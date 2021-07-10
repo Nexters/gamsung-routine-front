@@ -1,0 +1,64 @@
+import React from 'react';
+import styled from '@emotion/native';
+
+const Complete = () => {
+  return (
+    <CompleteStyled>
+      <CompleteTitle>
+        오늘 테스크를{'\n'}
+        <CompleteTitleStrong>34%</CompleteTitleStrong> 달성했어요
+      </CompleteTitle>
+      <CompleteBar>
+        <CompleteBarProgress />
+        <CompleteBarBackground />
+      </CompleteBar>
+    </CompleteStyled>
+  );
+};
+
+const CompleteStyled = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+  z-index: 3;
+`;
+
+const CompleteTitle = styled.Text`
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 38px;
+`;
+
+const CompleteTitleStrong = styled.Text`
+  color: #7160ec;
+`;
+
+const CompleteBar = styled.View`
+  width: 80%;
+  height: 5px;
+  justify-content: center;
+  position: relative;
+  padding-top: 40px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+`;
+
+const CompleteBarProgress = styled.View`
+  width: 100%;
+  height: 5px;
+  position: absolute;
+  background-color: #513de5;
+  opacity: 0.3;
+`;
+
+const CompleteBarBackground = styled.View`
+  width: 34%;
+  height: 5px;
+  position: absolute;
+  background-color: #513de5;
+`;
+
+export default Complete;

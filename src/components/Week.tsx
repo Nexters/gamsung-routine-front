@@ -36,10 +36,11 @@ const Week = () => {
 };
 
 const WeekStyled = styled.View`
-  flex: 1;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  padding: 30px 0;
+  z-index: 1;
 `;
 
 const WeekItem = styled.View`
