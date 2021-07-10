@@ -14,9 +14,8 @@ const Week = () => {
       {Array(7)
         .fill(0)
         .map((_, index) => {
-          console.log(typeof index);
           return (
-            <WeekItem>
+            <WeekItem key={index}>
               <WeekItemText indexNumber={index}>
                 {day
                   .day(index + 1)
@@ -36,10 +35,11 @@ const Week = () => {
 };
 
 const WeekStyled = styled.View`
-  flex: 1;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  padding: 30px 0;
+  z-index: 1;
 `;
 
 const WeekItem = styled.View`

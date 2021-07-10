@@ -1,10 +1,14 @@
 import React, {useMemo, useState} from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {NavigationProp} from '../../App';
 import Modal from 'react-native-modal';
+import styled from '@emotion/native';
 import {SafeAreaView} from 'react-navigation';
 import {TaskMy} from '../components/TaskMy';
+import Week from '../components/Week';
+import Complete from '../components/Complete';
 
-const MyTask = () => {
+const MyTask = ({navigation}: NavigationProp) => {
   const [isModalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -31,30 +35,39 @@ const MyTask = () => {
   };
 
   const renderTasks = useMemo(() => {
-    return Array.from({length: 30}, (_, index) => ({
+    return Array.from({length: 8}, (_, index) => ({
       id: index,
       taskName: `task${index}`,
     }));
   }, []);
+
   return (
-    <SafeAreaView style={{marginTop: 32}}>
-      <ScrollView style={{margin: 20}}>
-        <Text style={{marginBottom: 8}}>
-          내 하루 테스크 {renderTasks.length}
-        </Text>
-        {renderTasks.map(task => {
-          const has = selectedTasks.some(selectedTask => {
-            return selectedTask.id === task.id;
-          });
-          return (
-            <TaskMy
-              has={has}
-              taskName={task.taskName}
-              onPress={() => onPress(task)}
-            />
-          );
-        })}
-      </ScrollView>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+      <HomeStyled>
+        <Complete />
+        <Week />
+        <TaskView>
+          <TaskViewTitle>내 하루 테스크 {renderTasks.length}</TaskViewTitle>
+          <TaskViewList>
+            {renderTasks.map((task, index) => {
+              const has = selectedTasks.some(selectedTask => {
+                return selectedTask.id === task.id;
+              });
+              return (
+                <TaskMy
+                  has={has}
+                  taskName={task.taskName}
+                  onPress={() => onPress(task)}
+                  key={index}
+                />
+              );
+            })}
+          </TaskViewList>
+        </TaskView>
+      </HomeStyled>
+      <AddTaskButton onPress={() => navigation.navigate('AddTask')}>
+        <AddTaskButtonText>+</AddTaskButtonText>
+      </AddTaskButton>
       <Modal
         isVisible={isModalVisible}
         style={{
@@ -97,5 +110,47 @@ const MyTask = () => {
     </SafeAreaView>
   );
 };
+
+const HomeStyled = styled.View`
+  width: 100%;
+  height: auto;
+  background-color: #292c34;
+`;
+
+const TaskView = styled.View`
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f2f2f4;
+  border-radius: 20px 20px 0 0;
+  z-index: 2;
+`;
+
+const TaskViewTitle = styled.Text`
+  font-size: 12px;
+  color: #4f5461;
+`;
+
+const TaskViewList = styled.ScrollView`
+  padding: 20px 0;
+`;
+
+const AddTaskButton = styled.TouchableOpacity`
+  width: 64px;
+  height: 64px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 41%;
+  bottom: 30px;
+  background-color: #513de5;
+  border-radius: 64px;
+  z-index: 5;
+`;
+
+const AddTaskButtonText = styled.Text`
+  color: #fff;
+  font-size: 30px;
+  font-weight: normal;
+`;
 
 export default MyTask;
