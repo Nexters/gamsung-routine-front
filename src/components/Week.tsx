@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 
 const Week = () => {
-  const [selectedDate, setSelectedDate] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(6);
 
   const isSun = dayjs().format('ddd') === 'Sun';
   const day = isSun ? dayjs().add(-1, 'day') : dayjs();
