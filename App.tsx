@@ -1,34 +1,52 @@
-import styled from '@emotion/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {SafeAreaView, StatusBar, Text, useColorScheme} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {
+  SafeAreaView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
 
-const MainView = styled.View`
-  width: 100%;
-  height: 100%;
-  background: yellowgreen;
-  justify-content: center;
-  align-items: center;
-`;
+const Stack = createStackNavigator();
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  <StatusBar barStyle={isDarkMode ? 'dark-content' : 'dark-content'} />;
-
   return (
     <SafeAreaView>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        children={<Text>aaa</Text>}
-        backgroundColor="#61dafb"
-        hidden={true}
-      />
-      <MainView>
-        <Text>routine</Text>
-      </MainView>
+      <StatusBar />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home3"
+            component={Home}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen name="AddTask" component={AddTask} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 };
 
 export default App;
+
+const Home = () => {
+  return (
+    <View
+      style={{flex: 1, width: '100%', height: '100%', backgroundColor: 'red'}}>
+      <Text>!!!Home1</Text>
+      <Text>!!!Home1</Text>
+      <Text>!!!Home1</Text>
+      <Text>!!!Home1</Text>
+      <Text>!!!Home1</Text>
+      <Text>!!!Home1</Text>
+      <TouchableOpacity>
+        <Text>버튼!!!!</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+const AddTask = () => {
+  return <Text>AddTask</Text>;
+};
