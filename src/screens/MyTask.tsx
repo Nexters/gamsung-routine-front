@@ -1,12 +1,11 @@
 import React, {useMemo, useState} from 'react';
-import {Button, ScrollView, Text, View} from 'react-native';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Modal from 'react-native-modal';
 import {SafeAreaView} from 'react-navigation';
-import {Task} from '../components/Task';
+import {TaskMy} from '../components/TaskMy';
 
 const MyTask = () => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [id, setId] = useState(0);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -27,7 +26,6 @@ const MyTask = () => {
         });
       }
       toggleModal();
-      setId(selectedTask.id);
       return [...oldSelectedTasks, selectedTask];
     });
   };
@@ -40,16 +38,19 @@ const MyTask = () => {
   }, []);
   return (
     <SafeAreaView style={{marginTop: 32}}>
-      <ScrollView>
+      <ScrollView style={{margin: 20}}>
+        <Text style={{marginBottom: 8}}>
+          내 하루 테스크 {renderTasks.length}
+        </Text>
         {renderTasks.map(task => {
           const has = selectedTasks.some(selectedTask => {
             return selectedTask.id === task.id;
           });
           return (
-            <Task
+            <TaskMy
               has={has}
               taskName={task.taskName}
-              onClick={() => onPress(task)}
+              onPress={() => onPress(task)}
             />
           );
         })}
@@ -67,10 +68,30 @@ const MyTask = () => {
         hideModalContentWhileAnimating={true}
         useNativeDriver={true}>
         <View>
-          <Button title="Close modal" onPress={toggleModal} />
-          <Text style={{color: 'white', textAlign: 'center'}}>
-            {id} 수행했네?!
-          </Text>
+          <TouchableOpacity
+            style={{
+              marginLeft: 60,
+              marginRight: 60,
+              marginBottom: 16,
+              backgroundColor: 'white',
+              paddingTop: 24,
+              paddingLeft: 32,
+              paddingRight: 32,
+              paddingBottom: 40,
+              justifyContent: 'center',
+              alignContent: 'center',
+              borderRadius: 20,
+            }}
+            onPress={toggleModal}>
+            <Image
+              style={{width: 195, height: 128}}
+              source={require('../assets/success_monster.png')}
+            />
+            <Text
+              style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>
+              테스크 완료
+            </Text>
+          </TouchableOpacity>
         </View>
       </Modal>
     </SafeAreaView>
