@@ -14,7 +14,7 @@ const Complete = ({percent = 34}: Props) => {
       </CompleteTitle>
       <CompleteBar>
         <CompleteBarProgress />
-        <CompleteBarBackground />
+        <CompleteBarBackground percent={percent} />
       </CompleteBar>
     </CompleteStyled>
   );
@@ -58,8 +58,8 @@ const CompleteBarProgress = styled.View`
   opacity: 0.3;
 `;
 
-const CompleteBarBackground = styled.View`
-  width: 34%;
+const CompleteBarBackground = styled.View<{percent: number}>`
+  width: ${({percent}) => `${percent}%`};
   height: 5px;
   position: absolute;
   background-color: #513de5;
