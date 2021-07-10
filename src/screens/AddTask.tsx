@@ -1,12 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import {
-  Button,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import {Button, Image, SafeAreaView, ScrollView, Text, View,} from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
 import {NavigationProp} from '../../App';
 import {Task} from '../components/Task';
@@ -74,7 +67,7 @@ export const AddTask = ({navigation}: NavigationProp) => {
           캘리가 처음이라면
         </Text>
         <Text>캘리가 처음이신가요?</Text>
-        <Image source={require('./temp.png')} />
+        <Image source={require('../assets/temp.png')} />
         <Text>모두 선택하기</Text>
         {renderTasks.map(task => {
           const has = selectedTasks.some(selectedTask => {
