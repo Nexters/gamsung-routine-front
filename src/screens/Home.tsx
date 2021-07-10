@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, SafeAreaView, Text, View} from 'react-native';
 import {NavigationProp} from '../../App';
 import styled from '@emotion/native';
+import Week from '../components/Week';
 
 const EmptyText = styled.Text`
   font-weight: bold;
@@ -18,6 +19,7 @@ const EmptyImage = styled.Image`
 export const Home = ({navigation}: NavigationProp) => {
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'space-between'}}>
+      <Week />
       <Text>내 하루 테스크 0</Text>
       <View style={{justifyContent: 'center', alignContent: 'center'}}>
         <EmptyImage source={require('../assets/empty_monster.png')} />
