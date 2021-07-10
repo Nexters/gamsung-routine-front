@@ -14,9 +14,8 @@ const Week = () => {
       {Array(7)
         .fill(0)
         .map((_, index) => {
-          console.log(typeof index);
           return (
-            <WeekItem>
+            <WeekItem key={index}>
               <WeekItemText indexNumber={index}>
                 {day
                   .day(index + 1)

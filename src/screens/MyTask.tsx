@@ -42,7 +42,7 @@ const MyTask = () => {
         <Text style={{marginBottom: 8}}>
           내 하루 테스크 {renderTasks.length}
         </Text>
-        {renderTasks.map(task => {
+        {renderTasks.map((task, index) => {
           const has = selectedTasks.some(selectedTask => {
             return selectedTask.id === task.id;
           });
@@ -51,6 +51,7 @@ const MyTask = () => {
               has={has}
               taskName={task.taskName}
               onPress={() => onPress(task)}
+              key={index}
             />
           );
         })}

@@ -1,9 +1,12 @@
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator, StackNavigationProp,} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
 import React from 'react';
 import Home from './src/screens/Home';
 import {AddTask} from './src/screens/AddTask';
-import {Text, TouchableHighlight} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import MyTask from './src/screens/MyTask';
 
 const Stack = createStackNavigator();
@@ -38,12 +41,18 @@ const App = () => {
               title: '테스크 선택',
               headerBackTitle: ' ',
               headerRight: () => (
-                <TouchableHighlight
-                    onPress={() => {navigation.navigate('MyTask');}}
-                    style={{marginRight: 10}}
-                >
-                  <Text style={{color: 'rgba(81, 61, 229, 1)'}}>완료</Text>
-                </TouchableHighlight>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('Home');
+                  }}
+                  style={{marginRight: 10}}>
+                  <Text
+                    style={{
+                      color: 'rgba(81, 61, 229, 1)',
+                    }}>
+                    완료
+                  </Text>
+                </TouchableOpacity>
               ),
             };
           }}
