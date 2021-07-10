@@ -1,12 +1,9 @@
 import {NavigationContainer} from '@react-navigation/native';
-import {
-  createStackNavigator,
-  StackNavigationProp,
-} from '@react-navigation/stack';
+import {createStackNavigator, StackNavigationProp,} from '@react-navigation/stack';
 import React from 'react';
 import Home from './src/screens/Home';
 import {AddTask} from './src/screens/AddTask';
-import {Button} from 'react-native';
+import {Text, TouchableHighlight} from 'react-native';
 import MyTask from './src/screens/MyTask';
 
 const Stack = createStackNavigator();
@@ -41,12 +38,12 @@ const App = () => {
               title: '테스크 선택',
               headerBackTitle: ' ',
               headerRight: () => (
-                <Button
-                  title="생성완료"
-                  onPress={() => {
-                    navigation.navigate('MyTask');
-                  }}
-                />
+                <TouchableHighlight
+                    onPress={() => {navigation.navigate('MyTask');}}
+                    style={{marginRight: 10}}
+                >
+                  <Text style={{color: 'rgba(81, 61, 229, 1)'}}>완료</Text>
+                </TouchableHighlight>
               ),
             };
           }}
