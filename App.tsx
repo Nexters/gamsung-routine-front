@@ -43,7 +43,7 @@ const App = () => {
               headerRight: () => (
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate('Home');
+                    navigation.navigate('MyTask');
                   }}
                   style={{marginRight: 10}}>
                   <Text
