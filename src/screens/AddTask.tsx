@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useMemo, useState} from "react";
 import {Button, Image, SafeAreaView, ScrollView, Text, View} from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 import {NavigationProp} from "../../App";
@@ -8,6 +8,8 @@ import {Task} from "../components/Task";
 export const AddTask = ({navigation}: NavigationProp) => {
     const sheetRef = React.useRef(null);
 
+    const [selectedTasks, setSelectedTasks] = useState<{taskName: string}[]>([]);
+
     const renderContent = () => (
         <View
             style={{
@@ -16,8 +18,9 @@ export const AddTask = ({navigation}: NavigationProp) => {
             }}>
             <Text>Swipe down to close</Text>
             <Text>내가 선택한 태스크</Text>
-            <Task taskName={'task1'}/>
-            <Task taskName={'task2'}/>
+            {selectedTasks.map(
+                (task, index) => <Task key={index} taskName={task.taskName} onClick={() => console.log('test')}/>
+            )}
         </View>
     );
 
@@ -40,7 +43,7 @@ export const AddTask = ({navigation}: NavigationProp) => {
                 <Image source={require('./temp.png')}/>
                 <Text>모두 선택하기</Text>
                 <Button title={'test'} onPress={() => console.log(`test`)}/>
-                {renderTasks.map(it => <Task taskName={it.name}/>)}
+                {renderTasks.map(it => <Task taskName={it.name} onClick={() => selectedTasks.push({taskName: it.name})}/>)}
             </ScrollView>
 
             <Button

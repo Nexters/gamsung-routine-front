@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useCallback} from "react";
 import styled from "@emotion/native";
 
 interface Props {
     taskName: string;
+    onClick: () => void;
 }
 
 const TaskButton = styled.Button`
@@ -11,9 +12,13 @@ const TaskButton = styled.Button`
 
 export const Task = (props: Props) => {
 
-    const {taskName} = props;
+    const {taskName, onClick} = props;
+
+    const handleClick = useCallback(() => {
+        onClick();
+    }, [])
 
     return (
-        <TaskButton title={taskName} onPress={() => console.log(`tset click ${taskName}`)}/>
+        <TaskButton title={taskName} onPress={handleClick}/>
     )
 }
