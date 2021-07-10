@@ -1,12 +1,16 @@
 import React from 'react';
 import styled from '@emotion/native';
 
-const Complete = () => {
+interface Props {
+  percent: number;
+}
+
+const Complete = ({percent = 34}: Props) => {
   return (
     <CompleteStyled>
       <CompleteTitle>
         오늘 테스크를{'\n'}
-        <CompleteTitleStrong>34%</CompleteTitleStrong> 달성했어요
+        <CompleteTitleStrong>{percent}%</CompleteTitleStrong> 달성했어요
       </CompleteTitle>
       <CompleteBar>
         <CompleteBarProgress />

@@ -44,7 +44,7 @@ const MyTask = ({navigation}: NavigationProp) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <HomeStyled>
-        <Complete />
+        <Complete percent={(selectedTasks.length / renderTasks.length) * 100} />
         <Week />
         <TaskView>
           <TaskViewTitle>내 하루 테스크 {renderTasks.length}</TaskViewTitle>
