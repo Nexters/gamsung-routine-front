@@ -35,7 +35,7 @@ const MyTask = ({navigation}: NavigationProp) => {
   };
 
   const renderTasks = useMemo(() => {
-    return Array.from({length: 8}, (_, index) => ({
+    return Array.from({length: 10}, (_, index) => ({
       id: index,
       taskName: `task${index}`,
     }));
@@ -62,6 +62,7 @@ const MyTask = ({navigation}: NavigationProp) => {
                 />
               );
             })}
+            <View style={{height: 100}} />
           </TaskViewList>
         </TaskView>
       </HomeStyled>
@@ -112,6 +113,7 @@ const MyTask = ({navigation}: NavigationProp) => {
 };
 
 const HomeStyled = styled.View`
+  flex: 1;
   width: 100%;
   height: auto;
   background-color: #292c34;
@@ -123,6 +125,8 @@ const TaskView = styled.View`
   background-color: #f2f2f4;
   border-radius: 20px 20px 0 0;
   z-index: 2;
+  display: flex;
+  flex: 1;
 `;
 
 const TaskViewTitle = styled.Text`
@@ -132,6 +136,7 @@ const TaskViewTitle = styled.Text`
 
 const TaskViewList = styled.ScrollView`
   padding: 20px 0;
+  flex: 1;
 `;
 
 const AddTaskButton = styled.TouchableOpacity`
