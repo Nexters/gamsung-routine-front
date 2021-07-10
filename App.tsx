@@ -4,7 +4,7 @@ import {
   StackNavigationProp,
 } from '@react-navigation/stack';
 import React from 'react';
-import {Home} from './src/screens/Home';
+import Home from './src/screens/Home';
 import {AddTask} from './src/screens/AddTask';
 import {Button} from 'react-native';
 import MyTask from './src/screens/MyTask';

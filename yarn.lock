@@ -1400,16 +1400,7 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
 
-"@types/react-native-calendars@^1.505.4":
-  version "1.505.4"
-  resolved "https://registry.yarnpkg.com/@types/react-native-calendars/-/react-native-calendars-1.505.4.tgz#d76a866623279b92e5883a2fdffd2e58efce5509"
-  integrity sha512-LFWQdpE+sGG3aszyCQZf9cYDahOqKU2G4nH+JRETMjngWJbN/REfAlVgycyCD3FJMfq76wr75a7067hEYv/YlA==
-  dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
-    "@types/xdate" "*"
-
-"@types/react-native@*", "@types/react-native@^0.64.5":
+"@types/react-native@^0.64.5":
   version "0.64.11"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.11.tgz#c40264c5bd916e589b6c914982df324f5107960a"
   integrity sha512-WgOJtQpFyH063MHZugOHq8Qr0J0UnASmz0NvSNRXEOd8ySkuNvLmlkiITr+L85o2BPj3hB/wx8IiK16dW/uVkQ==
@@ -1441,11 +1432,6 @@
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
-
-"@types/xdate@*":
-  version "0.8.32"
-  resolved "https://registry.yarnpkg.com/@types/xdate/-/xdate-0.8.32.tgz#52f1bc426cc6929474034e5e3b83f82f43e25dcd"
-  integrity sha512-giM6hmU4ZCCAQj8BVSMNMA8hQwvKuWewLIe7r+G5NtGvehqW9jXdF/V6CzzkQYgHsk+67/udxql3RdfR8zqSNA==
 
 "@types/yargs-parser@*":
   version "20.2.1"
