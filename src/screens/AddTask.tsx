@@ -1,10 +1,11 @@
-import React, {useMemo, useState} from 'react';
-import {SafeAreaView} from 'react-native';
-import BottomSheet from 'reanimated-bottom-sheet';
-import {NavigationProp} from '../../App';
-import {Task} from '../components/Task';
 import styled from '@emotion/native';
-import {BottomSheetContent} from '../components/BottomSheetContent';
+import React, { useMemo, useState } from 'react';
+import { SafeAreaView } from 'react-native';
+import BottomSheet from 'reanimated-bottom-sheet';
+
+import { NavigationProp } from '../../App';
+import { BottomSheetContent } from '../components/BottomSheetContent';
+import { Task } from '../components/Task';
 
 export type TaskType = {
   id: number;
@@ -17,17 +18,17 @@ export const ContentScrollView = styled.ScrollView`
   padding: 20px;
 `;
 
-export const AddTask = ({navigation}: NavigationProp) => {
+export const AddTask = ({ navigation }: NavigationProp) => {
   const sheetRef = React.useRef(null);
   const [selectedTasks, setSelectedTasks] = useState<TaskType[]>([]);
 
   const onPress = (selectedTask: TaskType) => {
-    setSelectedTasks(oldSelectedTasks => {
-      const has = oldSelectedTasks.some(task => {
+    setSelectedTasks((oldSelectedTasks) => {
+      const has = oldSelectedTasks.some((task) => {
         return task.id === selectedTask.id;
       });
       if (has) {
-        return oldSelectedTasks.filter(task => {
+        return oldSelectedTasks.filter((task) => {
           return task.id !== selectedTask.id;
         });
       }
@@ -36,7 +37,7 @@ export const AddTask = ({navigation}: NavigationProp) => {
   };
 
   const tempTasks = useMemo(() => {
-    return Array.from({length: 20}, (_, index) => ({
+    return Array.from({ length: 20 }, (_, index) => ({
       id: index,
       taskName: `task${index}`,
     }));
@@ -54,17 +55,10 @@ export const AddTask = ({navigation}: NavigationProp) => {
       }}>
       <ContentScrollView>
         {tempTasks.map((task, index) => {
-          const has = selectedTasks.some(selectedTask => {
+          const has = selectedTasks.some((selectedTask) => {
             return selectedTask.id === task.id;
           });
-          return (
-            <Task
-              selected={has}
-              taskName={task.taskName}
-              onClick={() => onPress(task)}
-              key={index}
-            />
-          );
+          return <Task selected={has} taskName={task.taskName} onClick={() => onPress(task)} key={index} />;
         })}
       </ContentScrollView>
       <BottomSheet
@@ -72,9 +66,7 @@ export const AddTask = ({navigation}: NavigationProp) => {
         initialSnap={2}
         snapPoints={['85%', '15%', '15%']}
         borderRadius={8}
-        renderContent={() => (
-          <BottomSheetContent selectedTasks={selectedTasks} onPress={onPress} />
-        )}
+        renderContent={() => <BottomSheetContent selectedTasks={selectedTasks} onPress={onPress} />}
         enabledInnerScrolling
       />
     </SafeAreaView>

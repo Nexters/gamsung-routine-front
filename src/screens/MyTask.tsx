@@ -1,31 +1,30 @@
-import React, {useMemo, useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {NavigationProp} from '../../App';
-import Modal from 'react-native-modal';
 import styled from '@emotion/native';
-import {SafeAreaView} from 'react-navigation';
-import {TaskMy} from '../components/TaskMy';
-import Week from '../components/Week';
-import Complete from '../components/Complete';
+import React, { useMemo, useState } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import Modal from 'react-native-modal';
+import { SafeAreaView } from 'react-navigation';
 
-const MyTask = ({navigation}: NavigationProp) => {
+import { NavigationProp } from '../../App';
+import Complete from '../components/Complete';
+import { TaskMy } from '../components/TaskMy';
+import Week from '../components/Week';
+
+const MyTask = ({ navigation }: NavigationProp) => {
   const [isModalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
-  const [selectedTasks, setSelectedTasks] = useState<
-    {id: number; taskName: string}[]
-  >([]);
+  const [selectedTasks, setSelectedTasks] = useState<{ id: number; taskName: string }[]>([]);
 
-  const onPress = (selectedTask: {id: number; taskName: string}) => {
-    setSelectedTasks(oldSelectedTasks => {
-      const has = oldSelectedTasks.some(task => {
+  const onPress = (selectedTask: { id: number; taskName: string }) => {
+    setSelectedTasks((oldSelectedTasks) => {
+      const has = oldSelectedTasks.some((task) => {
         return task.id === selectedTask.id;
       });
       if (has) {
-        return oldSelectedTasks.filter(task => {
+        return oldSelectedTasks.filter((task) => {
           return task.id !== selectedTask.id;
         });
       }
@@ -35,14 +34,14 @@ const MyTask = ({navigation}: NavigationProp) => {
   };
 
   const renderTasks = useMemo(() => {
-    return Array.from({length: 10}, (_, index) => ({
+    return Array.from({ length: 10 }, (_, index) => ({
       id: index,
       taskName: `task${index}`,
     }));
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <HomeStyled>
         <Complete percent={(selectedTasks.length / renderTasks.length) * 100} />
         <Week />
@@ -50,19 +49,12 @@ const MyTask = ({navigation}: NavigationProp) => {
           <TaskViewTitle>내 하루 테스크 {renderTasks.length}</TaskViewTitle>
           <TaskViewList>
             {renderTasks.map((task, index) => {
-              const has = selectedTasks.some(selectedTask => {
+              const has = selectedTasks.some((selectedTask) => {
                 return selectedTask.id === task.id;
               });
-              return (
-                <TaskMy
-                  has={has}
-                  taskName={task.taskName}
-                  onPress={() => onPress(task)}
-                  key={index}
-                />
-              );
+              return <TaskMy has={has} taskName={task.taskName} onPress={() => onPress(task)} key={index} />;
             })}
-            <View style={{height: 100}} />
+            <View style={{ height: 100 }} />
           </TaskViewList>
         </TaskView>
       </HomeStyled>
@@ -97,14 +89,8 @@ const MyTask = ({navigation}: NavigationProp) => {
               borderRadius: 20,
             }}
             onPress={toggleModal}>
-            <Image
-              style={{width: 195, height: 128}}
-              source={require('../assets/success_monster.png')}
-            />
-            <Text
-              style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>
-              테스크 완료
-            </Text>
+            <Image style={{ width: 195, height: 128 }} source={require('../assets/success_monster.png')} />
+            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>테스크 완료</Text>
           </TouchableOpacity>
         </View>
       </Modal>

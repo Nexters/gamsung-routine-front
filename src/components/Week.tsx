@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
 import styled from '@emotion/native';
 import dayjs from 'dayjs';
+import React, { useState } from 'react';
 import 'dayjs/locale/ko';
 
 const Week = () => {
@@ -23,9 +23,7 @@ const Week = () => {
                   .format('ddd')}
               </WeekItemText>
               <WeekItemNumber selected={index === selectedDate}>
-                <WeekItemNumberText>
-                  {day.day(index + 1).date()}
-                </WeekItemNumberText>
+                <WeekItemNumberText>{day.day(index + 1).date()}</WeekItemNumberText>
               </WeekItemNumber>
             </WeekItem>
           );
@@ -47,18 +45,17 @@ const WeekItem = styled.View`
   align-items: center;
 `;
 
-const WeekItemText = styled.Text<{indexNumber: number}>`
+const WeekItemText = styled.Text<{ indexNumber: number }>`
   padding-bottom: 10px;
-  color: ${props =>
-    props.indexNumber === 5 || props.indexNumber === 6 ? '#EF7C79' : '#fff'};
+  color: ${(props) => (props.indexNumber === 5 || props.indexNumber === 6 ? '#EF7C79' : '#fff')};
 `;
 
-const WeekItemNumber = styled.View<{selected: boolean}>`
+const WeekItemNumber = styled.View<{ selected: boolean }>`
   width: 36px;
   height: 36px;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.selected && '#604DEE'};
+  background-color: ${(props) => props.selected && '#604DEE'};
   border-radius: 36px;
 `;
 

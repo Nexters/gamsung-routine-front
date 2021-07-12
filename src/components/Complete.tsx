@@ -1,11 +1,11 @@
-import React from 'react';
 import styled from '@emotion/native';
+import React from 'react';
 
 interface Props {
   percent: number;
 }
 
-const Complete = ({percent = 34}: Props) => {
+const Complete = ({ percent = 34 }: Props) => {
   return (
     <CompleteStyled>
       <CompleteTitle>
@@ -58,8 +58,8 @@ const CompleteBarProgress = styled.View`
   opacity: 0.3;
 `;
 
-const CompleteBarBackground = styled.View<{percent: number}>`
-  width: ${({percent}) => `${percent}%`};
+const CompleteBarBackground = styled.View<{ percent: number }>`
+  width: ${({ percent }) => `${percent}%`};
   height: 5px;
   position: absolute;
   background-color: #513de5;
