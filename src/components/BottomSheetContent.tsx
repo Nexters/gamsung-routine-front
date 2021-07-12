@@ -1,10 +1,9 @@
 import styled from '@emotion/native';
 import React, { useMemo } from 'react';
 
-import { ContentScrollView, TaskType } from '../screens/AddTask';
-
-import { RoundedCount } from './RoundedCount';
-import { Task } from './Task';
+import { RoundedCount } from '~/components/RoundedCount';
+import { Task } from '~/components/Task';
+import { ContentScrollView, TaskType } from '~/screens/AddTask';
 
 const BottomSheetTitle = styled.View`
   margin-bottom: 20px;
@@ -30,7 +29,7 @@ const BottomSheetContentView = styled.View`
 `;
 
 const BottomText = styled.Text`
-  font-size: 18;
+  font-size: 18px;
   font-weight: 700;
 `;
 

@@ -1,11 +1,10 @@
 import styled from '@emotion/native';
 import React, { useMemo, useState } from 'react';
-import { SafeAreaView } from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
 
-import { NavigationProp } from '../../App';
-import { BottomSheetContent } from '../components/BottomSheetContent';
-import { Task } from '../components/Task';
+import { BottomSheetContent } from '~/components/BottomSheetContent';
+import { Task } from '~/components/Task';
+import { NavigationProp } from '~/navigations';
 
 export type TaskType = {
   id: number;
@@ -16,6 +15,15 @@ export const ContentScrollView = styled.ScrollView`
   width: 100%;
   height: 100%;
   padding: 20px;
+`;
+
+const AddTaskStyled = styled.SafeAreaView`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f4;
 `;
 
 export const AddTask = ({ navigation }: NavigationProp) => {
@@ -44,15 +52,7 @@ export const AddTask = ({ navigation }: NavigationProp) => {
   }, []);
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        width: '100%',
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F2F2F4',
-      }}>
+    <AddTaskStyled>
       <ContentScrollView>
         {tempTasks.map((task, index) => {
           const has = selectedTasks.some((selectedTask) => {
@@ -69,6 +69,6 @@ export const AddTask = ({ navigation }: NavigationProp) => {
         renderContent={() => <BottomSheetContent selectedTasks={selectedTasks} onPress={onPress} />}
         enabledInnerScrolling
       />
-    </SafeAreaView>
+    </AddTaskStyled>
   );
 };

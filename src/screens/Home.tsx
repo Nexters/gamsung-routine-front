@@ -1,43 +1,17 @@
 import styled from '@emotion/native';
 import React from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text } from 'react-native';
 
-import { NavigationProp } from '../../App';
-import Complete from '../components/Complete';
-import Week from '../components/Week';
+import Complete from '~/components/Complete';
+import Week from '~/components/Week';
+import { NavigationProp } from '~/navigations';
 
-const taskList = [];
+const HomeStyled = styled.SafeAreaView`
+  flex: 1;
+  background-color: #fff;
+`;
 
-const Home = ({ navigation }: NavigationProp) => {
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-      <HomeStyled>
-        {taskList.length !== 0 && <Complete />}
-        <Week />
-        <TaskView>
-          <TaskViewTitle>내 하루 테스크 {taskList.length}</TaskViewTitle>
-          <TaskViewList>
-            {taskList.length ? (
-              <View>
-                <Text>있음</Text>
-              </View>
-            ) : (
-              <EmptyView>
-                <EmptyImage source={require('../assets/empty_monster.png')} />
-                <EmptyText>루틴이 없어요.{'\n'}루틴을 추가해요.</EmptyText>
-              </EmptyView>
-            )}
-          </TaskViewList>
-        </TaskView>
-      </HomeStyled>
-      <AddTaskButton onPress={() => navigation.navigate('AddTask')}>
-        <AddTaskButtonText>+</AddTaskButtonText>
-      </AddTaskButton>
-    </SafeAreaView>
-  );
-};
-
-const HomeStyled = styled.View`
+const HomeView = styled.View`
   width: 100%;
   height: auto;
   background-color: #292c34;
@@ -96,5 +70,36 @@ const AddTaskButtonText = styled.Text`
   font-size: 30px;
   font-weight: normal;
 `;
+
+const taskList = [];
+
+const Home = ({ navigation }: NavigationProp) => {
+  return (
+    <HomeStyled>
+      <HomeView>
+        {taskList.length !== 0 && <Complete />}
+        <Week />
+        <TaskView>
+          <TaskViewTitle>내 하루 테스크 {taskList.length}</TaskViewTitle>
+          <TaskViewList>
+            {taskList.length ? (
+              <View>
+                <Text>있음</Text>
+              </View>
+            ) : (
+              <EmptyView>
+                <EmptyImage source={require('~/assets/images/empty_monster.png')} />
+                <EmptyText>루틴이 없어요.{'\n'}루틴을 추가해요.</EmptyText>
+              </EmptyView>
+            )}
+          </TaskViewList>
+        </TaskView>
+      </HomeView>
+      <AddTaskButton onPress={() => navigation.navigate('AddTask')}>
+        <AddTaskButtonText>+</AddTaskButtonText>
+      </AddTaskButton>
+    </HomeStyled>
+  );
+};
 
 export default Home;
