@@ -59,6 +59,8 @@ module.exports = {
       },
     ],
     '@typescript-eslint/naming-convention': 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
     'import/namespace': 0,
     'react/display-name': 0,
   },
