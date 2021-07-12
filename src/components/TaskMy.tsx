@@ -2,12 +2,6 @@ import styled from '@emotion/native';
 import React, { useCallback } from 'react';
 import { Image, Text, View } from 'react-native';
 
-interface Props {
-  taskName: string;
-  onPress: () => void;
-  has: boolean;
-}
-
 const StyledTouchableOpacity = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
@@ -32,6 +26,12 @@ const StyledTouchableOpacity = styled.TouchableOpacity`
   position: relative;
 `;
 
+interface Props {
+  taskName: string;
+  onPress: () => void;
+  has: boolean;
+}
+
 export const TaskMy = (props: Props) => {
   const { taskName, onPress } = props;
 
@@ -44,7 +44,7 @@ export const TaskMy = (props: Props) => {
       {props.has && (
         <View
           style={{
-            borderBottomColor: '#9399A5',
+            borderBottomColor: '#9399a5',
             borderBottomWidth: 1,
             width: '100%',
             position: 'absolute',
@@ -53,10 +53,10 @@ export const TaskMy = (props: Props) => {
           }}
         />
       )}
-      <Text style={{ color: props.has ? '#9399A5' : '#303339' }}>{taskName}</Text>
+      <Text style={{ color: props.has ? '#9399a5' : '#303339' }}>{taskName}</Text>
       <Image
         style={{ width: props.has ? 34 : 27, height: 27 }}
-        source={props.has ? require('../assets/b_monster.png') : require('../assets/a_monster.png')}
+        source={props.has ? require('~/assets/icons/b_monster.png') : require('~/assets/icons/a_monster.png')}
       />
     </StyledTouchableOpacity>
   );

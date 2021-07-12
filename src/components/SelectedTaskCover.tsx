@@ -20,7 +20,7 @@ const CoverImage = styled.Image`
 export const SelectTaskCover = () => {
   return (
     <SelectCover>
-      <CoverImage source={require('../assets/accept_area.png')} />
+      <CoverImage source={require('~/assets/images/accept_area.png')} />
     </SelectCover>
   );
 };

@@ -1,16 +1,9 @@
 import styled from '@emotion/native';
 import React, { useCallback } from 'react';
-import { Text } from 'react-native';
 
-import { SelectTaskCover } from './SelectedTaskCover';
+import { SelectTaskCover } from '~/components/SelectedTaskCover';
 
-interface Props {
-  taskName: string;
-  onClick: () => void;
-  selected: boolean;
-}
-
-const TaskButton = styled.TouchableOpacity<{ selected: boolean }>`
+const TaskButton = styled.TouchableOpacity`
   display: flex;
   position: relative;
   font-size: 18px;
@@ -24,6 +17,17 @@ const TaskButton = styled.TouchableOpacity<{ selected: boolean }>`
   border-radius: 8px;
 `;
 
+const TaskButtonText = styled.Text<{ selected: boolean }>`
+  text-align: center;
+  color: ${(props) => (props.selected ? 'rgba(201, 204, 210, 1)' : 'rgba(48, 51, 57, 1)')};
+`;
+
+interface Props {
+  taskName: string;
+  onClick: () => void;
+  selected: boolean;
+}
+
 export const Task = (props: Props) => {
   const { taskName, selected, onClick } = props;
 
@@ -32,14 +36,8 @@ export const Task = (props: Props) => {
   }, [onClick]);
 
   return (
-    <TaskButton selected={selected} onPress={handleClick}>
-      <Text
-        style={{
-          textAlign: 'center',
-          color: selected ? 'rgba(201, 204, 210, 1)' : 'rgba(48, 51, 57, 1)',
-        }}>
-        {taskName}
-      </Text>
+    <TaskButton onPress={handleClick}>
+      <TaskButtonText selected={selected}>{taskName}</TaskButtonText>
       {selected && <SelectTaskCover />}
     </TaskButton>
   );
