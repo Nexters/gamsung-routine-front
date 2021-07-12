@@ -1,6 +1,6 @@
-import React from 'react';
 import styled from '@emotion/native';
-import {Text} from 'react-native';
+import React from 'react';
+import { Text } from 'react-native';
 
 interface Props {
   count: number;
@@ -19,7 +19,7 @@ const RoundBall = styled.View`
 export const RoundedCount = (props: Props) => {
   return (
     <RoundBall>
-      <Text style={{color: 'white'}}>{props.count}</Text>
+      <Text style={{ color: 'white' }}>{props.count}</Text>
     </RoundBall>
   );
 };

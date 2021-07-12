@@ -1,8 +1,10 @@
 import styled from '@emotion/native';
-import React, {useMemo} from 'react';
-import {ContentScrollView, TaskType} from '../screens/AddTask';
-import {RoundedCount} from './RoundedCount';
-import {Task} from './Task';
+import React, { useMemo } from 'react';
+
+import { ContentScrollView, TaskType } from '../screens/AddTask';
+
+import { RoundedCount } from './RoundedCount';
+import { Task } from './Task';
 
 const BottomSheetTitle = styled.View`
   margin-bottom: 20px;
@@ -38,7 +40,7 @@ interface Props {
 }
 
 export const BottomSheetContent = (props: Props) => {
-  const {selectedTasks, onPress} = props;
+  const { selectedTasks, onPress } = props;
 
   const count = useMemo(() => selectedTasks.length, [selectedTasks]);
 
@@ -51,14 +53,7 @@ export const BottomSheetContent = (props: Props) => {
       </BottomSheetTitle>
       <ContentScrollView>
         {selectedTasks.map((task, index) => {
-          return (
-            <Task
-              selected={true}
-              key={index}
-              taskName={task.taskName}
-              onClick={() => onPress(task)}
-            />
-          );
+          return <Task selected={true} key={index} taskName={task.taskName} onClick={() => onPress(task)} />;
         })}
       </ContentScrollView>
     </BottomSheetContentView>

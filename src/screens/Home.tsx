@@ -1,15 +1,16 @@
-import React from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
-import {NavigationProp} from '../../App';
 import styled from '@emotion/native';
-import Week from '../components/Week';
+import React from 'react';
+import { View, Text, SafeAreaView } from 'react-native';
+
+import { NavigationProp } from '../../App';
 import Complete from '../components/Complete';
+import Week from '../components/Week';
 
 const taskList = [];
 
-const Home = ({navigation}: NavigationProp) => {
+const Home = ({ navigation }: NavigationProp) => {
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <HomeStyled>
         {taskList.length !== 0 && <Complete />}
         <Week />

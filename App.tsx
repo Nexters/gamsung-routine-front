@@ -1,12 +1,10 @@
-import {NavigationContainer} from '@react-navigation/native';
-import {
-  createStackNavigator,
-  StackNavigationProp,
-} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
+import { Text, TouchableOpacity } from 'react-native';
+
+import { AddTask } from './src/screens/AddTask';
 import Home from './src/screens/Home';
-import {AddTask} from './src/screens/AddTask';
-import {Text, TouchableOpacity} from 'react-native';
 import MyTask from './src/screens/MyTask';
 
 const Stack = createStackNavigator();
@@ -25,18 +23,10 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          options={{headerShown: false}}
-          name="Home"
-          component={Home}
-        />
+        <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
         <Stack.Screen
           name="AddTask"
-          options={({
-            navigation,
-          }: {
-            navigation: StackNavigationProp<RootStackParamList>;
-          }) => {
+          options={({ navigation }: { navigation: StackNavigationProp<RootStackParamList> }) => {
             return {
               title: '테스크 선택',
               headerBackTitle: ' ',
@@ -45,7 +35,7 @@ const App = () => {
                   onPress={() => {
                     navigation.navigate('MyTask');
                   }}
-                  style={{marginRight: 10}}>
+                  style={{ marginRight: 10 }}>
                   <Text
                     style={{
                       color: 'rgba(81, 61, 229, 1)',
@@ -58,11 +48,7 @@ const App = () => {
           }}
           component={AddTask}
         />
-        <Stack.Screen
-          options={{headerShown: false}}
-          name="MyTask"
-          component={MyTask}
-        />
+        <Stack.Screen options={{ headerShown: false }} name="MyTask" component={MyTask} />
       </Stack.Navigator>
     </NavigationContainer>
   );
