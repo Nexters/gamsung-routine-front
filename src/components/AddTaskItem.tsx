@@ -40,7 +40,7 @@ const TaskButton = styled.TouchableOpacity`
 
 const TaskButtonText = styled.Text<{ selected: boolean }>`
   text-align: center;
-  color: ${(props) => (props.selected ? 'rgba(201, 204, 210, 1)' : 'rgba(48, 51, 57, 1)')};
+  color: ${({ selected }) => (selected ? 'rgba(201, 204, 210, 1)' : 'rgba(48, 51, 57, 1)')};
 `;
 
 export default AddTaskItem;
