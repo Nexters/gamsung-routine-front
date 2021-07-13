@@ -4,7 +4,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 
 import AddTaskItem from '~/components/AddTaskItem';
 import BottomSheetContent from '~/components/BottomSheetContent';
-import { NavigationProp } from '~/navigations';
+import { AddTaskScreenProps } from '~/navigations';
 
 export type TaskType = {
   id: number;
@@ -26,7 +26,7 @@ const AddTaskStyled = styled.SafeAreaView`
   background-color: #f2f2f4;
 `;
 
-const AddTask = ({ navigation }: NavigationProp) => {
+const AddTask = ({ navigation, route }: AddTaskScreenProps) => {
   const sheetRef = React.useRef(null);
   const [selectedTasks, setSelectedTasks] = useState<TaskType[]>([]);
 

@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 import Complete from '~/components/Complete';
 import TaskListView from '~/components/TaskListView';
 import Week from '~/components/Week';
-import { NavigationProp } from '~/navigations';
+import { HomeScreenProps } from '~/navigations';
 
 const HomeStyled = styled.SafeAreaView`
   flex: 1;
@@ -80,7 +80,7 @@ const ClearModalImage = styled.Image`
   height: 128px;
 `;
 
-const Home = ({ navigation }: NavigationProp) => {
+const Home = ({ navigation, route }: HomeScreenProps) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedTasks, setSelectedTasks] = useState<{ id: number; taskName: string }[]>([]);
 

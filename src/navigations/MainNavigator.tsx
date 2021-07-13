@@ -14,14 +14,15 @@ const AddTaskSubmitButtonText = styled.Text`
   color: rgba(81, 61, 229, 1);
 `;
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 const MainNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen
         name="AddTask"
+        component={AddTask}
         options={({ navigation }: { navigation: StackNavigationProp<RootStackParamList> }) => {
           return {
             title: '테스크 선택',
@@ -36,7 +37,6 @@ const MainNavigator = () => {
             ),
           };
         }}
-        component={AddTask}
       />
     </Stack.Navigator>
   );
