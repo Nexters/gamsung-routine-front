@@ -4,17 +4,13 @@ import BottomSheet from 'reanimated-bottom-sheet';
 
 import AddTaskItem from '~/components/AddTaskItem';
 import BottomSheetContent from '~/components/BottomSheet';
-
-export type TaskType = {
-  id: number;
-  taskName: string;
-};
+import { Task } from '~/models/Task';
 
 const AddTask = () => {
   const sheetRef = React.useRef(null);
-  const [selectedTasks, setSelectedTasks] = useState<TaskType[]>([]);
+  const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
 
-  const onPress = (selectedTask: TaskType) => {
+  const onPress = (selectedTask: Task) => {
     setSelectedTasks((oldSelectedTasks) => {
       const has = oldSelectedTasks.some((task) => {
         return task.id === selectedTask.id;
