@@ -47,7 +47,7 @@ const WeekItem = styled.View`
 
 const WeekItemText = styled.Text<{ indexNumber: number }>`
   padding-bottom: 10px;
-  color: ${(props) => (props.indexNumber >= 5 ? '#ef7c79' : '#ffffff')};
+  color: ${({ indexNumber }) => (indexNumber >= 5 ? '#ef7c79' : '#ffffff')};
 `;
 
 const WeekItemNumber = styled.View<{ selected: boolean }>`
@@ -55,7 +55,7 @@ const WeekItemNumber = styled.View<{ selected: boolean }>`
   height: 36px;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.selected && '#604dee'};
+  background-color: ${({ selected }) => selected && '#604dee'};
   border-radius: 36px;
 `;
 
