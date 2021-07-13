@@ -1,29 +1,25 @@
 import styled from '@emotion/native';
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import React from 'react';
 import 'dayjs/locale/ko';
 
 const Week = () => {
-  const isSun = dayjs().format('ddd') === 'Sun';
-  const day = isSun ? dayjs().add(-1, 'day') : dayjs();
-
-  const [selectedDate] = useState(day.date());
+  const today = dayjs();
+  const isSun = today.format('ddd') === 'Sun';
+  const weekDay = isSun ? dayjs().add(-1, 'day') : dayjs();
 
   return (
     <WeekStyled>
       {Array(7)
         .fill(0)
         .map((_, index) => {
+          const day = weekDay.locale('ko').day(index + 1);
+          const dayOfTheWeek = day.date();
           return (
             <WeekItem key={index}>
-              <WeekItemText indexNumber={index}>
-                {day
-                  .day(index + 1)
-                  .locale('ko')
-                  .format('ddd')}
-              </WeekItemText>
-              <WeekItemNumber selected={day.day(index + 1).date() === selectedDate}>
-                <WeekItemNumberText>{day.day(index + 1).date()}</WeekItemNumberText>
+              <WeekItemText indexNumber={index}>{day.format('ddd')}</WeekItemText>
+              <WeekItemNumber selected={dayOfTheWeek === today.date()}>
+                <WeekItemNumberText>{dayOfTheWeek}</WeekItemNumberText>
               </WeekItemNumber>
             </WeekItem>
           );
