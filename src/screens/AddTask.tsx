@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import BottomSheet from 'reanimated-bottom-sheet';
 
 import AddTaskItem from '~/components/AddTaskItem';
-import BottomSheetContent from '~/components/BottomSheetContent';
+import BottomSheetContent from '~/components/BottomSheet';
 
 export type TaskType = {
   id: number;

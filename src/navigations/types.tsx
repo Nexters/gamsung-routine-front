@@ -2,8 +2,8 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 export type RootStackParamList = {
-  Home: React.FC;
-  AddTask: React.FC;
+  Home: React.FC | undefined;
+  AddTask: React.FC | undefined;
 };
 
 export interface HomeScreenProps {

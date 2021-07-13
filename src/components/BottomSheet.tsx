@@ -2,7 +2,6 @@ import styled from '@emotion/native';
 import React, { useMemo } from 'react';
 
 import AddTaskItem from '~/components/AddTaskItem';
-import RoundedCount from '~/components/RoundedCount';
 import { TaskType } from '~/screens/AddTask';
 
 interface Props {
@@ -10,24 +9,26 @@ interface Props {
   onPress: (task: TaskType) => void;
 }
 
-const BottomSheetContent = (props: Props) => {
+const BottomSheet = (props: Props) => {
   const { selectedTasks, onPress } = props;
 
   const count = useMemo(() => selectedTasks.length, [selectedTasks]);
 
   return (
-    <BottomSheetContentView>
+    <BottomSheetView>
       <Bar />
       <BottomSheetTitle>
         <BottomText>내가 선택한 태스크</BottomText>
-        <RoundedCount count={count} />
+        <BottomSheetCount>
+          <BottomSheetCountText>{count}</BottomSheetCountText>
+        </BottomSheetCount>
       </BottomSheetTitle>
       <ContentScrollView>
         {selectedTasks.map((task, index) => {
           return <AddTaskItem selected={true} key={index} taskName={task.taskName} onClick={() => onPress(task)} />;
         })}
       </ContentScrollView>
-    </BottomSheetContentView>
+    </BottomSheetView>
   );
 };
 
@@ -52,7 +53,7 @@ const Bar = styled.View`
   border-radius: 20px;
 `;
 
-const BottomSheetContentView = styled.View`
+const BottomSheetView = styled.View`
   background-color: #fff;
   width: 100%;
   height: 100%;
@@ -65,4 +66,18 @@ const BottomText = styled.Text`
   font-weight: 700;
 `;
 
-export default BottomSheetContent;
+const BottomSheetCount = styled.View`
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: rgba(81, 61, 229, 1);
+  justify-content: center;
+  align-items: center;
+  margin-left: 4px;
+`;
+
+const BottomSheetCountText = styled.Text`
+  color: #fff;
+`;
+
+export default BottomSheet;
