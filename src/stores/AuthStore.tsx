@@ -1,9 +1,16 @@
-import { observable, action } from 'mobx';
+import { observable, action, makeObservable } from 'mobx';
 
 export default class AuthStore {
-  @observable token: string | null = null;
-
-  @action setToken(token: string) {
-    this.token = token;
+  constructor() {
+    makeObservable(this, {
+      token: observable,
+      login: action,
+    });
   }
+
+  token: string | null = null;
+
+  login = (token: string) => {
+    this.token = token;
+  };
 }
