@@ -7,11 +7,11 @@ export type RootStackParamList = {
 };
 
 export interface HomeScreenProps {
-  route: RouteProp<RootStackParamList, 'Home'>;
+  route?: RouteProp<RootStackParamList, 'Home'>;
   navigation: StackNavigationProp<RootStackParamList>;
 }
 
 export interface AddTaskScreenProps {
-  route: RouteProp<RootStackParamList, 'AddTask'>;
+  route?: RouteProp<RootStackParamList, 'AddTask'>;
   navigation: StackNavigationProp<RootStackParamList>;
 }
