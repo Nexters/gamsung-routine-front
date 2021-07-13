@@ -4,7 +4,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 
 import AddTaskItem from '~/components/AddTaskItem';
 import BottomSheetContent from '~/components/BottomSheetContent';
-import { AddTaskScreenProps } from '~/navigations';
+import { AddTaskScreenProps } from '~/navigations/types';
 
 export type TaskType = {
   id: number;
