@@ -1,14 +1,5 @@
-import useSWR from 'swr';
+import { SWR, useCommonSWR } from '~/utils/swr';
 
-import api from '~/utils/api';
-
-export const useUserData = (userId: string) => {
-  const getUserData = useSWR(['getUserData', userId], (_, userId) =>
-    api
-      .get(`user/${userId}`)
-      .then((res) => res.data)
-      .catch((error) => console.warn(error)),
-  );
-
-  return { getUserData };
+export const useUserData = (userId: string): SWR<any> => {
+  return useCommonSWR(`user/${userId}`);
 };
