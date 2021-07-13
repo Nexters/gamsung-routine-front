@@ -18,7 +18,7 @@ const WeekItem = styled.View`
 
 const WeekItemText = styled.Text<{ indexNumber: number }>`
   padding-bottom: 10px;
-  color: ${(props) => (props.indexNumber === 5 || props.indexNumber === 6 ? '#ef7c79' : '#ffffff')};
+  color: ${(props) => (props.indexNumber >= 5 ? '#ef7c79' : '#ffffff')};
 `;
 
 const WeekItemNumber = styled.View<{ selected: boolean }>`
