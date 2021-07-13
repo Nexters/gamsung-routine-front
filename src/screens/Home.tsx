@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import React, { useMemo, useState } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 
 import Complete from '~/components/Complete';
@@ -52,14 +52,8 @@ const Home = ({ navigation }: HomeScreenProps) => {
         <AddTaskButtonText>+</AddTaskButtonText>
       </AddTaskButton>
       <Modal
+        style={styles.modalStyled}
         isVisible={isModalVisible}
-        style={{
-          width: '100%',
-          margin: 0,
-          backgroundColor: 'rgba(25,25,25,0.8)',
-          justifyContent: 'center',
-          alignContent: 'center',
-        }}
         backdropOpacity={0}
         hideModalContentWhileAnimating={true}
         useNativeDriver={true}>
@@ -73,6 +67,16 @@ const Home = ({ navigation }: HomeScreenProps) => {
     </HomeStyled>
   );
 };
+
+const styles = StyleSheet.create({
+  modalStyled: {
+    width: '100%',
+    margin: 0,
+    backgroundColor: 'rgba(25, 25, 25, 0.8)',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+});
 
 const HomeStyled = styled.SafeAreaView`
   flex: 1;
