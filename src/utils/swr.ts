@@ -1,6 +1,6 @@
 import useSWR, { SWRResponse } from 'swr';
 
-import api from './api';
+import API from './api';
 
 export interface SWR<T> extends SWRResponse<T, string | Error> {
   data?: T;
@@ -8,8 +8,7 @@ export interface SWR<T> extends SWRResponse<T, string | Error> {
 }
 
 const fetcher = (url: string) => {
-  return api
-    .get(url)
+  return API.get(url)
     .then((res) => res.data)
     .catch((error) => console.warn(error));
 };
