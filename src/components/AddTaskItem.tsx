@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import React, { useCallback } from 'react';
 
-import { SelectTaskCover } from '~/components/SelectedTaskCover';
+import SelectTaskCover from '~/components/SelectedTaskCover';
 
 const TaskButton = styled.TouchableOpacity`
   display: flex;
@@ -28,7 +28,7 @@ interface Props {
   selected: boolean;
 }
 
-export const Task = (props: Props) => {
+const AddTaskItem = (props: Props) => {
   const { taskName, selected, onClick } = props;
 
   const handleClick = useCallback(() => {
@@ -42,3 +42,5 @@ export const Task = (props: Props) => {
     </TaskButton>
   );
 };
+
+export default AddTaskItem;

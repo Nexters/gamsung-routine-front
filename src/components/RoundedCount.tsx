@@ -19,10 +19,12 @@ interface Props {
   count: number;
 }
 
-export const RoundedCount = (props: Props) => {
+const RoundedCount = (props: Props) => {
   return (
     <RoundBall>
       <RoundBallText>{props.count}</RoundBallText>
     </RoundBall>
   );
 };
+
+export default RoundedCount;
