@@ -1,6 +1,7 @@
 import { observable, action, makeObservable } from 'mobx';
 
-export default class AuthStore {
+class AuthStore {
+  private static _instance: AuthStore;
   constructor() {
     makeObservable(this, {
       token: observable,
@@ -13,4 +14,13 @@ export default class AuthStore {
   login = (token: string) => {
     this.token = token;
   };
+
+  public static instance() {
+    if (!this._instance) {
+      this._instance = new AuthStore();
+    }
+    return this._instance;
+  }
 }
+
+export default AuthStore.instance();
