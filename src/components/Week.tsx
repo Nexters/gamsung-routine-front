@@ -3,6 +3,35 @@ import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import 'dayjs/locale/ko';
 
+const Week = () => {
+  const isSun = dayjs().format('ddd') === 'Sun';
+  const day = isSun ? dayjs().add(-1, 'day') : dayjs();
+
+  const [selectedDate] = useState(day.date());
+
+  return (
+    <WeekStyled>
+      {Array(7)
+        .fill(0)
+        .map((_, index) => {
+          return (
+            <WeekItem key={index}>
+              <WeekItemText indexNumber={index}>
+                {day
+                  .day(index + 1)
+                  .locale('ko')
+                  .format('ddd')}
+              </WeekItemText>
+              <WeekItemNumber selected={day.day(index + 1).date() === selectedDate}>
+                <WeekItemNumberText>{day.day(index + 1).date()}</WeekItemNumberText>
+              </WeekItemNumber>
+            </WeekItem>
+          );
+        })}
+    </WeekStyled>
+  );
+};
+
 const WeekStyled = styled.View`
   flex-direction: row;
   justify-content: space-around;
@@ -34,34 +63,5 @@ const WeekItemNumberText = styled.Text`
   font-weight: bold;
   color: #fff;
 `;
-
-const Week = () => {
-  const isSun = dayjs().format('ddd') === 'Sun';
-  const day = isSun ? dayjs().add(-1, 'day') : dayjs();
-
-  const [selectedDate] = useState(day.date());
-
-  return (
-    <WeekStyled>
-      {Array(7)
-        .fill(0)
-        .map((_, index) => {
-          return (
-            <WeekItem key={index}>
-              <WeekItemText indexNumber={index}>
-                {day
-                  .day(index + 1)
-                  .locale('ko')
-                  .format('ddd')}
-              </WeekItemText>
-              <WeekItemNumber selected={day.day(index + 1).date() === selectedDate}>
-                <WeekItemNumberText>{day.day(index + 1).date()}</WeekItemNumberText>
-              </WeekItemNumber>
-            </WeekItem>
-          );
-        })}
-    </WeekStyled>
-  );
-};
 
 export default Week;

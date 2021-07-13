@@ -6,14 +6,6 @@ import { RootStackParamList } from '~/navigations/types';
 import AddTask from '~/screens/AddTask';
 import Home from '~/screens/Home';
 
-const AddTaskSubmitButton = styled.TouchableOpacity`
-  margin-right: 10px;
-`;
-
-const AddTaskSubmitButtonText = styled.Text`
-  color: rgba(81, 61, 229, 1);
-`;
-
 const Stack = createStackNavigator<RootStackParamList>();
 
 const MainNavigator = () => {
@@ -41,5 +33,13 @@ const MainNavigator = () => {
     </Stack.Navigator>
   );
 };
+
+const AddTaskSubmitButton = styled.TouchableOpacity`
+  margin-right: 10px;
+`;
+
+const AddTaskSubmitButtonText = styled.Text`
+  color: rgba(81, 61, 229, 1);
+`;
 
 export default MainNavigator;

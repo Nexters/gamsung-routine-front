@@ -8,6 +8,72 @@ import TaskListView from '~/components/TaskListView';
 import Week from '~/components/Week';
 import { HomeScreenProps } from '~/navigations';
 
+const Home = ({ navigation, route }: HomeScreenProps) => {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedTasks, setSelectedTasks] = useState<{ id: number; taskName: string }[]>([]);
+
+  const taskList = useMemo(() => {
+    return Array.from({ length: 10 }, (_, index) => ({
+      id: index + 1,
+      taskName: `task${index + 1}`,
+    }));
+  }, []);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const handleToggleTask = (selectedTask: { id: number; taskName: string }) => {
+    setSelectedTasks((oldSelectedTasks) => {
+      const has = oldSelectedTasks.some((task) => {
+        return task.id === selectedTask.id;
+      });
+      if (has) {
+        return oldSelectedTasks.filter((task) => {
+          return task.id !== selectedTask.id;
+        });
+      }
+      toggleModal();
+      return [...oldSelectedTasks, selectedTask];
+    });
+  };
+
+  return (
+    <HomeStyled>
+      <HomeView>
+        <Complete percent={(selectedTasks.length / taskList.length) * 100} />
+        <Week />
+        <TaskView>
+          <TaskViewTitle>내 하루 테스크 {taskList.length}</TaskViewTitle>
+          <TaskListView taskList={taskList} selectedTasks={selectedTasks} onToggleTask={handleToggleTask} />
+        </TaskView>
+      </HomeView>
+      <AddTaskButton onPress={() => navigation.navigate('AddTask')}>
+        <AddTaskButtonText>+</AddTaskButtonText>
+      </AddTaskButton>
+      <Modal
+        isVisible={isModalVisible}
+        style={{
+          width: '100%',
+          margin: 0,
+          backgroundColor: 'rgba(25,25,25,0.8)',
+          justifyContent: 'center',
+          alignContent: 'center',
+        }}
+        backdropOpacity={0}
+        hideModalContentWhileAnimating={true}
+        useNativeDriver={true}>
+        <View>
+          <ClearModalView onPress={toggleModal}>
+            <ClearModalImage source={require('~/assets/images/success_monster.png')} />
+            <ClearModalText>테스크 완료</ClearModalText>
+          </ClearModalView>
+        </View>
+      </Modal>
+    </HomeStyled>
+  );
+};
+
 const HomeStyled = styled.SafeAreaView`
   flex: 1;
   background-color: #fff;
@@ -79,71 +145,5 @@ const ClearModalImage = styled.Image`
   width: 195px;
   height: 128px;
 `;
-
-const Home = ({ navigation, route }: HomeScreenProps) => {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedTasks, setSelectedTasks] = useState<{ id: number; taskName: string }[]>([]);
-
-  const taskList = useMemo(() => {
-    return Array.from({ length: 10 }, (_, index) => ({
-      id: index + 1,
-      taskName: `task${index + 1}`,
-    }));
-  }, []);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
-
-  const handleToggleTask = (selectedTask: { id: number; taskName: string }) => {
-    setSelectedTasks((oldSelectedTasks) => {
-      const has = oldSelectedTasks.some((task) => {
-        return task.id === selectedTask.id;
-      });
-      if (has) {
-        return oldSelectedTasks.filter((task) => {
-          return task.id !== selectedTask.id;
-        });
-      }
-      toggleModal();
-      return [...oldSelectedTasks, selectedTask];
-    });
-  };
-
-  return (
-    <HomeStyled>
-      <HomeView>
-        <Complete percent={(selectedTasks.length / taskList.length) * 100} />
-        <Week />
-        <TaskView>
-          <TaskViewTitle>내 하루 테스크 {taskList.length}</TaskViewTitle>
-          <TaskListView taskList={taskList} selectedTasks={selectedTasks} onToggleTask={handleToggleTask} />
-        </TaskView>
-      </HomeView>
-      <AddTaskButton onPress={() => navigation.navigate('AddTask')}>
-        <AddTaskButtonText>+</AddTaskButtonText>
-      </AddTaskButton>
-      <Modal
-        isVisible={isModalVisible}
-        style={{
-          width: '100%',
-          margin: 0,
-          backgroundColor: 'rgba(25,25,25,0.8)',
-          justifyContent: 'center',
-          alignContent: 'center',
-        }}
-        backdropOpacity={0}
-        hideModalContentWhileAnimating={true}
-        useNativeDriver={true}>
-        <View>
-          <ClearModalView onPress={toggleModal}>
-            <ClearModalImage source={require('~/assets/images/success_monster.png')} />
-            <ClearModalText>테스크 완료</ClearModalText>
-          </ClearModalView>
-        </View>
-      </Modal>
-    </HomeStyled>
-  );
-};
 
 export default Home;

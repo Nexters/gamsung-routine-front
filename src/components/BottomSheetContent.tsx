@@ -5,6 +5,32 @@ import AddTaskItem from '~/components/AddTaskItem';
 import RoundedCount from '~/components/RoundedCount';
 import { TaskType } from '~/screens/AddTask';
 
+interface Props {
+  selectedTasks: TaskType[];
+  onPress: (task: TaskType) => void;
+}
+
+const BottomSheetContent = (props: Props) => {
+  const { selectedTasks, onPress } = props;
+
+  const count = useMemo(() => selectedTasks.length, [selectedTasks]);
+
+  return (
+    <BottomSheetContentView>
+      <Bar />
+      <BottomSheetTitle>
+        <BottomText>내가 선택한 태스크</BottomText>
+        <RoundedCount count={count} />
+      </BottomSheetTitle>
+      <ContentScrollView>
+        {selectedTasks.map((task, index) => {
+          return <AddTaskItem selected={true} key={index} taskName={task.taskName} onClick={() => onPress(task)} />;
+        })}
+      </ContentScrollView>
+    </BottomSheetContentView>
+  );
+};
+
 const ContentScrollView = styled.ScrollView`
   width: 100%;
   height: 100%;
@@ -38,31 +64,5 @@ const BottomText = styled.Text`
   font-size: 18px;
   font-weight: 700;
 `;
-
-interface Props {
-  selectedTasks: TaskType[];
-  onPress: (task: TaskType) => void;
-}
-
-const BottomSheetContent = (props: Props) => {
-  const { selectedTasks, onPress } = props;
-
-  const count = useMemo(() => selectedTasks.length, [selectedTasks]);
-
-  return (
-    <BottomSheetContentView>
-      <Bar />
-      <BottomSheetTitle>
-        <BottomText>내가 선택한 태스크</BottomText>
-        <RoundedCount count={count} />
-      </BottomSheetTitle>
-      <ContentScrollView>
-        {selectedTasks.map((task, index) => {
-          return <AddTaskItem selected={true} key={index} taskName={task.taskName} onClick={() => onPress(task)} />;
-        })}
-      </ContentScrollView>
-    </BottomSheetContentView>
-  );
-};
 
 export default BottomSheetContent;
