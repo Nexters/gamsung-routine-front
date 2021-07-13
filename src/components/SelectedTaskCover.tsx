@@ -1,6 +1,14 @@
 import styled from '@emotion/native';
 import React from 'react';
 
+const SelectTaskCover = () => {
+  return (
+    <SelectCover>
+      <CoverImage source={require('~/assets/images/accept_area.png')} />
+    </SelectCover>
+  );
+};
+
 const SelectCover = styled.View`
   position: absolute;
   display: flex;
@@ -16,13 +24,5 @@ const CoverImage = styled.Image`
   height: 69px;
   margin-left: auto;
 `;
-
-const SelectTaskCover = () => {
-  return (
-    <SelectCover>
-      <CoverImage source={require('~/assets/images/accept_area.png')} />
-    </SelectCover>
-  );
-};
 
 export default SelectTaskCover;

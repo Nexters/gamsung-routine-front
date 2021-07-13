@@ -1,6 +1,25 @@
 import styled from '@emotion/native';
 import React from 'react';
 
+interface Props {
+  percent?: number;
+}
+
+const Complete = ({ percent = 34 }: Props) => {
+  return (
+    <CompleteStyled>
+      <CompleteTitle>
+        오늘 테스크를{'\n'}
+        <CompleteTitleStrong>{percent}%</CompleteTitleStrong> 달성했어요
+      </CompleteTitle>
+      <CompleteBar>
+        <CompleteBarProgress />
+        <CompleteBarBackground percent={percent} />
+      </CompleteBar>
+    </CompleteStyled>
+  );
+};
+
 const CompleteStyled = styled.View`
   flex-direction: column;
   justify-content: center;
@@ -45,24 +64,5 @@ const CompleteBarBackground = styled.View<{ percent: number }>`
   position: absolute;
   background-color: #513de5;
 `;
-
-interface Props {
-  percent?: number;
-}
-
-const Complete = ({ percent = 34 }: Props) => {
-  return (
-    <CompleteStyled>
-      <CompleteTitle>
-        오늘 테스크를{'\n'}
-        <CompleteTitleStrong>{percent}%</CompleteTitleStrong> 달성했어요
-      </CompleteTitle>
-      <CompleteBar>
-        <CompleteBarProgress />
-        <CompleteBarBackground percent={percent} />
-      </CompleteBar>
-    </CompleteStyled>
-  );
-};
 
 export default Complete;

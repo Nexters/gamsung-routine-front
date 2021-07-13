@@ -11,21 +11,6 @@ export type TaskType = {
   taskName: string;
 };
 
-const ContentScrollView = styled.ScrollView`
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-`;
-
-const AddTaskStyled = styled.SafeAreaView`
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  background-color: #f2f2f4;
-`;
-
 const AddTask = ({ navigation, route }: AddTaskScreenProps) => {
   const sheetRef = React.useRef(null);
   const [selectedTasks, setSelectedTasks] = useState<TaskType[]>([]);
@@ -72,5 +57,20 @@ const AddTask = ({ navigation, route }: AddTaskScreenProps) => {
     </AddTaskStyled>
   );
 };
+
+const ContentScrollView = styled.ScrollView`
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+`;
+
+const AddTaskStyled = styled.SafeAreaView`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f4;
+`;
 
 export default AddTask;
