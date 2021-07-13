@@ -1,7 +1,9 @@
 import { observable, action, makeObservable } from 'mobx';
 
 class AuthStore {
+  // XXX : _ prefix를 계속 사용할지 고민
   private static _instance: AuthStore;
+
   constructor() {
     makeObservable(this, {
       token: observable,
@@ -9,7 +11,7 @@ class AuthStore {
     });
   }
 
-  token: string | null = null;
+  token?: string = undefined;
 
   login = (token: string) => {
     this.token = token;
