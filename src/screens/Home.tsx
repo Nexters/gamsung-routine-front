@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 import Complete from '~/components/Complete';
 import TaskListView from '~/components/TaskListView';
 import Week from '~/components/Week';
-import { HomeScreenProps } from '~/navigations';
+import { HomeScreenProps } from '~/navigations/types';
 
 const Home = ({ navigation, route }: HomeScreenProps) => {
   const [isModalVisible, setModalVisible] = useState(false);
