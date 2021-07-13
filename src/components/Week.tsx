@@ -36,10 +36,10 @@ const WeekItemNumberText = styled.Text`
 `;
 
 const Week = () => {
-  const [selectedDate] = useState(6);
-
   const isSun = dayjs().format('ddd') === 'Sun';
   const day = isSun ? dayjs().add(-1, 'day') : dayjs();
+
+  const [selectedDate] = useState(day.date());
 
   return (
     <WeekStyled>
@@ -54,7 +54,7 @@ const Week = () => {
                   .locale('ko')
                   .format('ddd')}
               </WeekItemText>
-              <WeekItemNumber selected={index === selectedDate}>
+              <WeekItemNumber selected={day.day(index + 1).date() === selectedDate}>
                 <WeekItemNumberText>{day.day(index + 1).date()}</WeekItemNumberText>
               </WeekItemNumber>
             </WeekItem>
