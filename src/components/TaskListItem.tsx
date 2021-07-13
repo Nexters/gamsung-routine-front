@@ -20,7 +20,7 @@ const TaskListItem = (props: Props) => {
       <TaskListItemText has={props.has}>{taskName}</TaskListItemText>
       <TaskListItemImage
         has={props.has}
-        source={props.has ? require('~/assets/icons/b_monster.png') : require('~/assets/icons/a_monster.png')}
+        source={props.has ? require('~/assets/icons/icon_task_clear.png') : require('~/assets/icons/icon_task.png')}
       />
     </TaskListItemStyled>
   );
