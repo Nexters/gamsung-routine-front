@@ -15,7 +15,7 @@ const TaskListView = (props: Props) => {
 
   return (
     <TaskListViewStyled>
-      {taskList.length ? (
+      {taskList.length > 0 ? (
         taskList.map((task, index) => {
           const has = selectedTasks.some((selectedTask) => {
             return selectedTask.id === task.id;
