@@ -1,8 +1,10 @@
 import styled from '@emotion/native';
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { View } from 'react-native';
+import Modal from 'react-native-modal';
 
 import Complete from '~/components/Complete';
+import TaskListView from '~/components/TaskListView';
 import Week from '~/components/Week';
 import { NavigationProp } from '~/navigations';
 
@@ -12,6 +14,7 @@ const HomeStyled = styled.SafeAreaView`
 `;
 
 const HomeView = styled.View`
+  flex: 1;
   width: 100%;
   height: auto;
   background-color: #292c34;
@@ -20,36 +23,17 @@ const HomeView = styled.View`
 const TaskView = styled.View`
   justify-content: space-between;
   padding: 20px;
-  background-color: #fff;
+  background-color: #f2f2f4;
   border-radius: 20px 20px 0 0;
   z-index: 2;
+  display: flex;
+  flex: 1;
 `;
 
 const TaskViewTitle = styled.Text`
   font-size: 12px;
   color: #4f5461;
-`;
-
-const TaskViewList = styled.ScrollView``;
-
-const EmptyView = styled.View`
-  justify-content: center;
-  align-items: center;
-  padding-top: 180px;
-`;
-
-const EmptyImage = styled.Image`
-  width: 173px;
-  height: 98px;
-  margin-bottom: 30px;
-`;
-
-const EmptyText = styled.Text`
-  color: #292c34;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 32px;
-  text-align: center;
+  margin-bottom: 20px;
 `;
 
 const AddTaskButton = styled.TouchableOpacity`
@@ -71,33 +55,93 @@ const AddTaskButtonText = styled.Text`
   font-weight: normal;
 `;
 
-const taskList = [];
+const ClearModalView = styled.TouchableOpacity`
+  margin-left: 60px;
+  margin-right: 60px;
+  margin-bottom: 16px;
+  background-color: #fff;
+  padding-top: 24px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-bottom: 40px;
+  justify-content: center;
+  align-content: center;
+  border-radius: 20px;
+`;
+
+const ClearModalText = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+`;
+
+const ClearModalImage = styled.Image`
+  width: 195px;
+  height: 128px;
+`;
 
 const Home = ({ navigation }: NavigationProp) => {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedTasks, setSelectedTasks] = useState<{ id: number; taskName: string }[]>([]);
+
+  const taskList = useMemo(() => {
+    return Array.from({ length: 10 }, (_, index) => ({
+      id: index + 1,
+      taskName: `task${index + 1}`,
+    }));
+  }, []);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const handleToggleTask = (selectedTask: { id: number; taskName: string }) => {
+    setSelectedTasks((oldSelectedTasks) => {
+      const has = oldSelectedTasks.some((task) => {
+        return task.id === selectedTask.id;
+      });
+      if (has) {
+        return oldSelectedTasks.filter((task) => {
+          return task.id !== selectedTask.id;
+        });
+      }
+      toggleModal();
+      return [...oldSelectedTasks, selectedTask];
+    });
+  };
+
   return (
     <HomeStyled>
       <HomeView>
-        {taskList.length !== 0 && <Complete />}
+        <Complete percent={(selectedTasks.length / taskList.length) * 100} />
         <Week />
         <TaskView>
           <TaskViewTitle>내 하루 테스크 {taskList.length}</TaskViewTitle>
-          <TaskViewList>
-            {taskList.length ? (
-              <View>
-                <Text>있음</Text>
-              </View>
-            ) : (
-              <EmptyView>
-                <EmptyImage source={require('~/assets/images/empty_monster.png')} />
-                <EmptyText>루틴이 없어요.{'\n'}루틴을 추가해요.</EmptyText>
-              </EmptyView>
-            )}
-          </TaskViewList>
+          <TaskListView taskList={taskList} selectedTasks={selectedTasks} onToggleTask={handleToggleTask} />
         </TaskView>
       </HomeView>
       <AddTaskButton onPress={() => navigation.navigate('AddTask')}>
         <AddTaskButtonText>+</AddTaskButtonText>
       </AddTaskButton>
+      <Modal
+        isVisible={isModalVisible}
+        style={{
+          width: '100%',
+          margin: 0,
+          backgroundColor: 'rgba(25,25,25,0.8)',
+          justifyContent: 'center',
+          alignContent: 'center',
+        }}
+        backdropOpacity={0}
+        hideModalContentWhileAnimating={true}
+        useNativeDriver={true}>
+        <View>
+          <ClearModalView onPress={toggleModal}>
+            <ClearModalImage source={require('~/assets/images/success_monster.png')} />
+            <ClearModalText>테스크 완료</ClearModalText>
+          </ClearModalView>
+        </View>
+      </Modal>
     </HomeStyled>
   );
 };

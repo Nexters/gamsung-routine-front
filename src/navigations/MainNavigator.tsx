@@ -5,7 +5,6 @@ import React from 'react';
 import { RootStackParamList } from '~/navigations/types';
 import { AddTask } from '~/screens/AddTask';
 import Home from '~/screens/Home';
-import MyTask from '~/screens/MyTask';
 
 const AddTaskSubmitButton = styled.TouchableOpacity`
   margin-right: 10px;
@@ -30,7 +29,7 @@ const MainNavigator = () => {
             headerRight: () => (
               <AddTaskSubmitButton
                 onPress={() => {
-                  navigation.navigate('MyTask');
+                  navigation.navigate('Home');
                 }}>
                 <AddTaskSubmitButtonText>완료</AddTaskSubmitButtonText>
               </AddTaskSubmitButton>
@@ -39,7 +38,6 @@ const MainNavigator = () => {
         }}
         component={AddTask}
       />
-      <Stack.Screen options={{ headerShown: false }} name="MyTask" component={MyTask} />
     </Stack.Navigator>
   );
 };

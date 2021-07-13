@@ -32,7 +32,7 @@ interface Props {
   has: boolean;
 }
 
-export const TaskMy = (props: Props) => {
+export const TaskItem = (props: Props) => {
   const { taskName, onPress } = props;
 
   const handleClick = useCallback(() => {
