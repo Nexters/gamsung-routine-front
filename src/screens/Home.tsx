@@ -8,7 +8,7 @@ import TaskListView from '~/components/TaskListView';
 import Week from '~/components/Week';
 import { HomeScreenProps } from '~/navigations/types';
 
-const Home = ({ navigation, route }: HomeScreenProps) => {
+const Home = ({ navigation }: HomeScreenProps) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedTasks, setSelectedTasks] = useState<{ id: number; taskName: string }[]>([]);
 

@@ -4,14 +4,13 @@ import BottomSheet from 'reanimated-bottom-sheet';
 
 import AddTaskItem from '~/components/AddTaskItem';
 import BottomSheetContent from '~/components/BottomSheetContent';
-import { AddTaskScreenProps } from '~/navigations/types';
 
 export type TaskType = {
   id: number;
   taskName: string;
 };
 
-const AddTask = ({ navigation, route }: AddTaskScreenProps) => {
+const AddTask = () => {
   const sheetRef = React.useRef(null);
   const [selectedTasks, setSelectedTasks] = useState<TaskType[]>([]);
 
