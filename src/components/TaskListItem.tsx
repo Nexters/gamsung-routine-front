@@ -1,6 +1,5 @@
 import styled from '@emotion/native';
 import React, { useCallback } from 'react';
-import { Image, Text, View } from 'react-native';
 
 interface Props {
   taskName: string;
@@ -16,29 +15,18 @@ const TaskListItem = (props: Props) => {
   }, [onPress]);
 
   return (
-    <StyledTouchableOpacity onPress={() => handleClick()}>
-      {props.has && (
-        <View
-          style={{
-            borderBottomColor: '#9399a5',
-            borderBottomWidth: 1,
-            width: '100%',
-            position: 'absolute',
-            backgroundColor: 'red',
-            left: 10,
-          }}
-        />
-      )}
-      <Text style={{ color: props.has ? '#9399a5' : '#303339' }}>{taskName}</Text>
-      <Image
-        style={{ width: props.has ? 34 : 27, height: 27 }}
+    <TaskListItemStyled onPress={() => handleClick()}>
+      {props.has && <TaskListItemBox />}
+      <TaskListItemText has={props.has}>{taskName}</TaskListItemText>
+      <TaskListItemImage
+        has={props.has}
         source={props.has ? require('~/assets/icons/b_monster.png') : require('~/assets/icons/a_monster.png')}
       />
-    </StyledTouchableOpacity>
+    </TaskListItemStyled>
   );
 };
 
-const StyledTouchableOpacity = styled.TouchableOpacity`
+const TaskListItemStyled = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -60,6 +48,24 @@ const StyledTouchableOpacity = styled.TouchableOpacity`
   }
 
   position: relative;
+`;
+
+const TaskListItemBox = styled.View`
+  border-bottom-color: #9399a5;
+  border-bottom-width: 1px;
+  width: 100%;
+  position: absolute;
+  background-color: red;
+  left: 10px;
+`;
+
+const TaskListItemText = styled.Text<{ has: boolean }>`
+  color: ${({ has }) => (has ? '#9399a5' : '#303339')};
+`;
+
+const TaskListItemImage = styled.Image<{ has: boolean }>`
+  width: ${({ has }) => (has ? '34px' : '27px')};
+  height: 27px;
 `;
 
 export default TaskListItem;
