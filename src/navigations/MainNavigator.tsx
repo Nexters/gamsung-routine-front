@@ -15,11 +15,11 @@ const MainNavigator = () => {
       <Stack.Screen
         name="AddTask"
         component={AddTask}
-        options={({ navigation, route }: AddTaskScreenProps) => {
+        options={({ navigation }: AddTaskScreenProps) => {
           return {
             title: '테스크 선택',
             headerBackTitle: ' ',
-            headerRight: () => <AddTaskSubmitButton navigation={navigation} route={route} />,
+            headerRight: () => <AddTaskSubmitButton navigation={navigation} />,
           };
         }}
       />
