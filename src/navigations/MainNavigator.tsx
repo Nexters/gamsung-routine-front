@@ -3,7 +3,7 @@ import { createStackNavigator, StackNavigationProp } from '@react-navigation/sta
 import React from 'react';
 
 import { RootStackParamList } from '~/navigations/types';
-import { AddTask } from '~/screens/AddTask';
+import AddTask from '~/screens/AddTask';
 import Home from '~/screens/Home';
 
 const AddTaskSubmitButton = styled.TouchableOpacity`

@@ -2,8 +2,8 @@ import styled from '@emotion/native';
 import React, { useMemo, useState } from 'react';
 import BottomSheet from 'reanimated-bottom-sheet';
 
-import { BottomSheetContent } from '~/components/BottomSheetContent';
-import { Task } from '~/components/Task';
+import AddTaskItem from '~/components/AddTaskItem';
+import BottomSheetContent from '~/components/BottomSheetContent';
 import { NavigationProp } from '~/navigations';
 
 export type TaskType = {
@@ -11,7 +11,7 @@ export type TaskType = {
   taskName: string;
 };
 
-export const ContentScrollView = styled.ScrollView`
+const ContentScrollView = styled.ScrollView`
   width: 100%;
   height: 100%;
   padding: 20px;
@@ -26,7 +26,7 @@ const AddTaskStyled = styled.SafeAreaView`
   background-color: #f2f2f4;
 `;
 
-export const AddTask = ({ navigation }: NavigationProp) => {
+const AddTask = ({ navigation }: NavigationProp) => {
   const sheetRef = React.useRef(null);
   const [selectedTasks, setSelectedTasks] = useState<TaskType[]>([]);
 
@@ -58,7 +58,7 @@ export const AddTask = ({ navigation }: NavigationProp) => {
           const has = selectedTasks.some((selectedTask) => {
             return selectedTask.id === task.id;
           });
-          return <Task selected={has} taskName={task.taskName} onClick={() => onPress(task)} key={index} />;
+          return <AddTaskItem selected={has} taskName={task.taskName} onClick={() => onPress(task)} key={index} />;
         })}
       </ContentScrollView>
       <BottomSheet
@@ -72,3 +72,5 @@ export const AddTask = ({ navigation }: NavigationProp) => {
     </AddTaskStyled>
   );
 };
+
+export default AddTask;

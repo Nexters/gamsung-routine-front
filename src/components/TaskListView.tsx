@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import React from 'react';
 
-import { TaskItem } from '~/components/TaskItem';
+import TaskListItem from '~/components/TaskListItem';
 import { TaskType } from '~/screens/AddTask';
 
 const TaskListViewStyled = styled.ScrollView`
@@ -45,7 +45,7 @@ const TaskListView = (props: Props) => {
           const has = selectedTasks.some((selectedTask) => {
             return selectedTask.id === task.id;
           });
-          return <TaskItem has={has} taskName={task.taskName} onPress={() => onToggleTask(task)} key={index} />;
+          return <TaskListItem has={has} taskName={task.taskName} onPress={() => onToggleTask(task)} key={index} />;
         })
       ) : (
         <EmptyView>

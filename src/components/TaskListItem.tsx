@@ -32,7 +32,7 @@ interface Props {
   has: boolean;
 }
 
-export const TaskItem = (props: Props) => {
+const TaskListItem = (props: Props) => {
   const { taskName, onPress } = props;
 
   const handleClick = useCallback(() => {
@@ -61,3 +61,5 @@ export const TaskItem = (props: Props) => {
     </StyledTouchableOpacity>
   );
 };
+
+export default TaskListItem;

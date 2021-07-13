@@ -17,10 +17,12 @@ const CoverImage = styled.Image`
   margin-left: auto;
 `;
 
-export const SelectTaskCover = () => {
+const SelectTaskCover = () => {
   return (
     <SelectCover>
       <CoverImage source={require('~/assets/images/accept_area.png')} />
     </SelectCover>
   );
 };
+
+export default SelectTaskCover;
