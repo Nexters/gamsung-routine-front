@@ -1,4 +1,5 @@
 import styled from '@emotion/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useMemo, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
@@ -6,11 +7,16 @@ import Modal from 'react-native-modal';
 import Complete from '~/components/Complete';
 import TaskListView from '~/components/TaskListView';
 import Week from '~/components/Week';
-import { HomeScreenProps } from '~/navigations/types';
+import { Task } from '~/models/Task';
+import { RootStackParamList } from '~/navigations/types';
+
+export interface HomeScreenProps {
+  navigation: StackNavigationProp<RootStackParamList>;
+}
 
 const Home = ({ navigation }: HomeScreenProps) => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedTasks, setSelectedTasks] = useState<{ id: number; taskName: string }[]>([]);
+  const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
 
   const taskList = useMemo(() => {
     return Array.from({ length: 10 }, (_, index) => ({
@@ -23,7 +29,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
     setModalVisible(!isModalVisible);
   };
 
-  const handleToggleTask = (selectedTask: { id: number; taskName: string }) => {
+  const handleToggleTask = (selectedTask: Task) => {
     setSelectedTasks((oldSelectedTasks) => {
       const has = oldSelectedTasks.some((task) => {
         return task.id === selectedTask.id;

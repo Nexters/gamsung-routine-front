@@ -1,7 +1,12 @@
 import styled from '@emotion/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 
-import { AddTaskScreenProps } from '~/navigations/types';
+import { RootStackParamList } from '~/navigations/types';
+
+export interface AddTaskScreenProps {
+  navigation: StackNavigationProp<RootStackParamList>;
+}
 
 const AddTaskSubmitButton = ({ navigation }: AddTaskScreenProps) => {
   return (
