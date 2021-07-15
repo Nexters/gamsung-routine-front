@@ -2,6 +2,7 @@ import styled from '@emotion/native';
 import React from 'react';
 
 import CustomText from '~/components/CustomText';
+import { TextColor } from '~/utils/color';
 
 interface Props {
   percent?: number;
@@ -10,9 +11,9 @@ interface Props {
 const Complete = ({ percent = 34 }: Props) => {
   return (
     <CompleteStyled>
-      <CustomText color="white" size={24} weight="bold" align="center">
+      <CustomText color={TextColor.WHITE} size={24} weight="bold" align="center">
         오늘 테스크를{'\n'}
-        <CustomText color="puple50" size={24} weight="bold" align="center">
+        <CustomText color={TextColor.MAIN} size={24} weight="bold" align="center">
           {percent}%
         </CustomText>{' '}
         달성했어요

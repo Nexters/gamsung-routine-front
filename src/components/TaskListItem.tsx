@@ -2,6 +2,7 @@ import styled from '@emotion/native';
 import React, { useCallback } from 'react';
 
 import CustomText from '~/components/CustomText';
+import { TextColor } from '~/utils/color';
 
 interface Props {
   taskName: string;
@@ -19,7 +20,7 @@ const TaskListItem = (props: Props) => {
   return (
     <TaskListItemStyled onPress={() => handleClick()}>
       {has && <TaskListItemBox />}
-      <CustomText color={has ? 'disable' : 'primary'}>{taskName}</CustomText>
+      <CustomText color={has ? TextColor.DISABLE : TextColor.PRIMARY}>{taskName}</CustomText>
       <TaskListItemImage
         has={has}
         source={has ? require('~/assets/icons/icon_task_clear.png') : require('~/assets/icons/icon_task.png')}

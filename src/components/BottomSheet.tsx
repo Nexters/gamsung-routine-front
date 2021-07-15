@@ -3,11 +3,12 @@ import React, { useMemo } from 'react';
 
 import AddTaskItem from '~/components/AddTaskItem';
 import CustomText from '~/components/CustomText';
-import { TaskType } from '~/screens/AddTask';
+import { TextColor } from '~/utils/color';
+import { Task } from '~/models/Task';
 
 interface Props {
-  selectedTasks: TaskType[];
-  onPress: (task: TaskType) => void;
+  selectedTasks: Task[];
+  onPress: (task: Task) => void;
 }
 
 const BottomSheet = (props: Props) => {
@@ -23,7 +24,7 @@ const BottomSheet = (props: Props) => {
           내가 선택한 태스크
         </CustomText>
         <BottomSheetCount>
-          <CustomText color="white">{count}</CustomText>
+          <CustomText color={TextColor.WHITE}>{count}</CustomText>
         </BottomSheetCount>
       </BottomSheetTitle>
       <ContentScrollView>

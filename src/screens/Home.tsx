@@ -10,6 +10,7 @@ import TaskListView from '~/components/TaskListView';
 import Week from '~/components/Week';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
+import {TextColor} from "~/utils/color";
 
 export interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -51,14 +52,14 @@ const Home = ({ navigation }: HomeScreenProps) => {
         <Complete percent={(selectedTasks.length / taskList.length) * 100} />
         <Week />
         <TaskView>
-          <CustomText size={12} color="secondary">
+          <CustomText size={12} color={TextColor.SECONDARY}>
             내 하루 테스크 {taskList.length}
           </CustomText>
           <TaskListView taskList={taskList} selectedTasks={selectedTasks} onToggleTask={handleToggleTask} />
         </TaskView>
       </HomeView>
       <AddTaskButton onPress={() => navigation.navigate('AddTask')}>
-        <CustomText color="white" size={32}>
+        <CustomText color={TextColor.WHITE} size={32}>
           +
         </CustomText>
       </AddTaskButton>

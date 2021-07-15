@@ -38,6 +38,8 @@ const TextColor = {
   SECONDARY: BasicColor.GRAY70,
   DISABLE: BasicColor.GRAY30,
   MAIN: BasicColor.PURPLE60,
+  WHITE: BasicColor.WHITE,
+  RED: BasicColor.RED,
 } as const;
 
 const PressedColor = {

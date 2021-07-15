@@ -3,12 +3,12 @@ import React from 'react';
 
 import CustomText from '~/components/CustomText';
 import TaskListItem from '~/components/TaskListItem';
-import { TaskType } from '~/screens/AddTask';
+import { Task } from '~/models/Task';
 
 interface Props {
-  taskList: TaskType[];
-  selectedTasks: TaskType[];
-  onToggleTask: (task: TaskType) => void;
+  taskList: Task[];
+  selectedTasks: Task[];
+  onToggleTask: (task: Task) => void;
 }
 
 const TaskListView = (props: Props) => {
