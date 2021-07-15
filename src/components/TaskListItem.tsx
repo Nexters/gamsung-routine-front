@@ -1,6 +1,8 @@
 import styled from '@emotion/native';
 import React, { useCallback } from 'react';
 
+import CustomText from '~/components/CustomText';
+
 interface Props {
   taskName: string;
   onPress: () => void;
@@ -8,7 +10,7 @@ interface Props {
 }
 
 const TaskListItem = (props: Props) => {
-  const { taskName, onPress } = props;
+  const { taskName, onPress, has } = props;
 
   const handleClick = useCallback(() => {
     onPress();
@@ -16,11 +18,11 @@ const TaskListItem = (props: Props) => {
 
   return (
     <TaskListItemStyled onPress={() => handleClick()}>
-      {props.has && <TaskListItemBox />}
-      <TaskListItemText has={props.has}>{taskName}</TaskListItemText>
+      {has && <TaskListItemBox />}
+      <CustomText color={has ? 'disable' : 'primary'}>{taskName}</CustomText>
       <TaskListItemImage
-        has={props.has}
-        source={props.has ? require('~/assets/icons/icon_task_clear.png') : require('~/assets/icons/icon_task.png')}
+        has={has}
+        source={has ? require('~/assets/icons/icon_task_clear.png') : require('~/assets/icons/icon_task.png')}
       />
     </TaskListItemStyled>
   );
@@ -57,10 +59,6 @@ const TaskListItemBox = styled.View`
   position: absolute;
   background-color: red;
   left: 10px;
-`;
-
-const TaskListItemText = styled.Text<{ has: boolean }>`
-  color: ${({ has }) => (has ? '#9399a5' : '#303339')};
 `;
 
 const TaskListItemImage = styled.Image<{ has: boolean }>`

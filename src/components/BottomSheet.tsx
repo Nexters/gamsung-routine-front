@@ -2,6 +2,7 @@ import styled from '@emotion/native';
 import React, { useMemo } from 'react';
 
 import AddTaskItem from '~/components/AddTaskItem';
+import CustomText from '~/components/CustomText';
 import { TaskType } from '~/screens/AddTask';
 
 interface Props {
@@ -18,9 +19,11 @@ const BottomSheet = (props: Props) => {
     <BottomSheetView>
       <Bar />
       <BottomSheetTitle>
-        <BottomText>내가 선택한 태스크</BottomText>
+        <CustomText size={18} weight="bold">
+          내가 선택한 태스크
+        </CustomText>
         <BottomSheetCount>
-          <BottomSheetCountText>{count}</BottomSheetCountText>
+          <CustomText color="white">{count}</CustomText>
         </BottomSheetCount>
       </BottomSheetTitle>
       <ContentScrollView>
@@ -61,11 +64,6 @@ const BottomSheetView = styled.View`
   border-radius: 8px;
 `;
 
-const BottomText = styled.Text`
-  font-size: 18px;
-  font-weight: 700;
-`;
-
 const BottomSheetCount = styled.View`
   width: 24px;
   height: 24px;
@@ -74,10 +72,6 @@ const BottomSheetCount = styled.View`
   justify-content: center;
   align-items: center;
   margin-left: 4px;
-`;
-
-const BottomSheetCountText = styled.Text`
-  color: #fff;
 `;
 
 export default BottomSheet;

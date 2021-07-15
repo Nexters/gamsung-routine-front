@@ -2,6 +2,7 @@ import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 
+import CustomText from '~/components/CustomText';
 import { RootStackParamList } from '~/navigations/types';
 
 export interface AddTaskScreenProps {
@@ -14,17 +15,13 @@ const AddTaskSubmitButton = ({ navigation }: AddTaskScreenProps) => {
       onPress={() => {
         navigation.navigate('Home');
       }}>
-      <AddTaskSubmitButtonText>완료</AddTaskSubmitButtonText>
+      <CustomText color="puple60">완료</CustomText>
     </AddTaskSubmitButtonStyled>
   );
 };
 
 const AddTaskSubmitButtonStyled = styled.TouchableOpacity`
   margin-right: 10px;
-`;
-
-const AddTaskSubmitButtonText = styled.Text`
-  color: rgba(81, 61, 229, 1);
 `;
 
 export default AddTaskSubmitButton;

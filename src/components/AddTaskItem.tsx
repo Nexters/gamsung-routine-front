@@ -1,6 +1,7 @@
 import styled from '@emotion/native';
 import React, { useCallback } from 'react';
 
+import CustomText from '~/components/CustomText';
 import SelectTaskCover from '~/components/SelectedTaskCover';
 
 interface Props {
@@ -18,7 +19,9 @@ const AddTaskItem = (props: Props) => {
 
   return (
     <TaskButton onPress={handleClick}>
-      <TaskButtonText selected={selected}>{taskName}</TaskButtonText>
+      <CustomText color={selected ? 'puple40' : 'primary'} align="center">
+        {taskName}
+      </CustomText>
       {selected && <SelectTaskCover />}
     </TaskButton>
   );
@@ -36,11 +39,6 @@ const TaskButton = styled.TouchableOpacity`
   text-align: center;
   border: 1px solid #e4e5e9;
   border-radius: 8px;
-`;
-
-const TaskButtonText = styled.Text<{ selected: boolean }>`
-  text-align: center;
-  color: ${({ selected }) => (selected ? 'rgba(201, 204, 210, 1)' : 'rgba(48, 51, 57, 1)')};
 `;
 
 export default AddTaskItem;

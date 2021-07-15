@@ -3,6 +3,8 @@ import dayjs from 'dayjs';
 import React from 'react';
 import 'dayjs/locale/ko';
 
+import CustomText from '~/components/CustomText';
+
 const Week = () => {
   const today = dayjs();
   const isSun = today.format('ddd') === 'Sun';
@@ -17,9 +19,11 @@ const Week = () => {
           const dayOfTheWeek = day.date();
           return (
             <WeekItem key={index}>
-              <WeekItemText indexNumber={index}>{day.format('ddd')}</WeekItemText>
+              <CustomText color={index >= 5 ? 'red' : 'white'}>{day.format('ddd')}</CustomText>
               <WeekItemNumber selected={dayOfTheWeek === today.date()}>
-                <WeekItemNumberText>{dayOfTheWeek}</WeekItemNumberText>
+                <CustomText weight="bold" color="white">
+                  {dayOfTheWeek}
+                </CustomText>
               </WeekItemNumber>
             </WeekItem>
           );
@@ -41,11 +45,6 @@ const WeekItem = styled.View`
   align-items: center;
 `;
 
-const WeekItemText = styled.Text<{ indexNumber: number }>`
-  padding-bottom: 10px;
-  color: ${({ indexNumber }) => (indexNumber >= 5 ? '#ef7c79' : '#ffffff')};
-`;
-
 const WeekItemNumber = styled.View<{ selected: boolean }>`
   width: 36px;
   height: 36px;
@@ -53,11 +52,7 @@ const WeekItemNumber = styled.View<{ selected: boolean }>`
   align-items: center;
   background-color: ${({ selected }) => selected && '#604dee'};
   border-radius: 36px;
-`;
-
-const WeekItemNumberText = styled.Text`
-  font-weight: bold;
-  color: #fff;
+  margin-top: 10px;
 `;
 
 export default Week;
