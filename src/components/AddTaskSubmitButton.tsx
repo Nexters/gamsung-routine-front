@@ -4,6 +4,7 @@ import React from 'react';
 
 import CustomText from '~/components/CustomText';
 import { RootStackParamList } from '~/navigations/types';
+import { TextColor } from '~/utils/color';
 
 export interface AddTaskScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -15,7 +16,7 @@ const AddTaskSubmitButton = ({ navigation }: AddTaskScreenProps) => {
       onPress={() => {
         navigation.navigate('Home');
       }}>
-      <CustomText color="puple60">완료</CustomText>
+      <CustomText color={TextColor.MAIN}>완료</CustomText>
     </AddTaskSubmitButtonStyled>
   );
 };

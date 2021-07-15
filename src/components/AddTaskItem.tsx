@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 
 import CustomText from '~/components/CustomText';
 import SelectTaskCover from '~/components/SelectedTaskCover';
+import { TextColor } from '~/utils/color';
 
 interface Props {
   taskName: string;
@@ -19,7 +20,7 @@ const AddTaskItem = (props: Props) => {
 
   return (
     <TaskButton onPress={handleClick}>
-      <CustomText color={selected ? 'puple40' : 'primary'} align="center">
+      <CustomText color={selected ? TextColor.MAIN : TextColor.PRIMARY} align="center">
         {taskName}
       </CustomText>
       {selected && <SelectTaskCover />}
