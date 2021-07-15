@@ -4,6 +4,7 @@ import React, { useCallback } from 'react';
 import CustomText from '~/components/CustomText';
 import SelectTaskCover from '~/components/SelectedTaskCover';
 import { TextColor } from '~/utils/color';
+import { Align } from '~/utils/font';
 
 interface Props {
   taskName: string;
@@ -20,7 +21,7 @@ const AddTaskItem = (props: Props) => {
 
   return (
     <TaskButton onPress={handleClick}>
-      <CustomText color={selected ? TextColor.MAIN : TextColor.PRIMARY} align="center">
+      <CustomText color={selected ? TextColor.MAIN : TextColor.PRIMARY} align={Align.CENTER}>
         {taskName}
       </CustomText>
       {selected && <SelectTaskCover />}

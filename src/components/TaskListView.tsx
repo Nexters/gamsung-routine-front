@@ -4,6 +4,7 @@ import React from 'react';
 import CustomText from '~/components/CustomText';
 import TaskListItem from '~/components/TaskListItem';
 import { Task } from '~/models/Task';
+import { Align, FontType } from '~/utils/font';
 
 interface Props {
   taskList: Task[];
@@ -26,7 +27,7 @@ const TaskListView = (props: Props) => {
       ) : (
         <EmptyView>
           <EmptyImage source={require('~/assets/images/empty_monster.png')} />
-          <CustomText weight="bold" size={20} align="center">
+          <CustomText font={FontType.BOLD_LARGE} align={Align.CENTER}>
             루틴이 없어요.{'\n'}루틴을 추가해요.
           </CustomText>
         </EmptyView>
