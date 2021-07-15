@@ -63,6 +63,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 0,
     'import/namespace': 0,
     'react/display-name': 0,
+    'ts-ignore': true,
   },
   settings: {
     'import/resolver': {
