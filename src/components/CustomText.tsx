@@ -35,7 +35,7 @@ const CustomText = ({ children, size, weight, color, align }: Props) => {
 
 const CustomTextStyled = styled.Text<{ size?: number; weight?: string; color?: string; align?: string }>`
   font-family: 'Pretendard';
-  font-size: ${({ size }) => (size ? size : 14) + 'px'};
+  font-size: ${({ size }) => (size ?? 14) + 'px'};
   font-weight: ${({ weight }) => (weight === 'bold' ? 700 : weight === 'medium' ? 600 : 400) + ''};
   color: ${({ color }) =>
     color === 'white'
@@ -69,8 +69,8 @@ const CustomTextStyled = styled.Text<{ size?: number; weight?: string; color?: s
       : color === 'secondary'
       ? '#6b6d72'
       : '#333436'};
-  line-height: ${({ size }) => (size ? size : 14) * 1.6 + 'px'};
-  text-align: ${({ align }) => (align ? align : 'left')};
+  line-height: ${({ size }) => (size ?? 14) * 1.6 + 'px'};
+  text-align: ${({ align }) => align ?? 'left'};
 `;
 
 export default CustomText;
