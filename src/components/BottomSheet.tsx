@@ -5,6 +5,7 @@ import AddTaskItem from '~/components/AddTaskItem';
 import CustomText from '~/components/CustomText';
 import { TextColor } from '~/utils/color';
 import { Task } from '~/models/Task';
+import { FontType } from '~/utils/font';
 
 interface Props {
   selectedTasks: Task[];
@@ -20,9 +21,7 @@ const BottomSheet = (props: Props) => {
     <BottomSheetView>
       <Bar />
       <BottomSheetTitle>
-        <CustomText size={18} weight="bold">
-          내가 선택한 태스크
-        </CustomText>
+        <CustomText font={FontType.BOLD_LARGE}>내가 선택한 태스크</CustomText>
         <BottomSheetCount>
           <CustomText color={TextColor.WHITE}>{count}</CustomText>
         </BottomSheetCount>
