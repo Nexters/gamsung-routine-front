@@ -10,7 +10,7 @@ interface Props {
   align?: 'left' | 'right' | 'center';
 }
 
-const CustomText = ({ children, size, weight, color, align }: Props) => {
+const CustomText = ({ children, size = 14, weight = 'regular', color = TextColor.PRIMARY, align = 'left' }: Props) => {
   return (
     <CustomTextStyled size={size} weight={weight} color={color} align={align}>
       {children}
@@ -18,13 +18,13 @@ const CustomText = ({ children, size, weight, color, align }: Props) => {
   );
 };
 
-const CustomTextStyled = styled.Text<{ size?: number; weight?: string; color?: TextColor; align?: string }>`
+const CustomTextStyled = styled.Text<{ size: number; weight: string; color: TextColor; align: string }>`
   font-family: 'Pretendard';
-  font-size: ${({ size }) => (size ?? 14) + 'px'};
+  font-size: ${({ size }) => `${size}px`};
   font-weight: ${({ weight }) => (weight === 'bold' ? 700 : weight === 'medium' ? 600 : 400) + ''};
   color: ${({ color }) => color};
-  line-height: ${({ size }) => (size ?? 14) * 1.6 + 'px'};
-  text-align: ${({ align }) => align ?? 'left'};
+  line-height: ${({ size }) => `${size * 1.6}px`};
+  text-align: ${({ align }) => align};
 `;
 
 export default CustomText;
