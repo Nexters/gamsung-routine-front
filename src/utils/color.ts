@@ -37,6 +37,7 @@ const TextColor = {
   PRIMARY: BasicColor.GRAY90,
   SECONDARY: BasicColor.GRAY70,
   DISABLE: BasicColor.GRAY30,
+  ELEVATED: BasicColor.GRAY10,
   MAIN: BasicColor.PURPLE60,
   WHITE: BasicColor.WHITE,
   RED: BasicColor.RED,
