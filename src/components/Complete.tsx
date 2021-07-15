@@ -1,6 +1,8 @@
 import styled from '@emotion/native';
 import React from 'react';
 
+import PretendardText from '~/components/PretendardText';
+
 interface Props {
   percent?: number;
 }
@@ -9,8 +11,7 @@ const Complete = ({ percent = 34 }: Props) => {
   return (
     <CompleteStyled>
       <CompleteTitle>
-        오늘 테스크를{'\n'}
-        <CompleteTitleStrong>{percent}%</CompleteTitleStrong> 달성했어요
+        오늘 테스크를{'\n'} <PretendardText content={`${percent}%`} color="#7160ec" size={24} weight={700} /> 달성했어요
       </CompleteTitle>
       <CompleteBar>
         <CompleteBarProgress />
@@ -29,15 +30,12 @@ const CompleteStyled = styled.View`
 `;
 
 const CompleteTitle = styled.Text`
+  font-family: 'Pretendard';
   color: #fff;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
   text-align: center;
   line-height: 38px;
-`;
-
-const CompleteTitleStrong = styled.Text`
-  color: #7160ec;
 `;
 
 const CompleteBar = styled.View`
