@@ -1,8 +1,6 @@
 import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useMemo, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import Modal from 'react-native-modal';
 
 import Complete from '~/components/Complete';
 import CustomText from '~/components/CustomText';
@@ -11,7 +9,7 @@ import Week from '~/components/Week';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
-import { FontType, Align } from '~/utils/font';
+import { FontType } from '~/utils/font';
 
 export interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -64,34 +62,9 @@ const Home = ({ navigation }: HomeScreenProps) => {
           +
         </CustomText>
       </AddTaskButton>
-      <Modal
-        style={styles.modalStyled}
-        isVisible={isModalVisible}
-        backdropOpacity={0}
-        hideModalContentWhileAnimating={true}
-        useNativeDriver={true}>
-        <View>
-          <ClearModalView onPress={toggleModal}>
-            <ClearModalImage source={require('~/assets/images/success_monster.png')} />
-            <CustomText font={FontType.BOLD_TITLE_02} align={Align.CENTER}>
-              테스크 완료
-            </CustomText>
-          </ClearModalView>
-        </View>
-      </Modal>
     </HomeStyled>
   );
 };
-
-const styles = StyleSheet.create({
-  modalStyled: {
-    width: '100%',
-    margin: 0,
-    backgroundColor: 'rgba(25, 25, 25, 0.8)',
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-});
 
 const HomeStyled = styled.SafeAreaView`
   flex: 1;
@@ -108,7 +81,7 @@ const HomeView = styled.View`
 const TaskView = styled.View`
   justify-content: space-between;
   padding: 20px;
-  background-color: #f2f2f4;
+  background-color: #fff;
   border-radius: 20px 20px 0 0;
   z-index: 2;
   display: flex;
@@ -126,21 +99,6 @@ const AddTaskButton = styled.TouchableOpacity`
   background-color: #513de5;
   border-radius: 64px;
   z-index: 5;
-`;
-
-const ClearModalView = styled.TouchableOpacity`
-  margin: 0px 60px;
-  background-color: #fff;
-  padding: 45px 32px;
-  justify-content: space-around;
-  align-items: center;
-  border-radius: 20px;
-`;
-
-const ClearModalImage = styled.Image`
-  width: 195px;
-  height: 128px;
-  margin-bottom: 15px;
 `;
 
 export default Home;

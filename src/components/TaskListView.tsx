@@ -3,13 +3,13 @@ import React from 'react';
 
 import CustomText from '~/components/CustomText';
 import TaskListItem from '~/components/TaskListItem';
-import { Task } from '~/models/Task';
-import { Align, FontType } from '~/utils/font';
+import { TaskType } from '~/screens/AddTask';
+import { FontType, Align } from '~/utils/font';
 
 interface Props {
-  taskList: Task[];
-  selectedTasks: Task[];
-  onToggleTask: (task: Task) => void;
+  taskList: TaskType[];
+  selectedTasks: TaskType[];
+  onToggleTask: (task: TaskType) => void;
 }
 
 const TaskListView = (props: Props) => {
@@ -22,12 +22,25 @@ const TaskListView = (props: Props) => {
           const has = selectedTasks.some((selectedTask) => {
             return selectedTask.id === task.id;
           });
-          return <TaskListItem has={has} taskName={task.taskName} onPress={() => onToggleTask(task)} key={index} />;
+          return (
+            <TaskListItem
+              listType="day"
+              taskName={task.taskName}
+              has={has}
+              share
+              shareCount={3}
+              shareFinishedCount={1}
+              sharePeople={['1', '2', '3']}
+              sharePercent={30}
+              onTaskItemClick={() => onToggleTask(task)}
+              key={index}
+            />
+          );
         })
       ) : (
         <EmptyView>
           <EmptyImage source={require('~/assets/images/empty_monster.png')} />
-          <CustomText font={FontType.BOLD_LARGE} align={Align.CENTER}>
+          <CustomText font={FontType.BOLD_TITLE_02} align={Align.CENTER}>
             루틴이 없어요.{'\n'}루틴을 추가해요.
           </CustomText>
         </EmptyView>
