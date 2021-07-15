@@ -5,6 +5,7 @@ import { View, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 
 import Complete from '~/components/Complete';
+import CustomText from '~/components/CustomText';
 import TaskListView from '~/components/TaskListView';
 import Week from '~/components/Week';
 import { Task } from '~/models/Task';
@@ -50,12 +51,16 @@ const Home = ({ navigation }: HomeScreenProps) => {
         <Complete percent={(selectedTasks.length / taskList.length) * 100} />
         <Week />
         <TaskView>
-          <TaskViewTitle>내 하루 테스크 {taskList.length}</TaskViewTitle>
+          <CustomText size={12} color="secondary">
+            내 하루 테스크 {taskList.length}
+          </CustomText>
           <TaskListView taskList={taskList} selectedTasks={selectedTasks} onToggleTask={handleToggleTask} />
         </TaskView>
       </HomeView>
       <AddTaskButton onPress={() => navigation.navigate('AddTask')}>
-        <AddTaskButtonText>+</AddTaskButtonText>
+        <CustomText color="white" size={32}>
+          +
+        </CustomText>
       </AddTaskButton>
       <Modal
         style={styles.modalStyled}
@@ -66,7 +71,9 @@ const Home = ({ navigation }: HomeScreenProps) => {
         <View>
           <ClearModalView onPress={toggleModal}>
             <ClearModalImage source={require('~/assets/images/success_monster.png')} />
-            <ClearModalText>테스크 완료</ClearModalText>
+            <CustomText size={20} weight="bold" align="center">
+              테스크 완료
+            </CustomText>
           </ClearModalView>
         </View>
       </Modal>
@@ -106,12 +113,6 @@ const TaskView = styled.View`
   flex: 1;
 `;
 
-const TaskViewTitle = styled.Text`
-  font-size: 12px;
-  color: #4f5461;
-  margin-bottom: 20px;
-`;
-
 const AddTaskButton = styled.TouchableOpacity`
   width: 64px;
   height: 64px;
@@ -125,35 +126,19 @@ const AddTaskButton = styled.TouchableOpacity`
   z-index: 5;
 `;
 
-const AddTaskButtonText = styled.Text`
-  color: #fff;
-  font-size: 30px;
-  font-weight: normal;
-`;
-
 const ClearModalView = styled.TouchableOpacity`
-  margin-left: 60px;
-  margin-right: 60px;
-  margin-bottom: 16px;
+  margin: 0px 60px;
   background-color: #fff;
-  padding-top: 24px;
-  padding-left: 32px;
-  padding-right: 32px;
-  padding-bottom: 40px;
-  justify-content: center;
-  align-content: center;
+  padding: 45px 32px;
+  justify-content: space-around;
+  align-items: center;
   border-radius: 20px;
-`;
-
-const ClearModalText = styled.Text`
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
 `;
 
 const ClearModalImage = styled.Image`
   width: 195px;
   height: 128px;
+  margin-bottom: 15px;
 `;
 
 export default Home;

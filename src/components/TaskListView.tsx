@@ -1,6 +1,7 @@
 import styled from '@emotion/native';
 import React from 'react';
 
+import CustomText from '~/components/CustomText';
 import TaskListItem from '~/components/TaskListItem';
 import { TaskType } from '~/screens/AddTask';
 
@@ -25,7 +26,9 @@ const TaskListView = (props: Props) => {
       ) : (
         <EmptyView>
           <EmptyImage source={require('~/assets/images/empty_monster.png')} />
-          <EmptyText>루틴이 없어요.{'\n'}루틴을 추가해요.</EmptyText>
+          <CustomText weight="bold" size={20} align="center">
+            루틴이 없어요.{'\n'}루틴을 추가해요.
+          </CustomText>
         </EmptyView>
       )}
     </TaskListViewStyled>
@@ -33,7 +36,7 @@ const TaskListView = (props: Props) => {
 };
 
 const TaskListViewStyled = styled.ScrollView`
-  padding-bottom: 20px;
+  padding: 20px 0;
   flex: 1;
 `;
 
@@ -47,14 +50,6 @@ const EmptyImage = styled.Image`
   width: 173px;
   height: 98px;
   margin-bottom: 30px;
-`;
-
-const EmptyText = styled.Text`
-  color: #292c34;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 32px;
-  text-align: center;
 `;
 
 export default TaskListView;
