@@ -1,5 +1,6 @@
 import styled from '@emotion/native';
 import React from 'react';
+
 import { TextColor } from '~/utils/color';
 import { Align, Font, FontType } from '~/utils/font';
 

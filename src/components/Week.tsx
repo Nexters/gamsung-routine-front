@@ -5,6 +5,7 @@ import 'dayjs/locale/ko';
 
 import CustomText from '~/components/CustomText';
 import { TextColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
 
 const Week = () => {
   const today = dayjs();
@@ -22,7 +23,7 @@ const Week = () => {
             <WeekItem key={index}>
               <CustomText color={index >= 5 ? TextColor.RED : TextColor.WHITE}>{day.format('ddd')}</CustomText>
               <WeekItemNumber selected={dayOfTheWeek === today.date()}>
-                <CustomText weight="bold" color={TextColor.WHITE}>
+                <CustomText font={FontType.BOLD_LARGE} color={TextColor.WHITE}>
                   {dayOfTheWeek}
                 </CustomText>
               </WeekItemNumber>
