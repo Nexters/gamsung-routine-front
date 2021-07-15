@@ -3,8 +3,8 @@ import React, { useMemo } from 'react';
 
 import AddTaskItem from '~/components/AddTaskItem';
 import CustomText from '~/components/CustomText';
-import { TextColor } from '~/utils/color';
 import { Task } from '~/models/Task';
+import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {

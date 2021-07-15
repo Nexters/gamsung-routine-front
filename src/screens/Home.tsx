@@ -10,7 +10,8 @@ import TaskListView from '~/components/TaskListView';
 import Week from '~/components/Week';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
-import {TextColor} from "~/utils/color";
+import { TextColor } from '~/utils/color';
+import { FontType, Align } from '~/utils/font';
 
 export interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -52,14 +53,14 @@ const Home = ({ navigation }: HomeScreenProps) => {
         <Complete percent={(selectedTasks.length / taskList.length) * 100} />
         <Week />
         <TaskView>
-          <CustomText size={12} color={TextColor.SECONDARY}>
+          <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
             내 하루 테스크 {taskList.length}
           </CustomText>
           <TaskListView taskList={taskList} selectedTasks={selectedTasks} onToggleTask={handleToggleTask} />
         </TaskView>
       </HomeView>
       <AddTaskButton onPress={() => navigation.navigate('AddTask')}>
-        <CustomText color={TextColor.WHITE} size={32}>
+        <CustomText color={TextColor.WHITE} font={FontType.REGULAR_HEAD_01}>
           +
         </CustomText>
       </AddTaskButton>
@@ -72,7 +73,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
         <View>
           <ClearModalView onPress={toggleModal}>
             <ClearModalImage source={require('~/assets/images/success_monster.png')} />
-            <CustomText size={20} weight="bold" align="center">
+            <CustomText font={FontType.BOLD_TITLE_02} align={Align.CENTER}>
               테스크 완료
             </CustomText>
           </ClearModalView>

@@ -3,6 +3,7 @@ import React from 'react';
 
 import CustomText from '~/components/CustomText';
 import { TextColor } from '~/utils/color';
+import { Align, FontType } from '~/utils/font';
 
 interface Props {
   percent?: number;
@@ -11,9 +12,9 @@ interface Props {
 const Complete = ({ percent = 34 }: Props) => {
   return (
     <CompleteStyled>
-      <CustomText color={TextColor.WHITE} size={24} weight="bold" align="center">
+      <CustomText color={TextColor.WHITE} font={FontType.BOLD_HEAD_02} align={Align.CENTER}>
         오늘 테스크를{'\n'}
-        <CustomText color={TextColor.MAIN} size={24} weight="bold" align="center">
+        <CustomText color={TextColor.MAIN} font={FontType.BOLD_HEAD_02} align={Align.CENTER}>
           {percent}%
         </CustomText>{' '}
         달성했어요
