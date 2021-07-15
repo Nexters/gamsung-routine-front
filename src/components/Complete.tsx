@@ -12,7 +12,7 @@ const Complete = ({ percent = 34 }: Props) => {
     <CompleteStyled>
       <CustomText color="white" size={24} weight="bold" align="center">
         오늘 테스크를{'\n'}
-        <CustomText color="puple50" size={24} weight="bold">
+        <CustomText color="puple50" size={24} weight="bold" align="center">
           {percent}%
         </CustomText>{' '}
         달성했어요
