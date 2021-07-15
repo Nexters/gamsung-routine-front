@@ -8,12 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* routineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* routineTests.m */; };
-		088F060B4923E258FE1955AD /* libPods-routine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF927AC09C3BBEEB54F74C0F /* libPods-routine.a */; };
+		02D71832851B4D8CA028AFAD /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9EC7E6EA58554A7C924341FD /* Pretendard-Thin.otf */; };
+		10A94AE6D1064C4E8D0F7299 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = AF35EDBF4BC145488F9B20D3 /* Pretendard-Black.otf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		523C087D9DAA1B210D01E26E /* libPods-routine-routineTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51FCDD03A6050215CE2D1D7 /* libPods-routine-routineTests.a */; };
+		22EE55B7FD4F7B4F51023D8D /* libPods-routine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF0D8F800523B6B6AF5E378 /* libPods-routine.a */; };
+		23A39F3950C3478FB62390E2 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FB4D35B13F1146A3BFA0E4CB /* Pretendard-ExtraBold.otf */; };
+		3183774F64D944258385D7D9 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9EB3F61302584C15B35695D7 /* Pretendard-Bold.otf */; };
+		584A4C30D9D9426E87FF6C4C /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9258E101B804F788A5F6306 /* Pretendard-Light.otf */; };
+		760F5140EECA438891779833 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6F31F0EFD18147DC9EEFFAEF /* Pretendard-Medium.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8FD922CC05F489F5B1EF7629 /* libPods-routine-routineTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B55CC155424D5DA83A52EB48 /* libPods-routine-routineTests.a */; };
+		BBDBEA5B28A54C58A1E9BB8C /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FEFF35F230E844339E99B151 /* Pretendard-Regular.otf */; };
+		CD18FC0A8A9B4D7590A82706 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = B7F5405F78F3498A8C7F6195 /* Pretendard-ExtraLight.otf */; };
+		D19EBB3ADF1A442ABEA2D11B /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C9AAE4454C01444BBD925022 /* Pretendard-SemiBold.otf */; };
+		0F1E5CE5862B4143BF2F3593 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 945D33DEF8D241DBB5E7B783 /* Pretendard-Black.otf */; };
+		B7B80BAACD0D401DB798F90D /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F8AEB05A0834CD2967E3719 /* Pretendard-Bold.otf */; };
+		E149365392024D98ABB9680F /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4DC55BA3F0AB416FA3038E83 /* Pretendard-ExtraBold.otf */; };
+		4F15BA4745C540D59E2F8B0C /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9AD6DD734FE749A9B894F5A6 /* Pretendard-ExtraLight.otf */; };
+		D4F358A5FC7744B58AC4D7D8 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE54DA818A7A49A482B59848 /* Pretendard-Light.otf */; };
+		BD2EC4D247C84B09841C63A3 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = F9BA3B96C8F743B7ABF4A84E /* Pretendard-Medium.otf */; };
+		795145F1BA4F40D7A0133758 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CA51C1D2E6C74159BD8516AE /* Pretendard-Regular.otf */; };
+		DACDF14567E9438C9EFCF123 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 518D1256316948BEA5840F5E /* Pretendard-SemiBold.otf */; };
+		BDAE2200E40E47F698702680 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = BEA1253F8ED84580A9F0CF1B /* Pretendard-Thin.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,20 +48,38 @@
 		00E356EE1AD99517003FC87E /* routineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = routineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* routineTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = routineTests.m; sourceTree = "<group>"; };
-		0316A723D5EB039288152080 /* Pods-routine-routineTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-routine-routineTests.debug.xcconfig"; path = "Target Support Files/Pods-routine-routineTests/Pods-routine-routineTests.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* routine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = routine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = routine/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = routine/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = routine/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = routine/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = routine/main.m; sourceTree = "<group>"; };
-		1D2A9973992F32D8F9E47440 /* Pods-routine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-routine.debug.xcconfig"; path = "Target Support Files/Pods-routine/Pods-routine.debug.xcconfig"; sourceTree = "<group>"; };
-		5F0FC1C043F3815EE1DF9235 /* Pods-routine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-routine.release.xcconfig"; path = "Target Support Files/Pods-routine/Pods-routine.release.xcconfig"; sourceTree = "<group>"; };
+		174AEEB452153DEEC9082A89 /* Pods-routine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-routine.release.xcconfig"; path = "Target Support Files/Pods-routine/Pods-routine.release.xcconfig"; sourceTree = "<group>"; };
+		6F31F0EFD18147DC9EEFFAEF /* Pretendard-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Medium.otf"; path = "../src/assets/fonts/Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		7DF0D8F800523B6B6AF5E378 /* libPods-routine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-routine.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = routine/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A51FCDD03A6050215CE2D1D7 /* libPods-routine-routineTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-routine-routineTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CDD588B015C029E07F922B64 /* Pods-routine-routineTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-routine-routineTests.release.xcconfig"; path = "Target Support Files/Pods-routine-routineTests/Pods-routine-routineTests.release.xcconfig"; sourceTree = "<group>"; };
-		CF927AC09C3BBEEB54F74C0F /* libPods-routine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-routine.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EB3F61302584C15B35695D7 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Bold.otf"; path = "../src/assets/fonts/Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		9EC7E6EA58554A7C924341FD /* Pretendard-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Thin.otf"; path = "../src/assets/fonts/Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		AF35EDBF4BC145488F9B20D3 /* Pretendard-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Black.otf"; path = "../src/assets/fonts/Pretendard-Black.otf"; sourceTree = "<group>"; };
+		B55CC155424D5DA83A52EB48 /* libPods-routine-routineTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-routine-routineTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7F5405F78F3498A8C7F6195 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-ExtraLight.otf"; path = "../src/assets/fonts/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		C9AAE4454C01444BBD925022 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-SemiBold.otf"; path = "../src/assets/fonts/Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		CB4C43B10EAFAAED30B336D6 /* Pods-routine-routineTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-routine-routineTests.release.xcconfig"; path = "Target Support Files/Pods-routine-routineTests/Pods-routine-routineTests.release.xcconfig"; sourceTree = "<group>"; };
+		D9258E101B804F788A5F6306 /* Pretendard-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Light.otf"; path = "../src/assets/fonts/Pretendard-Light.otf"; sourceTree = "<group>"; };
+		DCFD4406E4D0119F19216C2A /* Pods-routine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-routine.debug.xcconfig"; path = "Target Support Files/Pods-routine/Pods-routine.debug.xcconfig"; sourceTree = "<group>"; };
+		EA9D7F2707C3D4DD1C9D36B6 /* Pods-routine-routineTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-routine-routineTests.debug.xcconfig"; path = "Target Support Files/Pods-routine-routineTests/Pods-routine-routineTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FB4D35B13F1146A3BFA0E4CB /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-ExtraBold.otf"; path = "../src/assets/fonts/Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		FEFF35F230E844339E99B151 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Regular.otf"; path = "../src/assets/fonts/Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		945D33DEF8D241DBB5E7B783 /* Pretendard-Black.otf */ = {isa = PBXFileReference; name = "Pretendard-Black.otf"; path = "../assets/fonts/Pretendard-Black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3F8AEB05A0834CD2967E3719 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; name = "Pretendard-Bold.otf"; path = "../assets/fonts/Pretendard-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4DC55BA3F0AB416FA3038E83 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; name = "Pretendard-ExtraBold.otf"; path = "../assets/fonts/Pretendard-ExtraBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9AD6DD734FE749A9B894F5A6 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; name = "Pretendard-ExtraLight.otf"; path = "../assets/fonts/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BE54DA818A7A49A482B59848 /* Pretendard-Light.otf */ = {isa = PBXFileReference; name = "Pretendard-Light.otf"; path = "../assets/fonts/Pretendard-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F9BA3B96C8F743B7ABF4A84E /* Pretendard-Medium.otf */ = {isa = PBXFileReference; name = "Pretendard-Medium.otf"; path = "../assets/fonts/Pretendard-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CA51C1D2E6C74159BD8516AE /* Pretendard-Regular.otf */ = {isa = PBXFileReference; name = "Pretendard-Regular.otf"; path = "../assets/fonts/Pretendard-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		518D1256316948BEA5840F5E /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; name = "Pretendard-SemiBold.otf"; path = "../assets/fonts/Pretendard-SemiBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BEA1253F8ED84580A9F0CF1B /* Pretendard-Thin.otf */ = {isa = PBXFileReference; name = "Pretendard-Thin.otf"; path = "../assets/fonts/Pretendard-Thin.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				523C087D9DAA1B210D01E26E /* libPods-routine-routineTests.a in Frameworks */,
+				8FD922CC05F489F5B1EF7629 /* libPods-routine-routineTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				088F060B4923E258FE1955AD /* libPods-routine.a in Frameworks */,
+				22EE55B7FD4F7B4F51023D8D /* libPods-routine.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,19 +136,19 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				CF927AC09C3BBEEB54F74C0F /* libPods-routine.a */,
-				A51FCDD03A6050215CE2D1D7 /* libPods-routine-routineTests.a */,
+				7DF0D8F800523B6B6AF5E378 /* libPods-routine.a */,
+				B55CC155424D5DA83A52EB48 /* libPods-routine-routineTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		354F1A245CAF3B1CE38C536A /* Pods */ = {
+		7F1C36572359A972C99E6365 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1D2A9973992F32D8F9E47440 /* Pods-routine.debug.xcconfig */,
-				5F0FC1C043F3815EE1DF9235 /* Pods-routine.release.xcconfig */,
-				0316A723D5EB039288152080 /* Pods-routine-routineTests.debug.xcconfig */,
-				CDD588B015C029E07F922B64 /* Pods-routine-routineTests.release.xcconfig */,
+				DCFD4406E4D0119F19216C2A /* Pods-routine.debug.xcconfig */,
+				174AEEB452153DEEC9082A89 /* Pods-routine.release.xcconfig */,
+				EA9D7F2707C3D4DD1C9D36B6 /* Pods-routine-routineTests.debug.xcconfig */,
+				CB4C43B10EAFAAED30B336D6 /* Pods-routine-routineTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -133,7 +169,8 @@
 				00E356EF1AD99517003FC87E /* routineTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				354F1A245CAF3B1CE38C536A /* Pods */,
+				E83678269A5B4CDDB5A1C54E /* Resources */,
+				7F1C36572359A972C99E6365 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -149,6 +186,32 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E83678269A5B4CDDB5A1C54E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AF35EDBF4BC145488F9B20D3 /* Pretendard-Black.otf */,
+				9EB3F61302584C15B35695D7 /* Pretendard-Bold.otf */,
+				FB4D35B13F1146A3BFA0E4CB /* Pretendard-ExtraBold.otf */,
+				B7F5405F78F3498A8C7F6195 /* Pretendard-ExtraLight.otf */,
+				D9258E101B804F788A5F6306 /* Pretendard-Light.otf */,
+				6F31F0EFD18147DC9EEFFAEF /* Pretendard-Medium.otf */,
+				FEFF35F230E844339E99B151 /* Pretendard-Regular.otf */,
+				C9AAE4454C01444BBD925022 /* Pretendard-SemiBold.otf */,
+				9EC7E6EA58554A7C924341FD /* Pretendard-Thin.otf */,
+				945D33DEF8D241DBB5E7B783 /* Pretendard-Black.otf */,
+				3F8AEB05A0834CD2967E3719 /* Pretendard-Bold.otf */,
+				4DC55BA3F0AB416FA3038E83 /* Pretendard-ExtraBold.otf */,
+				9AD6DD734FE749A9B894F5A6 /* Pretendard-ExtraLight.otf */,
+				BE54DA818A7A49A482B59848 /* Pretendard-Light.otf */,
+				F9BA3B96C8F743B7ABF4A84E /* Pretendard-Medium.otf */,
+				CA51C1D2E6C74159BD8516AE /* Pretendard-Regular.otf */,
+				518D1256316948BEA5840F5E /* Pretendard-SemiBold.otf */,
+				BEA1253F8ED84580A9F0CF1B /* Pretendard-Thin.otf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -156,12 +219,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "routineTests" */;
 			buildPhases = (
-				404289AB80B4F6FD2C37BE3E /* [CP] Check Pods Manifest.lock */,
+				4B67CDEF18D32E405F49DBD7 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				DAE131662E313FB2F62DFE2E /* [CP] Embed Pods Frameworks */,
-				400E786DD4054A3086B7FFA4 /* [CP] Copy Pods Resources */,
+				7422BC09818420647A498772 /* [CP] Embed Pods Frameworks */,
+				2B3914A8EA6D2A3D7B95A41F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -177,14 +240,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "routine" */;
 			buildPhases = (
-				D6EBC65594B5A1C57408A7BA /* [CP] Check Pods Manifest.lock */,
+				ED88C031D95D9047D76DCE90 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				D95CD9E3FC98DB1C556D06A4 /* [CP] Embed Pods Frameworks */,
-				E087DDE8D4AB82B55A941E23 /* [CP] Copy Pods Resources */,
+				8B6825E9768991FCE48E163F /* [CP] Embed Pods Frameworks */,
+				6CC0C2F5174AEA920B03FFE8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -245,6 +308,24 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				10A94AE6D1064C4E8D0F7299 /* Pretendard-Black.otf in Resources */,
+				3183774F64D944258385D7D9 /* Pretendard-Bold.otf in Resources */,
+				23A39F3950C3478FB62390E2 /* Pretendard-ExtraBold.otf in Resources */,
+				CD18FC0A8A9B4D7590A82706 /* Pretendard-ExtraLight.otf in Resources */,
+				584A4C30D9D9426E87FF6C4C /* Pretendard-Light.otf in Resources */,
+				760F5140EECA438891779833 /* Pretendard-Medium.otf in Resources */,
+				BBDBEA5B28A54C58A1E9BB8C /* Pretendard-Regular.otf in Resources */,
+				D19EBB3ADF1A442ABEA2D11B /* Pretendard-SemiBold.otf in Resources */,
+				02D71832851B4D8CA028AFAD /* Pretendard-Thin.otf in Resources */,
+				0F1E5CE5862B4143BF2F3593 /* Pretendard-Black.otf in Resources */,
+				B7B80BAACD0D401DB798F90D /* Pretendard-Bold.otf in Resources */,
+				E149365392024D98ABB9680F /* Pretendard-ExtraBold.otf in Resources */,
+				4F15BA4745C540D59E2F8B0C /* Pretendard-ExtraLight.otf in Resources */,
+				D4F358A5FC7744B58AC4D7D8 /* Pretendard-Light.otf in Resources */,
+				BD2EC4D247C84B09841C63A3 /* Pretendard-Medium.otf in Resources */,
+				795145F1BA4F40D7A0133758 /* Pretendard-Regular.otf in Resources */,
+				DACDF14567E9438C9EFCF123 /* Pretendard-SemiBold.otf in Resources */,
+				BDAE2200E40E47F698702680 /* Pretendard-Thin.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +346,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		400E786DD4054A3086B7FFA4 /* [CP] Copy Pods Resources */ = {
+		2B3914A8EA6D2A3D7B95A41F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -282,7 +363,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-routine-routineTests/Pods-routine-routineTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		404289AB80B4F6FD2C37BE3E /* [CP] Check Pods Manifest.lock */ = {
+		4B67CDEF18D32E405F49DBD7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -304,7 +385,58 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D6EBC65594B5A1C57408A7BA /* [CP] Check Pods Manifest.lock */ = {
+		6CC0C2F5174AEA920B03FFE8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7422BC09818420647A498772 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-routine-routineTests/Pods-routine-routineTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-routine-routineTests/Pods-routine-routineTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-routine-routineTests/Pods-routine-routineTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8B6825E9768991FCE48E163F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED88C031D95D9047D76DCE90 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -324,57 +456,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D95CD9E3FC98DB1C556D06A4 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DAE131662E313FB2F62DFE2E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-routine-routineTests/Pods-routine-routineTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-routine-routineTests/Pods-routine-routineTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-routine-routineTests/Pods-routine-routineTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E087DDE8D4AB82B55A941E23 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-routine/Pods-routine-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -429,7 +510,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0316A723D5EB039288152080 /* Pods-routine-routineTests.debug.xcconfig */;
+			baseConfigurationReference = EA9D7F2707C3D4DD1C9D36B6 /* Pods-routine-routineTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -456,7 +537,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CDD588B015C029E07F922B64 /* Pods-routine-routineTests.release.xcconfig */;
+			baseConfigurationReference = CB4C43B10EAFAAED30B336D6 /* Pods-routine-routineTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -480,7 +561,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D2A9973992F32D8F9E47440 /* Pods-routine.debug.xcconfig */;
+			baseConfigurationReference = DCFD4406E4D0119F19216C2A /* Pods-routine.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -506,7 +587,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F0FC1C043F3815EE1DF9235 /* Pods-routine.release.xcconfig */;
+			baseConfigurationReference = 174AEEB452153DEEC9082A89 /* Pods-routine.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -561,7 +642,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -626,7 +707,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
