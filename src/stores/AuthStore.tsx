@@ -7,14 +7,20 @@ class AuthStore {
   constructor() {
     makeObservable(this, {
       token: observable,
+      nickname: observable,
+      profileImageUrl: observable,
       login: action,
     });
   }
 
   token?: string = undefined;
+  nickname?: string = undefined;
+  profileImageUrl?: string = undefined;
 
-  login = (token: string) => {
+  login = (token: string, nickname: string, profileImageUrl: string) => {
     this.token = token;
+    this.nickname = nickname;
+    this.profileImageUrl = profileImageUrl;
   };
 
   public static instance() {
