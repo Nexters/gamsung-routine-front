@@ -1215,6 +1215,13 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.1.0.tgz#e42b1bef12d2415411519fd528e64b593b1363dc"
   integrity sha512-W/J0fNYVO01tioHjvYWQ9m6RgndVtbElzYozBq1ZPrHO/iCzlqoySHl4gO/fpCl9QEFjvJfjPgtPMTMlsoq5DQ==
 
+"@react-native-seoul/kakao-login@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@react-native-seoul/kakao-login/-/kakao-login-3.3.3.tgz#ce01c08d4b9e4fefa65f2e3851c49efcc0d5fa7c"
+  integrity sha512-rDmeFkAg161kLOMcTO/z463pexZulUb6HJokDXKU+bQ2EiDnIk3KC0dqDgXaF2Yxn/1cfMUAu5ndl5YfPbla4w==
+  dependencies:
+    dooboolab-welcome "^1.3.0"
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -2694,6 +2701,11 @@ domexception@^2.0.1:
   integrity sha512-yxJ2mFy/sibVQlu5qHjOkf9J3K6zgmCxgJ94u2EdvDOV09H+32LtRswEcUsmUWN72pVLOEnTSRaIVVzVQgS0dg==
   dependencies:
     webidl-conversions "^5.0.0"
+
+dooboolab-welcome@^1.3.0:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/dooboolab-welcome/-/dooboolab-welcome-1.3.1.tgz#37c4bbae0c84616c37ba9301dc87521ae2e9af86"
+  integrity sha512-KcTf3RVRGO3QADgsEJPFixFqj1c3oZPI3SnS6rVO7soaASi4+iHmVvBFFAf+l/sQsxCbPeV8sGhsdG6ZdSLqmQ==
 
 ee-first@1.1.1:
   version "1.1.1"
