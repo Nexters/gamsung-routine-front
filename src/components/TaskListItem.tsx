@@ -6,7 +6,7 @@ import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
-  listType: string;
+  listType: 'day' | 'week';
   taskName: string;
   has: boolean;
   share?: boolean;
@@ -27,7 +27,7 @@ const TaskListItem = (props: Props) => {
 
   return (
     <TaskListItemStyled>
-      {listType === 'day' ? (
+      {listType === 'day' && (
         <TaskListItemToggleView onPress={() => handleTaskItemClick()}>
           <TaskListItemToggleViewTitle>
             {has && <TaskListItemLine />}
@@ -45,7 +45,8 @@ const TaskListItem = (props: Props) => {
             </CustomText>
           )}
         </TaskListItemToggleView>
-      ) : (
+      )}
+      {listType === 'week' && (
         <TaskListItemWeekView>
           <CustomText font={FontType.REGULAR_LARGE} color={TextColor.PRIMARY}>
             {taskName}
