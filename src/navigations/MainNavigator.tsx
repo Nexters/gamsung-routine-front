@@ -5,12 +5,14 @@ import AddTaskSubmitButton, { AddTaskScreenProps } from '~/components/AddTaskSub
 import { RootStackParamList } from '~/navigations/types';
 import AddTask from '~/screens/AddTask';
 import Home from '~/screens/Home';
+import Login from '~/screens/Login';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const MainNavigator = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen
         name="AddTask"
