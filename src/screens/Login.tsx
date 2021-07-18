@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 
 import CustomText from '~/components/CustomText';
+import { User } from '~/models/User';
 import { RootStackParamList } from '~/navigations/types';
 import AuthStore from '~/stores/AuthStore';
 
@@ -16,7 +17,12 @@ const Login = ({ navigation }: HomeScreenProps) => {
     try {
       const token = await login();
       const profile = await getKakaoProfile();
-      AuthStore.login(token.accessToken, profile.nickname, profile.profileImageUrl);
+      const user: User = {
+        token: token.accessToken,
+        nickname: profile.nickname,
+        profileImageUrl: profile.profileImageUrl,
+      };
+      AuthStore.login(user);
       navigation.navigate('Home');
     } catch (error) {
       console.error(error);
