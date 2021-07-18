@@ -8,6 +8,7 @@ import { User } from '~/models/User';
 import { RootStackParamList } from '~/navigations/types';
 import AuthStore from '~/stores/AuthStore';
 import { TextColor } from '~/utils/color';
+import { TouchableOpacity, Text } from 'react-native';
 import { Align, FontType } from '~/utils/font';
 import { TouchableOpacity, Text } from 'react-native';
 
