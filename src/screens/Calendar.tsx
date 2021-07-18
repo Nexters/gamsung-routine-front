@@ -53,6 +53,14 @@ const Calendar = () => {
 
   const insets = useSafeAreaInsets();
 
+  const handleChangeFocusDay = (date: dayjs.Dayjs) => {
+    setFocusDay(date);
+  };
+
+  const handleChangeFirstDay = (date: dayjs.Dayjs) => {
+    setFirstDay(date);
+  };
+
   return (
     <CalendarWrapper paddingTop={insets.top} paddingBottom={insets.bottom} backgroundColor={BackgroundColor.SECONDARY}>
       <MonthHead>
@@ -86,39 +94,24 @@ const Calendar = () => {
               </DayOfWeek>
             );
           })}
-          {monthArray.map((date) => {
-            return (
-              <TouchableOpacity
-                key={date.toString()}
-                onPress={() => {
-                  setFocusDay(date);
-                  if (date.month() !== month) {
-                    setFirstDay(getFirstDay(date));
-                  }
-                }}>
-                <DayOfWeek>
-                  <DateWrapper backgroundColor={focusDay.isSame(date) ? '#3A2E8E' : '#3F4042'}>
-                    <DateGauge backgroundColor={focusDay.isSame(date) ? '#5F4BF2' : '#5B5D61'} height={50} />
-                    <CrownIcon
-                      source={
-                        focusDay.isSame(date)
-                          ? require('~/assets/icons/icon_crown.png')
-                          : require('~/assets/icons/icon_crown_gray.png')
-                      }
-                    />
-                  </DateWrapper>
-                </DayOfWeek>
-                <DateTextWrapper>
-                  <CustomText
-                    font={FontType.REGULAR_CAPTION}
-                    color={month === date.month() ? TextColor.ELEVATED : TextColor.SECONDARY}
-                    align="center">
-                    {date.date()}
-                  </CustomText>
-                </DateTextWrapper>
-              </TouchableOpacity>
-            );
-          })}
+          {radio === RADIO_TYPE.일별 && (
+            <Daily
+              monthArray={monthArray}
+              month={month}
+              handleChangeFocusDay={handleChangeFocusDay}
+              handleChangeFirstDay={handleChangeFirstDay}
+              focusDay={focusDay}
+            />
+          )}
+          {radio === RADIO_TYPE.주별 && (
+            <Weekly
+              monthArray={monthArray}
+              month={month}
+              handleChangeFocusDay={handleChangeFocusDay}
+              handleChangeFirstDay={handleChangeFirstDay}
+              focusDay={focusDay}
+            />
+          )}
         </Week>
         {isDatePickerVisible && (
           <MonthPicker
@@ -246,3 +239,129 @@ const MonthHead = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
+
+const WeeklyWrapper = styled.View`
+  width: 100%;
+`;
+
+const WeeklyRow = styled.View`
+  flex-grow: 1;
+  height: 24px;
+  margin: 0 20px;
+  overflow: hidden;
+`;
+
+const WeekGauge = styled(DateGauge)`
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  position: absolute;
+  left: 0;
+  flex: 1;
+  height: 100%;
+  width: ${({ height }) => `${height}%`};
+`;
+
+const WeekTextWrapper = styled.View`
+  flex-direction: row;
+  justify-content: center;
+`;
+interface DailyProps {
+  monthArray: dayjs.Dayjs[];
+  month: number;
+  handleChangeFocusDay: (date: dayjs.Dayjs) => void;
+  handleChangeFirstDay: (date: dayjs.Dayjs) => void;
+  focusDay: dayjs.Dayjs;
+}
+
+const Daily = ({ monthArray, month, handleChangeFocusDay, handleChangeFirstDay, focusDay }: DailyProps) => {
+  return (
+    <>
+      {monthArray.map((date) => {
+        return (
+          <TouchableOpacity
+            key={date.toString()}
+            onPress={() => {
+              handleChangeFocusDay(date);
+              if (date.month() !== month) {
+                handleChangeFirstDay(getFirstDay(date));
+              }
+            }}>
+            <DayOfWeek>
+              <DateWrapper backgroundColor={focusDay.isSame(date) ? '#3A2E8E' : '#3F4042'}>
+                <DateGauge backgroundColor={focusDay.isSame(date) ? '#5F4BF2' : '#5B5D61'} height={50} />
+                <CrownIcon
+                  source={
+                    focusDay.isSame(date)
+                      ? require('~/assets/icons/icon_crown.png')
+                      : require('~/assets/icons/icon_crown_gray.png')
+                  }
+                />
+              </DateWrapper>
+            </DayOfWeek>
+            <DateTextWrapper>
+              <CustomText
+                font={FontType.REGULAR_CAPTION}
+                color={month === date.month() ? TextColor.ELEVATED : TextColor.SECONDARY}
+                align="center">
+                {date.date()}
+              </CustomText>
+            </DateTextWrapper>
+          </TouchableOpacity>
+        );
+      })}
+    </>
+  );
+};
+
+const Weekly = ({ monthArray, month, handleChangeFocusDay, handleChangeFirstDay, focusDay }: DailyProps) => {
+  return (
+    <WeeklyWrapper>
+      {monthArray.map((date, index) => {
+        if (index !== 0 && index % 7 !== 0) {
+          return null;
+        }
+        return (
+          <TouchableOpacity
+            key={date.toString()}
+            onPress={() => {
+              handleChangeFocusDay(date);
+              if (date.month() !== month) {
+                handleChangeFirstDay(getFirstDay(date));
+              }
+            }}>
+            <WeeklyRow>
+              <DateWrapper backgroundColor={focusDay.isSame(date) ? '#3A2E8E' : '#3F4042'}>
+                <WeekGauge backgroundColor={focusDay.isSame(date) ? '#5F4BF2' : '#5B5D61'} height={50} />
+                <CrownIcon
+                  source={
+                    focusDay.isSame(date)
+                      ? require('~/assets/icons/icon_crown.png')
+                      : require('~/assets/icons/icon_crown_gray.png')
+                  }
+                />
+              </DateWrapper>
+            </WeeklyRow>
+            <WeekTextWrapper key={`${date}_${index}`}>
+              {Array(7)
+                .fill(0)
+                .map((_, index) => {
+                  const textDate = date.add(index, 'day');
+                  return (
+                    <DayOfWeek>
+                      <DateTextWrapper>
+                        <CustomText
+                          font={FontType.REGULAR_CAPTION}
+                          color={month === textDate.month() ? TextColor.ELEVATED : TextColor.SECONDARY}
+                          align="center">
+                          {textDate.date()}
+                        </CustomText>
+                      </DateTextWrapper>
+                    </DayOfWeek>
+                  );
+                })}
+            </WeekTextWrapper>
+          </TouchableOpacity>
+        );
+      })}
+    </WeeklyWrapper>
+  );
+};
