@@ -1,13 +1,18 @@
 import styled from '@emotion/native';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import BottomSheet from 'reanimated-bottom-sheet';
 
 import AddTaskItem from '~/components/AddTaskItem';
 import BottomSheetContent from '~/components/BottomSheet';
 import { Task } from '~/models/Task';
+import { AddTaskVM } from '~/screens/addTaskVM';
+import { observer } from 'mobx-react';
+import { BackgroundColor } from '~/utils/color';
+import { SelectCategoryWithTemplate } from '~/components/SelectCategoryWithTemplate';
 
-const AddTask = () => {
+const AddTask = observer(() => {
   const sheetRef = React.useRef(null);
+  const [vm] = useState<AddTaskVM>(new AddTaskVM());
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
 
   const onPress = (selectedTask: Task) => {
@@ -24,34 +29,40 @@ const AddTask = () => {
     });
   };
 
-  const tempTasks = useMemo(() => {
-    return Array.from({ length: 20 }, (_, index) => ({
-      id: index,
-      taskName: `task${index}`,
-    }));
-  }, []);
-
   return (
     <AddTaskStyled>
-      <ContentScrollView>
-        {tempTasks.map((task, index) => {
-          const has = selectedTasks.some((selectedTask) => {
-            return selectedTask.id === task.id;
-          });
-          return <AddTaskItem selected={has} taskName={task.taskName} onClick={() => onPress(task)} key={index} />;
-        })}
-      </ContentScrollView>
-      <BottomSheet
-        ref={sheetRef}
-        initialSnap={2}
-        snapPoints={['85%', '15%', '15%']}
-        borderRadius={8}
-        renderContent={() => <BottomSheetContent selectedTasks={selectedTasks} onPress={onPress} />}
-        enabledInnerScrolling
-      />
+      {vm.selectedTemplateId === null ? (
+        <SelectCategoryWithTemplate vm={vm} />
+      ) : (
+        <ContentScrollView>
+          {vm.templates
+            .find((it) => it.id === vm.selectedTemplateId)
+            ?.tasks.map((task) => {
+              return (
+                <AddTaskItem
+                  key={task.id}
+                  taskName={task.taskName}
+                  onClick={() => console.log(`${task.taskName} click`)}
+                />
+              );
+            })}
+        </ContentScrollView>
+      )}
+
+      {/* 이제 이 페이지에서 사용하지 않는 컴포넌트인데, 혹시 다른 페이지에서 카피해 갈 때 참고용으로 쓰기 위해 임시로 남겨둠 */}
+      {false && (
+        <BottomSheet
+          ref={sheetRef}
+          initialSnap={2}
+          snapPoints={['85%', '15%', '15%']}
+          borderRadius={8}
+          renderContent={() => <BottomSheetContent selectedTasks={selectedTasks} onPress={onPress} />}
+          enabledInnerScrolling
+        />
+      )}
     </AddTaskStyled>
   );
-};
+});
 
 const ContentScrollView = styled.ScrollView`
   width: 100%;
@@ -65,7 +76,7 @@ const AddTaskStyled = styled.SafeAreaView`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: #f2f2f4;
+  background-color: ${BackgroundColor.PRIMARY};
 `;
 
 export default AddTask;
