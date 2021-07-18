@@ -1,5 +1,7 @@
 import { observable, action, makeObservable } from 'mobx';
 
+import { User } from '~/models/User';
+
 class AuthStore {
   // XXX : _ prefix를 계속 사용할지 고민
   private static _instance: AuthStore;
@@ -17,10 +19,10 @@ class AuthStore {
   nickname?: string = undefined;
   profileImageUrl?: string = undefined;
 
-  login = (token: string, nickname: string, profileImageUrl: string) => {
-    this.token = token;
-    this.nickname = nickname;
-    this.profileImageUrl = profileImageUrl;
+  login = (user: User) => {
+    this.token = user.token;
+    this.nickname = user.nickname;
+    this.profileImageUrl = user.profileImageUrl;
   };
 
   public static instance() {
