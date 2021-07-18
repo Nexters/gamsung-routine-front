@@ -1,10 +1,10 @@
 import React from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { ScrollingButtonMenu } from '~/components/ScrollingButtonMenu';
-import { AddTaskVM } from '~/screens/addTaskVM';
 import styled from '@emotion/native';
 import { TemplateCard } from '~/components/TemplateCard';
 import { observer } from 'mobx-react';
+import {AddTaskVM} from "~/screens/vm/addTaskVM";
 
 interface Props {
   vm: AddTaskVM;
@@ -13,17 +13,17 @@ interface Props {
 export const SelectCategoryWithTemplate = observer((props: Props) => {
   const { vm } = props;
 
-  const handlePress = (id: number) => {
-    vm.selectedCategoryId = id;
+  const handleCategoryPress = (id: number) => {
+    vm.onSelectedCategoryIdChange(id);
   };
 
   const handleTemplatePress = (id: number) => {
-    vm.selectedTemplateId = id;
+    vm.onSelectedTemplateIdChange(id);
   };
 
   return (
     <CategoryViewStyled>
-      <ScrollingButtonMenu data={vm.categories} selectedId={vm.selectedCategoryId} onClick={handlePress} />
+      <ScrollingButtonMenu data={vm.categories} selectedId={vm.selectedCategoryId} onClick={handleCategoryPress} />
       <FlatList
         data={vm.templates}
         renderItem={({ item }) => (

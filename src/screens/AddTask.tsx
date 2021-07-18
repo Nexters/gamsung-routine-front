@@ -5,10 +5,10 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import AddTaskItem from '~/components/AddTaskItem';
 import BottomSheetContent from '~/components/BottomSheet';
 import { Task } from '~/models/Task';
-import { AddTaskVM } from '~/screens/addTaskVM';
 import { observer } from 'mobx-react';
 import { BackgroundColor } from '~/utils/color';
 import { SelectCategoryWithTemplate } from '~/components/SelectCategoryWithTemplate';
+import { AddTaskVM } from '~/screens/vm/addTaskVM';
 
 const AddTask = observer(() => {
   const sheetRef = React.useRef(null);
