@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import dayjs from 'dayjs';
 import React, { useEffect, useMemo, useState } from 'react';
-import { Dimensions, Image, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { Button, Dimensions, Image, SafeAreaView, TouchableOpacity, View } from 'react-native';
 // @ts-ignore
 import MonthPicker from 'react-native-month-year-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -30,9 +30,23 @@ const Calendar = () => {
   const [month, setMonth] = useState(firstDay.add(7, 'day').month());
   const [radio, setRadio] = useState<RADIO_TYPE>(RADIO_TYPE.일별);
 
+  const [isWeek, setIsWeek] = useState(true);
+
   const monthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
     let nextWeek = firstDay;
     let monthArray = [] as dayjs.Dayjs[];
+    if (isWeek) {
+      let today = focusDay;
+      if (today.format('ddd') === 'Sun') {
+        today = today.add(-7, 'day');
+      }
+      today = today.day(1);
+      return Array(7)
+        .fill(0)
+        .map((_, index) => {
+          return today.add(index, 'day');
+        });
+    }
     do {
       monthArray = [
         ...monthArray,
@@ -43,7 +57,7 @@ const Calendar = () => {
       nextWeek = nextWeek.add(7, 'day');
     } while (month === nextWeek.month());
     return monthArray;
-  }, [firstDay, month]);
+  }, [firstDay, month, isWeek]);
 
   useEffect(() => {
     if (firstDay.add(7, 'day').month() !== month) {
@@ -124,6 +138,7 @@ const Calendar = () => {
           />
         )}
       </CalView>
+      <Button title="토클" onPress={() => setIsWeek((isWeek) => !isWeek)} />
     </CalendarWrapper>
   );
 };
