@@ -50,7 +50,7 @@ const AddTaskStyled = styled.SafeAreaView`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: #f2f2f4;
+  background-color: ${BackgroundColor.PRIMARY};
 `;
 
 export default AddTask;
