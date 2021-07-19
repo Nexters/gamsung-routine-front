@@ -1,10 +1,16 @@
 import styled from '@emotion/native';
 import dayjs from 'dayjs';
 import React, { useEffect, useMemo, useState } from 'react';
-import { Button, Dimensions, Image, SafeAreaView, TouchableOpacity, View } from 'react-native';
-// @ts-ignore
+import { Button, Dimensions, TouchableOpacity } from 'react-native';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore : 타입이 없음
 import MonthPicker from 'react-native-month-year-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SvgXml } from 'react-native-svg';
+
+import IconCrownSvg from '../assets/icons/icon_crown.svg';
+import IconCrownGraySvg from '../assets/icons/icon_crown_gray.svg';
+
 import CustomText from '~/components/CustomText';
 import { BackgroundColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -34,7 +40,7 @@ const Calendar = () => {
 
   const monthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
     let nextWeek = firstDay;
-    let monthArray = [] as dayjs.Dayjs[];
+    let arr = [] as dayjs.Dayjs[];
     if (isWeek) {
       let today = focusDay;
       if (today.format('ddd') === 'Sun') {
@@ -48,22 +54,22 @@ const Calendar = () => {
         });
     }
     do {
-      monthArray = [
-        ...monthArray,
+      arr = [
+        ...arr,
         ...Array(7)
           .fill(nextWeek)
           .map((day, index) => day.add(index, 'day')),
       ];
       nextWeek = nextWeek.add(7, 'day');
     } while (month === nextWeek.month());
-    return monthArray;
-  }, [firstDay, month, isWeek]);
+    return arr;
+  }, [firstDay, isWeek, month, focusDay]);
 
   useEffect(() => {
     if (firstDay.add(7, 'day').month() !== month) {
       setMonth(firstDay.add(7, 'day').month());
     }
-  }, [firstDay]);
+  }, [firstDay, month]);
 
   const insets = useSafeAreaInsets();
 
@@ -82,7 +88,7 @@ const Calendar = () => {
           <CustomText font={FontType.REGULAR_TITLE_02} color={TextColor.WHITE}>
             {month + 1}월
           </CustomText>
-          <DownIcon source={require('~/assets/icons/icon_down.png')} />
+          <DownIcon source={require('~/assets/icons/icon_down.svg')} />
         </MonthWrapper>
         <RadioWrapper>
           <RadioFocus left={radio === RADIO_TYPE.일별 ? 3 : 47} />
@@ -97,7 +103,7 @@ const Calendar = () => {
             </CustomText>
           </TouchableOpacity>
         </RadioWrapper>
-        <SettingIcon source={require('~/assets/icons/icon_setting.png')} />
+        <SettingIcon source={require('~/assets/icons/icon_setting.svg')} />
       </MonthHead>
       <CalView>
         <Week>
@@ -129,7 +135,7 @@ const Calendar = () => {
         </Week>
         {isDatePickerVisible && (
           <MonthPicker
-            onChange={(event: any, newDate: any) => {
+            onChange={(event: unknown, newDate: dayjs.Dayjs) => {
               setDatePickerVisibility(false);
               setFirstDay(getFirstDay(newDate));
             }}
@@ -138,7 +144,7 @@ const Calendar = () => {
           />
         )}
       </CalView>
-      <Button title="토클" onPress={() => setIsWeek((isWeek) => !isWeek)} />
+      <Button title="토클" onPress={() => setIsWeek((prevIsWeek) => !prevIsWeek)} />
     </CalendarWrapper>
   );
 };
@@ -234,11 +240,6 @@ const DateGauge = styled.View<{ backgroundColor: string; height: number }>`
   height: ${({ height }) => `${height}%`};
 `;
 
-const CrownIcon = styled.Image`
-  width: 16px;
-  height: 8px;
-`;
-
 const DateTextWrapper = styled.View`
   margin-top: 4px;
   margin-bottom: 12px;
@@ -303,13 +304,7 @@ const Daily = ({ monthArray, month, handleChangeFocusDay, handleChangeFirstDay, 
             <DayOfWeek>
               <DateWrapper backgroundColor={focusDay.isSame(date) ? '#3A2E8E' : '#3F4042'}>
                 <DateGauge backgroundColor={focusDay.isSame(date) ? '#5F4BF2' : '#5B5D61'} height={50} />
-                <CrownIcon
-                  source={
-                    focusDay.isSame(date)
-                      ? require('~/assets/icons/icon_crown.png')
-                      : require('~/assets/icons/icon_crown_gray.png')
-                  }
-                />
+                <SvgXml xml={focusDay.isSame(date) ? IconCrownSvg : IconCrownGraySvg} />
               </DateWrapper>
             </DayOfWeek>
             <DateTextWrapper>
@@ -346,22 +341,16 @@ const Weekly = ({ monthArray, month, handleChangeFocusDay, handleChangeFirstDay,
             <WeeklyRow>
               <DateWrapper backgroundColor={focusDay.isSame(date) ? '#3A2E8E' : '#3F4042'}>
                 <WeekGauge backgroundColor={focusDay.isSame(date) ? '#5F4BF2' : '#5B5D61'} height={50} />
-                <CrownIcon
-                  source={
-                    focusDay.isSame(date)
-                      ? require('~/assets/icons/icon_crown.png')
-                      : require('~/assets/icons/icon_crown_gray.png')
-                  }
-                />
+                <SvgXml xml={focusDay.isSame(date) ? IconCrownSvg : IconCrownGraySvg} />
               </DateWrapper>
             </WeeklyRow>
             <WeekTextWrapper key={`${date}_${index}`}>
               {Array(7)
                 .fill(0)
-                .map((_, index) => {
-                  const textDate = date.add(index, 'day');
+                .map((_, idx) => {
+                  const textDate = date.add(idx, 'day');
                   return (
-                    <DayOfWeek>
+                    <DayOfWeek key={textDate.toString()}>
                       <DateTextWrapper>
                         <CustomText
                           font={FontType.REGULAR_CAPTION}
