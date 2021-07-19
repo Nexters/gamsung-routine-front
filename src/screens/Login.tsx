@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import { login, getProfile as getKakaoProfile } from '@react-native-seoul/kakao-login';
+import { getProfile as getKakaoProfile, login } from '@react-native-seoul/kakao-login';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 
