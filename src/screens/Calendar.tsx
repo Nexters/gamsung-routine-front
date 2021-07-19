@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import dayjs from 'dayjs';
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Button, Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore : 타입이 없음
@@ -37,8 +37,6 @@ const Calendar = () => {
   const [radio, setRadio] = useState<RADIO_TYPE>(RADIO_TYPE.일별);
 
   const [isWeek, setIsWeek] = useState(true);
-  const ref = useRef<ScrollView>(null);
-  const [ab, setAb] = useState<dayjs.Dayjs[]>([]);
 
   const monthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
     let nextWeek = firstDay;
@@ -127,17 +125,7 @@ const Calendar = () => {
     if (firstDay.add(7, 'day').month() !== month) {
       setMonth(firstDay.add(7, 'day').month());
     }
-    ref.current?.scrollTo({ x: Dimensions.get('window').width });
   }, [firstDay, month]);
-
-  useEffect(() => {
-    if (ab.length > 0) {
-      ref.current?.scrollTo({ animated: false, x: Dimensions.get('window').width });
-      setTimeout(() => {
-        setAb([]);
-      }, 500);
-    }
-  }, [ab, firstDay]);
 
   const insets = useSafeAreaInsets();
 
@@ -149,8 +137,6 @@ const Calendar = () => {
     setFirstDay(date);
   };
 
-  console.log(123, ab.length);
-  console.log(123, ab);
   return (
     <CalendarWrapper paddingTop={insets.top} paddingBottom={insets.bottom} backgroundColor={BackgroundColor.SECONDARY}>
       <MonthHead>
@@ -187,78 +173,16 @@ const Calendar = () => {
             })}
           </Week>
           {radio === RADIO_TYPE.일별 && (
-            <>
-              <View>
-                {ab.length > 0 && (
-                  <Week style={{ backgroundColor: 'red' }} key={ab.toString()}>
-                    <Daily
-                      monthArray={ab}
-                      month={month}
-                      handleChangeFocusDay={handleChangeFocusDay}
-                      handleChangeFirstDay={handleChangeFirstDay}
-                      focusDay={focusDay}
-                    />
-                  </Week>
-                )}
-                <View style={{ opacity: 0, position: ab.length === 0 ? 'absolute' : 'relative' }}>
-                  <CustomText>6주가 되면 렌더링 안되는 이슈해결을 위한 임시방편</CustomText>
-                </View>
-              </View>
-              <ScrollView
-                style={{ opacity: ab.length > 0 ? 0 : 1, position: ab.length > 0 ? 'absolute' : 'relative' }}
-                ref={ref}
-                horizontal
-                disableIntervalMomentum={true}
-                snapToInterval={Dimensions.get('window').width}
-                snapToAlignment={'center'}
-                showsHorizontalScrollIndicator={false}
-                onMomentumScrollEnd={(e) => {
-                  const nextCurrent: number = Math.floor(
-                    e.nativeEvent.contentOffset.x / Dimensions.get('window').width,
-                  );
-
-                  if (ab.length || nextCurrent === 1) {
-                    return;
-                  }
-                  if (nextCurrent === 0) {
-                    setFirstDay(getFirstDay(firstDay.add(7, 'day').add(-1, 'month')));
-
-                    setAb([...prevMonthArray]);
-                  }
-                  if (nextCurrent === 2) {
-                    setFirstDay(getFirstDay(firstDay.add(7, 'day').add(1, 'month')));
-                    setAb([...nextMonthArray]);
-                  }
-                }}>
-                <Week>
-                  <Daily
-                    monthArray={prevMonthArray}
-                    month={month}
-                    handleChangeFocusDay={handleChangeFocusDay}
-                    handleChangeFirstDay={handleChangeFirstDay}
-                    focusDay={focusDay}
-                  />
-                </Week>
-                <Week>
-                  <Daily
-                    monthArray={monthArray}
-                    month={month}
-                    handleChangeFocusDay={handleChangeFocusDay}
-                    handleChangeFirstDay={handleChangeFirstDay}
-                    focusDay={focusDay}
-                  />
-                </Week>
-                <Week>
-                  <Daily
-                    monthArray={nextMonthArray}
-                    month={month}
-                    handleChangeFocusDay={handleChangeFocusDay}
-                    handleChangeFirstDay={handleChangeFirstDay}
-                    focusDay={focusDay}
-                  />
-                </Week>
-              </ScrollView>
-            </>
+            <DailyContainer
+              monthArray={monthArray}
+              month={month}
+              handleChangeFocusDay={handleChangeFocusDay}
+              handleChangeFirstDay={handleChangeFirstDay}
+              focusDay={focusDay}
+              prevMonthArray={prevMonthArray}
+              nextMonthArray={nextMonthArray}
+              firstDay={firstDay}
+            />
           )}
           {radio === RADIO_TYPE.주별 && (
             <Weekly
@@ -417,6 +341,16 @@ const WeekTextWrapper = styled.View`
   flex-direction: row;
   justify-content: center;
 `;
+
+const TempView = styled.View<{ position: string }>`
+  opacity: 0;
+  position: ${({ position }) => position};
+`;
+
+const CalenderScrollView = styled.ScrollView<{ show: boolean }>`
+  position: ${({ show }) => (show ? 'relative' : 'absolute')};
+`;
+
 interface DailyProps {
   monthArray: dayjs.Dayjs[];
   month: number;
@@ -504,5 +438,105 @@ const Weekly = ({ monthArray, month, handleChangeFocusDay, handleChangeFirstDay,
         );
       })}
     </WeeklyWrapper>
+  );
+};
+
+interface DailyContainerProps extends DailyProps {
+  firstDay: dayjs.Dayjs;
+  prevMonthArray: dayjs.Dayjs[];
+  nextMonthArray: dayjs.Dayjs[];
+}
+
+const DailyContainer = ({
+  monthArray,
+  month,
+  handleChangeFocusDay,
+  handleChangeFirstDay,
+  focusDay,
+  prevMonthArray,
+  nextMonthArray,
+  firstDay,
+}: DailyContainerProps) => {
+  const ref = useRef<ScrollView>(null);
+  const [ab, setAb] = useState<dayjs.Dayjs[]>([]);
+
+  useEffect(() => {
+    ref.current?.scrollTo({ animated: false, x: Dimensions.get('window').width });
+    setAb([]);
+  }, [month]);
+
+  return (
+    <>
+      <View>
+        {ab.length > 0 && (
+          <Week>
+            <Daily
+              monthArray={ab}
+              month={month}
+              handleChangeFocusDay={handleChangeFocusDay}
+              handleChangeFirstDay={handleChangeFirstDay}
+              focusDay={focusDay}
+            />
+          </Week>
+        )}
+        <TempView position={ab.length === 0 ? 'absolute' : 'relative'}>
+          <CustomText>6주가 되면 렌더링 안되는 이슈해결을 위한 임시방편</CustomText>
+        </TempView>
+      </View>
+      <CalenderScrollView
+        // opacity 값을 여기서 주지 않으면 적용되지 않음
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={{ opacity: ab.length > 0 ? 0 : 1 }}
+        show={ab.length > 0 ? false : true}
+        ref={ref}
+        horizontal
+        disableIntervalMomentum={true}
+        snapToInterval={Dimensions.get('window').width}
+        snapToAlignment={'center'}
+        showsHorizontalScrollIndicator={false}
+        onMomentumScrollEnd={(e) => {
+          const nextCurrent: number = Math.floor(e.nativeEvent.contentOffset.x / Dimensions.get('window').width);
+          if (ab.length || nextCurrent === 1) {
+            return;
+          }
+          if (nextCurrent === 0) {
+            handleChangeFirstDay(getFirstDay(firstDay.add(7, 'day').add(-1, 'month')));
+
+            setAb([...prevMonthArray]);
+          }
+          if (nextCurrent === 2) {
+            handleChangeFirstDay(getFirstDay(firstDay.add(7, 'day').add(1, 'month')));
+            setAb([...nextMonthArray]);
+          }
+        }}>
+        <Week>
+          <Daily
+            monthArray={prevMonthArray}
+            month={month}
+            handleChangeFocusDay={handleChangeFocusDay}
+            handleChangeFirstDay={handleChangeFirstDay}
+            focusDay={focusDay}
+          />
+        </Week>
+        <Week>
+          <Daily
+            monthArray={monthArray}
+            month={month}
+            handleChangeFocusDay={handleChangeFocusDay}
+            handleChangeFirstDay={handleChangeFirstDay}
+            focusDay={focusDay}
+          />
+        </Week>
+        <Week>
+          <Daily
+            monthArray={nextMonthArray}
+            month={month}
+            handleChangeFocusDay={handleChangeFocusDay}
+            handleChangeFirstDay={handleChangeFirstDay}
+            focusDay={focusDay}
+          />
+        </Week>
+      </CalenderScrollView>
+    </>
   );
 };
