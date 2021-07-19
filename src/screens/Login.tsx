@@ -25,7 +25,7 @@ const Login = ({ navigation }: HomeScreenProps) => {
         profileImageUrl: profile.profileImageUrl,
       };
       AuthStore.login(user);
-      navigation.navigate('Home');
+      navigation.replace('Home');
     } catch (error) {
       console.error(error);
     }
