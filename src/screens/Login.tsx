@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import { login, getProfile as getKakaoProfile } from '@react-native-seoul/kakao-login';
+import { getProfile as getKakaoProfile, login } from '@react-native-seoul/kakao-login';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 
@@ -8,7 +8,7 @@ import { User } from '~/models/User';
 import { RootStackParamList } from '~/navigations/types';
 import AuthStore from '~/stores/AuthStore';
 import { TextColor } from '~/utils/color';
-import { FontType, Align } from '~/utils/font';
+import { Align, FontType } from '~/utils/font';
 
 export interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
