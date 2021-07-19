@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import { observable, action, makeObservable } from 'mobx';
 
 import { User } from '~/models/User';
@@ -11,6 +12,7 @@ class AuthStore {
       token: observable,
       nickname: observable,
       profileImageUrl: observable,
+      isLoggedIn: observable,
       login: action,
     });
   }
@@ -18,11 +20,21 @@ class AuthStore {
   token?: string = undefined;
   nickname?: string = undefined;
   profileImageUrl?: string = undefined;
+  isLoggedIn?: boolean = false;
+
+  updateLoginState = (state: boolean) => {
+    this.isLoggedIn = state;
+  };
 
   login = (user: User) => {
     this.token = user.token;
     this.nickname = user.nickname;
     this.profileImageUrl = user.profileImageUrl;
+    try {
+      AsyncStorage.setItem('token', JSON.stringify(this.token));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   public static instance() {
