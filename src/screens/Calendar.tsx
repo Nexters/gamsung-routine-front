@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import dayjs from 'dayjs';
-import React, { useEffect, useMemo, useState } from 'react';
-import { Button, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
+import { Button, Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore : 타입이 없음
 import MonthPicker from 'react-native-month-year-picker';
@@ -37,6 +37,8 @@ const Calendar = () => {
   const [radio, setRadio] = useState<RADIO_TYPE>(RADIO_TYPE.일별);
 
   const [isWeek, setIsWeek] = useState(true);
+  const ref = useRef<ScrollView>(null);
+  const [ab, setAb] = useState<dayjs.Dayjs[]>([]);
 
   const monthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
     let nextWeek = firstDay;
@@ -65,11 +67,77 @@ const Calendar = () => {
     return arr;
   }, [firstDay, isWeek, month, focusDay]);
 
+  const prevMonthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
+    let nextWeek = getFirstDay(firstDay.add(7, 'day').add(-1, 'month').date(1));
+    let arr = [] as dayjs.Dayjs[];
+    if (isWeek) {
+      let today = focusDay;
+      if (today.format('ddd') === 'Sun') {
+        today = today.add(-7, 'day');
+      }
+      today = today.day(1);
+      return Array(7)
+        .fill(0)
+        .map((_, index) => {
+          return today.add(index, 'day');
+        });
+    }
+    do {
+      arr = [
+        ...arr,
+        ...Array(7)
+          .fill(nextWeek)
+          .map((day, index) => day.add(index, 'day')),
+      ];
+      nextWeek = nextWeek.add(7, 'day');
+      // month가 0이면 12를 리턴
+    } while ((month || 12) - 1 === nextWeek.month());
+    return arr;
+  }, [firstDay, isWeek, month, focusDay]);
+
+  const nextMonthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
+    let nextWeek = getFirstDay(firstDay.add(7, 'day').add(1, 'month').date(1));
+    let arr = [] as dayjs.Dayjs[];
+    if (isWeek) {
+      let today = focusDay;
+      if (today.format('ddd') === 'Sun') {
+        today = today.add(-7, 'day');
+      }
+      today = today.day(1);
+      return Array(7)
+        .fill(0)
+        .map((_, index) => {
+          return today.add(index, 'day');
+        });
+    }
+    do {
+      arr = [
+        ...arr,
+        ...Array(7)
+          .fill(nextWeek)
+          .map((day, index) => day.add(index, 'day')),
+      ];
+      nextWeek = nextWeek.add(7, 'day');
+      // nextWeek.month()가 0이면 12를 리턴
+    } while (month + 1 === (nextWeek.month() || 12));
+    return arr;
+  }, [firstDay, isWeek, month, focusDay]);
+
   useEffect(() => {
     if (firstDay.add(7, 'day').month() !== month) {
       setMonth(firstDay.add(7, 'day').month());
     }
+    ref.current?.scrollTo({ x: Dimensions.get('window').width });
   }, [firstDay, month]);
+
+  useEffect(() => {
+    if (ab.length > 0) {
+      ref.current?.scrollTo({ animated: false, x: Dimensions.get('window').width });
+      setTimeout(() => {
+        setAb([]);
+      }, 500);
+    }
+  }, [ab, firstDay]);
 
   const insets = useSafeAreaInsets();
 
@@ -81,6 +149,8 @@ const Calendar = () => {
     setFirstDay(date);
   };
 
+  console.log(123, ab.length);
+  console.log(123, ab);
   return (
     <CalendarWrapper paddingTop={insets.top} paddingBottom={insets.bottom} backgroundColor={BackgroundColor.SECONDARY}>
       <MonthHead>
@@ -106,22 +176,89 @@ const Calendar = () => {
         <SettingIcon source={require('~/assets/icons/icon_setting.svg')} />
       </MonthHead>
       <CalView>
-        <Week>
-          {['월', '화', '수', '목', '금', '토', '일'].map((dayOfWeek) => {
-            return (
-              <DayOfWeek key={dayOfWeek}>
-                <CustomText color={TextColor.WHITE}>{dayOfWeek}</CustomText>
-              </DayOfWeek>
-            );
-          })}
+        <Week style={{ flexDirection: 'column' }}>
+          <Week>
+            {['월', '화', '수', '목', '금', '토', '일'].map((dayOfWeek) => {
+              return (
+                <DayOfWeek key={dayOfWeek}>
+                  <CustomText color={TextColor.WHITE}>{dayOfWeek}</CustomText>
+                </DayOfWeek>
+              );
+            })}
+          </Week>
           {radio === RADIO_TYPE.일별 && (
-            <Daily
-              monthArray={monthArray}
-              month={month}
-              handleChangeFocusDay={handleChangeFocusDay}
-              handleChangeFirstDay={handleChangeFirstDay}
-              focusDay={focusDay}
-            />
+            <>
+              <View>
+                {ab.length > 0 && (
+                  <Week style={{ backgroundColor: 'red' }} key={ab.toString()}>
+                    <Daily
+                      monthArray={ab}
+                      month={month}
+                      handleChangeFocusDay={handleChangeFocusDay}
+                      handleChangeFirstDay={handleChangeFirstDay}
+                      focusDay={focusDay}
+                    />
+                  </Week>
+                )}
+                <View style={{ opacity: 0, position: ab.length === 0 ? 'absolute' : 'relative' }}>
+                  <CustomText>6주가 되면 렌더링 안되는 이슈해결을 위한 임시방편</CustomText>
+                </View>
+              </View>
+              <ScrollView
+                style={{ opacity: ab.length > 0 ? 0 : 1, position: ab.length > 0 ? 'absolute' : 'relative' }}
+                ref={ref}
+                horizontal
+                disableIntervalMomentum={true}
+                snapToInterval={Dimensions.get('window').width}
+                snapToAlignment={'center'}
+                showsHorizontalScrollIndicator={false}
+                onMomentumScrollEnd={(e) => {
+                  const nextCurrent: number = Math.floor(
+                    e.nativeEvent.contentOffset.x / Dimensions.get('window').width,
+                  );
+
+                  if (ab.length || nextCurrent === 1) {
+                    return;
+                  }
+                  if (nextCurrent === 0) {
+                    setFirstDay(getFirstDay(firstDay.add(7, 'day').add(-1, 'month')));
+
+                    setAb([...prevMonthArray]);
+                  }
+                  if (nextCurrent === 2) {
+                    setFirstDay(getFirstDay(firstDay.add(7, 'day').add(1, 'month')));
+                    setAb([...nextMonthArray]);
+                  }
+                }}>
+                <Week>
+                  <Daily
+                    monthArray={prevMonthArray}
+                    month={month}
+                    handleChangeFocusDay={handleChangeFocusDay}
+                    handleChangeFirstDay={handleChangeFirstDay}
+                    focusDay={focusDay}
+                  />
+                </Week>
+                <Week>
+                  <Daily
+                    monthArray={monthArray}
+                    month={month}
+                    handleChangeFocusDay={handleChangeFocusDay}
+                    handleChangeFirstDay={handleChangeFirstDay}
+                    focusDay={focusDay}
+                  />
+                </Week>
+                <Week>
+                  <Daily
+                    monthArray={nextMonthArray}
+                    month={month}
+                    handleChangeFocusDay={handleChangeFocusDay}
+                    handleChangeFirstDay={handleChangeFirstDay}
+                    focusDay={focusDay}
+                  />
+                </Week>
+              </ScrollView>
+            </>
           )}
           {radio === RADIO_TYPE.주별 && (
             <Weekly
@@ -202,7 +339,7 @@ const CalView = styled.View`
 `;
 
 const Week = styled.View`
-  width: 100%;
+  width: ${`${Dimensions.get('window').width}px`};
   margin: 0 0 4px;
   flex-direction: row;
   justify-content: center;
