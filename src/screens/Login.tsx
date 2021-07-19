@@ -10,7 +10,6 @@ import AuthStore from '~/stores/AuthStore';
 import { TextColor } from '~/utils/color';
 import { TouchableOpacity, Text } from 'react-native';
 import { Align, FontType } from '~/utils/font';
-import { TouchableOpacity, Text } from 'react-native';
 
 export interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
