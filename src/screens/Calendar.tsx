@@ -32,6 +32,7 @@ const Calendar = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [focusDay, setFocusDay] = useState(dayjs().locale('ko'));
   const [firstDay, setFirstDay] = useState(getFirstDay());
+  const [weekDay, setWeekDay] = useState(getFirstDay());
   // 숫자는 0~11월로 표시됨
   const [month, setMonth] = useState(firstDay.add(7, 'day').month());
   const [radio, setRadio] = useState<RADIO_TYPE>(RADIO_TYPE.일별);
@@ -39,10 +40,10 @@ const Calendar = () => {
   const [isWeek, setIsWeek] = useState(true);
 
   const monthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
-    let nextWeek = firstDay;
+    let nextWeek = focusDay;
     let arr = [] as dayjs.Dayjs[];
     if (isWeek) {
-      let today = focusDay;
+      let today = weekDay;
       if (today.format('ddd') === 'Sun') {
         today = today.add(-7, 'day');
       }
@@ -63,13 +64,13 @@ const Calendar = () => {
       nextWeek = nextWeek.add(7, 'day');
     } while (month === nextWeek.month());
     return arr;
-  }, [firstDay, isWeek, month, focusDay]);
+  }, [weekDay, isWeek, month, focusDay]);
 
   const prevMonthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
     let nextWeek = getFirstDay(firstDay.add(7, 'day').add(-1, 'month').date(1));
     let arr = [] as dayjs.Dayjs[];
     if (isWeek) {
-      let today = focusDay;
+      let today = weekDay;
       if (today.format('ddd') === 'Sun') {
         today = today.add(-7, 'day');
       }
@@ -77,7 +78,7 @@ const Calendar = () => {
       return Array(7)
         .fill(0)
         .map((_, index) => {
-          return today.add(index, 'day');
+          return today.add(-7, 'day').add(index, 'day');
         });
     }
     do {
@@ -91,13 +92,13 @@ const Calendar = () => {
       // month가 0이면 12를 리턴
     } while ((month || 12) - 1 === nextWeek.month());
     return arr;
-  }, [firstDay, isWeek, month, focusDay]);
+  }, [firstDay, isWeek, month, weekDay]);
 
   const nextMonthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
     let nextWeek = getFirstDay(firstDay.add(7, 'day').add(1, 'month').date(1));
     let arr = [] as dayjs.Dayjs[];
     if (isWeek) {
-      let today = focusDay;
+      let today = weekDay;
       if (today.format('ddd') === 'Sun') {
         today = today.add(-7, 'day');
       }
@@ -105,7 +106,7 @@ const Calendar = () => {
       return Array(7)
         .fill(0)
         .map((_, index) => {
-          return today.add(index, 'day');
+          return today.add(7, 'day').add(index, 'day');
         });
     }
     do {
@@ -119,13 +120,19 @@ const Calendar = () => {
       // nextWeek.month()가 0이면 12를 리턴
     } while (month + 1 === (nextWeek.month() || 12));
     return arr;
-  }, [firstDay, isWeek, month, focusDay]);
+  }, [firstDay, isWeek, month, weekDay]);
 
   useEffect(() => {
     if (firstDay.add(7, 'day').month() !== month) {
       setMonth(firstDay.add(7, 'day').month());
     }
   }, [firstDay, month]);
+
+  useEffect(() => {
+    if (weekDay.month() !== month) {
+      setFirstDay(getFirstDay(weekDay));
+    }
+  }, [weekDay, month]);
 
   const insets = useSafeAreaInsets();
 
@@ -135,6 +142,10 @@ const Calendar = () => {
 
   const handleChangeFirstDay = (date: dayjs.Dayjs) => {
     setFirstDay(date);
+  };
+
+  const handleChangeWeekDay = (date: dayjs.Dayjs) => {
+    setWeekDay(date);
   };
 
   return (
@@ -162,7 +173,7 @@ const Calendar = () => {
         <SettingIcon source={require('~/assets/icons/icon_setting.svg')} />
       </MonthHead>
       <CalView>
-        <Week style={{ flexDirection: 'column' }}>
+        <CalColumn>
           <Week>
             {['월', '화', '수', '목', '금', '토', '일'].map((dayOfWeek) => {
               return (
@@ -172,28 +183,21 @@ const Calendar = () => {
               );
             })}
           </Week>
-          {radio === RADIO_TYPE.일별 && (
-            <DailyContainer
-              monthArray={monthArray}
-              month={month}
-              handleChangeFocusDay={handleChangeFocusDay}
-              handleChangeFirstDay={handleChangeFirstDay}
-              focusDay={focusDay}
-              prevMonthArray={prevMonthArray}
-              nextMonthArray={nextMonthArray}
-              firstDay={firstDay}
-            />
-          )}
-          {radio === RADIO_TYPE.주별 && (
-            <Weekly
-              monthArray={monthArray}
-              month={month}
-              handleChangeFocusDay={handleChangeFocusDay}
-              handleChangeFirstDay={handleChangeFirstDay}
-              focusDay={focusDay}
-            />
-          )}
-        </Week>
+          <Container
+            monthArray={monthArray}
+            month={month}
+            handleChangeFocusDay={handleChangeFocusDay}
+            handleChangeFirstDay={handleChangeFirstDay}
+            focusDay={focusDay}
+            prevMonthArray={prevMonthArray}
+            nextMonthArray={nextMonthArray}
+            firstDay={firstDay}
+            type={radio}
+            isWeek={isWeek}
+            weekDay={weekDay}
+            handleChangeWeekDay={handleChangeWeekDay}
+          />
+        </CalColumn>
         {isDatePickerVisible && (
           <MonthPicker
             onChange={(event: unknown, newDate: dayjs.Dayjs) => {
@@ -269,6 +273,10 @@ const Week = styled.View`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+`;
+
+const CalColumn = styled(Week)`
+  flex-direction: column;
 `;
 
 const DayOfWeek = styled.View`
@@ -394,6 +402,8 @@ const Daily = ({ monthArray, month, handleChangeFocusDay, handleChangeFirstDay, 
 };
 
 const Weekly = ({ monthArray, month, handleChangeFocusDay, handleChangeFirstDay, focusDay }: DailyProps) => {
+  const day = focusDay.format('ddd') === 'Sun' ? focusDay.add(-7, 'day').day(1) : focusDay.day(1);
+
   return (
     <WeeklyWrapper>
       {monthArray.map((date, index) => {
@@ -410,9 +420,9 @@ const Weekly = ({ monthArray, month, handleChangeFocusDay, handleChangeFirstDay,
               }
             }}>
             <WeeklyRow>
-              <DateWrapper backgroundColor={focusDay.isSame(date) ? '#3A2E8E' : '#3F4042'}>
-                <WeekGauge backgroundColor={focusDay.isSame(date) ? '#5F4BF2' : '#5B5D61'} height={50} />
-                <SvgXml xml={focusDay.isSame(date) ? IconCrownSvg : IconCrownGraySvg} />
+              <DateWrapper backgroundColor={day.isSame(date) ? '#3A2E8E' : '#3F4042'}>
+                <WeekGauge backgroundColor={day.isSame(date) ? '#5F4BF2' : '#5B5D61'} height={50} />
+                <SvgXml xml={day.isSame(date) ? IconCrownSvg : IconCrownGraySvg} />
               </DateWrapper>
             </WeeklyRow>
             <WeekTextWrapper key={`${date}_${index}`}>
@@ -441,13 +451,17 @@ const Weekly = ({ monthArray, month, handleChangeFocusDay, handleChangeFirstDay,
   );
 };
 
-interface DailyContainerProps extends DailyProps {
+interface ContainerProps extends DailyProps {
   firstDay: dayjs.Dayjs;
+  weekDay: dayjs.Dayjs;
   prevMonthArray: dayjs.Dayjs[];
   nextMonthArray: dayjs.Dayjs[];
+  type: RADIO_TYPE;
+  isWeek: boolean;
+  handleChangeWeekDay: (date: dayjs.Dayjs) => void;
 }
 
-const DailyContainer = ({
+const Container = ({
   monthArray,
   month,
   handleChangeFocusDay,
@@ -456,21 +470,27 @@ const DailyContainer = ({
   prevMonthArray,
   nextMonthArray,
   firstDay,
-}: DailyContainerProps) => {
+  type,
+  isWeek,
+  handleChangeWeekDay,
+  weekDay,
+}: ContainerProps) => {
   const ref = useRef<ScrollView>(null);
   const [ab, setAb] = useState<dayjs.Dayjs[]>([]);
 
   useEffect(() => {
     ref.current?.scrollTo({ animated: false, x: Dimensions.get('window').width });
     setAb([]);
-  }, [month]);
+  }, [month, weekDay]);
+
+  const ViewType = type === RADIO_TYPE.일별 ? Daily : Weekly;
 
   return (
     <>
       <View>
         {ab.length > 0 && (
           <Week>
-            <Daily
+            <ViewType
               monthArray={ab}
               month={month}
               handleChangeFocusDay={handleChangeFocusDay}
@@ -500,17 +520,25 @@ const DailyContainer = ({
             return;
           }
           if (nextCurrent === 0) {
-            handleChangeFirstDay(getFirstDay(firstDay.add(7, 'day').add(-1, 'month')));
+            if (isWeek) {
+              handleChangeWeekDay(weekDay.add(-7, 'day'));
+            } else {
+              handleChangeFirstDay(getFirstDay(firstDay.add(7, 'day').add(-1, 'month')));
+            }
 
             setAb([...prevMonthArray]);
           }
           if (nextCurrent === 2) {
-            handleChangeFirstDay(getFirstDay(firstDay.add(7, 'day').add(1, 'month')));
+            if (isWeek) {
+              handleChangeWeekDay(weekDay.add(7, 'day'));
+            } else {
+              handleChangeFirstDay(getFirstDay(firstDay.add(7, 'day').add(1, 'month')));
+            }
             setAb([...nextMonthArray]);
           }
         }}>
         <Week>
-          <Daily
+          <ViewType
             monthArray={prevMonthArray}
             month={month}
             handleChangeFocusDay={handleChangeFocusDay}
@@ -519,7 +547,7 @@ const DailyContainer = ({
           />
         </Week>
         <Week>
-          <Daily
+          <ViewType
             monthArray={monthArray}
             month={month}
             handleChangeFocusDay={handleChangeFocusDay}
@@ -528,7 +556,7 @@ const DailyContainer = ({
           />
         </Week>
         <Week>
-          <Daily
+          <ViewType
             monthArray={nextMonthArray}
             month={month}
             handleChangeFocusDay={handleChangeFocusDay}
