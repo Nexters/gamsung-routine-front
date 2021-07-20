@@ -1,12 +1,13 @@
 import styled from '@emotion/native';
 import dayjs from 'dayjs';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Animated, Dimensions, Easing, ScrollView, TouchableOpacity, View } from 'react-native';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore : 타입이 없음
 import MonthPicker from 'react-native-month-year-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 import IconCrownSvg from '../assets/icons/icon_crown.svg';
 import IconCrownGraySvg from '../assets/icons/icon_crown_gray.svg';
@@ -37,10 +38,10 @@ const Calendar = () => {
   const [month, setMonth] = useState(firstDay.add(7, 'day').month());
   const [radio, setRadio] = useState<RADIO_TYPE>(RADIO_TYPE.일별);
 
-  const [isWeek, setIsWeek] = useState(true);
+  const [isWeek, setIsWeek] = useState(false);
 
   const monthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
-    let nextWeek = focusDay;
+    let nextWeek = firstDay;
     let arr = [] as dayjs.Dayjs[];
     if (isWeek) {
       let today = weekDay;
@@ -64,7 +65,7 @@ const Calendar = () => {
       nextWeek = nextWeek.add(7, 'day');
     } while (month === nextWeek.month());
     return arr;
-  }, [weekDay, isWeek, month, focusDay]);
+  }, [firstDay, isWeek, month, weekDay]);
 
   const prevMonthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
     let nextWeek = getFirstDay(firstDay.add(7, 'day').add(-1, 'month').date(1));
@@ -124,15 +125,27 @@ const Calendar = () => {
 
   useEffect(() => {
     if (firstDay.add(7, 'day').month() !== month) {
+      console.log(444, firstDay);
+      console.log(555, firstDay.add(7, 'day').month());
+
       setMonth(firstDay.add(7, 'day').month());
     }
   }, [firstDay, month]);
 
   useEffect(() => {
-    if (weekDay.month() !== month) {
+    if (isWeek && weekDay.month() !== month) {
       setFirstDay(getFirstDay(weekDay));
     }
-  }, [weekDay, month]);
+  }, [weekDay, month, isWeek]);
+
+  // useEffect(() => {
+  //   console.log(999, isWeek, firstDay, weekDay);
+
+  //   if (isWeek && !firstDay.isSame(weekDay)) {
+  //     // setMonth(weekDay.month());
+  //     setFirstDay(weekDay);
+  //   }
+  // }, [firstDay, isWeek, weekDay]);
 
   const insets = useSafeAreaInsets();
 
@@ -146,6 +159,10 @@ const Calendar = () => {
 
   const handleChangeWeekDay = (date: dayjs.Dayjs) => {
     setWeekDay(date);
+  };
+
+  const handleChangeIsWeek = (bol: boolean) => {
+    setIsWeek(bol);
   };
 
   return (
@@ -196,6 +213,7 @@ const Calendar = () => {
             isWeek={isWeek}
             weekDay={weekDay}
             handleChangeWeekDay={handleChangeWeekDay}
+            handleChangeIsWeek={handleChangeIsWeek}
           />
         </CalColumn>
         {isDatePickerVisible && (
@@ -209,7 +227,6 @@ const Calendar = () => {
           />
         )}
       </CalView>
-      <Button title="토클" onPress={() => setIsWeek((prevIsWeek) => !prevIsWeek)} />
     </CalendarWrapper>
   );
 };
@@ -459,6 +476,7 @@ interface ContainerProps extends DailyProps {
   type: RADIO_TYPE;
   isWeek: boolean;
   handleChangeWeekDay: (date: dayjs.Dayjs) => void;
+  handleChangeIsWeek: (bol: boolean) => void;
 }
 
 const Container = ({
@@ -473,10 +491,13 @@ const Container = ({
   type,
   isWeek,
   handleChangeWeekDay,
+  handleChangeIsWeek,
   weekDay,
 }: ContainerProps) => {
   const ref = useRef<ScrollView>(null);
   const [ab, setAb] = useState<dayjs.Dayjs[]>([]);
+  const [translation] = useState(new Animated.Value(0));
+  const [y] = useState(new Animated.Value(0));
 
   useEffect(() => {
     ref.current?.scrollTo({ animated: false, x: Dimensions.get('window').width });
@@ -484,6 +505,40 @@ const Container = ({
   }, [month, weekDay]);
 
   const ViewType = type === RADIO_TYPE.일별 ? Daily : Weekly;
+
+  const maxHeight = translation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [
+      (Dimensions.get('window').width - 22) / 7 + 12,
+      Math.ceil(monthArray.length / 7 + 2) * ((Dimensions.get('window').width - 22) / 7),
+    ], // <-- value that larger than your content's height: ;
+  });
+
+  const index = monthArray.findIndex((date) => {
+    return date.isSame(focusDay);
+  });
+
+  const maxY = translation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-((Dimensions.get('window').width - 22) / 7 + 12) * (index / 7 - 1 < 0 ? 0 : index / 7 - 1), 0], // <-- value that larger than your content's height: ;
+  });
+
+  useEffect(() => {
+    if (isWeek === false) {
+      Animated.timing(translation, {
+        toValue: 1,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start(() => handleChangeIsWeek(false));
+      Animated.timing(y, {
+        toValue: 1,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [handleChangeIsWeek, isWeek, translation, y]);
 
   return (
     <>
@@ -503,68 +558,99 @@ const Container = ({
           <CustomText>6주가 되면 렌더링 안되는 이슈해결을 위한 임시방편</CustomText>
         </TempView>
       </View>
-      <CalenderScrollView
-        // opacity 값을 여기서 주지 않으면 적용되지 않음
-        // eslint-disable-next-line react-native/no-inline-styles
-        style={{ opacity: ab.length > 0 ? 0 : 1 }}
-        show={ab.length > 0 ? false : true}
-        ref={ref}
-        horizontal
-        disableIntervalMomentum={true}
-        snapToInterval={Dimensions.get('window').width}
-        snapToAlignment={'center'}
-        showsHorizontalScrollIndicator={false}
-        onMomentumScrollEnd={(e) => {
-          const nextCurrent: number = Math.floor(e.nativeEvent.contentOffset.x / Dimensions.get('window').width);
-          if (ab.length || nextCurrent === 1) {
-            return;
-          }
-          if (nextCurrent === 0) {
-            if (isWeek) {
-              handleChangeWeekDay(weekDay.add(-7, 'day'));
-            } else {
-              handleChangeFirstDay(getFirstDay(firstDay.add(7, 'day').add(-1, 'month')));
-            }
-
-            setAb([...prevMonthArray]);
-          }
-          if (nextCurrent === 2) {
-            if (isWeek) {
-              handleChangeWeekDay(weekDay.add(7, 'day'));
-            } else {
-              handleChangeFirstDay(getFirstDay(firstDay.add(7, 'day').add(1, 'month')));
-            }
-            setAb([...nextMonthArray]);
-          }
+      <Animated.View
+        style={{
+          // height: translation,
+          maxHeight: maxHeight,
+          transform: [{ translateY: maxY }],
         }}>
-        <Week>
-          <ViewType
-            monthArray={prevMonthArray}
-            month={month}
-            handleChangeFocusDay={handleChangeFocusDay}
-            handleChangeFirstDay={handleChangeFirstDay}
-            focusDay={focusDay}
-          />
-        </Week>
-        <Week>
-          <ViewType
-            monthArray={monthArray}
-            month={month}
-            handleChangeFocusDay={handleChangeFocusDay}
-            handleChangeFirstDay={handleChangeFirstDay}
-            focusDay={focusDay}
-          />
-        </Week>
-        <Week>
-          <ViewType
-            monthArray={nextMonthArray}
-            month={month}
-            handleChangeFocusDay={handleChangeFocusDay}
-            handleChangeFirstDay={handleChangeFirstDay}
-            focusDay={focusDay}
-          />
-        </Week>
-      </CalenderScrollView>
+        <CalenderScrollView
+          // opacity 값을 여기서 주지 않으면 적용되지 않음
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{ opacity: ab.length > 0 ? 0 : 1 }}
+          show={ab.length > 0 ? false : true}
+          ref={ref}
+          horizontal
+          disableIntervalMomentum={true}
+          snapToInterval={Dimensions.get('window').width}
+          snapToAlignment={'center'}
+          // showsHorizontalScrollIndicator={false}
+          onMomentumScrollEnd={(e) => {
+            const nextCurrent: number = Math.floor(e.nativeEvent.contentOffset.x / Dimensions.get('window').width);
+            if (ab.length || nextCurrent === 1) {
+              return;
+            }
+            if (nextCurrent === 0) {
+              if (isWeek) {
+                handleChangeWeekDay(weekDay.add(-7, 'day'));
+              } else {
+                handleChangeFirstDay(getFirstDay(firstDay.add(7, 'day').add(-1, 'month')));
+              }
+
+              setAb([...prevMonthArray]);
+            }
+            if (nextCurrent === 2) {
+              if (isWeek) {
+                handleChangeWeekDay(weekDay.add(7, 'day'));
+              } else {
+                handleChangeFirstDay(getFirstDay(firstDay.add(7, 'day').add(1, 'month')));
+              }
+              setAb([...nextMonthArray]);
+            }
+          }}>
+          <Week>
+            <ViewType
+              monthArray={prevMonthArray}
+              month={month}
+              handleChangeFocusDay={handleChangeFocusDay}
+              handleChangeFirstDay={handleChangeFirstDay}
+              focusDay={focusDay}
+            />
+          </Week>
+          <GestureRecognizer
+            // style={{ overflow: 'hidden' }}
+            onSwipeUp={(state) => {
+              console.log(getFirstDay(monthArray[0]).format('YYYY-MM-DD'));
+              // if (weekDay.isSame(getFirstDay(monthArray[0]))) {
+              //   handleChangeWeekDay(getFirstDay(monthArray[0]));
+              // }
+              Animated.timing(translation, {
+                toValue: 0,
+                duration: 300,
+                easing: Easing.linear,
+                useNativeDriver: false,
+              }).start(() => handleChangeIsWeek(true));
+              Animated.timing(y, {
+                toValue: 0,
+                duration: 300,
+                easing: Easing.linear,
+                useNativeDriver: false,
+              }).start();
+            }}
+            onSwipeDown={(state) => {
+              handleChangeIsWeek(false);
+            }}>
+            <Week>
+              <ViewType
+                monthArray={monthArray}
+                month={month}
+                handleChangeFocusDay={handleChangeFocusDay}
+                handleChangeFirstDay={handleChangeFirstDay}
+                focusDay={focusDay}
+              />
+            </Week>
+          </GestureRecognizer>
+          <Week>
+            <ViewType
+              monthArray={nextMonthArray}
+              month={month}
+              handleChangeFocusDay={handleChangeFocusDay}
+              handleChangeFirstDay={handleChangeFirstDay}
+              focusDay={focusDay}
+            />
+          </Week>
+        </CalenderScrollView>
+      </Animated.View>
     </>
   );
 };
