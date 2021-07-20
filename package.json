@@ -40,6 +40,7 @@
     "react-native-safe-area-view": "^1.1.1",
     "react-native-screens": "^3.4.0",
     "react-native-svg": "^12.1.1",
+    "react-native-swipe-gestures": "^1.0.5",
     "react-navigation": "^4.4.4",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "swr": "^0.5.6"
