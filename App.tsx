@@ -6,11 +6,11 @@ import MainNavigator from '~/navigations/MainNavigator';
 import AuthStore from '~/stores/AuthStore';
 
 const App = () => {
-  const getUser = () => {
+  const getUser = async () => {
     try {
-      const token = AsyncStorage.getItem('token');
-      if (token !== null) {
-        AuthStore.updateLoginState(true);
+      const getToken = await AsyncStorage.getItem('token');
+      if (getToken !== null) {
+        AuthStore.token = JSON.parse(getToken);
       }
     } catch (error) {
       console.error(error);
