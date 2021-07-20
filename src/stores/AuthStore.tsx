@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import { observable, action, makeObservable } from 'mobx';
+import { observable, action, makeObservable, computed } from 'mobx';
 
 import { User } from '~/models/User';
 
@@ -12,7 +12,7 @@ class AuthStore {
       token: observable,
       nickname: observable,
       profileImageUrl: observable,
-      isLoggedIn: observable,
+      isLoggedIn: computed,
       login: action,
     });
   }
@@ -20,11 +20,10 @@ class AuthStore {
   token?: string = undefined;
   nickname?: string = undefined;
   profileImageUrl?: string = undefined;
-  isLoggedIn?: boolean = false;
 
-  updateLoginState = (state: boolean) => {
-    this.isLoggedIn = state;
-  };
+  get isLoggedIn(): boolean {
+    return !!this.token;
+  }
 
   login = (user: User) => {
     this.token = user.token;

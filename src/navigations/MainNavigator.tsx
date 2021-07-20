@@ -13,9 +13,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const MainNavigator = () => {
   return (
     <Stack.Navigator>
-      {AuthStore.isLoggedIn === false && (
-        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-      )}
+      {!AuthStore.isLoggedIn && <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />}
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen
         name="AddTask"
