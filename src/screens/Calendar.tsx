@@ -29,11 +29,18 @@ const getFirstDay = (date?: dayjs.Dayjs | string) => {
   return day.day(1);
 };
 
+const getMonday = (date?: dayjs.Dayjs | string) => {
+  let day = dayjs(date).locale('ko');
+  if (day.format('ddd') === 'Sun') {
+    day = day.add(-7, 'day');
+  }
+  return day.day(1);
+};
 const Calendar = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [focusDay, setFocusDay] = useState(dayjs().locale('ko'));
   const [firstDay, setFirstDay] = useState(getFirstDay());
-  const [weekDay, setWeekDay] = useState(getFirstDay());
+  const [weekDay, setWeekDay] = useState(getMonday(focusDay));
   // 숫자는 0~11월로 표시됨
   const [month, setMonth] = useState(firstDay.add(7, 'day').month());
   const [radio, setRadio] = useState<RADIO_TYPE>(RADIO_TYPE.일별);
@@ -130,13 +137,17 @@ const Calendar = () => {
 
       setMonth(firstDay.add(7, 'day').month());
     }
-  }, [firstDay, month]);
+  }, [firstDay, month, focusDay]);
 
   useEffect(() => {
     if (isWeek && weekDay.month() !== month) {
       setFirstDay(getFirstDay(weekDay));
     }
   }, [weekDay, month, isWeek]);
+
+  useEffect(() => {
+    setWeekDay(getMonday(focusDay));
+  }, [focusDay]);
 
   // useEffect(() => {
   //   console.log(999, isWeek, firstDay, weekDay);
@@ -541,7 +552,7 @@ const Container = ({
   }, [handleChangeIsWeek, isWeek, translation, y]);
 
   return (
-    <>
+    <View style={{ overflow: 'hidden' }}>
       <View>
         {ab.length > 0 && (
           <Week>
@@ -610,10 +621,22 @@ const Container = ({
           <GestureRecognizer
             // style={{ overflow: 'hidden' }}
             onSwipeUp={(state) => {
-              console.log(getFirstDay(monthArray[0]).format('YYYY-MM-DD'));
-              // if (weekDay.isSame(getFirstDay(monthArray[0]))) {
-              //   handleChangeWeekDay(getFirstDay(monthArray[0]));
-              // }
+              console.log(77, getFirstDay(monthArray[0].add(7, 'day')).format('YYYY-MM-DD'));
+              console.log(88, weekDay.format('YYYY-MM-DD'));
+              if (!isWeek) {
+                if (
+                  !weekDay.isSame(monthArray[0]) &&
+                  !weekDay.isSame(monthArray[1]) &&
+                  !weekDay.isSame(monthArray[2]) &&
+                  !weekDay.isSame(monthArray[3]) &&
+                  !weekDay.isSame(monthArray[4]) &&
+                  !weekDay.isSame(monthArray[5]) &&
+                  !weekDay.isSame(monthArray[6])
+                ) {
+                  handleChangeWeekDay(monthArray[0]);
+                }
+              }
+              handleChangeIsWeek(true);
               Animated.timing(translation, {
                 toValue: 0,
                 duration: 300,
@@ -651,6 +674,6 @@ const Container = ({
           </Week>
         </CalenderScrollView>
       </Animated.View>
-    </>
+    </View>
   );
 };
