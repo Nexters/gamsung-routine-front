@@ -8,32 +8,41 @@ import { FontType, Align } from '~/utils/font';
 
 interface Props {
   taskList: Task[];
-  selectedTasks: Task[];
-  onToggleTask: (task: Task) => void;
+  onToggleTask: (id: number) => void;
+  isVisiblePopup: number | null;
+  onPopupClick: (id: number) => void;
 }
 
-const TaskListView = (props: Props) => {
-  const { taskList, selectedTasks, onToggleTask } = props;
+const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick }: Props) => {
+  const handleMoreButtonClick = (id: number) => {
+    onPopupClick?.(id);
+  };
 
   return (
     <TaskListViewStyled>
       {taskList.length > 0 ? (
         taskList.map((task, index) => {
-          const has = selectedTasks.some((selectedTask) => {
-            return selectedTask.id === task.id;
-          });
           return (
             <TaskListItem
-              listType="day"
-              taskName={task.taskName}
-              has={has}
+              layerIndex={index}
+              totalCount={taskList?.length}
+              key={index}
+              listType="week"
+              id={task.id}
+              title={task.title}
+              timesOfWeek={task.timesOfWeek}
+              timesOfDay={task.timesOfDay}
+              percent={task.percent}
+              todayOfWeek={task.todayOfWeek}
+              dayOfWeek={task.dayOfWeek}
               share
               shareCount={3}
               shareFinishedCount={1}
               sharePeople={['1', '2', '3']}
               sharePercent={30}
-              onTaskItemClick={() => onToggleTask(task)}
-              key={index}
+              onTaskItemClick={(id) => onToggleTask(id)}
+              isVisiblePopup={isVisiblePopup}
+              onMoreButtonClick={handleMoreButtonClick}
             />
           );
         })
@@ -50,7 +59,7 @@ const TaskListView = (props: Props) => {
 };
 
 const TaskListViewStyled = styled.ScrollView`
-  padding: 20px 0;
+  margin-top: 20px;
   flex: 1;
 `;
 
