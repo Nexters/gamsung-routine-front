@@ -149,15 +149,6 @@ const Calendar = () => {
     setWeekDay(getMonday(focusDay));
   }, [focusDay]);
 
-  // useEffect(() => {
-  //   console.log(999, isWeek, firstDay, weekDay);
-
-  //   if (isWeek && !firstDay.isSame(weekDay)) {
-  //     // setMonth(weekDay.month());
-  //     setFirstDay(weekDay);
-  //   }
-  // }, [firstDay, isWeek, weekDay]);
-
   const insets = useSafeAreaInsets();
 
   const handleChangeFocusDay = (date: dayjs.Dayjs) => {
@@ -552,7 +543,9 @@ const Container = ({
   }, [handleChangeIsWeek, isWeek, translation, y]);
 
   return (
-    <View style={{ overflow: 'hidden' }}>
+    <View
+    // style={{ overflow: 'hidden' }}
+    >
       <View>
         {ab.length > 0 && (
           <Week>
@@ -624,7 +617,9 @@ const Container = ({
               console.log(77, getFirstDay(monthArray[0].add(7, 'day')).format('YYYY-MM-DD'));
               console.log(88, weekDay.format('YYYY-MM-DD'));
               if (!isWeek) {
-                if (
+                if (focusDay.month() === month) {
+                  handleChangeWeekDay(getMonday(focusDay));
+                } else if (
                   !weekDay.isSame(monthArray[0]) &&
                   !weekDay.isSame(monthArray[1]) &&
                   !weekDay.isSame(monthArray[2]) &&
