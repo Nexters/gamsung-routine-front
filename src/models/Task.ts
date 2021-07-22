@@ -1,4 +1,9 @@
 export interface Task {
   id: number;
-  taskName: string;
+  title: string;
+  timesOfWeek: number;
+  timesOfDay: number;
+  percent: number;
+  todayOfWeek: { count: number; endTasks: string[] };
+  dayOfWeek: { count: number; endTasks: string[] }[];
 }
