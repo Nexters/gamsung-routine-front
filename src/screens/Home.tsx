@@ -1,12 +1,12 @@
 import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import Complete from '~/components/Complete';
 import CustomText from '~/components/CustomText';
 import TaskListView from '~/components/TaskListView';
 import Week from '~/components/Week';
-import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -16,48 +16,103 @@ export interface HomeScreenProps {
 }
 
 const Home = ({ navigation }: HomeScreenProps) => {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
-
-  const taskList = useMemo(() => {
-    return Array.from({ length: 10 }, (_, index) => ({
+  const totalPercent = 30;
+  const [taskList, setTaskList] = useState(() => {
+    return Array.from({ length: 5 }, (_, index) => ({
       id: index + 1,
-      taskName: `task${index + 1}`,
+      title: `My Task ${index + 1}`,
+      timesOfWeek: 3,
+      timesOfDay: 1,
+      percent: 15,
+      todayOfWeek: {
+        count: 3,
+        endTasks: ['1'],
+      },
+      dayOfWeek: [
+        {
+          count: 3,
+          endTasks: ['1', '2'],
+        },
+        {
+          count: 2,
+          endTasks: ['1', '2'],
+        },
+        {
+          count: 6,
+          endTasks: ['1', '2', '3', '4', '5'],
+        },
+        {
+          count: 8,
+          endTasks: ['1'],
+        },
+        {
+          count: 3,
+          endTasks: [],
+        },
+        {
+          count: 2,
+          endTasks: ['1'],
+        },
+        {
+          count: 0,
+          endTasks: [],
+        },
+      ],
     }));
-  }, []);
+  });
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+  const [isVisiblePopup, setIsVisiblePopup] = useState<number | null>(null);
+
+  const handleToggleTask = (id: number) => {
+    setIsVisiblePopup(null);
+    setTaskList((oldTaskList) =>
+      oldTaskList.filter((task, _) => {
+        if (task.id === id) {
+          task.todayOfWeek.endTasks.length > 0 &&
+            task.todayOfWeek.count > task.todayOfWeek.endTasks.length &&
+            task.todayOfWeek.endTasks.push('3');
+        }
+        return task;
+      }),
+    );
   };
 
-  const handleToggleTask = (selectedTask: Task) => {
-    setSelectedTasks((oldSelectedTasks) => {
-      const has = oldSelectedTasks.some((task) => {
-        return task.id === selectedTask.id;
-      });
-      if (has) {
-        return oldSelectedTasks.filter((task) => {
-          return task.id !== selectedTask.id;
-        });
-      }
-      toggleModal();
-      return [...oldSelectedTasks, selectedTask];
-    });
+  const handlePopupClick = (id: number | null) => {
+    setIsVisiblePopup(isVisiblePopup === id ? null : id);
   };
 
   return (
     <HomeStyled>
-      <HomeView>
-        <Complete percent={(selectedTasks.length / taskList.length) * 100} />
-        <Week />
-        <TaskView>
-          <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
-            내 하루 테스크 {taskList.length}
-          </CustomText>
-          <TaskListView taskList={taskList} selectedTasks={selectedTasks} onToggleTask={handleToggleTask} />
-        </TaskView>
-      </HomeView>
-      <AddTaskButton onPress={() => navigation.navigate('AddTask')}>
+      <TouchableWithoutFeedback style={{ height: '100%' }} onPress={() => handlePopupClick(null)}>
+        <HomeView>
+          <Complete percent={totalPercent} />
+          <Week />
+          <TaskView>
+            <TaskTitleView>
+              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.SECONDARY}>
+                내 하루 테스크{' '}
+                <CustomText font={FontType.BOLD_BODY_02} color={TextColor.MAIN}>
+                  {taskList.length}
+                </CustomText>
+              </CustomText>
+              <CustomText font={FontType.BOLD_BODY_02} color={TextColor.PRIMARY}>
+                {totalPercent}% 달성
+              </CustomText>
+            </TaskTitleView>
+            <TaskListView
+              taskList={taskList}
+              onToggleTask={handleToggleTask}
+              isVisiblePopup={isVisiblePopup}
+              onPopupClick={handlePopupClick}
+            />
+          </TaskView>
+        </HomeView>
+      </TouchableWithoutFeedback>
+      <AddTaskButton
+        onPress={() => {
+          setIsVisiblePopup(null);
+          navigation.navigate('AddTask');
+        }}>
         <CustomText color={TextColor.WHITE} font={FontType.REGULAR_HEAD_01}>
           +
         </CustomText>
@@ -68,7 +123,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
 
 const HomeStyled = styled.SafeAreaView`
   flex: 1;
-  background-color: #fff;
+  background-color: #f2f2f4;
 `;
 
 const HomeView = styled.View`
@@ -79,13 +134,16 @@ const HomeView = styled.View`
 `;
 
 const TaskView = styled.View`
+  flex: 1;
   justify-content: space-between;
   padding: 20px;
-  background-color: #fff;
+  background-color: #f2f2f4;
   border-radius: 20px 20px 0 0;
-  z-index: 2;
-  display: flex;
-  flex: 1;
+`;
+
+const TaskTitleView = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const AddTaskButton = styled.TouchableOpacity`
@@ -94,7 +152,7 @@ const AddTaskButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: 41%;
+  right: 24px;
   bottom: 30px;
   background-color: #513de5;
   border-radius: 64px;
