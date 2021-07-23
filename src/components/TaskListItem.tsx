@@ -57,6 +57,7 @@ const TaskListItem = (props: Props) => {
   };
 
   return (
+    // XXX : 스타일 내부에서는 z-index 가 먹히지 않음
     <TaskListItemStyled style={{ zIndex: totalCount - layerIndex }} checkLastItem={totalCount === layerIndex + 1}>
       <TaskListItemView>
         <TaskListItemViewLeft onPress={() => handleTaskItemClick()}>
