@@ -5,6 +5,7 @@ import CustomText from '~/components/CustomText';
 import MonsterIcon from '~/components/MonsterIcon';
 import TaskDetailPopup from '~/components/TaskDetailPopup';
 import { List } from '~/models/List';
+import { Weekday } from '~/models/Task';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
@@ -17,8 +18,8 @@ interface Props {
   timesOfWeek: number;
   timesOfDay: number;
   percent: number;
-  todayOfWeek: { count: number; endTasks: string[] };
-  dayOfWeek: { count: number; endTasks: string[] }[];
+  todayOfWeek: Weekday;
+  dayOfWeek: Weekday[];
   share?: boolean;
   shareCount?: number;
   shareFinishedCount?: number;
