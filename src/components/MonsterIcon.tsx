@@ -11,11 +11,11 @@ interface Props {
 }
 
 const MonsterIconBackground = (props: Props['data']) => {
-  const value = 100 - Math.floor((props?.endTasks.length / props?.count) * 100);
+  const value = 100 - Math.floor((props.endTasks.length / props.count) * 100);
 
   return (
     <MonsterIconBackgroundStyled>
-      <MonsterIconBackgroundBack count={props?.count} value={value} />
+      <MonsterIconBackgroundBack count={props.count} value={value} />
       <MonsterIconBackgroundPrograss value={value} />
     </MonsterIconBackgroundStyled>
   );
@@ -25,7 +25,7 @@ const MonsterIcon = ({ listType, data }: Props) => {
   return (
     <MonsterIconStyled listType={listType}>
       <MonsterIconBackground {...data} />
-      <MonsterIconFace source={getFace(data?.count, data?.endTasks.length)} />
+      <MonsterIconFace source={getFace(data.count, data.endTasks.length)} />
     </MonsterIconStyled>
   );
 };
