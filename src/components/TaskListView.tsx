@@ -15,7 +15,7 @@ interface Props {
 
 const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick }: Props) => {
   const handleMoreButtonClick = (id: number) => {
-    onPopupClick?.(id);
+    onPopupClick(id);
   };
 
   return (
