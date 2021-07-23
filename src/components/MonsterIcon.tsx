@@ -1,10 +1,11 @@
 import styled from '@emotion/native';
 import React from 'react';
 
+import { List } from '~/models/List';
 import { getFace } from '~/utils/monster';
 
 interface Props {
-  listType: 'day' | 'week';
+  listType: List;
   data: { count: number; endTasks: string[] };
 }
 
@@ -28,7 +29,7 @@ const MonsterIcon = ({ listType, data }: Props) => {
   );
 };
 
-const MonsterIconStyled = styled.View<{ listType: 'day' | 'week' }>`
+const MonsterIconStyled = styled.View<{ listType: List }>`
   width: 28px;
   height: 28px;
   position: relative;

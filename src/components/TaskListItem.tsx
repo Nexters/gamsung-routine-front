@@ -4,11 +4,12 @@ import React from 'react';
 import CustomText from '~/components/CustomText';
 import MonsterIcon from '~/components/MonsterIcon';
 import TaskDetailPopup from '~/components/TaskDetailPopup';
+import { List } from '~/models/List';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
-  listType: 'day' | 'week';
+  listType: List;
   layerIndex: number;
   totalCount: number;
   id: number;
@@ -170,7 +171,7 @@ const TaskListItemWeekView = styled.View`
   margin-top: 15px;
 `;
 
-const TaskListItemInfoView = styled.View<{ listType: 'day' | 'week'; share: boolean | undefined }>`
+const TaskListItemInfoView = styled.View<{ listType: List; share: boolean | undefined }>`
   flex-direction: row;
   justify-content: space-between;
   border-top-color: #e4e5e9;
