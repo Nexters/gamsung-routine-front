@@ -2,11 +2,12 @@ import styled from '@emotion/native';
 import React from 'react';
 
 import { List } from '~/models/List';
+import { Weekday } from '~/models/Task';
 import { getFace } from '~/utils/monster';
 
 interface Props {
   listType: List;
-  data: { count: number; endTasks: string[] };
+  data: Weekday;
 }
 
 const MonsterIconBackground = (props: Props['data']) => {
