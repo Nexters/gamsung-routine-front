@@ -1,14 +1,13 @@
 import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useState } from 'react';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { StatusBar } from 'react-native';
 
-import Complete from '~/components/Complete';
+import Calendar from '~/components/Calendar';
 import CustomText from '~/components/CustomText';
 import TaskListView from '~/components/TaskListView';
-import Week from '~/components/Week';
 import { RootStackParamList } from '~/navigations/types';
-import { TextColor } from '~/utils/color';
+import { BackgroundColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 export interface HomeScreenProps {
@@ -82,12 +81,16 @@ const Home = ({ navigation }: HomeScreenProps) => {
   };
 
   return (
-    <HomeStyled>
-      <TouchableWithoutFeedback style={{ height: '100%' }} onPress={() => handlePopupClick(null)}>
+    <>
+      <TopStatusBarStyled backgroundColor={BackgroundColor.SECONDARY} />
+      <StatusBar barStyle="light-content" />
+      <HomeStyled>
+        <Calendar />
         <HomeView>
-          <Complete percent={totalPercent} />
-          <Week />
           <TaskView>
+            <DropView>
+              <DropIcon source={require('~/assets/icons/icon_drop.png')} />
+            </DropView>
             <TaskTitleView>
               <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.SECONDARY}>
                 내 하루 테스크{' '}
@@ -107,19 +110,24 @@ const Home = ({ navigation }: HomeScreenProps) => {
             />
           </TaskView>
         </HomeView>
-      </TouchableWithoutFeedback>
-      <AddTaskButton
-        onPress={() => {
-          setIsVisiblePopup(null);
-          navigation.navigate('AddTask');
-        }}>
-        <CustomText color={TextColor.WHITE} font={FontType.REGULAR_HEAD_01}>
-          +
-        </CustomText>
-      </AddTaskButton>
-    </HomeStyled>
+        <AddTaskButton
+          onPress={() => {
+            setIsVisiblePopup(null);
+            navigation.navigate('AddTask');
+          }}>
+          <CustomText color={TextColor.WHITE} font={FontType.REGULAR_HEAD_01}>
+            +
+          </CustomText>
+        </AddTaskButton>
+      </HomeStyled>
+    </>
   );
 };
+
+const TopStatusBarStyled = styled.SafeAreaView<{ backgroundColor: string }>`
+  flex: 0;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`;
 
 const HomeStyled = styled.SafeAreaView`
   flex: 1;
@@ -128,6 +136,7 @@ const HomeStyled = styled.SafeAreaView`
 
 const HomeView = styled.View`
   flex: 1;
+  flex-direction: column;
   width: 100%;
   height: auto;
   background-color: #292c34;
@@ -139,6 +148,17 @@ const TaskView = styled.View`
   padding: 20px;
   background-color: #f2f2f4;
   border-radius: 20px 20px 0 0;
+`;
+
+const DropView = styled.View`
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+`;
+
+const DropIcon = styled.Image`
+  width: 14px;
+  height: 6px;
 `;
 
 const TaskTitleView = styled.View`

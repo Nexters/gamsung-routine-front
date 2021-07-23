@@ -36,6 +36,7 @@ const getMonday = (date?: dayjs.Dayjs | string) => {
   }
   return day.day(1);
 };
+
 const Calendar = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [focusDay, setFocusDay] = useState(dayjs().locale('ko'));
@@ -45,7 +46,7 @@ const Calendar = () => {
   const [month, setMonth] = useState(firstDay.add(7, 'day').month());
   const [radio, setRadio] = useState<RADIO_TYPE>(RADIO_TYPE.일별);
 
-  const [isWeek, setIsWeek] = useState(false);
+  const [isWeek, setIsWeek] = useState(true);
 
   const monthArray = useMemo<dayjs.Dayjs[]>((): dayjs.Dayjs[] => {
     let nextWeek = firstDay;
