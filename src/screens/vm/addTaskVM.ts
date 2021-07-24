@@ -1,17 +1,9 @@
-import {action, computed, makeObservable, observable} from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { Category } from '~/models/Category';
 import { Template } from '~/models/Template';
 
 export class AddTaskVM {
-  categories: Category[] = [
-    { id: 1, name: '건강' },
-    { id: 2, name: '학습' },
-    { id: 3, name: '인플루언스' },
-    { id: 4, name: '취미' },
-    { id: 5, name: '흐으으으음' },
-    { id: 6, name: '모르겠따' },
-    { id: 7, name: '악' },
-  ];
+  categories: Category[] = categoryMock;
 
   selectedCategoryId: number | null = 1;
   selectedTemplateId: number | null = null;
@@ -35,11 +27,20 @@ export class AddTaskVM {
       templates: computed,
       selectedTemplateId: observable,
       onSelectedCategoryIdChange: action,
-      onSelectedTemplateIdChange: action
+      onSelectedTemplateIdChange: action,
     });
   }
 }
 
+const categoryMock: Category[] = [
+  { id: 1, name: '건강' },
+  { id: 2, name: '학습' },
+  { id: 3, name: '인플루언스' },
+  { id: 4, name: '취미' },
+  { id: 5, name: '흐으으으음' },
+  { id: 6, name: '모르겠따' },
+  { id: 7, name: '악' },
+]
 
 const templateMockA: Template[] = [
   {
@@ -196,6 +197,13 @@ const templateMockB: Template[] = [
       { id: 5, taskName: '칼퇴' },
       { id: 6, taskName: '칼퇴' },
       { id: 7, taskName: '칼퇴' },
+      { id: 8, taskName: '칼퇴' },
+      { id: 9, taskName: '칼퇴' },
+      { id: 10, taskName: '칼퇴' },
+      { id: 11, taskName: '칼퇴' },
+      { id: 12, taskName: '칼퇴' },
+      { id: 13, taskName: '칼퇴' },
+      { id: 14, taskName: '칼퇴' },
     ],
     templateIconSrc: null,
   },

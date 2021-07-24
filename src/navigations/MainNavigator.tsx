@@ -15,17 +15,7 @@ const MainNavigator = () => {
     <Stack.Navigator>
       {!AuthStore.isLoggedIn && <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />}
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-      <Stack.Screen
-        name="AddTask"
-        component={AddTask}
-        options={({ navigation }: AddTaskScreenProps) => {
-          return {
-            title: '테스크 선택',
-            headerBackTitle: ' ',
-            headerRight: () => <AddTaskSubmitButton navigation={navigation} />,
-          };
-        }}
-      />
+      <Stack.Screen name="AddTask" component={AddTask} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

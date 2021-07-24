@@ -9,6 +9,7 @@ import { observer } from 'mobx-react';
 import { BackgroundColor } from '~/utils/color';
 import { SelectCategoryWithTemplate } from '~/components/SelectCategoryWithTemplate';
 import { AddTaskVM } from '~/screens/vm/addTaskVM';
+import { CollapsibleToolbar } from '~/components/CollapsibleToolbar';
 
 const AddTask = observer(() => {
   const sheetRef = React.useRef(null);
@@ -34,19 +35,25 @@ const AddTask = observer(() => {
       {vm.selectedTemplateId === null ? (
         <SelectCategoryWithTemplate vm={vm} />
       ) : (
-        <ContentScrollView>
-          {vm.templates
-            .find((it) => it.id === vm.selectedTemplateId)
-            ?.tasks.map((task) => {
-              return (
-                <AddTaskItem
-                  key={task.id}
-                  taskName={task.taskName}
-                  onClick={() => console.log(`${task.taskName} click`)}
-                />
-              );
-            })}
-        </ContentScrollView>
+        <>
+          <CollapsibleToolbar
+              title={vm.templates.find((it) => it.id === vm.selectedTemplateId)?.title ?? ''}
+          >
+            <ContentScrollView>
+              {vm.templates
+                .find((it) => it.id === vm.selectedTemplateId)
+                ?.tasks.map((task) => {
+                  return (
+                    <AddTaskItem
+                      key={task.id}
+                      taskName={task.taskName}
+                      onClick={() => console.log(`${task.taskName} click`)}
+                    />
+                  );
+                })}
+            </ContentScrollView>
+          </CollapsibleToolbar>
+        </>
       )}
 
       {/* 이제 이 페이지에서 사용하지 않는 컴포넌트인데, 혹시 다른 페이지에서 카피해 갈 때 참고용으로 쓰기 위해 임시로 남겨둠 */}
@@ -64,7 +71,7 @@ const AddTask = observer(() => {
   );
 });
 
-const ContentScrollView = styled.ScrollView`
+const ContentScrollView = styled.View`
   width: 100%;
   height: 100%;
   padding: 20px;
