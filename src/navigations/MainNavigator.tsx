@@ -4,6 +4,7 @@ import React from 'react';
 import AddTaskSubmitButton, { AddTaskScreenProps } from '~/components/AddTaskSubmitButton';
 import { RootStackParamList } from '~/navigations/types';
 import AddTask from '~/screens/AddTask';
+import EditTask from '~/screens/EditTask';
 import Home from '~/screens/Home';
 import Login from '~/screens/Login';
 import AuthStore from '~/stores/AuthStore';
@@ -23,6 +24,16 @@ const MainNavigator = () => {
             title: '테스크 선택',
             headerBackTitle: ' ',
             headerRight: () => <AddTaskSubmitButton navigation={navigation} />,
+          };
+        }}
+      />
+      <Stack.Screen
+        name="EditTask"
+        component={EditTask}
+        options={() => {
+          return {
+            title: ' ',
+            headerBackTitle: ' ',
           };
         }}
       />

@@ -1,14 +1,20 @@
 import styled from '@emotion/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 
 import AddTaskItem from '~/components/AddTaskItem';
-import { observer } from 'mobx-react';
-import { BackgroundColor } from '~/utils/color';
-import { SelectCategoryWithTemplate } from '~/components/SelectCategoryWithTemplate';
-import { AddTaskVM } from '~/screens/vm/addTaskVM';
 import { CollapsibleToolbar } from '~/components/CollapsibleToolbar';
+import { SelectCategoryWithTemplate } from '~/components/SelectCategoryWithTemplate';
+import { RootStackParamList } from '~/navigations/types';
+import { AddTaskVM } from '~/screens/vm/addTaskVM';
+import { BackgroundColor } from '~/utils/color';
 
-const AddTask = observer(() => {
+export interface AddTaskScreenProps {
+  navigation: StackNavigationProp<RootStackParamList>;
+}
+
+const AddTask = observer(({ navigation }: AddTaskScreenProps) => {
   const [vm] = useState<AddTaskVM>(new AddTaskVM());
 
   return (
@@ -26,7 +32,10 @@ const AddTask = observer(() => {
                     <AddTaskItem
                       key={task.id}
                       taskName={task.taskName}
-                      onClick={() => console.log(`${task.taskName} click`)}
+                      onClick={() => {
+                        console.log(`${task.taskName} click`);
+                        navigation.navigate('EditTask');
+                      }}
                     />
                   );
                 })}
