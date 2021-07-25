@@ -30,6 +30,7 @@ const MainNavigator = () => {
       <Stack.Screen
         name="EditTask"
         component={EditTask}
+        initialParams={{ taskId: null }}
         options={() => {
           return {
             title: ' ',

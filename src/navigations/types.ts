@@ -1,6 +1,8 @@
 export type RootStackParamList = {
-  Login: React.FC | undefined;
-  Home: React.FC | undefined;
-  AddTask: React.FC | undefined;
-  EditTask: React.FC | undefined;
+  Login: undefined;
+  Home: undefined;
+  AddTask: undefined;
+  EditTask: { taskId: TaskId };
 };
+
+export type TaskId = number | null;

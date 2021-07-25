@@ -34,7 +34,7 @@ const AddTask = observer(({ navigation }: AddTaskScreenProps) => {
                       taskName={task.taskName}
                       onClick={() => {
                         console.log(`${task.taskName} click`);
-                        navigation.navigate('EditTask');
+                        navigation.navigate('EditTask', { taskId: task.id });
                       }}
                     />
                   );
