@@ -1,4 +1,4 @@
 export interface WheelItem {
-    id: number | string;
-    name: string;
+  id: number | string;
+  name: string;
 }

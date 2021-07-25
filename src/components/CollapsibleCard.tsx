@@ -1,6 +1,5 @@
-import { View } from 'react-native';
-import React from 'react';
 import styled from '@emotion/native';
+import React from 'react';
 
 interface Props {
   children: React.ReactNode;

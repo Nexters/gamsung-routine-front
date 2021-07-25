@@ -1,12 +1,11 @@
 import styled from '@emotion/native';
-import React from 'react';
-import { useCallback } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image } from 'react-native';
+
+import CustomText from './CustomText';
+
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-import CustomText from './CustomText';
 
 interface Props {
   label: string;

@@ -2,6 +2,7 @@ import styled from '@emotion/native';
 import { getProfile as getKakaoProfile, login } from '@react-native-seoul/kakao-login';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
+import { TouchableOpacity, Text } from 'react-native';
 
 import CustomText from '~/components/CustomText';
 import { User } from '~/models/User';
@@ -9,7 +10,6 @@ import { RootStackParamList } from '~/navigations/types';
 import AuthStore from '~/stores/AuthStore';
 import { TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
-import { TouchableOpacity, Text } from 'react-native';
 
 export interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;

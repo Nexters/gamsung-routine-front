@@ -1,9 +1,11 @@
 import styled from '@emotion/native';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
+
+import CustomText from './CustomText';
+
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-import CustomText from './CustomText';
 
 interface Props {
   isRender: boolean;

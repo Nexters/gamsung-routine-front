@@ -1,12 +1,12 @@
-import React from 'react';
 import styled from '@emotion/native';
+import React, { useState, useCallback } from 'react';
+
 import { CollapsibleCard } from './CollapsibleCard';
-import { useState } from 'react';
-import { WheelPicker } from './WheelPicker';
-import { BackgroundColor } from '~/utils/color';
-import { useCallback } from 'react';
-import { FoldableContainer } from './FoldableContainer';
 import { DayWeekContainer } from './DayWeekContainer';
+import { FoldableContainer } from './FoldableContainer';
+import { WheelPicker } from './WheelPicker';
+
+import { BackgroundColor } from '~/utils/color';
 
 interface Props {
   marginTop?: number;

@@ -1,8 +1,9 @@
 import styled from '@emotion/native';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'react-native-svg';
+
 import { WheelItem } from '~/models/WheelItem';
 
 interface Props {
@@ -18,7 +19,7 @@ export const WheelPicker = (props: Props) => {
 
   return (
     <WheelPickerStyled>
-      <LinearGradient></LinearGradient>
+      <LinearGradient />
       <ScrollView nestedScrollEnabled scrollEventThrottle={1} showsVerticalScrollIndicator={false}>
         {props.items.map((it) => (
           <PickerItemStyled key={it.id} onPress={handleItemClick(it.id)}>
