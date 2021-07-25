@@ -42,6 +42,7 @@ export const WeekLoopCard = (props: Props) => {
   return (
     <CollapsibleCard marginTop={props?.marginTop} marginBottom={props?.marginBottom}>
       <FoldableContainer
+        type={'SELECTOR'}
         label={'일주일동안'}
         isOpen={isTimesWeekWheelOpen}
         countText={timesWeekText(timesWeek + 1)}

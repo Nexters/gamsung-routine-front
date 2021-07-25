@@ -1,13 +1,15 @@
 import styled from '@emotion/native';
 import React from 'react';
-import { Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'react-native-svg';
+
+import CustomText from './CustomText';
 
 import { WheelItem } from '~/models/WheelItem';
 
 interface Props {
   items: WheelItem[];
+  height?: number;
   onClick?: (id: number | string) => void;
 }
 
@@ -18,12 +20,12 @@ export const WheelPicker = (props: Props) => {
   };
 
   return (
-    <WheelPickerStyled>
+    <WheelPickerStyled height={props?.height}>
       <LinearGradient />
       <ScrollView nestedScrollEnabled scrollEventThrottle={1} showsVerticalScrollIndicator={false}>
         {props.items.map((it) => (
           <PickerItemStyled key={it.id} onPress={handleItemClick(it.id)}>
-            <Text>{it.name}</Text>
+            <CustomText>{it.name}</CustomText>
           </PickerItemStyled>
         ))}
       </ScrollView>
@@ -40,4 +42,5 @@ const PickerItemStyled = styled.TouchableOpacity`
   height: 36px;
   align-items: center;
   align-content: center;
+  justify-content: center;
 `;
