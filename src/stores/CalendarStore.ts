@@ -50,9 +50,9 @@ class CalendarStore {
     this.days = this.getDays();
   }
 
-  changeIsWeek(bol: boolean) {
-    this.isWeek = bol;
-    if (!bol) {
+  changeIsWeek(isWeek: boolean) {
+    this.isWeek = isWeek;
+    if (!isWeek) {
       this.changeFirstDay(this.getFirstDay(this.weekDay));
       Animated.parallel([
         Animated.timing(this.translation, {
