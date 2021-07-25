@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from '@emotion/native';
 import { CollapsibleCard } from './CollapsibleCard';
-import CustomText from './CustomText';
 import { useState } from 'react';
 import { WheelPicker } from './WheelPicker';
-import { BackgroundColor, TextColor } from '~/utils/color';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { BackgroundColor } from '~/utils/color';
 import { useCallback } from 'react';
-import { Font, FontType } from '~/utils/font';
-import { Image } from 'react-native';
 import { FoldableContainer } from './FoldableContainer';
 import { DayWeekContainer } from './DayWeekContainer';
 
-export const WeekLoopCard = () => {
+interface Props {
+  marginTop?: number;
+  marginBottom?: number;
+}
+
+export const WeekLoopCard = (props: Props) => {
   // 1 ~ 7 ; 7 = 매일
   const [timesWeek, setTimesWeek] = useState<number>(7);
   const [isTimesWeekWheelOpen, setIsTimesWeekWheelOpen] = useState<boolean>(false);
@@ -39,7 +40,7 @@ export const WeekLoopCard = () => {
   };
 
   return (
-    <CollapsibleCard>
+    <CollapsibleCard marginTop={props?.marginTop} marginBottom={props?.marginBottom}>
       <FoldableContainer
         label={'일주일동안'}
         isOpen={isTimesWeekWheelOpen}

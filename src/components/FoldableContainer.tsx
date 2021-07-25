@@ -52,7 +52,6 @@ export const FoldableContainer = (props: Props) => {
 const FoldableContainerStyled = styled.View`
   display: flex;
   flex-direction: row;
-  margin-top: 16px;
 `;
 
 const RightViewStyled = styled.View`
