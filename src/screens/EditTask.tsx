@@ -1,14 +1,23 @@
 import styled from '@emotion/native';
+import { RouteProp } from '@react-navigation/native';
 import React from 'react';
 
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
 import useModal from '~/hooks/useModal';
+import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 
-const EditTask = () => {
+interface EditTaskScreenProps {
+  route: RouteProp<RootStackParamList, 'EditTask'>;
+}
+
+const EditTask = ({ route }: EditTaskScreenProps) => {
+  const { taskId } = route.params;
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
+
+  console.log(taskId);
 
   const handleEditSubmitClick = () => {
     openModal();
