@@ -3,12 +3,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
-import { SvgXml } from 'react-native-svg';
 
-import IconDrop from '~/assets/icons/icon_drop.svg';
-import IconTake from '~/assets/icons/icon_take.svg';
 import Calendar from '~/components/Calendar';
 import CustomText from '~/components/CustomText';
+import Icon, { IconType } from '~/components/Icon';
 import TaskListView from '~/components/TaskListView';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore from '~/stores/CalendarStore';
@@ -94,7 +92,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
         <HomeView>
           <TaskView>
             <DropView onPress={() => CalendarStore.changeIsWeek(!CalendarStore.isWeek)}>
-              <SvgXml xml={CalendarStore.isWeek ? IconDrop : IconTake} />
+              {CalendarStore.isWeek ? <Icon type={IconType.drop} /> : <Icon type={IconType.take} />}
             </DropView>
             <TaskTitleView>
               <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.SECONDARY}>
@@ -159,11 +157,6 @@ const DropView = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   padding-bottom: 20px;
-`;
-
-const DropIcon = styled.Image`
-  width: 14px;
-  height: 6px;
 `;
 
 const TaskTitleView = styled.View`

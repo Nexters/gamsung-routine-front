@@ -7,11 +7,9 @@ import { Animated, Dimensions, TouchableOpacity, View } from 'react-native';
 // @ts-ignore : 타입이 없음
 import MonthPicker from 'react-native-month-year-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { SvgXml } from 'react-native-svg';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-import IconCrownSvg from '../assets/icons/icon_crown.svg';
-import IconCrownGraySvg from '../assets/icons/icon_crown_gray.svg';
+import Icon, { IconType } from './Icon';
 
 import CustomText from '~/components/CustomText';
 import CalendarStore from '~/stores/CalendarStore';
@@ -236,7 +234,11 @@ const Daily = observer(() => {
                   backgroundColor={CalendarStore.focusDay.isSame(date, 'day') ? '#5F4BF2' : '#5B5D61'}
                   height={50}
                 />
-                <SvgXml xml={CalendarStore.focusDay.isSame(date, 'day') ? IconCrownSvg : IconCrownGraySvg} />
+                {CalendarStore.focusDay.isSame(date, 'day') ? (
+                  <Icon type={IconType.crown} />
+                ) : (
+                  <Icon type={IconType.crownGray} />
+                )}
               </DateWrapper>
             </DayOfWeek>
             <DateTextWrapper>
@@ -278,7 +280,7 @@ const Weekly = observer(() => {
             <WeeklyRow>
               <DateWrapper backgroundColor={day.isSame(date) ? '#3A2E8E' : '#3F4042'}>
                 <WeekGauge backgroundColor={day.isSame(date) ? '#5F4BF2' : '#5B5D61'} height={50} />
-                <SvgXml xml={day.isSame(date) ? IconCrownSvg : IconCrownGraySvg} />
+                {day.isSame(date) ? <Icon type={IconType.crown} /> : <Icon type={IconType.crownGray} />}
               </DateWrapper>
             </WeeklyRow>
             <WeekTextWrapper key={`${date}_${index}`}>
