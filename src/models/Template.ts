@@ -1,8 +1,8 @@
-import { Task } from '~/models/Task';
+import { TemplateTask } from '~/models/TemplateTask';
 
 export interface Template {
   id: number;
   title: string;
-  tasks: Task[];
+  tasks: TemplateTask[];
   templateIconSrc: string | null;
 }

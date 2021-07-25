@@ -83,19 +83,19 @@ export const CollapsibleToolbar = observer((props: Props) => {
   return (
     <SafeAreaView style={{ width: '100%', flex: 1 }}>
       <Animated.ScrollView
-        style={{
-          flex: 1,
-        }}
-        onScroll={Animated.event([
-          {
-            nativeEvent: {
-              contentOffset: {
-                y: scrollY,
+          style={{
+            flex: 1,
+          }}
+          onScroll={Animated.event([
+            {
+              nativeEvent: {
+                contentOffset: {
+                  y: scrollY,
+                },
               },
             },
-          },
-        ])}
-        scrollEventThrottle={16}>
+          ])}
+          scrollEventThrottle={16}>
         <Animated.View>{props.children}</Animated.View>
       </Animated.ScrollView>
       <Header style={{ height: HEADER_EXPANDED_HEIGHT, transform: [{ translateY: headerSlide }] }}>
@@ -104,9 +104,13 @@ export const CollapsibleToolbar = observer((props: Props) => {
             height: HEADER_EXPANDED_HEIGHT,
             transform: [{ translateY: backgroundSlide }],
           }}
-        />
+        >
+          <View style={{position: 'absolute', bottom: 0, left: 20}}>
+            <Text style={{color: 'white'}}>ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</Text>
+          </View>
+        </Background>
         <Action style={{ transform: [{ scale: headerTitleSize }] }}>
-          <View>
+          <View style={{ position: 'absolute', bottom: 20, left: 20}}>
             <Text style={{ color: 'white' }}>{props.title}</Text>
           </View>
         </Action>
@@ -150,15 +154,15 @@ const AppBar = styled.View`
   padding: 20px 24px;
   justify-content: space-between;
   background-color: transparent;
-  flex-direction: row;
 `;
 
 const Header = styled(Animated.View)`
+  overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  overflow: hidden;
+  height: 56px;
 `;
 
 const Background = styled(Animated.View)`
@@ -170,14 +174,11 @@ const Background = styled(Animated.View)`
 `;
 
 const Action = styled(Animated.View)`
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 60px;
   z-index: 10;
-  flex-direction: row;
-  align-items: center;
-  position: absolute;
   padding: 0 40px;
   color: white;
 `;
