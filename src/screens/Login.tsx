@@ -9,6 +9,7 @@ import { RootStackParamList } from '~/navigations/types';
 import AuthStore from '~/stores/AuthStore';
 import { TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
+import { TouchableOpacity, Text } from 'react-native';
 
 export interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -40,6 +41,9 @@ const Login = ({ navigation }: HomeScreenProps) => {
           카카오 로그인 하기
         </CustomText>
       </KakaoLoginButton>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <Text>임시 버튼 로그인 없이 일단 넘어갓</Text>
+      </TouchableOpacity>
     </LoginStyled>
   );
 };
