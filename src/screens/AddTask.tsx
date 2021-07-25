@@ -1,10 +1,7 @@
 import styled from '@emotion/native';
 import React, { useState } from 'react';
-import BottomSheet from 'reanimated-bottom-sheet';
 
 import AddTaskItem from '~/components/AddTaskItem';
-import BottomSheetContent from '~/components/BottomSheet';
-import { Task } from '~/models/Task';
 import { observer } from 'mobx-react';
 import { BackgroundColor } from '~/utils/color';
 import { SelectCategoryWithTemplate } from '~/components/SelectCategoryWithTemplate';
@@ -20,9 +17,7 @@ const AddTask = observer(() => {
         <SelectCategoryWithTemplate vm={vm} />
       ) : (
         <>
-          <CollapsibleToolbar
-              title={vm.templates.find((it) => it.id === vm.selectedTemplateId)?.title ?? ''}
-          >
+          <CollapsibleToolbar title={vm.templates.find((it) => it.id === vm.selectedTemplateId)?.title ?? ''}>
             <ContentScrollView>
               {vm.templates
                 .find((it) => it.id === vm.selectedTemplateId)

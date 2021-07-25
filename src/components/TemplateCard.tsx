@@ -3,13 +3,12 @@ import styled from '@emotion/native';
 import CustomText from '~/components/CustomText';
 import { FontType } from '~/utils/font';
 import { BackgroundColor, TextColor } from '~/utils/color';
-import { Task } from '~/models/Task';
-import { View } from 'react-native';
+import { TemplateTask } from '~/models/TemplateTask';
 
 interface Props {
   id: number;
   name: string;
-  tasks: Task[];
+  tasks: TemplateTask[];
   onPress?: (id: number) => void;
 }
 

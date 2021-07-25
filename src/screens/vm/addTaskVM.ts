@@ -41,7 +41,7 @@ const categoryMock: Category[] = [
   { id: 5, name: '흐으으으음' },
   { id: 6, name: '모르겠따' },
   { id: 7, name: '악' },
-]
+];
 
 const templateMockA: Template[] = [
   {
