@@ -9,7 +9,7 @@ import { Align } from '~/utils/font';
 interface Props {
   taskName: string;
   onClick: () => void;
-  selected: boolean;
+  selected?: boolean;
 }
 
 const AddTaskItem = (props: Props) => {

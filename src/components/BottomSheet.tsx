@@ -28,7 +28,7 @@ const BottomSheet = (props: Props) => {
       </BottomSheetTitle>
       <ContentScrollView>
         {selectedTasks.map((task, index) => {
-          return <AddTaskItem selected={true} key={index} taskName={task.taskName} onClick={() => onPress(task)} />;
+          return <AddTaskItem selected={true} key={index} taskName={task.title} onClick={() => onPress(task)} />;
         })}
       </ContentScrollView>
     </BottomSheetView>
