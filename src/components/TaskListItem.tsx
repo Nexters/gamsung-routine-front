@@ -1,16 +1,16 @@
 import styled from '@emotion/native';
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import CustomText from '~/components/CustomText';
 import MonsterIcon from '~/components/MonsterIcon';
 import TaskDetailPopup from '~/components/TaskDetailPopup';
-import { List } from '~/models/List';
 import { Weekday } from '~/models/Task';
+import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
-  listType: List;
   layerIndex: number;
   totalCount: number;
   id: number;
@@ -30,11 +30,10 @@ interface Props {
   onMoreButtonClick: (id: number) => void;
 }
 
-const TaskListItem = (props: Props) => {
+const TaskListItem = observer((props: Props) => {
   const {
     layerIndex,
     totalCount,
-    listType,
     id,
     title,
     timesOfWeek,
@@ -53,7 +52,7 @@ const TaskListItem = (props: Props) => {
   const checkTodayTaskState = todayOfWeek.count - todayOfWeek.endTasks.length;
 
   const handleTaskItemClick = () => {
-    listType === 'day' && onTaskItemClick?.(id);
+    CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.(id);
   };
 
   return (
@@ -61,7 +60,7 @@ const TaskListItem = (props: Props) => {
     <TaskListItemStyled style={{ zIndex: totalCount - layerIndex }} checkLastItem={totalCount === layerIndex + 1}>
       <TaskListItemView>
         <TaskListItemViewLeft onPress={() => handleTaskItemClick()}>
-          {listType === 'day' && <MonsterIcon listType={listType} data={todayOfWeek} />}
+          {CalendarStore.radio === RADIO_TYPE.루틴 && <MonsterIcon listType={CalendarStore.radio} data={todayOfWeek} />}
           <TaskListItemViewTitle>
             <TaskListItemViewInfo>
               <CustomText
@@ -82,24 +81,24 @@ const TaskListItem = (props: Props) => {
           <MoreIconImage source={require('~/assets/icons/icon_more.png')} />
         </MoreIconButton>
       </TaskListItemView>
-      {listType === 'week' && (
+      {CalendarStore.radio === RADIO_TYPE.리포트 && (
         <TaskListItemWeekView>
           {dayOfWeek?.map((item, index) => {
-            return <MonsterIcon key={index} listType={listType} data={item} />;
+            return <MonsterIcon key={index} listType={CalendarStore.radio} data={item} />;
           })}
         </TaskListItemWeekView>
       )}
-      <TaskListItemInfoView listType={listType} share={share}>
+      <TaskListItemInfoView listType={CalendarStore.radio} share={share}>
         <TaskListItemInfoImageList>
           {share && sharePeople?.map((_, index) => <TaskListItemInfoImage index={index} key={index} />)}
         </TaskListItemInfoImageList>
         <TaskListItemInfoPercent>
-          {listType === 'day' && share && (
+          {CalendarStore.radio === RADIO_TYPE.루틴 && share && (
             <CustomText color={TextColor.SECONDARY} font={FontType.REGULAR_CAPTION}>
               {shareCount}명 중 {shareFinishedCount}명이 완료
             </CustomText>
           )}
-          {listType === 'week' && (
+          {CalendarStore.radio === RADIO_TYPE.리포트 && (
             <CustomText color={TextColor.SECONDARY} font={FontType.REGULAR_CAPTION}>
               {share ? `${shareCount}명의 달성률 총 ` : '나의 달성률 총 '}
               <CustomText color={TextColor.MAIN} font={FontType.REGULAR_CAPTION}>
@@ -112,7 +111,7 @@ const TaskListItem = (props: Props) => {
       {isVisiblePopup === id && <TaskDetailPopup id={id} />}
     </TaskListItemStyled>
   );
-};
+});
 
 const TaskListItemStyled = styled.View<{ checkLastItem: boolean }>`
   flex-direction: column;
@@ -173,13 +172,14 @@ const TaskListItemWeekView = styled.View`
   margin-top: 15px;
 `;
 
-const TaskListItemInfoView = styled.View<{ listType: List; share: boolean | undefined }>`
+const TaskListItemInfoView = styled.View<{ listType: RADIO_TYPE; share: boolean | undefined }>`
   flex-direction: row;
   justify-content: space-between;
   border-top-color: #e4e5e9;
-  border-top-width: ${({ listType, share }) => listType === 'day' && share && '1px'};
-  padding-top: ${({ listType, share }) => (listType === 'day' && share ? '20px' : listType === 'week' ? '16px' : '0')};
-  margin-top: ${({ listType, share }) => listType === 'day' && share && '12px'};
+  border-top-width: ${({ listType, share }) => listType === RADIO_TYPE.루틴 && share && '1px'};
+  padding-top: ${({ listType, share }) =>
+    listType === RADIO_TYPE.루틴 && share ? '20px' : listType === RADIO_TYPE.리포트 ? '16px' : '0'};
+  margin-top: ${({ listType, share }) => listType === RADIO_TYPE.루틴 && share && '12px'};
 `;
 
 const TaskListItemInfoImageList = styled.View`
