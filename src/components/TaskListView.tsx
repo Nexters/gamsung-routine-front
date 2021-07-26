@@ -27,7 +27,6 @@ const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick }: 
               layerIndex={index}
               totalCount={taskList?.length}
               key={index}
-              listType="week"
               id={task.id}
               title={task.title}
               timesOfWeek={task.timesOfWeek}

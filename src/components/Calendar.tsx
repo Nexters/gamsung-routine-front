@@ -12,19 +12,18 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import Icon, { IconType } from './Icon';
 
 import CustomText from '~/components/CustomText';
-import CalendarStore from '~/stores/CalendarStore';
+import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import { BackgroundColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
-enum RADIO_TYPE {
-  '일별' = '일별',
-  '주별' = '주별',
-}
-
 const Calendar = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [radio, setRadio] = useState<RADIO_TYPE>(RADIO_TYPE.일별);
   const insets = useSafeAreaInsets();
+
+  const left = CalendarStore.left.interpolate({
+    inputRange: [0, 1],
+    outputRange: [3, 53],
+  });
 
   return (
     <CalendarWrapper paddingTop={insets.top} paddingBottom={insets.bottom} backgroundColor={BackgroundColor.SECONDARY}>
@@ -36,17 +35,26 @@ const Calendar = () => {
           <DownIcon source={require('~/assets/icons/icon_down.svg')} />
         </MonthWrapper>
         <RadioWrapper>
-          <RadioFocus left={radio === RADIO_TYPE.일별 ? 3 : 47} />
-          <RadioDay onPress={() => setRadio(RADIO_TYPE.일별)}>
+          <Animated.View
+            style={{
+              left,
+              position: 'absolute',
+              width: 51,
+              height: 24,
+              backgroundColor: '#6b6d72',
+              borderRadius: 7,
+            }}
+          />
+          <RadioDay onPress={() => CalendarStore.changeRadio(RADIO_TYPE.루틴)}>
             <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.WHITE}>
-              {RADIO_TYPE.일별}
+              {RADIO_TYPE.루틴}
             </CustomText>
           </RadioDay>
-          <TouchableOpacity onPress={() => setRadio(RADIO_TYPE.주별)}>
+          <RadioWeek onPress={() => CalendarStore.changeRadio(RADIO_TYPE.리포트)}>
             <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.WHITE}>
-              {RADIO_TYPE.주별}
+              {RADIO_TYPE.리포트}
             </CustomText>
-          </TouchableOpacity>
+          </RadioWeek>
         </RadioWrapper>
         <SettingIcon source={require('~/assets/icons/icon_setting.svg')} />
       </MonthHead>
@@ -61,7 +69,7 @@ const Calendar = () => {
               );
             })}
           </Week>
-          <Container type={radio} />
+          <Container />
         </CalColumn>
         {isDatePickerVisible && (
           <MonthPicker
@@ -105,24 +113,20 @@ const DownIcon = styled.Image`
 const RadioWrapper = styled.View`
   background-color: #3f4042;
   border-radius: 7px;
-  width: 101px;
+  width: 108px;
   height: 28px;
   justify-content: center;
   align-items: center;
   flex-direction: row;
 `;
 
-const RadioFocus = styled.View<{ left: number }>`
-  position: absolute;
-  width: 51px;
-  height: 24px;
-  background-color: #6b6d72;
-  border-radius: 7px;
-  left: ${({ left }) => left};
-`;
-
 const RadioDay = styled.TouchableOpacity`
   margin-right: 20px;
+  margin-left: 13px;
+`;
+
+const RadioWeek = styled.TouchableOpacity`
+  margin-right: 7px;
 `;
 
 const CalView = styled.View`
@@ -309,12 +313,8 @@ const Weekly = observer(() => {
   );
 });
 
-interface ContainerProps {
-  type: RADIO_TYPE;
-}
-
-const Container = observer(({ type }: ContainerProps) => {
-  const ViewType = type === RADIO_TYPE.일별 ? Daily : Weekly;
+const Container = observer(() => {
+  const ViewType = CalendarStore.radio === RADIO_TYPE.루틴 ? Daily : Weekly;
 
   const maxHeight = CalendarStore.translation.interpolate({
     inputRange: [0, 1],

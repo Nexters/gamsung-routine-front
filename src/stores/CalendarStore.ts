@@ -2,6 +2,11 @@ import dayjs from 'dayjs';
 import { action, makeObservable, observable } from 'mobx';
 import { Animated, Easing } from 'react-native';
 
+export enum RADIO_TYPE {
+  '루틴' = '루틴',
+  '리포트' = '리포트',
+}
+
 class CalendarStore {
   // XXX : _ prefix를 계속 사용할지 고민
   private static _instance: CalendarStore;
@@ -16,6 +21,9 @@ class CalendarStore {
   translation = new Animated.Value(0);
   y = new Animated.Value(0);
 
+  radio = RADIO_TYPE.루틴;
+  left = new Animated.Value(0);
+
   constructor() {
     makeObservable(this, {
       focusDay: observable,
@@ -23,6 +31,7 @@ class CalendarStore {
       month: observable,
       isWeek: observable,
       days: observable,
+      radio: observable,
 
       changeFirstDay: action,
       changeIsWeek: action,
@@ -101,6 +110,25 @@ class CalendarStore {
 
   changeWeekDay(date: dayjs.Dayjs) {
     this.weekDay = date;
+  }
+
+  changeRadio(type: RADIO_TYPE) {
+    this.radio = type;
+    if (this.radio === RADIO_TYPE.루틴) {
+      Animated.timing(this.left, {
+        toValue: 0,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start();
+    } else {
+      Animated.timing(this.left, {
+        toValue: 1,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start();
+    }
   }
 
   getFirstDay(date?: dayjs.Dayjs | string) {
