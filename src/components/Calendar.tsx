@@ -339,7 +339,7 @@ const Container = observer(() => {
       <Animated.View
         style={{
           maxHeight: maxHeight,
-          transform: [{ translateY: maxY }],
+          // transform: [{ translateY: maxY }],
         }}>
         <GestureRecognizer
           onSwipeUp={() => {
