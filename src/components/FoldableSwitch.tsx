@@ -11,12 +11,8 @@ interface Props {
   onToggle?: (value: boolean) => void;
 }
 
-export const FoldableSwitch = (props: Props) => {
-  const { isOn, onToggle, onColor } = props;
+export const FoldableSwitch = ({isOn, onColor, onToggle}: Props) => {
 
-  const handleToggle = (value: boolean) => {
-    props?.onToggle?.(value);
-  };
   const [switchTranslate] = useState(new Animated.Value(0));
   useEffect(() => {
     if (isOn) {
@@ -42,12 +38,12 @@ export const FoldableSwitch = (props: Props) => {
     }
   }, [isOn, switchTranslate]);
 
-  const memoizedOnSwitchPressCallback = React.useCallback(() => {
-    handleToggle(!isOn);
-  }, [handleToggle, isOn]);
+  const handleSwitchToggle = () => {
+    onToggle?.(!isOn);
+  };
 
   return (
-    <Pressable onPress={memoizedOnSwitchPressCallback}>
+    <Pressable onPress={handleSwitchToggle}>
       <ContainerStyled style={{ backgroundColor: isOn ? '#513DE5' : '#B6B8BC' }}>
         <CircleStyled
           style={[

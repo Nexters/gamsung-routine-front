@@ -20,7 +20,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const CollapsibleToolbar = observer((props: Props) => {
+export const CollapsibleToolbar = observer(({title, children}: Props) => {
   const [scrollY] = useState(new Animated.Value(0));
 
   const headerHeight = scrollY.interpolate({
@@ -74,7 +74,7 @@ export const CollapsibleToolbar = observer((props: Props) => {
   });
 
   return (
-    <SafeAreaView style={{ width: '100%', flex: 1 }}>
+    <CollapsibleToolbarStyled>
       <Animated.ScrollView
         style={{
           flex: 1,
@@ -89,7 +89,7 @@ export const CollapsibleToolbar = observer((props: Props) => {
           },
         ])}
         scrollEventThrottle={16}>
-        <Animated.View>{props.children}</Animated.View>
+        <Animated.View>{children}</Animated.View>
       </Animated.ScrollView>
       <Header style={{ height: HEADER_EXPANDED_HEIGHT, transform: [{ translateY: headerSlide }] }}>
         <Background
@@ -103,7 +103,7 @@ export const CollapsibleToolbar = observer((props: Props) => {
         </Background>
         <Action style={{ transform: [{ scale: headerTitleSize }] }}>
           <View style={{ position: 'absolute', bottom: 20, left: 20 }}>
-            <Text style={{ color: 'white' }}>{props.title}</Text>
+            <Text style={{ color: 'white' }}>{title}</Text>
           </View>
         </Action>
       </Header>
@@ -117,9 +117,14 @@ export const CollapsibleToolbar = observer((props: Props) => {
           </CustomText>
         </RightHeaderItem>
       </AppBar>
-    </SafeAreaView>
+    </CollapsibleToolbarStyled>
   );
 });
+
+const CollapsibleToolbarStyled = styled.SafeAreaView`
+  width: 100%;
+  flex: 1;
+`;
 
 const LeftHeaderItem = styled(Animated.View)`
   position: absolute;

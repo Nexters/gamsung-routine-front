@@ -11,8 +11,8 @@ interface Props {
   isRender: boolean;
 }
 
-export const DayWeekContainer = (props: Props) => {
-  if (!props.isRender) {
+export const DayWeekContainer = ({ isRender }: Props) => {
+  if (!isRender) {
     return null;
   }
 
@@ -20,7 +20,7 @@ export const DayWeekContainer = (props: Props) => {
 
   return (
     <DayWeekContainerStyled>
-      {Array.from({ length: 7 }, (_, index) => day[index]).map((it, index) => (
+      {day.map((it, index) => (
         <DayStyled selected={index % 2 === 0}>
           <TouchableOpacity>
             <CustomText font={FontType.MEDIUM_BODY_01} color={index % 2 === 0 ? TextColor.WHITE : TextColor.SECONDARY}>

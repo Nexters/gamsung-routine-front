@@ -6,6 +6,7 @@ import CustomText from './CustomText';
 
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import Icon, { IconType } from './Icon';
 
 interface Props {
   isOpen: boolean;
@@ -13,27 +14,21 @@ interface Props {
   onSelectorClick?: () => void;
 }
 
-export const FoldableSelector = (props: Props) => {
+export const FoldableSelector = ({isOpen, countText, onSelectorClick}: Props) => {
   const handleOpen = () => {
-    props?.onSelectorClick?.();
+    onSelectorClick?.();
   };
 
   return (
     <SelectorStyled onPress={handleOpen}>
       <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY}>
-        {props?.countText ?? ''}
+        {countText ?? ''}
       </CustomText>
-      <Image
-        style={{ width: 24, height: 24, marginLeft: 6 }}
-        source={
-          props.isOpen ? require('~/assets/icons/icon_arrow_up.png') : require('~/assets/icons/icon_arrow_down.png')
-        }
-      />
+      {isOpen ? <Icon type={IconType.iconArrowUp} /> : <Icon type={IconType.iconArrowDown} />}
     </SelectorStyled>
   );
 };
 
 const SelectorStyled = styled.TouchableOpacity`
-  display: flex;
   flex-direction: row;
 `;

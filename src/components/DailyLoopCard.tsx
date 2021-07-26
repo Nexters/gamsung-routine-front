@@ -12,7 +12,7 @@ interface Props {
   marginBottom?: number;
 }
 
-export const DailyLoopCard = (props: Props) => {
+export const DailyLoopCard = ({ marginTop, marginBottom }: Props) => {
   const countDaily = useCallback((time) => {
     return `${time + 1} 회`;
   }, []);
@@ -20,13 +20,13 @@ export const DailyLoopCard = (props: Props) => {
   const [dailyTime, setDailyTime] = useState<number>(0);
   const [isDailyTimeWheelOpen, setIsDailyTimeWheelOpen] = useState<boolean>(false);
 
-  const handleWheelItemClick = (id: number | string) => {
-    setDailyTime(id as number);
+  const handleWheelItemClick = (id: number) => {
+    setDailyTime(id);
     setIsDailyTimeWheelOpen(false);
   };
 
   return (
-    <CollapsibleCard marginTop={props?.marginTop} marginBottom={props?.marginBottom}>
+    <CollapsibleCard marginTop={marginTop} marginBottom={marginBottom}>
       <FoldableContainer
         type={'SELECTOR'}
         label={'하루동안'}

@@ -10,20 +10,19 @@ import { WheelItem } from '~/models/WheelItem';
 interface Props {
   items: WheelItem[];
   height?: number;
-  onClick?: (id: number | string) => void;
+  onClick?: (id: number) => void;
 }
 
-export const WheelPicker = (props: Props) => {
-  const handleItemClick = (id: string | number) => () => {
-    console.log('click', id);
-    props.onClick?.(id);
+export const WheelPicker = ({ items, height, onClick }: Props) => {
+  const handleItemClick = (id: number) => () => {
+    onClick?.(id);
   };
 
   return (
-    <WheelPickerStyled height={props?.height}>
+    <WheelPickerStyled height={height}>
       <LinearGradient />
       <ScrollView nestedScrollEnabled scrollEventThrottle={1} showsVerticalScrollIndicator={false}>
-        {props.items.map((it) => (
+        {items.map((it) => (
           <PickerItemStyled key={it.id} onPress={handleItemClick(it.id)}>
             <CustomText>{it.name}</CustomText>
           </PickerItemStyled>
@@ -34,7 +33,7 @@ export const WheelPicker = (props: Props) => {
 };
 
 const WheelPickerStyled = styled.View<{ height?: number }>`
-  height: ${({ height }) => height ?? '96px'};
+  height: ${({ height }) => `${height ?? 96}px`};
 `;
 
 const PickerItemStyled = styled.TouchableOpacity`

@@ -7,22 +7,21 @@ interface Props {
   marginBottom?: number;
 }
 
-export const CollapsibleCard = (props: Props) => {
+export const CollapsibleCard = ({ children, marginBottom, marginTop }: Props) => {
   return (
-    <CollapsibleCardStyled marginTop={props?.marginTop ?? 0} marginBottom={props?.marginBottom ?? 0}>
-      {props.children}
+    <CollapsibleCardStyled marginTop={marginTop || 0} marginBottom={marginBottom || 0}>
+      {children}
     </CollapsibleCardStyled>
   );
 };
 
 const CollapsibleCardStyled = styled.View<{ marginTop: number; marginBottom: number }>`
-  display: flex;
   flex-direction: column;
   min-height: 56px;
   width: 100%;
   border-radius: 8px;
   background-color: white;
   padding: 16px;
-  margin-top: ${({ marginTop }) => marginTop};
-  margin-bottom: ${({ marginBottom }) => marginBottom};
+  margin-top: ${({ marginTop }) => `${marginTop}px`};
+  margin-bottom: ${({ marginBottom }) => `${marginBottom}px`};
 `;

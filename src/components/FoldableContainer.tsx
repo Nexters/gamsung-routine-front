@@ -16,35 +16,34 @@ interface Props {
   onOpen?: () => void;
 }
 
-export const FoldableContainer = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(props.isOpen);
+export const FoldableContainer = ({ label, type, isOpen, countText, onOpen }: Props) => {
+  const [isExpended, setIsExpended] = useState(isOpen);
 
   const handleOpen = useCallback(() => {
-    setIsOpen(!isOpen);
-    props.onOpen?.();
-  }, [props.onOpen]);
+    setIsExpended(!isExpended);
+    onOpen?.();
+  }, [onOpen]);
 
   useEffect(() => {
-    setIsOpen(props.isOpen);
-  }, [props.isOpen]);
+    setIsExpended(isExpended);
+  }, [isOpen]);
 
   return (
     <FoldableContainerStyled>
       <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY}>
-        {props.label}
+        {label}
       </CustomText>
       <RightViewStyled>
-        {props.type === 'SELECTOR' && (
-          <FoldableSelector countText={props?.countText} isOpen={props.isOpen} onSelectorClick={handleOpen} />
+        {type === 'SELECTOR' && (
+          <FoldableSelector countText={countText} isOpen={isExpended} onSelectorClick={handleOpen} />
         )}
-        {props.type === 'SWITCH' && <FoldableSwitch isOn={props.isOpen} onToggle={handleOpen} />}
+        {type === 'SWITCH' && <FoldableSwitch isOn={isExpended} onToggle={handleOpen} />}
       </RightViewStyled>
     </FoldableContainerStyled>
   );
 };
 
 const FoldableContainerStyled = styled.View`
-  display: flex;
   flex-direction: row;
 `;
 

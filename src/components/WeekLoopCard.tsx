@@ -13,13 +13,13 @@ interface Props {
   marginBottom?: number;
 }
 
-export const WeekLoopCard = (props: Props) => {
+export const WeekLoopCard = ({ marginBottom, marginTop }: Props) => {
   // 1 ~ 7 ; 7 = 매일
   const [timesWeek, setTimesWeek] = useState<number>(7);
   const [isTimesWeekWheelOpen, setIsTimesWeekWheelOpen] = useState<boolean>(false);
 
-  const handleWheelItemClick = (id: number | string) => {
-    setTimesWeek(id as number);
+  const handleWheelItemClick = (id: number) => {
+    setTimesWeek(id);
     setIsTimesWeekWheelOpen(false);
   };
 
@@ -40,10 +40,10 @@ export const WeekLoopCard = (props: Props) => {
   };
 
   return (
-    <CollapsibleCard marginTop={props?.marginTop} marginBottom={props?.marginBottom}>
+    <CollapsibleCard marginTop={marginTop} marginBottom={marginBottom}>
       <FoldableContainer
-        type={'SELECTOR'}
-        label={'일주일동안'}
+        type="SELECTOR"
+        label="일주일동안"
         isOpen={isTimesWeekWheelOpen}
         countText={timesWeekText(timesWeek + 1)}
         onOpen={() => setIsTimesWeekWheelOpen(!isTimesWeekWheelOpen)}
