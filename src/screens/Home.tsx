@@ -106,6 +106,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
               </CustomText>
             </TaskTitleView>
             <TaskListView
+              navigation={navigation}
               taskList={taskList}
               onToggleTask={handleToggleTask}
               isVisiblePopup={isVisiblePopup}

@@ -1,15 +1,18 @@
 import styled from '@emotion/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 
 import CustomText from '~/components/CustomText';
+import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
   id: number;
+  navigation: StackNavigationProp<RootStackParamList>;
 }
 
-const TaskDetailPopup = ({ id }: Props) => {
+const TaskDetailPopup = ({ id, navigation }: Props) => {
   const handleCancelButtonClick = () => {
     console.log(id, ' : cancel');
   };
@@ -20,6 +23,7 @@ const TaskDetailPopup = ({ id }: Props) => {
 
   const handleEditButtonClick = () => {
     console.log(id, ' : edit');
+    navigation.navigate('EditTask', { taskId: id });
   };
 
   const handleDeleteButtonClick = () => {
