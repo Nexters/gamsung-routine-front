@@ -76,7 +76,6 @@ const Calendar = () => {
             onChange={(event: unknown, newDate: dayjs.Dayjs) => {
               setDatePickerVisibility(false);
               CalendarStore.changeFirstDay(CalendarStore.getFirstDay(newDate));
-              console.log(9999, CalendarStore.getFirstDay(newDate));
             }}
             value={new Date(CalendarStore.firstDay.add(7, 'day').format('YYYY-MM-DD'))}
             locale="ko"
@@ -261,6 +260,8 @@ const Daily = observer(() => {
 });
 
 const Weekly = observer(() => {
+  console.log(123, CalendarStore.days);
+
   const day =
     CalendarStore.focusDay.format('ddd') === 'Sun'
       ? CalendarStore.focusDay.add(-7, 'day').day(1)
@@ -293,7 +294,7 @@ const Weekly = observer(() => {
                 .map((_, idx) => {
                   const textDate = date.add(idx, 'day');
                   return (
-                    <DayOfWeek key={textDate.toString()}>
+                    <DayOfWeek key={textDate.toString()} style={{ height: 'auto' }}>
                       <DateTextWrapper>
                         <CustomText
                           font={FontType.REGULAR_CAPTION}
