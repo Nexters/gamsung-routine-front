@@ -11,8 +11,7 @@ interface Props {
   onToggle?: (value: boolean) => void;
 }
 
-export const FoldableSwitch = ({isOn, onColor, onToggle}: Props) => {
-
+export const FoldableSwitch = ({ isOn, onColor, onToggle }: Props) => {
   const [switchTranslate] = useState(new Animated.Value(0));
   useEffect(() => {
     if (isOn) {

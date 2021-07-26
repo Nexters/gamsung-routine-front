@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { SafeAreaView, View, Animated, Text, Dimensions } from 'react-native';
+import { View, Animated, Text, Dimensions } from 'react-native';
 
 import CustomText from './CustomText';
 
@@ -20,7 +20,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const CollapsibleToolbar = observer(({title, children}: Props) => {
+export const CollapsibleToolbar = observer(({ title, children }: Props) => {
   const [scrollY] = useState(new Animated.Value(0));
 
   const headerHeight = scrollY.interpolate({

@@ -1,12 +1,11 @@
 import styled from '@emotion/native';
 import React from 'react';
-import { Image } from 'react-native';
 
 import CustomText from './CustomText';
+import Icon, { IconType } from './Icon';
 
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-import Icon, { IconType } from './Icon';
 
 interface Props {
   isOpen: boolean;
@@ -14,7 +13,7 @@ interface Props {
   onSelectorClick?: () => void;
 }
 
-export const FoldableSelector = ({isOpen, countText, onSelectorClick}: Props) => {
+export const FoldableSelector = ({ isOpen, countText, onSelectorClick }: Props) => {
   const handleOpen = () => {
     onSelectorClick?.();
   };

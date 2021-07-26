@@ -12,8 +12,7 @@ interface Props {
   selected?: boolean;
 }
 
-const AddTaskItem = ({taskName, onClick, selected}: Props) => {
-
+const AddTaskItem = ({ taskName, onClick, selected }: Props) => {
   const handleClick = useCallback(() => {
     onClick();
   }, [onClick]);

@@ -28,8 +28,8 @@ export const DailyLoopCard = ({ marginTop, marginBottom }: Props) => {
   return (
     <CollapsibleCard marginTop={marginTop} marginBottom={marginBottom}>
       <FoldableContainer
-        type={'SELECTOR'}
-        label={'하루동안'}
+        type='SELECTOR'
+        label='하루동안'
         isOpen={isDailyTimeWheelOpen}
         countText={countDaily(dailyTime)}
         onOpen={() => setIsDailyTimeWheelOpen(!isDailyTimeWheelOpen)}

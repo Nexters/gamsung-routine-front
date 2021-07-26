@@ -1,12 +1,12 @@
 import React from 'react';
 import { SvgXml } from 'react-native-svg';
 
+import IconArrowDown from '~/assets/icons/icon_arrow_down.svg';
+import IconArrowUp from '~/assets/icons/icon_arrow_up.svg';
 import IconCrown from '~/assets/icons/icon_crown.svg';
 import IconCrownGray from '~/assets/icons/icon_crown_gray.svg';
 import IconDrop from '~/assets/icons/icon_drop.svg';
 import IconTake from '~/assets/icons/icon_take.svg';
-import IconArrowDown from '~/assets/icons/icon_arrow_down.svg';
-import IconArrowUp from '~/assets/icons/icon_arrow_up.svg';
 
 export enum IconType {
   'drop' = 'drop',
