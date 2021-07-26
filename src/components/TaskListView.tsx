@@ -1,19 +1,22 @@
 import styled from '@emotion/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 
 import CustomText from '~/components/CustomText';
 import TaskListItem from '~/components/TaskListItem';
 import { Task } from '~/models/Task';
+import { RootStackParamList } from '~/navigations/types';
 import { FontType, Align } from '~/utils/font';
 
 interface Props {
+  navigation: StackNavigationProp<RootStackParamList>;
   taskList: Task[];
   onToggleTask: (id: number) => void;
   isVisiblePopup: number | null;
   onPopupClick: (id: number) => void;
 }
 
-const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick }: Props) => {
+const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick, navigation }: Props) => {
   const handleMoreButtonClick = (id: number) => {
     onPopupClick(id);
   };
@@ -24,6 +27,7 @@ const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick }: 
         taskList.map((task, index) => {
           return (
             <TaskListItem
+              navigation={navigation}
               layerIndex={index}
               totalCount={taskList?.length}
               key={index}

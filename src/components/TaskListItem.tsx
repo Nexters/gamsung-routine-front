@@ -1,4 +1,5 @@
 import styled from '@emotion/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -6,6 +7,7 @@ import CustomText from '~/components/CustomText';
 import MonsterIcon from '~/components/MonsterIcon';
 import TaskDetailPopup from '~/components/TaskDetailPopup';
 import { Weekday } from '~/models/Task';
+import { RootStackParamList } from '~/navigations/types';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -28,10 +30,11 @@ interface Props {
   onTaskItemClick: (id: number) => void;
   isVisiblePopup: number | null;
   onMoreButtonClick: (id: number) => void;
+  navigation: StackNavigationProp<RootStackParamList>;
 }
 
-const TaskListItem = observer((props: Props) => {
-  const {
+const TaskListItem = observer(
+  ({
     layerIndex,
     totalCount,
     id,
@@ -48,70 +51,74 @@ const TaskListItem = observer((props: Props) => {
     onTaskItemClick,
     isVisiblePopup,
     onMoreButtonClick,
-  } = props;
-  const checkTodayTaskState = todayOfWeek.count - todayOfWeek.endTasks.length;
+    navigation,
+  }: Props) => {
+    const checkTodayTaskState = todayOfWeek.count - todayOfWeek.endTasks.length;
 
-  const handleTaskItemClick = () => {
-    CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.(id);
-  };
+    const handleTaskItemClick = () => {
+      CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.(id);
+    };
 
-  return (
-    // XXX : 스타일 내부에서는 z-index 가 먹히지 않음
-    <TaskListItemStyled style={{ zIndex: totalCount - layerIndex }} checkLastItem={totalCount === layerIndex + 1}>
-      <TaskListItemView>
-        <TaskListItemViewLeft onPress={() => handleTaskItemClick()}>
-          {CalendarStore.radio === RADIO_TYPE.루틴 && <MonsterIcon listType={CalendarStore.radio} data={todayOfWeek} />}
-          <TaskListItemViewTitle>
-            <TaskListItemViewInfo>
-              <CustomText
-                font={FontType.REGULAR_LARGE}
-                color={!checkTodayTaskState ? TextColor.DISABLE : TextColor.PRIMARY}>
-                {title}
+    return (
+      // XXX : 스타일 내부에서는 z-index 가 먹히지 않음
+      <TaskListItemStyled style={{ zIndex: totalCount - layerIndex }} checkLastItem={totalCount === layerIndex + 1}>
+        <TaskListItemView>
+          <TaskListItemViewLeft onPress={() => handleTaskItemClick()}>
+            {CalendarStore.radio === RADIO_TYPE.루틴 && (
+              <MonsterIcon listType={CalendarStore.radio} data={todayOfWeek} />
+            )}
+            <TaskListItemViewTitle>
+              <TaskListItemViewInfo>
+                <CustomText
+                  font={FontType.REGULAR_LARGE}
+                  color={!checkTodayTaskState ? TextColor.DISABLE : TextColor.PRIMARY}>
+                  {title}
+                </CustomText>
+                {!checkTodayTaskState && <TaskListItemLine />}
+              </TaskListItemViewInfo>
+              <TaskListItemViewSubTitle>
+                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
+                  주 {timesOfWeek}회 · 하루 {timesOfDay}번
+                </CustomText>
+              </TaskListItemViewSubTitle>
+            </TaskListItemViewTitle>
+          </TaskListItemViewLeft>
+          <MoreIconButton onPress={() => onMoreButtonClick(id)}>
+            <MoreIconImage source={require('~/assets/icons/icon_more.png')} />
+          </MoreIconButton>
+        </TaskListItemView>
+        {CalendarStore.radio === RADIO_TYPE.리포트 && (
+          <TaskListItemWeekView>
+            {dayOfWeek?.map((item, index) => {
+              return <MonsterIcon key={index} listType={CalendarStore.radio} data={item} />;
+            })}
+          </TaskListItemWeekView>
+        )}
+        <TaskListItemInfoView listType={CalendarStore.radio} share={share}>
+          <TaskListItemInfoImageList>
+            {share && sharePeople?.map((_, index) => <TaskListItemInfoImage index={index} key={index} />)}
+          </TaskListItemInfoImageList>
+          <TaskListItemInfoPercent>
+            {CalendarStore.radio === RADIO_TYPE.루틴 && share && (
+              <CustomText color={TextColor.SECONDARY} font={FontType.REGULAR_CAPTION}>
+                {shareCount}명 중 {shareFinishedCount}명이 완료
               </CustomText>
-              {!checkTodayTaskState && <TaskListItemLine />}
-            </TaskListItemViewInfo>
-            <TaskListItemViewSubTitle>
-              <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
-                주 {timesOfWeek}회 · 하루 {timesOfDay}번
+            )}
+            {CalendarStore.radio === RADIO_TYPE.리포트 && (
+              <CustomText color={TextColor.SECONDARY} font={FontType.REGULAR_CAPTION}>
+                {share ? `${shareCount}명의 달성률 총 ` : '나의 달성률 총 '}
+                <CustomText color={TextColor.MAIN} font={FontType.REGULAR_CAPTION}>
+                  {percent}%
+                </CustomText>
               </CustomText>
-            </TaskListItemViewSubTitle>
-          </TaskListItemViewTitle>
-        </TaskListItemViewLeft>
-        <MoreIconButton onPress={() => onMoreButtonClick(id)}>
-          <MoreIconImage source={require('~/assets/icons/icon_more.png')} />
-        </MoreIconButton>
-      </TaskListItemView>
-      {CalendarStore.radio === RADIO_TYPE.리포트 && (
-        <TaskListItemWeekView>
-          {dayOfWeek?.map((item, index) => {
-            return <MonsterIcon key={index} listType={CalendarStore.radio} data={item} />;
-          })}
-        </TaskListItemWeekView>
-      )}
-      <TaskListItemInfoView listType={CalendarStore.radio} share={share}>
-        <TaskListItemInfoImageList>
-          {share && sharePeople?.map((_, index) => <TaskListItemInfoImage index={index} key={index} />)}
-        </TaskListItemInfoImageList>
-        <TaskListItemInfoPercent>
-          {CalendarStore.radio === RADIO_TYPE.루틴 && share && (
-            <CustomText color={TextColor.SECONDARY} font={FontType.REGULAR_CAPTION}>
-              {shareCount}명 중 {shareFinishedCount}명이 완료
-            </CustomText>
-          )}
-          {CalendarStore.radio === RADIO_TYPE.리포트 && (
-            <CustomText color={TextColor.SECONDARY} font={FontType.REGULAR_CAPTION}>
-              {share ? `${shareCount}명의 달성률 총 ` : '나의 달성률 총 '}
-              <CustomText color={TextColor.MAIN} font={FontType.REGULAR_CAPTION}>
-                {percent}%
-              </CustomText>
-            </CustomText>
-          )}
-        </TaskListItemInfoPercent>
-      </TaskListItemInfoView>
-      {isVisiblePopup === id && <TaskDetailPopup id={id} />}
-    </TaskListItemStyled>
-  );
-});
+            )}
+          </TaskListItemInfoPercent>
+        </TaskListItemInfoView>
+        {isVisiblePopup === id && <TaskDetailPopup id={id} navigation={navigation} />}
+      </TaskListItemStyled>
+    );
+  },
+);
 
 const TaskListItemStyled = styled.View<{ checkLastItem: boolean }>`
   flex-direction: column;
