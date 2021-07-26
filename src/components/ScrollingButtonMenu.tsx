@@ -1,10 +1,11 @@
+import styled from '@emotion/native';
+import { observer } from 'mobx-react';
 import React from 'react';
 import { FlatList, View } from 'react-native';
+
 import CustomText from '~/components/CustomText';
-import styled from '@emotion/native';
-import { BackgroundColor, TextColor } from '~/utils/color';
 import { Category } from '~/models/Category';
-import { observer } from 'mobx-react';
+import { BackgroundColor, TextColor } from '~/utils/color';
 
 interface Props {
   data: Category[];

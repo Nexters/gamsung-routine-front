@@ -1,4 +1,5 @@
-import {action, computed, makeObservable, observable} from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
+
 import { Category } from '~/models/Category';
 import { Template } from '~/models/Template';
 
@@ -27,11 +28,10 @@ export class AddTaskVM {
       templates: computed,
       selectedTemplateId: observable,
       onSelectedCategoryIdChange: action,
-      onSelectedTemplateIdChange: action
+      onSelectedTemplateIdChange: action,
     });
   }
 }
-
 
 const categoryMock: Category[] = [
   { id: 1, name: '건강' },
@@ -41,7 +41,7 @@ const categoryMock: Category[] = [
   { id: 5, name: '흐으으으음' },
   { id: 6, name: '모르겠따' },
   { id: 7, name: '악' },
-]
+];
 
 const templateMockA: Template[] = [
   {

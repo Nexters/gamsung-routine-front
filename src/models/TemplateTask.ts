@@ -1,4 +1,4 @@
 export interface TemplateTask {
-    id: number;
-    taskName: string;
+  id: number;
+  taskName: string;
 }

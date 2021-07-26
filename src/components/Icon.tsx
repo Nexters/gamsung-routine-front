@@ -1,6 +1,8 @@
 import React from 'react';
 import { SvgXml } from 'react-native-svg';
 
+import IconArrowDown from '~/assets/icons/icon_arrow_down.svg';
+import IconArrowUp from '~/assets/icons/icon_arrow_up.svg';
 import IconCrown from '~/assets/icons/icon_crown.svg';
 import IconCrownGray from '~/assets/icons/icon_crown_gray.svg';
 import IconDrop from '~/assets/icons/icon_drop.svg';
@@ -11,6 +13,8 @@ export enum IconType {
   'take' = 'take',
   'crown' = 'crown',
   'crownGray' = 'crownGray',
+  'iconArrowUp' = 'iconUp',
+  'iconArrowDown' = 'iconDown',
 }
 
 interface Props {
@@ -29,6 +33,12 @@ const Icon = ({ type }: Props) => {
     }
     if (type === IconType.crownGray) {
       return IconCrownGray;
+    }
+    if (type === IconType.iconArrowDown) {
+      return IconArrowDown;
+    }
+    if (type === IconType.iconArrowUp) {
+      return IconArrowUp;
     }
   };
   return <SvgXml xml={getIcon(type)} />;

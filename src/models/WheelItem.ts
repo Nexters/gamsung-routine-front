@@ -1,4 +1,4 @@
-export interface Category {
+export interface WheelItem {
   id: number;
   name: string;
 }

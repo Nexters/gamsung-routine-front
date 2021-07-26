@@ -12,9 +12,7 @@ interface Props {
   onPress: (task: Task) => void;
 }
 
-const BottomSheet = (props: Props) => {
-  const { selectedTasks, onPress } = props;
-
+const BottomSheet = ({ selectedTasks, onPress }: Props) => {
   const count = useMemo(() => selectedTasks.length, [selectedTasks]);
 
   return (

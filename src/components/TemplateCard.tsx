@@ -1,9 +1,10 @@
-import React from 'react';
 import styled from '@emotion/native';
+import React from 'react';
+
 import CustomText from '~/components/CustomText';
-import { FontType } from '~/utils/font';
-import { BackgroundColor, TextColor } from '~/utils/color';
 import { TemplateTask } from '~/models/TemplateTask';
+import { BackgroundColor, TextColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
 
 interface Props {
   id: number;

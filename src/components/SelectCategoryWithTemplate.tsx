@@ -1,9 +1,10 @@
+import styled from '@emotion/native';
+import { observer } from 'mobx-react';
 import React from 'react';
 import { FlatList } from 'react-native';
+
 import { ScrollingButtonMenu } from '~/components/ScrollingButtonMenu';
-import styled from '@emotion/native';
 import { TemplateCard } from '~/components/TemplateCard';
-import { observer } from 'mobx-react';
 import { AddTaskVM } from '~/screens/vm/addTaskVM';
 
 interface Props {

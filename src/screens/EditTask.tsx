@@ -4,6 +4,9 @@ import React from 'react';
 
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
+import { DailyLoopCard } from '~/components/DailyLoopCard';
+import { TimeSettingCard } from '~/components/TimeSettingCard';
+import { WeekLoopCard } from '~/components/WeekLoopCard';
 import useModal from '~/hooks/useModal';
 import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
@@ -47,6 +50,9 @@ const EditTask = ({ route }: EditTaskScreenProps) => {
               <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
                 시간 설정
               </CustomText>
+              <WeekLoopCard />
+              <DailyLoopCard marginTop={16} />
+              <TimeSettingCard marginTop={16} />
             </TimeSettingView>
             <AddSettingView>
               <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
