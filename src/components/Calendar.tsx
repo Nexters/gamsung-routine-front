@@ -3,13 +3,11 @@ import dayjs from 'dayjs';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { Animated, Dimensions, TouchableOpacity, View } from 'react-native';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore : 타입이 없음
-import MonthPicker from 'react-native-month-year-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 import Icon, { IconType } from './Icon';
+import { WheelPicker } from './WheelPicker';
 
 import CustomText from '~/components/CustomText';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
@@ -26,7 +24,11 @@ const Calendar = () => {
   });
 
   return (
-    <CalendarWrapper paddingTop={insets.top} paddingBottom={insets.bottom} backgroundColor={BackgroundColor.SECONDARY}>
+    <CalendarWrapper
+      paddingTop={insets.top}
+      paddingBottom={insets.bottom}
+      backgroundColor={BackgroundColor.SECONDARY}
+      style={{ zIndex: 10 }}>
       <MonthHead>
         <MonthWrapper onPress={() => setDatePickerVisibility(true)}>
           <CustomText font={FontType.REGULAR_TITLE_02} color={TextColor.WHITE}>
@@ -72,14 +74,81 @@ const Calendar = () => {
           <Container />
         </CalColumn>
         {isDatePickerVisible && (
-          <MonthPicker
-            onChange={(event: unknown, newDate: dayjs.Dayjs) => {
-              setDatePickerVisibility(false);
-              CalendarStore.changeFirstDay(CalendarStore.getFirstDay(newDate));
-            }}
-            value={new Date(CalendarStore.firstDay.add(7, 'day').format('YYYY-MM-DD'))}
-            locale="ko"
-          />
+          <View
+            style={{
+              position: 'absolute',
+              backgroundColor: '#3F4042',
+              width: '100%',
+              height: 198,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignContent: 'center',
+              zIndex: 100,
+            }}>
+            <TouchableOpacity
+              style={{ position: 'absolute', top: 12, right: 24 }}
+              onPress={() => {
+                setDatePickerVisibility(false);
+                const date = `${CalendarStore.tempYear}-${
+                  CalendarStore.tempMonth < 9 ? `0${CalendarStore.tempMonth}` : CalendarStore.tempMonth
+                }-01`;
+                CalendarStore.changeIsWeek(false);
+                CalendarStore.changeFirstDay(CalendarStore.getFirstDay(date));
+              }}>
+              <CustomText color={TextColor.ELEVATED}>완료</CustomText>
+            </TouchableOpacity>
+            <View
+              style={{
+                width: Dimensions.get('window').width - 50,
+                marginLeft: 25,
+                marginRight: 25,
+                height: 36,
+                position: 'absolute',
+                top: '50%',
+                transform: [{ translateY: -18 }],
+                backgroundColor: '#5B5D61',
+                borderRadius: 8,
+              }}
+            />
+            <View style={{ marginRight: 40, justifyContent: 'center' }}>
+              <WheelPicker
+                onScrollEndDrag={(id) => {
+                  CalendarStore.tempYear = id;
+                }}
+                initHeight={(9 - (parseInt(dayjs().format('YYYY'), 10) - CalendarStore.firstDay.year())) * 36}
+                height={36}
+                items={Array.from({ length: 10 }, (_, index) => index).map((it) => {
+                  return {
+                    id: parseInt(dayjs().format('YYYY'), 10) - (9 - it),
+                    name: `${parseInt(dayjs().format('YYYY'), 10) - (9 - it)}년`,
+                  };
+                })}
+              />
+            </View>
+            <View style={{ justifyContent: 'center' }}>
+              <WheelPicker
+                onScrollEndDrag={(id) => {
+                  CalendarStore.tempMonth = id;
+                }}
+                initHeight={CalendarStore.month * 36}
+                height={36}
+                items={Array.from({ length: 12 }, (_, index) => index).map((it) => {
+                  return {
+                    id: it + 1,
+                    name: `${it < 9 ? `0${it + 1}` : it + 1}월`,
+                  };
+                })}
+              />
+            </View>
+          </View>
+          // <MonthPicker
+          //   onChange={(event: unknown, newDate: dayjs.Dayjs) => {
+          //     setDatePickerVisibility(false);
+          //     CalendarStore.changeFirstDay(CalendarStore.getFirstDay(newDate));
+          //   }}
+          //   value={new Date(CalendarStore.firstDay.add(7, 'day').format('YYYY-MM-DD'))}
+          //   locale="ko"
+          // />
         )}
       </CalView>
     </CalendarWrapper>
