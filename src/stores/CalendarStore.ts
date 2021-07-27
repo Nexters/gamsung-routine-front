@@ -64,7 +64,7 @@ class CalendarStore {
   changeIsWeek(isWeek: boolean) {
     this.isWeek = isWeek;
     if (!isWeek) {
-      this.changeFirstDay(this.getFirstDay(this.weekDay));
+      this.days = this.getDays();
       Animated.parallel([
         Animated.timing(this.translation, {
           toValue: 1,
@@ -80,11 +80,6 @@ class CalendarStore {
         }),
       ]).start();
     } else {
-      if (this.focusDay.month() === this.month) {
-        this.changeWeekDay(this.getMonday(this.focusDay));
-      } else {
-        this.changeWeekDay(this.days[0]);
-      }
       Animated.parallel([
         Animated.timing(this.translation, {
           toValue: 0,
@@ -98,8 +93,13 @@ class CalendarStore {
           easing: Easing.linear,
           useNativeDriver: false,
         }),
-      ]).start();
-      // ]).start(() => this.changeFirstDay(this.getFirstDay(this.weekDay)));
+      ]).start(() => {
+        if (this.focusDay.month() === this.month) {
+          this.changeWeekDay(this.getMonday(this.focusDay));
+        } else {
+          this.changeWeekDay(this.days[0]);
+        }
+      });
     }
   }
 

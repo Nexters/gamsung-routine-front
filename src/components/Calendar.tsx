@@ -404,11 +404,10 @@ const Container = observer(() => {
   });
 
   return (
-    <View>
+    <Animated.View style={{ maxHeight: maxHeight, overflow: 'hidden' }}>
       <Animated.View
         style={{
-          maxHeight: maxHeight,
-          // transform: [{ translateY: maxY }],
+          transform: [{ translateY: maxY }],
         }}>
         <GestureRecognizer
           onSwipeUp={() => {
@@ -422,6 +421,6 @@ const Container = observer(() => {
           </Week>
         </GestureRecognizer>
       </Animated.View>
-    </View>
+    </Animated.View>
   );
 });
