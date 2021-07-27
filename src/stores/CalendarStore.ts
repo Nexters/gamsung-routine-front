@@ -15,6 +15,8 @@ class CalendarStore {
   month = this.getFirstDay().add(7, 'day').month();
   isWeek = true;
   weekDay = this.getMonday(this.focusDay);
+  tempYear = parseInt(dayjs().format('YYYY'), 10);
+  tempMonth = parseInt(dayjs().format('MM'), 10);
 
   days = this.getDays();
 
@@ -80,15 +82,7 @@ class CalendarStore {
     } else {
       if (this.focusDay.month() === this.month) {
         this.changeWeekDay(this.getMonday(this.focusDay));
-      } else if (
-        !this.weekDay.isSame(this.days[0]) &&
-        !this.weekDay.isSame(this.days[1]) &&
-        !this.weekDay.isSame(this.days[2]) &&
-        !this.weekDay.isSame(this.days[3]) &&
-        !this.weekDay.isSame(this.days[4]) &&
-        !this.weekDay.isSame(this.days[5]) &&
-        !this.weekDay.isSame(this.days[6])
-      ) {
+      } else {
         this.changeWeekDay(this.days[0]);
       }
       Animated.parallel([
@@ -104,12 +98,14 @@ class CalendarStore {
           easing: Easing.linear,
           useNativeDriver: false,
         }),
-      ]).start(() => this.changeFirstDay(this.getFirstDay(this.weekDay)));
+      ]).start();
+      // ]).start(() => this.changeFirstDay(this.getFirstDay(this.weekDay)));
     }
   }
 
   changeWeekDay(date: dayjs.Dayjs) {
     this.weekDay = date;
+    this.days = this.getDays();
   }
 
   changeRadio(type: RADIO_TYPE) {
