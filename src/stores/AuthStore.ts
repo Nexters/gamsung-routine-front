@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import { KakaoOAuthToken } from '@react-native-seoul/kakao-login';
+import { login } from '@react-native-seoul/kakao-login';
 import { observable, action, makeObservable, computed } from 'mobx';
 
 import api from '~/utils/api';
@@ -8,53 +8,44 @@ class AuthStore {
   // XXX : _ prefix를 계속 사용할지 고민
   private static _instance: AuthStore;
 
+  token?: string = '';
+
   constructor() {
     makeObservable(this, {
       token: observable,
-      nickname: observable,
-      profileImageUrl: observable,
       isLoggedIn: computed,
       login: action,
     });
   }
 
-  token?: string = undefined;
-  nickname?: string = undefined;
-  profileImageUrl?: string = undefined;
-
   get isLoggedIn(): boolean {
     return !!this.token;
   }
 
-  login = async (token: KakaoOAuthToken) => {
-    const {
-      data: {
-        data: { accessToken },
-      },
-    } = await api.post<{
-      data: {
-        accessToken: string;
-      };
-    }>('/auth/sign-in/kakao', {
-      accessToken: token.accessToken,
-      refreshToken: token.refreshToken,
-    });
+  login = async () => {
+    try {
+      const token = await login();
 
-    this.token = accessToken;
+      const {
+        data: {
+          data: { accessToken },
+        },
+      } = await api.post<{
+        data: {
+          accessToken: string;
+        };
+      }>('/auth/sign-in/kakao', {
+        accessToken: token.accessToken,
+        refreshToken: token.refreshToken,
+      });
 
-    await AsyncStorage.setItem('token', accessToken);
-    await this.updateProfile();
-  };
+      this.token = accessToken;
 
-  private updateProfile = async () => {
-    const {
-      data: {
-        data: { name, profileImageUrl },
-      },
-    } = await api.get('/profile');
-
-    this.nickname = name;
-    this.profileImageUrl = profileImageUrl;
+      await AsyncStorage.setItem('token', accessToken);
+    } catch (error) {
+      // TODO: 토스트 표시
+      console.error(error);
+    }
   };
 
   public static instance() {
