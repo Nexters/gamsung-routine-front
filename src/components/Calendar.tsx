@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { Animated, Dimensions, TouchableOpacity, View } from 'react-native';
+import { Animated, Dimensions, Platform, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
@@ -342,9 +342,10 @@ const Weekly = observer(() => {
         if (index !== 0 && index % 7 !== 0) {
           return null;
         }
+
         return (
           <TouchableOpacity
-            style={{ height: (Dimensions.get('window').width - 22) / 7 }}
+            style={{ height: Platform.OS === 'ios' ? 'auto' : (Dimensions.get('window').width - 22) / 7 }}
             key={date.toString()}
             onPress={() => {
               CalendarStore.changeFocusDay(date);
@@ -358,7 +359,7 @@ const Weekly = observer(() => {
                 {day.isSame(date, 'day') ? <Icon type={IconType.CROWN} /> : <Icon type={IconType.CROWN_GRAY} />}
               </DateWrapper>
             </WeeklyRow>
-            <WeekTextWrapper key={`${date}_${index}`}>
+            <WeekTextWrapper key={`${date}_${index}`} style={{ height: 'auto' }}>
               {Array(7)
                 .fill(0)
                 .map((_, idx) => {
