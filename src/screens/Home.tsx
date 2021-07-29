@@ -116,7 +116,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
         <AddTaskButton
           onPress={() => {
             setIsVisiblePopup(null);
-            navigation.navigate('AddTask');
+            navigation.navigate('TemplateList');
           }}>
           <CustomText color={TextColor.WHITE} font={FontType.REGULAR_HEAD_01}>
             +

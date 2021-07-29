@@ -1,6 +1,10 @@
 import styled from '@emotion/native';
-import { RouteProp } from '@react-navigation/native';
-import React from 'react';
+import { RouteProp, StackActions } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { observer } from 'mobx-react';
+import React, { useState } from 'react';
+import { ScrollView } from 'react-native';
+import { AlarmSettingCard } from '~/components/AlarmSettingCard';
 
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
@@ -11,61 +15,74 @@ import useModal from '~/hooks/useModal';
 import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
+import { EditTaskVM } from './vm/editTaskVM';
 
 interface EditTaskScreenProps {
+  navigation: StackNavigationProp<RootStackParamList>;
   route: RouteProp<RootStackParamList, 'EditTask'>;
 }
 
-const EditTask = ({ route }: EditTaskScreenProps) => {
-  const { taskId } = route.params;
+const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
+  const { taskId, taskName } = route.params;
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
 
-  console.log(taskId);
+  const [vm] = useState(new EditTaskVM(taskId, taskName));
+
+  const handleDaySelect = (id: number) => {
+    vm.onSelectDay(id);
+  };
 
   const handleEditSubmitClick = () => {
     openModal();
   };
 
   const handleShowMyTaskButtonClick = () => {
-    console.log('show task');
+    navigation.pop(3);
     closeModal();
   };
 
   const handleKeepAddingButtonClick = () => {
-    console.log('keep adding');
+    navigation.pop(2);
     closeModal();
+  };
+
+  const handleCountOfDay = (countOfDay: number) => {
+    vm.onChangeCountOfDay(countOfDay);
   };
 
   return (
     <>
       <EditTaskStyled>
-        <EditTaskView>
-          <EditSettingView>
-            <TitleSettingView>
-              <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY}>
-                아침 명상하기
+        <ScrollView style={{ width: '100%', height: '100%' }}>
+          <EditTaskView>
+            <EditSettingView>
+              <TitleSettingView>
+                <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY}>
+                  {vm.taskName}
+                </CustomText>
+              </TitleSettingView>
+              <TimeSettingView>
+                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
+                  시간 설정
+                </CustomText>
+                <WeekLoopCard days={vm.day} onDayPress={handleDaySelect} />
+                <DailyLoopCard marginTop={16} onSelectCountOfDay={handleCountOfDay} />
+                <TimeSettingCard marginTop={16} timeSettingData={vm.timeSettingData} />
+              </TimeSettingView>
+              <AddSettingView>
+                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
+                  부가 설정
+                </CustomText>
+                <AlarmSettingCard />
+              </AddSettingView>
+            </EditSettingView>
+            <EditSubmitButton onPress={() => handleEditSubmitClick()}>
+              <CustomText font={FontType.BOLD_LARGE} color={TextColor.WHITE} align={Align.CENTER}>
+                추가하기
               </CustomText>
-            </TitleSettingView>
-            <TimeSettingView>
-              <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
-                시간 설정
-              </CustomText>
-              <WeekLoopCard />
-              <DailyLoopCard marginTop={16} />
-              <TimeSettingCard marginTop={16} />
-            </TimeSettingView>
-            <AddSettingView>
-              <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
-                부가 설정
-              </CustomText>
-            </AddSettingView>
-          </EditSettingView>
-          <EditSubmitButton onPress={() => handleEditSubmitClick()}>
-            <CustomText font={FontType.BOLD_LARGE} color={TextColor.WHITE} align={Align.CENTER}>
-              추가하기
-            </CustomText>
-          </EditSubmitButton>
-        </EditTaskView>
+            </EditSubmitButton>
+          </EditTaskView>
+        </ScrollView>
       </EditTaskStyled>
       <CustomModal
         isVisible={isModalVisible}
@@ -117,6 +134,8 @@ const EditSubmitButton = styled.TouchableOpacity`
   background-color: #513de5;
   border-radius: 8px;
   padding: 12px 0;
+  margin-top: 34px;
+  margin-bottom: 34px;
 `;
 
-export default EditTask;
+export default observer(EditTask);

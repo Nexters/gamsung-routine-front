@@ -10,26 +10,29 @@ import { BackgroundColor } from '~/utils/color';
 interface Props {
   marginTop?: number;
   marginBottom?: number;
+  dayOfTime?: number;
+  onSelectCountOfDay?: (dayOfTime: number) => void;
 }
 
-export const DailyLoopCard = ({ marginTop, marginBottom }: Props) => {
+export const DailyLoopCard = ({ marginTop, marginBottom, dayOfTime = 1, onSelectCountOfDay }: Props) => {
   const countDaily = useCallback((time) => {
-    return `${time + 1} 회`;
+    return `${time} 회`;
   }, []);
 
-  const [dailyTime, setDailyTime] = useState<number>(0);
+  const [dailyTime, setDailyTime] = useState<number>(dayOfTime);
   const [isDailyTimeWheelOpen, setIsDailyTimeWheelOpen] = useState<boolean>(false);
 
   const handleWheelItemClick = (id: number) => {
     setDailyTime(id);
     setIsDailyTimeWheelOpen(false);
+    onSelectCountOfDay?.(id);
   };
 
   return (
     <CollapsibleCard marginTop={marginTop} marginBottom={marginBottom}>
       <FoldableContainer
-        type='SELECTOR'
-        label='하루동안'
+        type="SELECTOR"
+        label="하루동안"
         isOpen={isDailyTimeWheelOpen}
         countText={countDaily(dailyTime)}
         onOpen={() => setIsDailyTimeWheelOpen(!isDailyTimeWheelOpen)}
@@ -37,7 +40,7 @@ export const DailyLoopCard = ({ marginTop, marginBottom }: Props) => {
       {isDailyTimeWheelOpen && <DividerStyled />}
       {isDailyTimeWheelOpen && (
         <WheelPicker
-          items={Array.from({ length: 7 }, (_, index) => ({ id: index, name: countDaily(index) }))}
+          items={Array.from({ length: 7 }, (_, index) => ({ id: index + 1, name: countDaily(index + 1) }))}
           onClick={handleWheelItemClick}
         />
       )}
