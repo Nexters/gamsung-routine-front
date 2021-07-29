@@ -6,15 +6,19 @@ import IconArrowUp from '~/assets/icons/icon_arrow_up.svg';
 import IconCrown from '~/assets/icons/icon_crown.svg';
 import IconCrownGray from '~/assets/icons/icon_crown_gray.svg';
 import IconDrop from '~/assets/icons/icon_drop.svg';
+import IconFullArrowDown from '~/assets/icons/icon_full_arrow_down.svg';
+import IconMore from '~/assets/icons/icon_more.svg';
 import IconTake from '~/assets/icons/icon_take.svg';
 
 export enum IconType {
-  'drop' = 'drop',
-  'take' = 'take',
-  'crown' = 'crown',
-  'crownGray' = 'crownGray',
-  'iconArrowUp' = 'iconUp',
-  'iconArrowDown' = 'iconDown',
+  'DROP' = 'DROP',
+  'TAKE' = 'TAKE',
+  'CROWN' = 'CROWN',
+  'CROWN_GRAY' = 'CROWN_GRAY',
+  'ARROW_UP' = 'ARROW_UP',
+  'ARROW_DOWN' = 'ARROW_DOWN',
+  'MORE' = 'MORE',
+  'FULL_ARROW_DOWN' = 'FULL_ARROW_DOWN',
 }
 
 interface Props {
@@ -22,23 +26,29 @@ interface Props {
 }
 const Icon = ({ type }: Props) => {
   const getIcon = (type: IconType) => {
-    if (type === IconType.drop) {
+    if (type === IconType.DROP) {
       return IconDrop;
     }
-    if (type === IconType.take) {
+    if (type === IconType.TAKE) {
       return IconTake;
     }
-    if (type === IconType.crown) {
+    if (type === IconType.CROWN) {
       return IconCrown;
     }
-    if (type === IconType.crownGray) {
+    if (type === IconType.CROWN_GRAY) {
       return IconCrownGray;
     }
-    if (type === IconType.iconArrowDown) {
+    if (type === IconType.ARROW_DOWN) {
       return IconArrowDown;
     }
-    if (type === IconType.iconArrowUp) {
+    if (type === IconType.ARROW_UP) {
       return IconArrowUp;
+    }
+    if (type === IconType.MORE) {
+      return IconMore;
+    }
+    if (type === IconType.FULL_ARROW_DOWN) {
+      return IconFullArrowDown;
     }
   };
   return <SvgXml xml={getIcon(type)} />;

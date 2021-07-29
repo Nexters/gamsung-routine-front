@@ -92,7 +92,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
         <HomeView>
           <TaskView>
             <DropView onPress={() => CalendarStore.changeIsWeek(!CalendarStore.isWeek)}>
-              {CalendarStore.isWeek ? <Icon type={IconType.drop} /> : <Icon type={IconType.take} />}
+              {CalendarStore.isWeek ? <Icon type={IconType.DROP} /> : <Icon type={IconType.TAKE} />}
             </DropView>
             <TaskTitleView>
               <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.SECONDARY}>

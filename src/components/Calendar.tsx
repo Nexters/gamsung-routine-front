@@ -38,7 +38,7 @@ const Calendar = () => {
           <CustomText font={FontType.REGULAR_TITLE_02} color={TextColor.WHITE}>
             {CalendarStore.month + 1}월
           </CustomText>
-          <DownIcon source={require('~/assets/icons/icon_down.svg')} />
+          <Icon type={IconType.FULL_ARROW_DOWN} />
         </MonthWrapper>
         <RadioWrapper>
           <Animated.View
@@ -78,14 +78,7 @@ const Calendar = () => {
           <Container />
         </CalColumn>
         {isDatePickerVisible && (
-          <TouchableOpacity
-            style={{
-              position: 'absolute',
-              width: '100%',
-              flex: 1,
-              height: Dimensions.get('window').height,
-            }}
-            onPress={() => setDatePickerVisibility(false)}>
+          <BackDrop onPress={() => setDatePickerVisibility(false)}>
             <View
               style={{
                 backgroundColor: '#3F4042',
@@ -150,13 +143,20 @@ const Calendar = () => {
                 />
               </View>
             </View>
-          </TouchableOpacity>
+          </BackDrop>
         )}
       </CalView>
     </CalendarWrapper>
   );
 };
 export default observer(Calendar);
+
+const BackDrop = styled.TouchableOpacity`
+  position: absolute;
+  width: 100%;
+  flex: 1;
+  height: ${`${Dimensions.get('window').height}px`};
+`;
 
 const CalendarWrapper = styled.SafeAreaView<{
   paddingTop: number;
@@ -309,9 +309,9 @@ const Daily = observer(() => {
                   height={50}
                 />
                 {CalendarStore.focusDay.isSame(date, 'day') ? (
-                  <Icon type={IconType.crown} />
+                  <Icon type={IconType.CROWN} />
                 ) : (
-                  <Icon type={IconType.crownGray} />
+                  <Icon type={IconType.CROWN_GRAY} />
                 )}
               </DateWrapper>
             </DayOfWeek>
@@ -331,8 +331,6 @@ const Daily = observer(() => {
 });
 
 const Weekly = observer(() => {
-  console.log(123, CalendarStore.days);
-
   const day =
     CalendarStore.focusDay.format('ddd') === 'Sun'
       ? CalendarStore.focusDay.add(-7, 'day').day(1)
@@ -356,7 +354,7 @@ const Weekly = observer(() => {
             <WeeklyRow>
               <DateWrapper backgroundColor={day.isSame(date) ? '#3A2E8E' : '#3F4042'}>
                 <WeekGauge backgroundColor={day.isSame(date) ? '#5F4BF2' : '#5B5D61'} height={50} />
-                {day.isSame(date) ? <Icon type={IconType.crown} /> : <Icon type={IconType.crownGray} />}
+                {day.isSame(date) ? <Icon type={IconType.CROWN} /> : <Icon type={IconType.CROWN_GRAY} />}
               </DateWrapper>
             </WeeklyRow>
             <WeekTextWrapper key={`${date}_${index}`}>
