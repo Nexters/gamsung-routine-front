@@ -3,50 +3,64 @@ import dayjs from 'dayjs';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { Animated, Dimensions, TouchableOpacity, View } from 'react-native';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore : 타입이 없음
-import MonthPicker from 'react-native-month-year-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 import Icon, { IconType } from './Icon';
+import { WheelPicker } from './WheelPicker';
 
 import CustomText from '~/components/CustomText';
-import CalendarStore from '~/stores/CalendarStore';
+import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import { BackgroundColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
-enum RADIO_TYPE {
-  '일별' = '일별',
-  '주별' = '주별',
-}
-
 const Calendar = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [radio, setRadio] = useState<RADIO_TYPE>(RADIO_TYPE.일별);
   const insets = useSafeAreaInsets();
 
+  const left = CalendarStore.left.interpolate({
+    inputRange: [0, 1],
+    outputRange: [3, 53],
+  });
+
   return (
-    <CalendarWrapper paddingTop={insets.top} paddingBottom={insets.bottom} backgroundColor={BackgroundColor.SECONDARY}>
+    <CalendarWrapper
+      paddingTop={insets.top}
+      paddingBottom={insets.bottom}
+      backgroundColor={BackgroundColor.SECONDARY}
+      style={{ zIndex: 10 }}>
       <MonthHead>
-        <MonthWrapper onPress={() => setDatePickerVisibility(true)}>
+        <MonthWrapper
+          onPress={() => {
+            setDatePickerVisibility(true);
+            CalendarStore.changeIsWeek(false);
+          }}>
           <CustomText font={FontType.REGULAR_TITLE_02} color={TextColor.WHITE}>
             {CalendarStore.month + 1}월
           </CustomText>
-          <DownIcon source={require('~/assets/icons/icon_down.svg')} />
+          <Icon type={IconType.FULL_ARROW_DOWN} />
         </MonthWrapper>
         <RadioWrapper>
-          <RadioFocus left={radio === RADIO_TYPE.일별 ? 3 : 47} />
-          <RadioDay onPress={() => setRadio(RADIO_TYPE.일별)}>
+          <Animated.View
+            style={{
+              left,
+              position: 'absolute',
+              width: 51,
+              height: 24,
+              backgroundColor: '#6b6d72',
+              borderRadius: 7,
+            }}
+          />
+          <RadioDay onPress={() => CalendarStore.changeRadio(RADIO_TYPE.루틴)}>
             <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.WHITE}>
-              {RADIO_TYPE.일별}
+              {RADIO_TYPE.루틴}
             </CustomText>
           </RadioDay>
-          <TouchableOpacity onPress={() => setRadio(RADIO_TYPE.주별)}>
+          <RadioWeek onPress={() => CalendarStore.changeRadio(RADIO_TYPE.리포트)}>
             <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.WHITE}>
-              {RADIO_TYPE.주별}
+              {RADIO_TYPE.리포트}
             </CustomText>
-          </TouchableOpacity>
+          </RadioWeek>
         </RadioWrapper>
         <SettingIcon source={require('~/assets/icons/icon_setting.svg')} />
       </MonthHead>
@@ -61,24 +75,88 @@ const Calendar = () => {
               );
             })}
           </Week>
-          <Container type={radio} />
+          <Container />
         </CalColumn>
         {isDatePickerVisible && (
-          <MonthPicker
-            onChange={(event: unknown, newDate: dayjs.Dayjs) => {
-              setDatePickerVisibility(false);
-              CalendarStore.changeFirstDay(CalendarStore.getFirstDay(newDate));
-              console.log(9999, CalendarStore.getFirstDay(newDate));
-            }}
-            value={new Date(CalendarStore.firstDay.add(7, 'day').format('YYYY-MM-DD'))}
-            locale="ko"
-          />
+          <BackDrop onPress={() => setDatePickerVisibility(false)}>
+            <View
+              style={{
+                backgroundColor: '#3F4042',
+                width: '100%',
+                height: 198,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignContent: 'center',
+                zIndex: 100,
+              }}>
+              <View
+                style={{
+                  width: Dimensions.get('window').width - 50,
+                  marginLeft: 25,
+                  marginRight: 25,
+                  height: 36,
+                  position: 'absolute',
+                  top: '50%',
+                  transform: [{ translateY: -18 }],
+                  backgroundColor: '#5B5D61',
+                  borderRadius: 8,
+                }}
+              />
+              <View style={{ marginRight: 40, justifyContent: 'center' }}>
+                <WheelPicker
+                  onScrollEndDrag={(id) => {
+                    CalendarStore.tempYear = id;
+                    const date = `${CalendarStore.tempYear}-${
+                      CalendarStore.tempMonth < 9 ? `0${CalendarStore.tempMonth}` : CalendarStore.tempMonth
+                    }-01`;
+                    CalendarStore.changeIsWeek(false);
+                    CalendarStore.changeFirstDay(CalendarStore.getFirstDay(date));
+                  }}
+                  initHeight={(9 - (parseInt(dayjs().format('YYYY'), 10) - CalendarStore.firstDay.year())) * 36}
+                  height={36}
+                  items={Array.from({ length: 10 }, (_, index) => index).map((it) => {
+                    return {
+                      id: parseInt(dayjs().format('YYYY'), 10) - (9 - it),
+                      name: `${parseInt(dayjs().format('YYYY'), 10) - (9 - it)}년`,
+                    };
+                  })}
+                />
+              </View>
+              <View style={{ justifyContent: 'center' }}>
+                <WheelPicker
+                  onScrollEndDrag={(id) => {
+                    CalendarStore.tempMonth = id;
+                    const date = `${CalendarStore.tempYear}-${
+                      CalendarStore.tempMonth < 9 ? `0${CalendarStore.tempMonth}` : CalendarStore.tempMonth
+                    }-01`;
+                    CalendarStore.changeIsWeek(false);
+                    CalendarStore.changeFirstDay(CalendarStore.getFirstDay(date));
+                  }}
+                  initHeight={CalendarStore.month * 36}
+                  height={36}
+                  items={Array.from({ length: 12 }, (_, index) => index).map((it) => {
+                    return {
+                      id: it + 1,
+                      name: `${it < 9 ? `0${it + 1}` : it + 1}월`,
+                    };
+                  })}
+                />
+              </View>
+            </View>
+          </BackDrop>
         )}
       </CalView>
     </CalendarWrapper>
   );
 };
 export default observer(Calendar);
+
+const BackDrop = styled.TouchableOpacity`
+  position: absolute;
+  width: 100%;
+  flex: 1;
+  height: ${`${Dimensions.get('window').height}px`};
+`;
 
 const CalendarWrapper = styled.SafeAreaView<{
   paddingTop: number;
@@ -105,24 +183,20 @@ const DownIcon = styled.Image`
 const RadioWrapper = styled.View`
   background-color: #3f4042;
   border-radius: 7px;
-  width: 101px;
+  width: 108px;
   height: 28px;
   justify-content: center;
   align-items: center;
   flex-direction: row;
 `;
 
-const RadioFocus = styled.View<{ left: number }>`
-  position: absolute;
-  width: 51px;
-  height: 24px;
-  background-color: #6b6d72;
-  border-radius: 7px;
-  left: ${({ left }) => left};
-`;
-
 const RadioDay = styled.TouchableOpacity`
   margin-right: 20px;
+  margin-left: 13px;
+`;
+
+const RadioWeek = styled.TouchableOpacity`
+  margin-right: 7px;
 `;
 
 const CalView = styled.View`
@@ -235,9 +309,9 @@ const Daily = observer(() => {
                   height={50}
                 />
                 {CalendarStore.focusDay.isSame(date, 'day') ? (
-                  <Icon type={IconType.crown} />
+                  <Icon type={IconType.CROWN} />
                 ) : (
-                  <Icon type={IconType.crownGray} />
+                  <Icon type={IconType.CROWN_GRAY} />
                 )}
               </DateWrapper>
             </DayOfWeek>
@@ -270,6 +344,7 @@ const Weekly = observer(() => {
         }
         return (
           <TouchableOpacity
+            style={{ height: (Dimensions.get('window').width - 22) / 7 }}
             key={date.toString()}
             onPress={() => {
               CalendarStore.changeFocusDay(date);
@@ -278,9 +353,9 @@ const Weekly = observer(() => {
               }
             }}>
             <WeeklyRow>
-              <DateWrapper backgroundColor={day.isSame(date) ? '#3A2E8E' : '#3F4042'}>
-                <WeekGauge backgroundColor={day.isSame(date) ? '#5F4BF2' : '#5B5D61'} height={50} />
-                {day.isSame(date) ? <Icon type={IconType.crown} /> : <Icon type={IconType.crownGray} />}
+              <DateWrapper backgroundColor={day.isSame(date, 'day') ? '#3A2E8E' : '#3F4042'}>
+                <WeekGauge backgroundColor={day.isSame(date, 'day') ? '#5F4BF2' : '#5B5D61'} height={50} />
+                {day.isSame(date, 'day') ? <Icon type={IconType.CROWN} /> : <Icon type={IconType.CROWN_GRAY} />}
               </DateWrapper>
             </WeeklyRow>
             <WeekTextWrapper key={`${date}_${index}`}>
@@ -289,7 +364,7 @@ const Weekly = observer(() => {
                 .map((_, idx) => {
                   const textDate = date.add(idx, 'day');
                   return (
-                    <DayOfWeek key={textDate.toString()}>
+                    <DayOfWeek key={textDate.toString()} style={{ height: 'auto' }}>
                       <DateTextWrapper>
                         <CustomText
                           font={FontType.REGULAR_CAPTION}
@@ -309,12 +384,8 @@ const Weekly = observer(() => {
   );
 });
 
-interface ContainerProps {
-  type: RADIO_TYPE;
-}
-
-const Container = observer(({ type }: ContainerProps) => {
-  const ViewType = type === RADIO_TYPE.일별 ? Daily : Weekly;
+const Container = observer(() => {
+  const ViewType = CalendarStore.radio === RADIO_TYPE.루틴 ? Daily : Weekly;
 
   const maxHeight = CalendarStore.translation.interpolate({
     inputRange: [0, 1],
@@ -325,7 +396,7 @@ const Container = observer(({ type }: ContainerProps) => {
   });
 
   const index = CalendarStore.days.findIndex((date) => {
-    return date.isSame(CalendarStore.focusDay);
+    return date.isSame(CalendarStore.focusDay, 'day');
   });
 
   const maxY = CalendarStore.translation.interpolate({
@@ -334,10 +405,9 @@ const Container = observer(({ type }: ContainerProps) => {
   });
 
   return (
-    <View>
+    <Animated.View style={{ maxHeight: maxHeight, overflow: 'hidden' }}>
       <Animated.View
         style={{
-          maxHeight: maxHeight,
           transform: [{ translateY: maxY }],
         }}>
         <GestureRecognizer
@@ -352,6 +422,6 @@ const Container = observer(({ type }: ContainerProps) => {
           </Week>
         </GestureRecognizer>
       </Animated.View>
-    </View>
+    </Animated.View>
   );
 });

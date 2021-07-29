@@ -1,12 +1,12 @@
 import styled from '@emotion/native';
 import React from 'react';
 
-import { List } from '~/models/List';
 import { Weekday } from '~/models/Task';
+import { RADIO_TYPE } from '~/stores/CalendarStore';
 import { getFace } from '~/utils/monster';
 
 interface Props {
-  listType: List;
+  listType: RADIO_TYPE;
   data: Weekday;
 }
 
@@ -30,12 +30,12 @@ const MonsterIcon = ({ listType, data }: Props) => {
   );
 };
 
-const MonsterIconStyled = styled.View<{ listType: List }>`
+const MonsterIconStyled = styled.View<{ listType: RADIO_TYPE }>`
   width: 28px;
   height: 28px;
   position: relative;
-  margin-left: ${({ listType }) => listType === 'week' && '6px'};
-  margin-right: ${({ listType }) => (listType === 'day' ? '12px' : '6px')};
+  margin-left: ${({ listType }) => listType === RADIO_TYPE.리포트 && '6px'};
+  margin-right: ${({ listType }) => (listType === RADIO_TYPE.루틴 ? '12px' : '6px')};
 `;
 
 const MonsterIconFace = styled.Image`

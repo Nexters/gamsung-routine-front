@@ -1,15 +1,22 @@
 import styled from '@emotion/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 
+import CustomModal from './CustomModal';
+
 import CustomText from '~/components/CustomText';
+import useModal from '~/hooks/useModal';
+import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
   id: number;
+  navigation: StackNavigationProp<RootStackParamList>;
 }
 
-const TaskDetailPopup = ({ id }: Props) => {
+const TaskDetailPopup = ({ id, navigation }: Props) => {
+  const { isVisible: isModalVisible, openModal, closeModal } = useModal();
   const handleCancelButtonClick = () => {
     console.log(id, ' : cancel');
   };
@@ -20,10 +27,12 @@ const TaskDetailPopup = ({ id }: Props) => {
 
   const handleEditButtonClick = () => {
     console.log(id, ' : edit');
+    navigation.navigate('EditTask', { taskId: id });
   };
 
   const handleDeleteButtonClick = () => {
     console.log(id, ' : delete');
+    openModal();
   };
 
   return (
@@ -52,6 +61,19 @@ const TaskDetailPopup = ({ id }: Props) => {
           삭제
         </CustomText>
       </TaskDetailPopupButton>
+      <CustomModal
+        isVisible={isModalVisible}
+        onClose={closeModal}
+        content={'테스크를\n삭제하겠습니까?'}
+        leftButtonText="취소"
+        onLeftButtonClick={() => {
+          closeModal();
+        }}
+        rightButtonText="확인"
+        onRightButtonClick={() => {
+          closeModal();
+        }}
+      />
     </TaskDetailPopupStyled>
   );
 };

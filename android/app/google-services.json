@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "514813722896",
+    "project_id": "bonkaemaster",
+    "storage_bucket": "bonkaemaster.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514813722896:android:df93f59397439acbe2e595",
+        "android_client_info": {
+          "package_name": "com.routine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514813722896-e1s9m9bfjc73gc7nci0ptsobgjc0pkud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD16AkvLR65onsECliacRpDkNccJ1Ougb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514813722896-e1s9m9bfjc73gc7nci0ptsobgjc0pkud.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
