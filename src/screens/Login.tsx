@@ -1,11 +1,10 @@
 import styled from '@emotion/native';
-import { getProfile as getKakaoProfile, login } from '@react-native-seoul/kakao-login';
+import { login } from '@react-native-seoul/kakao-login';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 
 import CustomText from '~/components/CustomText';
-import { User } from '~/models/User';
 import { RootStackParamList } from '~/navigations/types';
 import AuthStore from '~/stores/AuthStore';
 import { TextColor } from '~/utils/color';
@@ -19,15 +18,10 @@ const Login = ({ navigation }: HomeScreenProps) => {
   const onLogin = async () => {
     try {
       const token = await login();
-      const profile = await getKakaoProfile();
-      const user: User = {
-        token: token.accessToken,
-        nickname: profile.nickname,
-        profileImageUrl: profile.profileImageUrl,
-      };
-      AuthStore.login(user);
+      await AuthStore.login(token);
       navigation.replace('Home');
     } catch (error) {
+      // TODO: 토스트 표시
       console.error(error);
     }
   };
