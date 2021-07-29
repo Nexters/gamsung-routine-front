@@ -1,6 +1,5 @@
 import styled from '@emotion/native';
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 
 import CustomText from './CustomText';
 
@@ -8,25 +7,27 @@ import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
-  isRender: boolean;
+  days: {
+    id: number;
+    day: string;
+    selected: boolean;
+  }[];
+  onDayPress?: (id: number) => void;
 }
 
-export const DayWeekContainer = ({ isRender }: Props) => {
-  if (!isRender) {
-    return null;
-  }
-
-  const day = ['월', '화', '수', '목', '금', '토', '일'];
+export const DayWeekContainer: React.FC<Props> = ({ days, onDayPress }) => {
+  const handleDayPress = (id: number) => () => {
+    console.log('press', id);
+    onDayPress?.(id);
+  };
 
   return (
     <DayWeekContainerStyled>
-      {day.map((it, index) => (
-        <DayStyled selected={index % 2 === 0}>
-          <TouchableOpacity>
-            <CustomText font={FontType.MEDIUM_BODY_01} color={index % 2 === 0 ? TextColor.WHITE : TextColor.SECONDARY}>
-              {it}
-            </CustomText>
-          </TouchableOpacity>
+      {days.map((day) => (
+        <DayStyled selected={day.selected} onPress={handleDayPress(day.id)} key={day.id}>
+          <CustomText font={FontType.MEDIUM_BODY_01} color={day.selected ? TextColor.WHITE : TextColor.SECONDARY}>
+            {day.day}
+          </CustomText>
         </DayStyled>
       ))}
     </DayWeekContainerStyled>

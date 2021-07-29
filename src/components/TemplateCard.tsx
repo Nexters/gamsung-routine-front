@@ -1,9 +1,10 @@
 import styled from '@emotion/native';
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import CustomText from '~/components/CustomText';
 import { TemplateTask } from '~/models/TemplateTask';
-import { BackgroundColor, TextColor } from '~/utils/color';
+import { BackgroundColor, GraphicColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
@@ -11,40 +12,56 @@ interface Props {
   name: string;
   tasks: TemplateTask[];
   onPress?: (id: number) => void;
+  cardColor?: GraphicColor;
 }
 
-export const TemplateCard = (props: Props) => {
-  const { id, name, tasks, onPress } = props;
-
+export const TemplateCard: React.FC<Props> = observer(({ id, name, tasks, onPress, cardColor = GraphicColor.RED }) => {
   const handlePress = () => {
     onPress?.(id);
   };
 
   return (
-    <TemplateCardStyled onPress={handlePress}>
-      <CustomText font={FontType.BOLD_LARGE}>💪</CustomText>
-      <CustomText font={FontType.BOLD_LARGE} color={TextColor.WHITE}>
-        {name}
-      </CustomText>
-      <ViewStyled>
-        {tasks.slice(0, 3).map((it) => (
-          <CustomText key={it.id} font={FontType.REGULAR_CAPTION} color={TextColor.WHITE}>
-            {it.taskName}
-          </CustomText>
-        ))}
-      </ViewStyled>
+    <TemplateCardStyled onPress={handlePress} backgroundColor={cardColor}>
+      <TemplateContentStyled>
+        <CustomText font={FontType.BOLD_LARGE} color={TextColor.WHITE}>
+          {name}
+        </CustomText>
+        <ViewStyled>
+          {tasks.slice(0, 3).map((it) => (
+            <CustomText key={it.id} font={FontType.REGULAR_CAPTION} color={TextColor.WHITE}>
+              {it.taskName}
+            </CustomText>
+          ))}
+        </ViewStyled>
+      </TemplateContentStyled>
+      <TemplateBeltStyled />
     </TemplateCardStyled>
   );
-};
+});
 
-const TemplateCardStyled = styled.TouchableOpacity`
+const TemplateContentStyled = styled.View`
+  height: 100%;
+`;
+
+const TemplateBeltStyled = styled.View`
+  position: absolute;
+  width: 12px;
+  top: 0;
+  bottom: 0;
+  right: 16px;
+  background-color: ${BackgroundColor.PRIMARY};
+  opacity: 0.2;
+`;
+
+const TemplateCardStyled = styled.TouchableOpacity<{ backgroundColor: GraphicColor }>`
   width: 160px;
   height: 184px;
-  background-color: ${BackgroundColor.SECONDARY};
-  border-radius: 9px;
   flex: 1;
+  flex-direction: row;
   margin: 10px;
   padding: 18px;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  border-radius: 9px;
 `;
 
 const ViewStyled = styled.View`

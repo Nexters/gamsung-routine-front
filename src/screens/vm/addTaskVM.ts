@@ -2,6 +2,15 @@ import { action, computed, makeObservable, observable } from 'mobx';
 
 import { Category } from '~/models/Category';
 import { Template } from '~/models/Template';
+import { GraphicColor } from '~/utils/color';
+
+const GRAPHIC_COLORS = [
+  GraphicColor.RED,
+  GraphicColor.SKYBLUE,
+  GraphicColor.GREEN,
+  GraphicColor.YELLOW,
+  GraphicColor.PURPLE,
+];
 
 export class AddTaskVM {
   categories: Category[] = categoryMock;
@@ -10,7 +19,15 @@ export class AddTaskVM {
   selectedTemplateId: number | null = null;
 
   get templates() {
-    return (this.selectedCategoryId ?? 1) % 2 === 0 ? templateMockA : templateMockB;
+    return (this.selectedCategoryId ?? 1) % 2 === 0
+      ? templateMockA.map((templates, index) => ({
+          ...templates,
+          color: this.getColor(index),
+        }))
+      : templateMockB.map((templates, index) => ({
+          ...templates,
+          color: this.getColor(index),
+        }));
   }
 
   onSelectedCategoryIdChange(id: number) {
@@ -19,6 +36,10 @@ export class AddTaskVM {
 
   onSelectedTemplateIdChange(id: number) {
     this.selectedTemplateId = id;
+  }
+
+  getColor(index: number) {
+    return GRAPHIC_COLORS[index % GRAPHIC_COLORS.length];
   }
 
   constructor() {

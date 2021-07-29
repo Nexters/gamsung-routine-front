@@ -6,32 +6,19 @@ import { FoldableContainer } from './FoldableContainer';
 import { TimeSettingContainer } from './TimeSettingContainer';
 
 import { BackgroundColor } from '~/utils/color';
+import { observer } from 'mobx-react';
 
 interface Props {
   marginTop?: number;
   marginBottom?: number;
+  timeSettingData: { isAm: boolean; hour: number; minute: number }[];
 }
 
-const mock = [
-  {
-    id: 1,
-    isAm: true,
-    hour: 8,
-    minute: 20,
-  },
-  {
-    id: 2,
-    isAm: false,
-    hour: 8,
-    minute: 30,
-  },
-];
-
-export const TimeSettingCard = (props: Props) => {
+export const TimeSettingCard: React.FC<Props> = observer(({ marginTop, marginBottom, timeSettingData }) => {
   const [isTimeSettingOpen, setIsTimeSettingOpen] = useState<boolean>(false);
 
   return (
-    <CollapsibleCard marginTop={props?.marginTop} marginBottom={props?.marginBottom}>
+    <CollapsibleCard marginTop={marginTop} marginBottom={marginBottom}>
       <FoldableContainer
         type={'SWITCH'}
         label={'시간 설정'}
@@ -39,10 +26,10 @@ export const TimeSettingCard = (props: Props) => {
         onOpen={() => setIsTimeSettingOpen(!isTimeSettingOpen)}
       />
       {isTimeSettingOpen && <DividerStyled />}
-      {isTimeSettingOpen && mock.map((it, index) => <TimeSettingContainer key={it.id} count={index + 1} />)}
+      {isTimeSettingOpen && timeSettingData.map((it, index) => <TimeSettingContainer key={index} count={index + 1} />)}
     </CollapsibleCard>
   );
-};
+});
 
 const DividerStyled = styled.View`
   width: 100%;
