@@ -1,19 +1,20 @@
-const MonsterFace = {
-  SMILE: require('~/assets/images/monster_face_smile.png'),
-  CRITICAL: require('~/assets/images/monster_face_critical.png'),
-  CLEAR: require('~/assets/images/monster_face_clear.png'),
-  DISABLE: require('~/assets/images/monster_face_disable.png'),
-} as const;
+import FACE1 from '~/assets/images/monster_face_1.svg';
+import FACE2 from '~/assets/images/monster_face_2.svg';
+import FACE3 from '~/assets/images/monster_face_3.svg';
+import FACE4 from '~/assets/images/monster_face_4.svg';
+import FACE5 from '~/assets/images/monster_face_5.svg';
 
-const getFace = (count: number, endTasksCount: number) => {
-  if (count === 0) {
-    return MonsterFace.DISABLE;
-  } else if (count - endTasksCount === 0) {
-    return MonsterFace.CLEAR;
-  } else if (count === count - endTasksCount) {
-    return MonsterFace.SMILE;
+const getFace = (value: number) => {
+  if (value >= 0.75) {
+    return FACE1;
+  } else if (value >= 0.5) {
+    return FACE2;
+  } else if (value >= 0.25) {
+    return FACE3;
+  } else if (value >= 0.01) {
+    return FACE4;
   } else {
-    return MonsterFace.CRITICAL;
+    return FACE5;
   }
 };
 
