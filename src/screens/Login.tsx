@@ -1,5 +1,4 @@
 import styled from '@emotion/native';
-import { login } from '@react-native-seoul/kakao-login';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
@@ -16,14 +15,8 @@ export interface HomeScreenProps {
 
 const Login = ({ navigation }: HomeScreenProps) => {
   const onLogin = async () => {
-    try {
-      const token = await login();
-      await AuthStore.login(token);
-      navigation.replace('Home');
-    } catch (error) {
-      // TODO: 토스트 표시
-      console.error(error);
-    }
+    await AuthStore.login();
+    navigation.replace('Home');
   };
 
   return (
