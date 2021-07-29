@@ -38,7 +38,7 @@ const App = () => {
 
   const getFcmToken = async () => {
     const fcmToken = await messaging().getToken();
-    console.log(fcmToken);
+    console.log('fcmToken : ', fcmToken);
   };
 
   const getUser = async () => {
