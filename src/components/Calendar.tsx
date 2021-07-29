@@ -353,9 +353,9 @@ const Weekly = observer(() => {
               }
             }}>
             <WeeklyRow>
-              <DateWrapper backgroundColor={day.isSame(date) ? '#3A2E8E' : '#3F4042'}>
-                <WeekGauge backgroundColor={day.isSame(date) ? '#5F4BF2' : '#5B5D61'} height={50} />
-                {day.isSame(date) ? <Icon type={IconType.CROWN} /> : <Icon type={IconType.CROWN_GRAY} />}
+              <DateWrapper backgroundColor={day.isSame(date, 'day') ? '#3A2E8E' : '#3F4042'}>
+                <WeekGauge backgroundColor={day.isSame(date, 'day') ? '#5F4BF2' : '#5B5D61'} height={50} />
+                {day.isSame(date, 'day') ? <Icon type={IconType.CROWN} /> : <Icon type={IconType.CROWN_GRAY} />}
               </DateWrapper>
             </WeeklyRow>
             <WeekTextWrapper key={`${date}_${index}`}>
@@ -396,7 +396,7 @@ const Container = observer(() => {
   });
 
   const index = CalendarStore.days.findIndex((date) => {
-    return date.isSame(CalendarStore.focusDay);
+    return date.isSame(CalendarStore.focusDay, 'day');
   });
 
   const maxY = CalendarStore.translation.interpolate({

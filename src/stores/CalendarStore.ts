@@ -80,7 +80,6 @@ class CalendarStore {
         }),
       ]).start();
     } else {
-      this.days = this.getDays();
       Animated.parallel([
         Animated.timing(this.translation, {
           toValue: 0,
@@ -100,6 +99,7 @@ class CalendarStore {
         } else {
           this.changeWeekDay(this.days[0]);
         }
+        this.days = this.getDays();
       });
     }
   }
