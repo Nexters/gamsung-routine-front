@@ -24,10 +24,13 @@ const MainNavigator = () => {
       <Stack.Screen
         name="TemplateList"
         component={TemplateList}
-        options={(navigation) => ({
+        options={({ navigation }) => ({
           headerTitleAlign: 'center',
           headerLeft: () => (
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('EditTask');
+              }}>
               <Icon type={IconType.add} />
             </TouchableOpacity>
           ),
