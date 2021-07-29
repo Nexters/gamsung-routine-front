@@ -344,6 +344,7 @@ const Weekly = observer(() => {
         }
         return (
           <TouchableOpacity
+            style={{ height: (Dimensions.get('window').width - 22) / 7 }}
             key={date.toString()}
             onPress={() => {
               CalendarStore.changeFocusDay(date);

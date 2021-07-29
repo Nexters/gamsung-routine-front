@@ -80,6 +80,7 @@ class CalendarStore {
         }),
       ]).start();
     } else {
+      this.days = this.getDays();
       Animated.parallel([
         Animated.timing(this.translation, {
           toValue: 0,
