@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import { KakaoOAuthToken } from '@react-native-seoul/kakao-login';
 import { observable, action, makeObservable, computed } from 'mobx';
 
-import { User } from '~/models/User';
+import api from '~/utils/api';
 
 class AuthStore {
   // XXX : _ prefix를 계속 사용할지 고민
@@ -25,15 +26,35 @@ class AuthStore {
     return !!this.token;
   }
 
-  login = (user: User) => {
-    this.token = user.token;
-    this.nickname = user.nickname;
-    this.profileImageUrl = user.profileImageUrl;
-    try {
-      AsyncStorage.setItem('token', this.token);
-    } catch (error) {
-      console.error(error);
-    }
+  login = async (token: KakaoOAuthToken) => {
+    const {
+      data: {
+        data: { accessToken },
+      },
+    } = await api.post<{
+      data: {
+        accessToken: string;
+      };
+    }>('/auth/sign-in/kakao', {
+      accessToken: token.accessToken,
+      refreshToken: token.refreshToken,
+    });
+
+    this.token = accessToken;
+
+    await AsyncStorage.setItem('token', accessToken);
+    await this.updateProfile();
+  };
+
+  private updateProfile = async () => {
+    const {
+      data: {
+        data: { name, profileImageUrl },
+      },
+    } = await api.get('/profile');
+
+    this.nickname = name;
+    this.profileImageUrl = profileImageUrl;
   };
 
   public static instance() {
