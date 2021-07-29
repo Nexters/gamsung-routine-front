@@ -25,6 +25,12 @@ const BasicColor = {
   GRAY80: '#4B4C4F',
   GRAY90: '#333436',
   GRAY100: '#0C0D0E',
+
+  GRAPHIC_RED: '#FF7B68',
+  GRAPHIC_SKYBLUE: '#89B1FF',
+  GRAPHIC_GREEN: '#52C39B',
+  GRAPHIC_YELLOW: '#FFCA42',
+  GRAPHIC_PURPLE: '#7D6BFF',
 } as const;
 
 const BackgroundColor = {
@@ -51,6 +57,14 @@ const DimColor = {
   DIM: alpha(BasicColor.GRAY100, 60), // 가이드 상 아직 정해지지 않은 칼라명
 } as const;
 
+const GraphicColor = {
+  RED: BasicColor.GRAPHIC_RED,
+  GREEN: BasicColor.GRAPHIC_GREEN,
+  SKYBLUE: BasicColor.GRAPHIC_SKYBLUE,
+  YELLOW: BasicColor.GRAPHIC_YELLOW,
+  PURPLE: BasicColor.GRAPHIC_PURPLE,
+} as const;
+
 /**
  *
  * @param color
@@ -67,5 +81,6 @@ type BackgroundColor = typeof BackgroundColor[keyof typeof BackgroundColor];
 type TextColor = typeof TextColor[keyof typeof TextColor];
 type PressedColor = typeof PressedColor[keyof typeof PressedColor];
 type DimColor = typeof DimColor[keyof typeof DimColor];
+type GraphicColor = typeof GraphicColor[keyof typeof GraphicColor];
 
-export { BackgroundColor, TextColor, PressedColor, DimColor };
+export { BackgroundColor, TextColor, PressedColor, DimColor, GraphicColor };

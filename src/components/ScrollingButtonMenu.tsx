@@ -41,13 +41,13 @@ export const ScrollingButtonMenu = observer((props: Props) => {
 
 const MenuButtonStyled = styled.TouchableOpacity<{ selected: boolean }>`
   padding: 4px 16px;
-  background-color: ${({ selected }) => (selected ? BackgroundColor.SECONDARY : BackgroundColor.ELEVATED)};
-  border: 1px solid ${TextColor.DISABLE};
+  background-color: ${({ selected }) => (selected ? '#513DE5' : BackgroundColor.PRIMARY)};
+  border: 1px solid #e4e5e9;
   border-radius: 20px;
   margin-right: 8px;
 `;
 
 const ViewStyled = styled.View`
   padding: 0 10px;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 `;

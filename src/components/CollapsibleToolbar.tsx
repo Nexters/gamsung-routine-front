@@ -1,12 +1,13 @@
 import styled from '@emotion/native';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { View, Animated, Text, Dimensions } from 'react-native';
+import { View, Animated, Text, Dimensions, TouchableOpacity } from 'react-native';
 
 import CustomText from './CustomText';
 
-import { BackgroundColor, TextColor } from '~/utils/color';
+import { GraphicColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import Icon, { IconType } from './Icon';
 
 const HEADER_EXPANDED_HEIGHT = 215;
 const HEADER_COLLAPSED_HEIGHT = 56;
@@ -18,121 +19,130 @@ const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 interface Props {
   title: string;
   children: React.ReactNode;
+  onBackpressClick?: () => void;
+  backgroundColor?: GraphicColor;
 }
 
-export const CollapsibleToolbar = observer(({ title, children }: Props) => {
-  const [scrollY] = useState(new Animated.Value(0));
+export const CollapsibleToolbar: React.FC<Props> = observer(
+  ({ title, children, onBackpressClick, backgroundColor = GraphicColor.RED }) => {
+    const [scrollY] = useState(new Animated.Value(0));
 
-  const headerHeight = scrollY.interpolate({
-    inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-    outputRange: [HEADER_EXPANDED_HEIGHT, HEADER_COLLAPSED_HEIGHT],
-    extrapolate: 'clamp',
-  });
+    const headerHeight = scrollY.interpolate({
+      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
+      outputRange: [HEADER_EXPANDED_HEIGHT, HEADER_COLLAPSED_HEIGHT],
+      extrapolate: 'clamp',
+    });
 
-  const headerSlide = scrollY.interpolate({
-    inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-    outputRange: [0, HEADER_COLLAPSED_HEIGHT - HEADER_EXPANDED_HEIGHT],
-    extrapolate: 'clamp',
-  });
+    const headerSlide = scrollY.interpolate({
+      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
+      outputRange: [0, HEADER_COLLAPSED_HEIGHT - HEADER_EXPANDED_HEIGHT],
+      extrapolate: 'clamp',
+    });
 
-  const backgroundSlide = scrollY.interpolate({
-    inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-    outputRange: [0, 100],
-    extrapolate: 'clamp',
-  });
+    const backgroundSlide = scrollY.interpolate({
+      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
+      outputRange: [0, 100],
+      extrapolate: 'clamp',
+    });
 
-  const headerTitleSlide = scrollY.interpolate({
-    inputRange: [
-      0,
-      (HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT) / 2,
-      HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT,
-    ],
-    outputRange: [0, 0, -8],
-    extrapolate: 'clamp',
-  });
+    const headerTitleSlide = scrollY.interpolate({
+      inputRange: [
+        0,
+        (HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT) / 2,
+        HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT,
+      ],
+      outputRange: [0, 0, -8],
+      extrapolate: 'clamp',
+    });
 
-  const headerTitleSize = scrollY.interpolate({
-    inputRange: [
-      0,
-      (HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT) / 2,
-      HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT,
-    ],
-    outputRange: [1, 1, 0.8],
-    extrapolate: 'clamp',
-  });
+    const headerTitleSize = scrollY.interpolate({
+      inputRange: [
+        0,
+        (HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT) / 2,
+        HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT,
+      ],
+      outputRange: [1, 1, 0.8],
+      extrapolate: 'clamp',
+    });
 
-  const headerTitleOpacity = scrollY.interpolate({
-    inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-    outputRange: [1, 0],
-    extrapolate: 'clamp',
-  });
+    const headerTitleOpacity = scrollY.interpolate({
+      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    });
 
-  const imageOpacity = scrollY.interpolate({
-    inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-    outputRange: [0.5, 0],
-    extrapolate: 'clamp',
-  });
+    const imageOpacity = scrollY.interpolate({
+      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
+      outputRange: [0.5, 0],
+      extrapolate: 'clamp',
+    });
 
-  return (
-    <CollapsibleToolbarStyled>
-      <Animated.ScrollView
-        style={{
-          flex: 1,
-        }}
-        onScroll={Animated.event([
-          {
-            nativeEvent: {
-              contentOffset: {
-                y: scrollY,
+    const handleBackpressClick = () => {
+      onBackpressClick?.();
+    };
+
+    return (
+      <CollapsibleToolbarStyled>
+        <Animated.ScrollView
+          style={{
+            flex: 1,
+          }}
+          onScroll={Animated.event([
+            {
+              nativeEvent: {
+                contentOffset: {
+                  y: scrollY,
+                },
               },
             },
-          },
-        ])}
-        scrollEventThrottle={16}>
-        <Animated.View>{children}</Animated.View>
-      </Animated.ScrollView>
-      <Header style={{ height: HEADER_EXPANDED_HEIGHT, transform: [{ translateY: headerSlide }] }}>
-        <Background
-          style={{
-            height: HEADER_EXPANDED_HEIGHT,
-            transform: [{ translateY: backgroundSlide }],
-          }}>
-          <View style={{ position: 'absolute', bottom: 0, left: 20 }}>
-            <Text style={{ color: 'white' }}>ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</Text>
-          </View>
-        </Background>
-        <Action style={{ transform: [{ scale: headerTitleSize }] }}>
-          <View style={{ position: 'absolute', bottom: 20, left: 20 }}>
-            <Text style={{ color: 'white' }}>{title}</Text>
-          </View>
-        </Action>
-      </Header>
-      <AppBar>
-        <LeftHeaderItem>
-          <CustomText color={TextColor.WHITE} font={FontType.BOLD_TITLE_02}>{`<`}</CustomText>
-        </LeftHeaderItem>
-        <RightHeaderItem>
-          <CustomText color={TextColor.WHITE} font={FontType.BOLD_LARGE}>
-            전체 담기
-          </CustomText>
-        </RightHeaderItem>
-      </AppBar>
-    </CollapsibleToolbarStyled>
-  );
-});
+          ])}
+          scrollEventThrottle={16}>
+          <Animated.View>{children}</Animated.View>
+        </Animated.ScrollView>
+        <Header style={{ height: HEADER_EXPANDED_HEIGHT, transform: [{ translateY: headerSlide }] }}>
+          <Background
+            backgroundColor={backgroundColor}
+            style={{
+              height: HEADER_EXPANDED_HEIGHT,
+              transform: [{ translateY: backgroundSlide }],
+            }}>
+            <View style={{ position: 'absolute', bottom: 0, left: 20 }}>
+              <Text style={{ color: 'white' }}>ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</Text>
+            </View>
+          </Background>
+          <Action style={{ transform: [{ scale: headerTitleSize }] }}>
+            <View style={{ position: 'absolute', bottom: 20, left: 20 }}>
+              <Text style={{ color: 'white' }}>{title}</Text>
+            </View>
+          </Action>
+        </Header>
+        <AppBar>
+          <LeftHeaderItem onPress={handleBackpressClick}>
+            <Icon type={IconType.iconArrowLeft} />
+          </LeftHeaderItem>
+          <RightHeaderItem>
+            <CustomText color={TextColor.WHITE} font={FontType.MEDIUM_BODY_01}>
+              전체 담기
+            </CustomText>
+          </RightHeaderItem>
+        </AppBar>
+      </CollapsibleToolbarStyled>
+    );
+  },
+);
 
 const CollapsibleToolbarStyled = styled.SafeAreaView`
   width: 100%;
   flex: 1;
 `;
 
-const LeftHeaderItem = styled(Animated.View)`
+const LeftHeaderItem = styled(TouchableOpacity)`
   position: absolute;
   left: 20px;
   top: 15px;
 `;
 
-const RightHeaderItem = styled(Animated.View)`
+const RightHeaderItem = styled(TouchableOpacity)`
   position: absolute;
   right: 20px;
   top: 15px;
@@ -162,12 +172,12 @@ const Header = styled(Animated.View)`
   height: 56px;
 `;
 
-const Background = styled(Animated.View)`
+const Background = styled(Animated.View)<{ backgroundColor: GraphicColor }>`
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  background-color: ${BackgroundColor.SECONDARY};
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
 const Action = styled(Animated.View)`

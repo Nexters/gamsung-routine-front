@@ -7,41 +7,46 @@ import { FoldableSwitch } from './FoldableSwitch';
 
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import { observer } from 'mobx-react';
 
 interface Props {
   label: string;
-  type: 'SELECTOR' | 'SWITCH';
-  isOpen: boolean;
+  type: 'SELECTOR' | 'SWITCH' | 'NONE';
+  isOpen?: boolean;
   countText?: string;
   onOpen?: () => void;
+  children?: React.ReactNode;
 }
 
-export const FoldableContainer = ({ label, type, isOpen, countText, onOpen }: Props) => {
-  const [isExpended, setIsExpended] = useState(isOpen);
+export const FoldableContainer: React.FC<Props> = observer(
+  ({ label, type, isOpen = false, countText, onOpen, children }) => {
+    const [isExpended, setIsExpended] = useState(isOpen);
 
-  const handleOpen = useCallback(() => {
-    setIsExpended(!isExpended);
-    onOpen?.();
-  }, [onOpen]);
+    const handleOpen = useCallback(() => {
+      setIsExpended(!isExpended);
+      onOpen?.();
+    }, [onOpen]);
 
-  useEffect(() => {
-    setIsExpended(isExpended);
-  }, [isOpen]);
+    useEffect(() => {
+      setIsExpended(isExpended);
+    }, [isOpen]);
 
-  return (
-    <FoldableContainerStyled>
-      <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY}>
-        {label}
-      </CustomText>
-      <RightViewStyled>
-        {type === 'SELECTOR' && (
-          <FoldableSelector countText={countText} isOpen={isExpended} onSelectorClick={handleOpen} />
-        )}
-        {type === 'SWITCH' && <FoldableSwitch isOn={isExpended} onToggle={handleOpen} />}
-      </RightViewStyled>
-    </FoldableContainerStyled>
-  );
-};
+    return (
+      <FoldableContainerStyled>
+        <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY}>
+          {label}
+        </CustomText>
+        <RightViewStyled>
+          {type === 'SELECTOR' && (
+            <FoldableSelector countText={countText} isOpen={isExpended} onSelectorClick={handleOpen} />
+          )}
+          {type === 'SWITCH' && <FoldableSwitch isOn={isExpended} onToggle={handleOpen} />}
+          {type === 'NONE' && children}
+        </RightViewStyled>
+      </FoldableContainerStyled>
+    );
+  },
+);
 
 const FoldableContainerStyled = styled.View`
   flex-direction: row;
