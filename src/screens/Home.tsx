@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
 
+import { useUserProfileData } from '~/apis/authAPI';
 import Calendar from '~/components/Calendar';
 import CustomText from '~/components/CustomText';
 import Icon, { IconType } from '~/components/Icon';
@@ -62,6 +63,9 @@ const Home = ({ navigation }: HomeScreenProps) => {
       ],
     }));
   });
+
+  const { data } = useUserProfileData();
+  console.log(data?.data.name);
 
   const [isVisiblePopup, setIsVisiblePopup] = useState<number | null>(null);
 
