@@ -45,7 +45,7 @@ const App = () => {
     try {
       const getToken = await AsyncStorage.getItem('token');
       if (getToken !== null) {
-        AuthStore.token = JSON.parse(getToken);
+        AuthStore.token = getToken;
       }
     } catch (error) {
       console.error(error);
