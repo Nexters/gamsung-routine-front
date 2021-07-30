@@ -17,7 +17,6 @@ interface Props {
 
 export const DayWeekContainer: React.FC<Props> = ({ days, onDayPress }) => {
   const handleDayPress = (id: number) => () => {
-    console.log('press', id);
     onDayPress?.(id);
   };
 

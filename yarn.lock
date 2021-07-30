@@ -6226,14 +6226,6 @@ react-native-modal@^12.0.2:
     prop-types "^15.6.2"
     react-native-animatable "1.3.3"
 
-react-native-month-year-picker@^1.7.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-month-year-picker/-/react-native-month-year-picker-1.8.0.tgz#9fd5b8502e4354506b9dc4525e73f966e8582aaa"
-  integrity sha512-3jf7KXrLTaqWvi+WALgadClnJ+f/HXtCtYMOjG5RH1r5aWWo7lfpETdlfYkRAVy4ZKLsDp65KStbkh4dyytZ8g==
-  dependencies:
-    invariant "^2.2.4"
-    moment "^2.24.0"
-
 react-native-reanimated@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.2.0.tgz#a6412c56b4e591d1f00fac949f62d0c72c357c78"

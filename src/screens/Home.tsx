@@ -12,6 +12,8 @@ import { RootStackParamList } from '~/navigations/types';
 import CalendarStore from '~/stores/CalendarStore';
 import { BackgroundColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import HomeStore from '~/stores/HomeStore';
+import { useEffect } from 'react';
 
 export interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -19,49 +21,11 @@ export interface HomeScreenProps {
 
 const Home = ({ navigation }: HomeScreenProps) => {
   const totalPercent = 30;
-  const [taskList, setTaskList] = useState(() => {
-    return Array.from({ length: 5 }, (_, index) => ({
-      id: index + 1,
-      title: `My Task ${index + 1}`,
-      timesOfWeek: 3,
-      timesOfDay: 1,
-      percent: 15,
-      todayOfWeek: {
-        count: 3,
-        endTasks: ['1'],
-      },
-      dayOfWeek: [
-        {
-          count: 3,
-          endTasks: ['1', '2'],
-        },
-        {
-          count: 2,
-          endTasks: ['1', '2'],
-        },
-        {
-          count: 6,
-          endTasks: ['1', '2', '3', '4', '5'],
-        },
-        {
-          count: 8,
-          endTasks: ['1'],
-        },
-        {
-          count: 3,
-          endTasks: [],
-        },
-        {
-          count: 2,
-          endTasks: ['1'],
-        },
-        {
-          count: 0,
-          endTasks: [],
-        },
-      ],
-    }));
-  });
+  const [taskList, setTaskList] = useState(HomeStore.taskList);
+
+  useEffect(() => {
+    setTaskList(HomeStore.taskList);
+  }, [HomeStore.taskList]);
 
   const [isVisiblePopup, setIsVisiblePopup] = useState<number | null>(null);
 
