@@ -1,11 +1,13 @@
 import styled from '@emotion/native';
-import { RouteProp, StackActions } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
-import { AlarmSettingCard } from '~/components/AlarmSettingCard';
 
+import { EditTaskVM } from './vm/editTaskVM';
+
+import { AlarmSettingCard } from '~/components/AlarmSettingCard';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
 import { DailyLoopCard } from '~/components/DailyLoopCard';
@@ -15,7 +17,6 @@ import useModal from '~/hooks/useModal';
 import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
-import { EditTaskVM } from './vm/editTaskVM';
 
 interface EditTaskScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -54,7 +55,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
   return (
     <>
       <EditTaskStyled>
-        <ScrollView style={{ width: '100%', height: '100%' }}>
+        <ScrollView style={{ width: '100%', height: '100%', marginBottom: 70 }}>
           <EditTaskView>
             <EditSettingView>
               <TitleSettingView>
@@ -77,13 +78,13 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
                 <AlarmSettingCard />
               </AddSettingView>
             </EditSettingView>
-            <EditSubmitButton onPress={handleEditSubmitClick}>
-              <CustomText font={FontType.BOLD_LARGE} color={TextColor.WHITE} align={Align.CENTER}>
-                추가하기
-              </CustomText>
-            </EditSubmitButton>
           </EditTaskView>
         </ScrollView>
+        <EditSubmitButton onPress={handleEditSubmitClick}>
+          <CustomText font={FontType.BOLD_LARGE} color={TextColor.WHITE} align={Align.CENTER}>
+            추가하기
+          </CustomText>
+        </EditSubmitButton>
       </EditTaskStyled>
       <CustomModal
         isVisible={isModalVisible}
@@ -129,14 +130,15 @@ const AddSettingView = styled.View`
 `;
 
 const EditSubmitButton = styled.TouchableOpacity`
-  width: 100%;
   justify-content: center;
   align-items: center;
   background-color: #513de5;
   border-radius: 8px;
   padding: 12px 0;
-  margin-top: 34px;
-  margin-bottom: 34px;
+  left: 20px;
+  right: 20px;
+  position: absolute;
+  bottom: 34px;
 `;
 
 export default observer(EditTask);

@@ -10,10 +10,9 @@ import Icon, { IconType } from '~/components/Icon';
 import TaskListView from '~/components/TaskListView';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore from '~/stores/CalendarStore';
+import HomeStore from '~/stores/HomeStore';
 import { BackgroundColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-import HomeStore from '~/stores/HomeStore';
-import { useEffect } from 'react';
 
 export interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -21,26 +20,12 @@ export interface HomeScreenProps {
 
 const Home = ({ navigation }: HomeScreenProps) => {
   const totalPercent = 30;
-  const [taskList, setTaskList] = useState(HomeStore.taskList);
-
-  useEffect(() => {
-    setTaskList(HomeStore.taskList);
-  }, [HomeStore.taskList]);
 
   const [isVisiblePopup, setIsVisiblePopup] = useState<number | null>(null);
 
   const handleToggleTask = (id: number) => {
     setIsVisiblePopup(null);
-    setTaskList((oldTaskList) =>
-      oldTaskList.filter((task, _) => {
-        if (task.id === id) {
-          task.todayOfWeek.endTasks.length > 0 &&
-            task.todayOfWeek.count > task.todayOfWeek.endTasks.length &&
-            task.todayOfWeek.endTasks.push('3');
-        }
-        return task;
-      }),
-    );
+    HomeStore.actionTask(id);
   };
 
   const handlePopupClick = (id: number | null) => {
@@ -62,7 +47,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
               <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.SECONDARY}>
                 내 하루 테스크{' '}
                 <CustomText font={FontType.BOLD_BODY_02} color={TextColor.MAIN}>
-                  {taskList.length}
+                  {HomeStore.taskList.length}
                 </CustomText>
               </CustomText>
               <CustomText font={FontType.BOLD_BODY_02} color={TextColor.PRIMARY}>
@@ -71,7 +56,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
             </TaskTitleView>
             <TaskListView
               navigation={navigation}
-              taskList={taskList}
+              taskList={HomeStore.taskList}
               onToggleTask={handleToggleTask}
               isVisiblePopup={isVisiblePopup}
               onPopupClick={handlePopupClick}
@@ -83,9 +68,8 @@ const Home = ({ navigation }: HomeScreenProps) => {
             setIsVisiblePopup(null);
             navigation.navigate('TemplateList');
           }}>
-          <CustomText color={TextColor.WHITE} font={FontType.REGULAR_HEAD_01}>
-            +
-          </CustomText>
+          {/* TODO : SVG로 바꾸기 */}
+          <Icon type={IconType.PLUS} />
         </AddTaskButton>
       </HomeStyled>
     </>
@@ -130,6 +114,7 @@ const TaskTitleView = styled.View`
 `;
 
 const AddTaskButton = styled.TouchableOpacity`
+  background-color: red;
   width: 64px;
   height: 64px;
   justify-content: center;

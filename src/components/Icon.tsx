@@ -1,16 +1,17 @@
 import React from 'react';
 import { SvgXml } from 'react-native-svg';
 
+import IconAdd from '~/assets/icons/icon_add.svg';
 import IconArrowDown from '~/assets/icons/icon_arrow_down.svg';
-import IconArrowUp from '~/assets/icons/icon_arrow_up.svg';
 import IconArrowLeft from '~/assets/icons/icon_arrow_left.svg';
+import IconArrowUp from '~/assets/icons/icon_arrow_up.svg';
 import IconCrown from '~/assets/icons/icon_crown.svg';
 import IconCrownGray from '~/assets/icons/icon_crown_gray.svg';
 import IconDrop from '~/assets/icons/icon_drop.svg';
 import IconFullArrowDown from '~/assets/icons/icon_full_arrow_down.svg';
 import IconMore from '~/assets/icons/icon_more.svg';
+import IconPlus from '~/assets/icons/icon_plus.svg';
 import IconTake from '~/assets/icons/icon_take.svg';
-import IconAdd from '~/assets/icons/icon_add.svg';
 
 export enum IconType {
   'DROP' = 'DROP',
@@ -22,7 +23,8 @@ export enum IconType {
   'MORE' = 'MORE',
   'FULL_ARROW_DOWN' = 'FULL_ARROW_DOWN',
   'ARROW_LEFT' = 'ARROW_LEFT',
-  'ADD' = 'ADD'
+  'ADD' = 'ADD',
+  'PLUS' = 'PLUS',
 }
 
 interface Props {
@@ -59,6 +61,9 @@ const Icon = ({ type }: Props) => {
     }
     if (type === IconType.ADD) {
       return IconAdd;
+    }
+    if (type === IconType.PLUS) {
+      return IconPlus;
     }
   };
   return <SvgXml xml={getIcon(type)} />;

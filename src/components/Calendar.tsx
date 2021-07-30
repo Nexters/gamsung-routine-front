@@ -78,10 +78,14 @@ const Calendar = () => {
           <Container />
         </CalColumn>
         {isDatePickerVisible && (
-          <BackDrop onPress={() => setDatePickerVisibility(false)}>
+          <>
+            <BackDrop onPress={() => setDatePickerVisibility(false)} />
             <View
               style={{
+                position: 'absolute',
+                top: 0,
                 backgroundColor: '#3F4042',
+                opacity: 1,
                 width: '100%',
                 height: 198,
                 flexDirection: 'row',
@@ -104,6 +108,7 @@ const Calendar = () => {
               />
               <View style={{ marginRight: 40, justifyContent: 'center' }}>
                 <WheelPicker
+                  color={TextColor.WHITE}
                   onScrollEndDrag={(id) => {
                     CalendarStore.tempYear = id;
                     const date = `${CalendarStore.tempYear}-${
@@ -124,6 +129,7 @@ const Calendar = () => {
               </View>
               <View style={{ justifyContent: 'center' }}>
                 <WheelPicker
+                  color={TextColor.WHITE}
                   onScrollEndDrag={(id) => {
                     CalendarStore.tempMonth = id;
                     const date = `${CalendarStore.tempYear}-${
@@ -143,7 +149,7 @@ const Calendar = () => {
                 />
               </View>
             </View>
-          </BackDrop>
+          </>
         )}
       </CalView>
     </CalendarWrapper>
@@ -156,6 +162,8 @@ const BackDrop = styled.TouchableOpacity`
   width: 100%;
   flex: 1;
   height: ${`${Dimensions.get('window').height}px`};
+  background: #292a2c;
+  opacity: 0.7;
 `;
 
 const CalendarWrapper = styled.SafeAreaView<{

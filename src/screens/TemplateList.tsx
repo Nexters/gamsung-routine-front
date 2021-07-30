@@ -1,15 +1,16 @@
-import React from 'react';
-import { observer } from 'mobx-react';
-import { BackgroundColor, TextColor } from '~/utils/color';
 import styled from '@emotion/native';
-import { AddTaskVM } from './vm/addTaskVM';
-import { useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '~/navigations/types';
-import { ScrollingButtonMenu } from '~/components/ScrollingButtonMenu';
+import { observer } from 'mobx-react';
+import React, { useState } from 'react';
 import { FlatList } from 'react-native';
-import { TemplateCard } from '~/components/TemplateCard';
+
+import { AddTaskVM } from './vm/addTaskVM';
+
 import CustomText from '~/components/CustomText';
+import { ScrollingButtonMenu } from '~/components/ScrollingButtonMenu';
+import { TemplateCard } from '~/components/TemplateCard';
+import { RootStackParamList } from '~/navigations/types';
+import { BackgroundColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {

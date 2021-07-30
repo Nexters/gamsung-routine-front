@@ -1,16 +1,18 @@
+import { action, makeObservable, observable } from 'mobx';
+
 import { Task, Weekday } from '~/models/Task';
-import { makeObservable, observable } from 'mobx';
 
 class HomeStore {
   private static _instance: HomeStore;
 
-  private static _id: number = -1;
+  private static _id = -1;
 
   taskList: Task[] = [];
 
   constructor() {
     makeObservable(this, {
       taskList: observable,
+      actionTask: action,
     });
   }
 
@@ -33,6 +35,16 @@ class HomeStore {
     });
   }
 
+  actionTask(id: number) {
+    this.taskList = this.taskList.filter((task, _) => {
+      if (task.id === id) {
+        task.todayOfWeek.count > task.todayOfWeek.endTasks.length &&
+          task.todayOfWeek.endTasks.push(`${task.todayOfWeek.endTasks.length + 1}`);
+      }
+      return task;
+    });
+  }
+
   public static instance() {
     if (!this._instance) {
       this._instance = new HomeStore();
@@ -46,7 +58,6 @@ class HomeStore {
 }
 
 export default HomeStore.instance();
-
 
 // const [taskList, setTaskList] = useState(() => {
 //   return Array.from({ length: 5 }, (_, index) => ({

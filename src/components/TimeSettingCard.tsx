@@ -1,4 +1,5 @@
 import styled from '@emotion/native';
+import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 
 import { CollapsibleCard } from './CollapsibleCard';
@@ -6,7 +7,6 @@ import { FoldableContainer } from './FoldableContainer';
 import { TimeSettingContainer } from './TimeSettingContainer';
 
 import { BackgroundColor } from '~/utils/color';
-import { observer } from 'mobx-react';
 
 interface Props {
   marginTop?: number;

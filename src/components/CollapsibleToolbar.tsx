@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { View, Animated, Text, Dimensions, TouchableOpacity } from 'react-native';
 
 import CustomText from './CustomText';
+import Icon, { IconType } from './Icon';
 
 import { GraphicColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-import Icon, { IconType } from './Icon';
 
 const HEADER_EXPANDED_HEIGHT = 215;
 const HEADER_COLLAPSED_HEIGHT = 56;
@@ -106,12 +106,12 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
               height: HEADER_EXPANDED_HEIGHT,
               transform: [{ translateY: backgroundSlide }],
             }}>
-            <View style={{ position: 'absolute', bottom: 0, left: 20 }}>
+            <View style={{ position: 'absolute', bottom: 20, left: 20 }}>
               <Text style={{ color: 'white' }}>ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</Text>
             </View>
           </Background>
           <Action style={{ transform: [{ scale: headerTitleSize }] }}>
-            <View style={{ position: 'absolute', bottom: 20, left: 20 }}>
+            <View style={{ position: 'absolute', left: 20, bottom: 40 }}>
               <Text style={{ color: 'white' }}>{title}</Text>
             </View>
           </Action>

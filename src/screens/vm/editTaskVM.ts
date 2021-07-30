@@ -1,8 +1,9 @@
 import { action, computed, makeObservable, observable } from 'mobx';
+
 import HomeStore from '~/stores/HomeStore';
 
 export class EditTaskVM {
-  taskName: string = '';
+  taskName = '';
 
   day: { id: number; day: string; selected: boolean }[] = [
     { id: 1, day: '월', selected: true },
@@ -14,7 +15,7 @@ export class EditTaskVM {
     { id: 7, day: '일', selected: true },
   ];
 
-  timeOfDay: number = 1;
+  timeOfDay = 1;
 
   constructor(readonly taskId: number | null, name: string) {
     makeObservable(this, {
@@ -46,12 +47,15 @@ export class EditTaskVM {
       30,
       {
         count: this.timeOfDay,
-        endTasks: ['1'],
-      },
-      Array.from({ length: 7 }, () => ({
-        count: 3,
         endTasks: [],
-      })),
+      },
+      Array.from({ length: 7 }, () => {
+        const count = Math.floor(Math.random() * 20);
+        return {
+          count,
+          endTasks: Array.from({ length: Math.floor(Math.random() * count) }),
+        };
+      }),
     );
   }
 

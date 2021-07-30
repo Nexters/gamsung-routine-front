@@ -1,14 +1,13 @@
-import React from 'react';
-import { observer } from 'mobx-react';
 import styled from '@emotion/native';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { observer } from 'mobx-react';
+import React, { useState, useCallback } from 'react';
+
 import AddTaskItem from '~/components/AddTaskItem';
 import { CollapsibleToolbar } from '~/components/CollapsibleToolbar';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '~/navigations/types';
-import { BackgroundColor, GraphicColor } from '~/utils/color';
-import { RouteProp } from '@react-navigation/native';
-import { useState } from 'react';
-import { useCallback } from 'react';
+import { BackgroundColor } from '~/utils/color';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -28,7 +27,7 @@ export const TaskList: React.FC<Props> = observer(({ navigation, route }) => {
         title={vm.templates.find((it) => it.id === vm.selectedTemplateId)?.title ?? ''}
         onBackpressClick={handleBackpressClick}
         backgroundColor={route.params.headerColor}>
-        <ContentScrollView>
+        <ContentScrollView style={{ marginTop: 230 }}>
           {vm.templates
             .find((it) => it.id === vm.selectedTemplateId)
             ?.tasks.map((task) => {

@@ -20,9 +20,9 @@ const MonsterIconBackground = (props: Props['data']) => {
         <Defs>
           <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor="#C8CACF" stopOpacity="1" />
-            <Stop offset={1 - value} stopColor="#C8CACF" stopOpacity="1" />
-            <Stop offset={1 - value} stopColor="#a89ef2" stopOpacity="1" />
-            <Stop offset="1" stopColor="#a89ef2" stopOpacity="1" />
+            <Stop offset={value} stopColor="#C8CACF" stopOpacity="1" />
+            <Stop offset={value} stopColor="#7d6bff" stopOpacity="1" />
+            <Stop offset="1" stopColor="#7d6bff" stopOpacity="1" />
           </LinearGradient>
         </Defs>
         <Path

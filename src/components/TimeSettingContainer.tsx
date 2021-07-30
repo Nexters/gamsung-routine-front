@@ -28,7 +28,7 @@ export const TimeSettingContainer = (props: Props) => {
             items={Array.from({ length: 12 }, (_, index) => index).map((it) => {
               return {
                 id: it,
-                name: `${it}`,
+                name: `${it < 9 ? `0${it}` : it}`,
               };
             })}
           />
@@ -38,9 +38,10 @@ export const TimeSettingContainer = (props: Props) => {
           <WheelPicker
             height={36}
             items={Array.from({ length: 6 }, (_, index) => index).map((it) => {
+              const item = it * 10;
               return {
                 id: it,
-                name: `${it * 10}`,
+                name: `${item < 9 ? `0${item}` : item}`,
               };
             })}
           />

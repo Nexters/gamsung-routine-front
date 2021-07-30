@@ -6,8 +6,10 @@ import { LinearGradient } from 'react-native-svg';
 import CustomText from './CustomText';
 
 import { WheelItem } from '~/models/WheelItem';
+import { TextColor } from '~/utils/color';
 
 interface Props {
+  color?: TextColor;
   items: WheelItem[];
   height?: number;
   onClick?: (id: number) => void;
@@ -15,7 +17,7 @@ interface Props {
   onScrollEndDrag?: (id: number) => void;
 }
 
-export const WheelPicker = ({ items, height, onClick, initHeight = 0, onScrollEndDrag }: Props) => {
+export const WheelPicker = ({ items, height, onClick, initHeight = 0, onScrollEndDrag, color }: Props) => {
   const ref = useRef<ScrollView>(null);
   const handleItemClick = (id: number) => () => {
     onClick?.(id);
@@ -44,7 +46,7 @@ export const WheelPicker = ({ items, height, onClick, initHeight = 0, onScrollEn
         snapToInterval={height}>
         {items.map((it) => (
           <PickerItemStyled key={it.id} onPress={handleItemClick(it.id)}>
-            <CustomText>{it.name}</CustomText>
+            <CustomText color={color}>{it.name}</CustomText>
           </PickerItemStyled>
         ))}
       </ScrollView>

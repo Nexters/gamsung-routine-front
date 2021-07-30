@@ -1,5 +1,6 @@
 import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import CustomText from './CustomText';
@@ -8,7 +9,6 @@ import TaskListItem from '~/components/TaskListItem';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import { Align, FontType } from '~/utils/font';
-import { observer } from 'mobx-react';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
