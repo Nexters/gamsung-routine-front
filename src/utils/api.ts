@@ -9,7 +9,7 @@ const getCommonHeaders = async () => {
   }
 
   return {
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${JSON.parse(token)}`,
   };
 };
 
@@ -32,6 +32,10 @@ class API {
     return this.call.post<T>(url, data, {
       headers: await getCommonHeaders(),
     });
+  }
+
+  public async postWithoutHeader<T = any>(url: string, data?: any) {
+    return this.call.post<T>(url, data);
   }
 
   public async put<T = any>(url: string, data?: any) {

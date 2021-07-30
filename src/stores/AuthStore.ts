@@ -30,7 +30,7 @@ class AuthStore {
         data: {
           data: { accessToken },
         },
-      } = await api.post<{
+      } = await api.postWithoutHeader<{
         data: {
           accessToken: string;
         };
