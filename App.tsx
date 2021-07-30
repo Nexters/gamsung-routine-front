@@ -36,11 +36,6 @@ const App = () => {
     return unsubscribe;
   }, []);
 
-  const getFcmToken = async () => {
-    const fcmToken = await messaging().getToken();
-    console.log('fcmToken : ', fcmToken);
-  };
-
   const getUser = async () => {
     try {
       const getToken = await AsyncStorage.getItem('token');
@@ -54,7 +49,6 @@ const App = () => {
 
   useEffect(() => {
     getUser();
-    getFcmToken();
   }, []);
 
   return (

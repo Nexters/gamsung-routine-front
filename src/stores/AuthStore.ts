@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import messaging from '@react-native-firebase/messaging';
 import { login } from '@react-native-seoul/kakao-login';
 import { observable, action, makeObservable, computed } from 'mobx';
 
 import api from '~/utils/api';
-import messaging from "@react-native-firebase/messaging";
 
 class AuthStore {
   // XXX : _ prefix를 계속 사용할지 고민
@@ -32,15 +32,19 @@ class AuthStore {
         data: {
           data: { accessToken },
         },
-      } = await api.postWithoutHeader<{
+      } = await api.post<{
         data: {
           accessToken: string;
         };
-      }>('/auth/sign-in/kakao', {
-        accessToken: token.accessToken,
-        refreshToken: token.refreshToken,
-        pushToken: fcmToken,
-      });
+      }>(
+        '/auth/sign-in/kakao',
+        {
+          accessToken: token.accessToken,
+          refreshToken: token.refreshToken,
+          pushToken: fcmToken,
+        },
+        {},
+      );
 
       this.token = accessToken;
 
