@@ -1,8 +1,9 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
+import AuthStore from '~/stores/AuthStore';
+
 const getCommonHeaders = async () => {
-  const token = await AsyncStorage.getItem('token');
+  const token = AuthStore.token;
 
   if (token == null) {
     return undefined;
