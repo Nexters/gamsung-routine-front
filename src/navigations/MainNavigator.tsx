@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
+import { observer } from 'mobx-react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import CustomText from '~/components/CustomText';
@@ -16,6 +17,16 @@ import AuthStore from '~/stores/AuthStore';
 const Stack = createStackNavigator<RootStackParamList>();
 
 const MainNavigator = () => {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    (async () => {
+      await AuthStore.checkLogin();
+      setLoading(false);
+    })();
+  });
+  if (loading) {
+    return null;
+  }
   return (
     <Stack.Navigator>
       {!AuthStore.isLoggedIn && <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />}
@@ -64,4 +75,4 @@ const MainNavigator = () => {
   );
 };
 
-export default MainNavigator;
+export default observer(MainNavigator);

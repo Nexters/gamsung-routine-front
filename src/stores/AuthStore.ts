@@ -15,12 +15,17 @@ class AuthStore {
     makeObservable(this, {
       token: observable,
       isLoggedIn: computed,
+      checkLogin: action,
       login: action,
     });
   }
 
-  get isLoggedIn(): boolean {
+  get isLoggedIn() {
     return !!this.token;
+  }
+
+  async checkLogin() {
+    this.token = (await AsyncStorage.getItem('token')) || '';
   }
 
   login = async () => {
