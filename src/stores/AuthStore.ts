@@ -3,6 +3,7 @@ import { login } from '@react-native-seoul/kakao-login';
 import { observable, action, makeObservable, computed } from 'mobx';
 
 import api from '~/utils/api';
+import messaging from "@react-native-firebase/messaging";
 
 class AuthStore {
   // XXX : _ prefix를 계속 사용할지 고민
@@ -25,6 +26,7 @@ class AuthStore {
   login = async () => {
     try {
       const token = await login();
+      const fcmToken = await messaging().getToken();
 
       const {
         data: {
@@ -37,6 +39,7 @@ class AuthStore {
       }>('/auth/sign-in/kakao', {
         accessToken: token.accessToken,
         refreshToken: token.refreshToken,
+        pushToken: fcmToken,
       });
 
       this.token = accessToken;
