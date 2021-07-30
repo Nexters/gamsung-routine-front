@@ -21,33 +21,48 @@ class API {
     baseURL: 'https://gamsung-routine.herokuapp.com/api/v1',
   });
 
-  public async get<T = any>(url: string, data?: any) {
-    return this.call.get<T>(url, {
-      params: data,
-      headers: await getCommonHeaders(),
-    });
+  public async get<T = any>(url: string, data?: any, config?: any) {
+    return this.call.get<T>(
+      url,
+      config
+        ? { ...config, params: data }
+        : {
+            params: data,
+            headers: await getCommonHeaders(),
+          },
+    );
   }
 
-  public async post<T = any>(url: string, data?: any) {
-    return this.call.post<T>(url, data, {
-      headers: await getCommonHeaders(),
-    });
+  public async post<T = any>(url: string, data?: any, config?: any) {
+    return this.call.post<T>(
+      url,
+      data,
+      config || {
+        headers: await getCommonHeaders(),
+      },
+    );
   }
 
-  public async postWithoutHeader<T = any>(url: string, data?: any) {
-    return this.call.post<T>(url, data);
+  public async put<T = any>(url: string, data?: any, config?: any) {
+    return this.call.put<T>(
+      url,
+      data,
+      config || {
+        headers: await getCommonHeaders(),
+      },
+    );
   }
 
-  public async put<T = any>(url: string, data?: any) {
-    return this.call.put<T>(url, data, {
-      headers: await getCommonHeaders(),
-    });
-  }
-
-  public async delete<T = any>(url: string) {
-    return this.call.delete<T>(url, {
-      headers: await getCommonHeaders(),
-    });
+  public async delete<T = any>(url: string, data?: any, config?: any) {
+    return this.call.delete<T>(
+      url,
+      config
+        ? { ...config, params: data }
+        : {
+            params: data,
+            headers: await getCommonHeaders(),
+          },
+    );
   }
 
   public static notSupported(): never {
