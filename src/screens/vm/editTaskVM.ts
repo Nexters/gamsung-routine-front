@@ -1,4 +1,5 @@
 import { action, computed, makeObservable, observable } from 'mobx';
+import HomeStore from '~/stores/HomeStore';
 
 export class EditTaskVM {
   taskName: string = '';
@@ -35,6 +36,23 @@ export class EditTaskVM {
 
   onChangeCountOfDay(time: number) {
     this.timeOfDay = time;
+  }
+
+  onSave() {
+    HomeStore.addTask(
+      this.taskName,
+      this.day.filter((d) => d.selected).length,
+      this.timeOfDay,
+      30,
+      {
+        count: this.timeOfDay,
+        endTasks: ['1'],
+      },
+      Array.from({ length: 7 }, () => ({
+        count: 3,
+        endTasks: [],
+      })),
+    );
   }
 
   get timeSettingData() {

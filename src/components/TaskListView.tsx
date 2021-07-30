@@ -8,6 +8,7 @@ import TaskListItem from '~/components/TaskListItem';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import { Align, FontType } from '~/utils/font';
+import { observer } from 'mobx-react';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -53,7 +54,7 @@ const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick, na
           })}
         </TaskListViewStyled>
       )}
-      {!!taskList.length && (
+      {taskList.length === 0 && (
         <EmptyView>
           <CustomText font={FontType.BOLD_LARGE} align={Align.CENTER}>
             루틴이 없어요{'\n'}테스크를 추가해보세요.
@@ -74,4 +75,4 @@ const EmptyView = styled.View`
   flex: 1;
 `;
 
-export default TaskListView;
+export default observer(TaskListView);

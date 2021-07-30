@@ -118,7 +118,7 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
         </Header>
         <AppBar>
           <LeftHeaderItem onPress={handleBackpressClick}>
-            <Icon type={IconType.iconArrowLeft} />
+            <Icon type={IconType.ARROW_LEFT} />
           </LeftHeaderItem>
           <RightHeaderItem>
             <CustomText color={TextColor.WHITE} font={FontType.MEDIUM_BODY_01}>

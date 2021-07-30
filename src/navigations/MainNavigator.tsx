@@ -31,7 +31,7 @@ const MainNavigator = () => {
               onPress={() => {
                 navigation.navigate('EditTask');
               }}>
-              <Icon type={IconType.add} />
+              <Icon type={IconType.ADD} />
             </TouchableOpacity>
           ),
         })}

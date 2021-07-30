@@ -33,6 +33,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
   };
 
   const handleEditSubmitClick = () => {
+    vm.onSave();
     openModal();
   };
 
@@ -76,7 +77,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
                 <AlarmSettingCard />
               </AddSettingView>
             </EditSettingView>
-            <EditSubmitButton onPress={() => handleEditSubmitClick()}>
+            <EditSubmitButton onPress={handleEditSubmitClick}>
               <CustomText font={FontType.BOLD_LARGE} color={TextColor.WHITE} align={Align.CENTER}>
                 추가하기
               </CustomText>
