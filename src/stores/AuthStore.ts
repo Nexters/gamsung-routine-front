@@ -30,7 +30,7 @@ class AuthStore {
     this.nickname = user.nickname;
     this.profileImageUrl = user.profileImageUrl;
     try {
-      AsyncStorage.setItem('token', JSON.stringify(this.token));
+      AsyncStorage.setItem('token', this.token);
     } catch (error) {
       console.error(error);
     }
