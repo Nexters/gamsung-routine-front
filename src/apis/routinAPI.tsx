@@ -1,3 +1,4 @@
+import { Task } from '~/models/Task';
 import { useCommonSWR } from '~/utils/swr';
 
 export const useMonthlyTasks = ({ profileId, year, month }: { profileId: string; year: string; month: string }) => {
@@ -6,20 +7,7 @@ export const useMonthlyTasks = ({ profileId, year, month }: { profileId: string;
   month = '08';
   return useCommonSWR<{
     dailyRoutines: {
-      [key: string]: {
-        completeCount: number;
-        completedDateList: any[];
-        date: string;
-        days: number[];
-        friendIds: any[];
-        id: string;
-        profileId: string;
-        taskId: string;
-        times: string[];
-        timesOfDay: number;
-        timesOfWeek: number;
-        title: string;
-      }[];
+      [key: string]: Task[];
     };
   }>(`/routine/weekly/${profileId}?year=${year}&month=${month}`);
 };

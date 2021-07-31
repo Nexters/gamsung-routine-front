@@ -13,13 +13,13 @@ import { Align, FontType } from '~/utils/font';
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
   taskList: Task[];
-  onToggleTask: (id: number) => void;
-  isVisiblePopup: number | null;
-  onPopupClick: (id: number) => void;
+  onToggleTask: (id: string) => void;
+  isVisiblePopup: string | null;
+  onPopupClick: (id: string) => void;
 }
 
 const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick, navigation }: Props) => {
-  const handleMoreButtonClick = (id: number) => {
+  const handleMoreButtonClick = (id: string) => {
     onPopupClick(id);
   };
 
@@ -38,15 +38,13 @@ const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick, na
                 title={task.title}
                 timesOfWeek={task.timesOfWeek}
                 timesOfDay={task.timesOfDay}
-                percent={task.percent}
-                todayOfWeek={task.todayOfWeek}
-                dayOfWeek={task.dayOfWeek}
-                share
+                percent={(task.completeCount || 0) / (task.timesOfDay || 0) || 0}
+                share={false}
                 shareCount={3}
-                shareFinishedCount={1}
-                sharePeople={['1', '2', '3']}
+                shareFinishedCount={0}
+                sharePeople={[]}
                 sharePercent={30}
-                onTaskItemClick={(id) => onToggleTask(id)}
+                onTaskItemClick={(id: string) => onToggleTask(id)}
                 isVisiblePopup={isVisiblePopup}
                 onMoreButtonClick={handleMoreButtonClick}
               />

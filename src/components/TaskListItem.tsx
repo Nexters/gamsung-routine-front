@@ -5,10 +5,11 @@ import React from 'react';
 
 import Icon from './Icon';
 
+import { useMonthlyTasks } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
 import MonsterIcon from '~/components/MonsterIcon';
 import TaskDetailPopup from '~/components/TaskDetailPopup';
-import { Weekday } from '~/models/Task';
+import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import { TextColor } from '~/utils/color';
@@ -17,21 +18,19 @@ import { FontType } from '~/utils/font';
 interface Props {
   layerIndex: number;
   totalCount: number;
-  id: number;
+  id: string;
   title: string;
   timesOfWeek: number;
   timesOfDay: number;
   percent: number;
-  todayOfWeek: Weekday;
-  dayOfWeek: Weekday[];
   share?: boolean;
   shareCount?: number;
   shareFinishedCount?: number;
   sharePeople?: string[];
   sharePercent?: number;
-  onTaskItemClick: (id: number) => void;
-  isVisiblePopup: number | null;
-  onMoreButtonClick: (id: number) => void;
+  onTaskItemClick: (id: string) => void;
+  isVisiblePopup: string | null;
+  onMoreButtonClick: (id: string) => void;
   navigation: StackNavigationProp<RootStackParamList>;
 }
 
@@ -44,8 +43,6 @@ const TaskListItem = observer(
     timesOfWeek,
     timesOfDay,
     percent,
-    todayOfWeek,
-    dayOfWeek,
     share,
     shareCount,
     shareFinishedCount,
@@ -55,7 +52,28 @@ const TaskListItem = observer(
     onMoreButtonClick,
     navigation,
   }: Props) => {
-    const checkTodayTaskState = todayOfWeek.count - todayOfWeek.endTasks.length;
+    const { data, error } = useMonthlyTasks({
+      profileId: '1',
+      month: CalendarStore.month.toString(),
+      year: CalendarStore.tempYear.toString(),
+    });
+
+    const dayOfWeek = [] as Task[];
+
+    if (CalendarStore.radio === RADIO_TYPE.리포트) {
+      const isSun = CalendarStore.focusDay.format('ddd') === 'Sun';
+      const today = CalendarStore.focusDay.add(isSun ? -1 : 0, 'day').day(1);
+      for (let i = 0; i < 7; i++) {
+        const routine = data?.dailyRoutines[today.add(i, 'day').format('YYYYMMDD')] || ([] as Task[]);
+        const r =
+          routine.find((rr) => {
+            return rr.id === id;
+          }) || ({} as Task);
+        dayOfWeek.push(r);
+      }
+    }
+
+    const checkTodayTaskState = 0 - 2;
 
     const handleTaskItemClick = () => {
       CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.(id);
@@ -66,9 +84,7 @@ const TaskListItem = observer(
       <TaskListItemStyled style={{ zIndex: totalCount - layerIndex }} checkLastItem={totalCount === layerIndex + 1}>
         <TaskListItemView>
           <TaskListItemViewLeft onPress={() => handleTaskItemClick()}>
-            {CalendarStore.radio === RADIO_TYPE.루틴 && (
-              <MonsterIcon listType={CalendarStore.radio} data={todayOfWeek} />
-            )}
+            {CalendarStore.radio === RADIO_TYPE.루틴 && <MonsterIcon listType={CalendarStore.radio} data={percent} />}
             <TaskListItemViewTitle>
               <TaskListItemViewInfo>
                 <CustomText
@@ -92,7 +108,10 @@ const TaskListItem = observer(
         {CalendarStore.radio === RADIO_TYPE.리포트 && (
           <TaskListItemWeekView>
             {dayOfWeek?.map((item, index) => {
-              return <MonsterIcon key={index} listType={CalendarStore.radio} data={item} />;
+              console.log('item', item);
+
+              const dayOfWeekPercent = ((item.completeCount || 0) / (item.timesOfDay || 0) || 0) * 100;
+              return <MonsterIcon key={index} listType={CalendarStore.radio} data={dayOfWeekPercent} none={!item.id} />;
             })}
           </TaskListItemWeekView>
         )}
@@ -101,7 +120,7 @@ const TaskListItem = observer(
             {share && sharePeople?.map((_, index) => <TaskListItemInfoImage index={index} key={index} />)}
           </TaskListItemInfoImageList>
           <TaskListItemInfoPercent>
-            {CalendarStore.radio === RADIO_TYPE.루틴 && share && (
+            {(shareFinishedCount || 0) > 0 && CalendarStore.radio === RADIO_TYPE.루틴 && share && (
               <CustomText color={TextColor.SECONDARY} font={FontType.REGULAR_CAPTION}>
                 {shareCount}명 중 {shareFinishedCount}명이 완료
               </CustomText>

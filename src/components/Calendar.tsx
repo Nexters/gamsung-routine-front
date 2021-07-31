@@ -312,7 +312,7 @@ const Daily = observer(() => {
           },
           { completeCount: 0, timesOfDay: 0 },
         );
-        const percent = (total?.completeCount || 0) / (total?.timesOfDay || 0) || 0 * 100;
+        const percent = ((total?.completeCount || 0) / (total?.timesOfDay || 0) || 0) * 100;
         return (
           <TouchableOpacity
             key={date.toString()}
@@ -376,7 +376,7 @@ const Weekly = observer(() => {
             }, total);
           }
         }
-        const percent = (total?.completeCount || 0) / (total?.timesOfDay || 0) || 0 * 100;
+        const percent = ((total?.completeCount || 0) / (total?.timesOfDay || 0) || 0) * 100;
 
         return (
           <TouchableOpacity

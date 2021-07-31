@@ -24,25 +24,26 @@ class HomeStore {
     todayOfWeek: Weekday,
     dayOfWeek: Weekday[],
   ) {
-    this.taskList.push({
-      id: HomeStore.nextId(),
-      title: title,
-      timesOfWeek: timesOfWeeks,
-      timesOfDay: timesOfDay,
-      percent: percent,
-      todayOfWeek: todayOfWeek,
-      dayOfWeek: dayOfWeek,
-    });
+    // this.taskList.push({
+    //   id: `${HomeStore.nextId()}`,
+    //   title: title,
+    //   timesOfWeek: timesOfWeeks,
+    //   timesOfDay: timesOfDay,
+    //   todayOfWeek: todayOfWeek,
+    //   dayOfWeek: dayOfWeek,
+    // });
   }
 
-  actionTask(id: number) {
-    this.taskList = this.taskList.filter((task, _) => {
-      if (task.id === id) {
-        task.todayOfWeek.count > task.todayOfWeek.endTasks.length &&
-          task.todayOfWeek.endTasks.push(`${task.todayOfWeek.endTasks.length + 1}`);
-      }
-      return task;
-    });
+  actionTask(task: Task) {
+    console.log('TASK');
+
+    // this.taskList = this.taskList.filter((task, _) => {
+    //   if (task.id === id) {
+    //     task.todayOfWeek.count > task.todayOfWeek.endTasks.length &&
+    //       task.todayOfWeek.endTasks.push(`${task.todayOfWeek.endTasks.length + 1}`);
+    //   }
+    //   return task;
+    // });
   }
 
   public static instance() {
