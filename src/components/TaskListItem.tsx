@@ -73,6 +73,7 @@ const TaskListItem = observer(
       }
     }
 
+    // XXXX : 이거 설명해 줄 사람
     const checkTodayTaskState = 0 - 2;
 
     const handleTaskItemClick = () => {
@@ -80,7 +81,7 @@ const TaskListItem = observer(
     };
 
     return (
-      // XXX : 스타일 내부에서는 z-index 가 먹히지 않음
+      // XXXX : 스타일 내부에서는 z-index 가 먹히지 않음
       <TaskListItemStyled style={{ zIndex: totalCount - layerIndex }} checkLastItem={totalCount === layerIndex + 1}>
         <TaskListItemView>
           <TaskListItemViewLeft onPress={() => handleTaskItemClick()}>
@@ -108,8 +109,6 @@ const TaskListItem = observer(
         {CalendarStore.radio === RADIO_TYPE.리포트 && (
           <TaskListItemWeekView>
             {dayOfWeek?.map((item, index) => {
-              console.log('item', item);
-
               const dayOfWeekPercent = ((item.completeCount || 0) / (item.timesOfDay || 0) || 0) * 100;
               return <MonsterIcon key={index} listType={CalendarStore.radio} data={dayOfWeekPercent} none={!item.id} />;
             })}
