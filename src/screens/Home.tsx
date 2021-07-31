@@ -22,8 +22,8 @@ export interface HomeScreenProps {
 const Home = ({ navigation }: HomeScreenProps) => {
   const totalPercent = 30;
 
-  const { data } = useUserProfileData();
-  console.log('useUserProfileData', data?.data.name);
+  const { data, error } = useUserProfileData();
+  console.log('useUserProfileData', data?.data.name, error);
 
   const [isVisiblePopup, setIsVisiblePopup] = useState<number | null>(null);
 

@@ -12,7 +12,7 @@ const getCommonHeaders = async () => {
   }
 
   return {
-    Authorization: `Bearer ${JSON.parse(token)}`,
+    Authorization: `Bearer ${token}`,
   };
 };
 
