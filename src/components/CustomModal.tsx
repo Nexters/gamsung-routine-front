@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 
 import CustomText from '~/components/CustomText';
-import { TextColor } from '~/utils/color';
+import { ActionColor, BackgroundColor, SurfaceColor, TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 
 interface Props {
@@ -36,20 +36,20 @@ const CustomModal = ({
       useNativeDriver={true}>
       <ModalStyled>
         <ModalContentView>
-          <CustomText font={FontType.REGULAR_BODY_01} color={TextColor.PRIMARY} align={Align.CENTER}>
+          <CustomText font={FontType.REGULAR_BODY_01} color={TextColor.PRIMARY_L} align={Align.CENTER}>
             {content}
           </CustomText>
         </ModalContentView>
         <ModalButtonView>
           {leftButtonText && (
             <LeftButton onPress={onLeftButtonClick}>
-              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY}>
+              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
                 {leftButtonText}
               </CustomText>
             </LeftButton>
           )}
           <RightButton onPress={onRightButtonClick} only={!leftButtonText}>
-            <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.WHITE}>
+            <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_D}>
               {rightButtonText}
             </CustomText>
           </RightButton>
@@ -73,7 +73,7 @@ const ModalStyled = styled.View`
   height: 216px;
   position: relative;
   overflow: hidden;
-  background-color: #fff;
+  background-color: ${BackgroundColor.DEPTH1_L};
   border-radius: 20px;
 `;
 
@@ -97,14 +97,14 @@ const LeftButton = styled.TouchableOpacity`
   width: 50%;
   justify-content: center;
   align-items: center;
-  background-color: #f2f2f4;
+  background-color: ${SurfaceColor.DEPTH2_L};
 `;
 
 const RightButton = styled.TouchableOpacity<{ only: boolean }>`
   width: ${({ only }) => (only ? '100%' : '50%')};
   justify-content: center;
   align-items: center;
-  background-color: #5f4bf2;
+  background-color: ${ActionColor.ACTIVE};
 `;
 
 export default CustomModal;

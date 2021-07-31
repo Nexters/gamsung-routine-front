@@ -6,7 +6,7 @@ import { TouchableOpacity, Text } from 'react-native';
 import CustomText from '~/components/CustomText';
 import { RootStackParamList } from '~/navigations/types';
 import AuthStore from '~/stores/AuthStore';
-import { TextColor } from '~/utils/color';
+import { GraphicColor, SurfaceColor, TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 
 export interface HomeScreenProps {
@@ -24,7 +24,7 @@ const Login = ({ navigation }: HomeScreenProps) => {
       <OnBoardingView />
       <KakaoLoginButton onPress={onLogin}>
         <KakaoLoginIcon source={require('~/assets/icons/icon_kakao_login.png')} />
-        <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY} align={Align.CENTER}>
+        <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_L} align={Align.CENTER}>
           카카오 로그인 하기
         </CustomText>
       </KakaoLoginButton>
@@ -40,14 +40,14 @@ const LoginStyled = styled.SafeAreaView`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
+  background-color: ${SurfaceColor.DEPTH1_L};
 `;
 
 const OnBoardingView = styled.View`
   width: 68%;
   height: 250px;
   margin-top: 80px;
-  background-color: #f2f2f4;
+  background-color: ${SurfaceColor.DEPTH2_L};
   border-radius: 40px;
 `;
 
@@ -56,7 +56,7 @@ const KakaoLoginButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   width: 88%;
-  background-color: #ffca42;
+  background-color: ${GraphicColor.YELLOW};
   padding: 12px 0;
   margin-bottom: 80px;
   border-radius: 8px;

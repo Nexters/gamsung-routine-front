@@ -14,7 +14,7 @@ interface AddTaskScreenProps {
 const AddTask = observer(({ navigation }: AddTaskScreenProps) => {
   const [vm] = useState<AddTaskVM>(new AddTaskVM());
 
-  return <AddTaskStyled></AddTaskStyled>;
+  return <AddTaskStyled />;
 });
 
 const AddTaskStyled = styled.SafeAreaView`
@@ -23,7 +23,7 @@ const AddTaskStyled = styled.SafeAreaView`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: ${BackgroundColor.PRIMARY};
+  background-color: ${BackgroundColor.DEPTH1_L};
 `;
 
 export default AddTask;

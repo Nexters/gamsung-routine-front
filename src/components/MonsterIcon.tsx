@@ -4,6 +4,7 @@ import Svg, { Defs, LinearGradient, Path, Stop, SvgXml } from 'react-native-svg'
 
 import { Weekday } from '~/models/Task';
 import { RADIO_TYPE } from '~/stores/CalendarStore';
+import { MonsterColor } from '~/utils/color';
 import { getFace } from '~/utils/monster';
 
 interface Props {
@@ -19,10 +20,10 @@ const MonsterIconBackground = (props: Props['data']) => {
       <Svg height="28" width="28">
         <Defs>
           <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-            <Stop offset="0" stopColor="#C8CACF" stopOpacity="1" />
-            <Stop offset={value} stopColor="#C8CACF" stopOpacity="1" />
-            <Stop offset={value} stopColor="#7d6bff" stopOpacity="1" />
-            <Stop offset="1" stopColor="#7d6bff" stopOpacity="1" />
+            <Stop offset="0" stopColor={MonsterColor.UNFILL} stopOpacity="1" />
+            <Stop offset={value} stopColor={MonsterColor.UNFILL} stopOpacity="1" />
+            <Stop offset={value} stopColor={MonsterColor.FILL} stopOpacity="1" />
+            <Stop offset="1" stopColor={MonsterColor.FILL} stopOpacity="1" />
           </LinearGradient>
         </Defs>
         <Path

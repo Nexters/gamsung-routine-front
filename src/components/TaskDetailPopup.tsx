@@ -39,25 +39,25 @@ const TaskDetailPopup = ({ id, navigation }: Props) => {
     <TaskDetailPopupStyled source={require('~/assets/images/popup_task_detail.png')} resizeMode="cover">
       <TaskDetailPopupButton onPress={handleCancelButtonClick}>
         <TaskDetailPopupButtonImage source={require('~/assets/images/button_cancel.png')} />
-        <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY}>
+        <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
           취소
         </CustomText>
       </TaskDetailPopupButton>
       <TaskDetailPopupButton onPress={handleDelayButtonClick}>
         <TaskDetailPopupButtonImage source={require('~/assets/images/button_delay.png')} />
-        <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY}>
+        <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
           미루기
         </CustomText>
       </TaskDetailPopupButton>
       <TaskDetailPopupButton onPress={handleEditButtonClick}>
         <TaskDetailPopupButtonImage source={require('~/assets/images/button_edit.png')} />
-        <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY}>
+        <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
           수정
         </CustomText>
       </TaskDetailPopupButton>
       <TaskDetailPopupButton onPress={handleDeleteButtonClick}>
         <TaskDetailPopupButtonImage source={require('~/assets/images/button_delete.png')} />
-        <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY}>
+        <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
           삭제
         </CustomText>
       </TaskDetailPopupButton>

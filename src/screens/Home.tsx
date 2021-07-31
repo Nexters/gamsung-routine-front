@@ -12,7 +12,7 @@ import TaskListView from '~/components/TaskListView';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore from '~/stores/CalendarStore';
 import HomeStore from '~/stores/HomeStore';
-import { BackgroundColor, TextColor } from '~/utils/color';
+import { ActionColor, BackgroundColor, SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 export interface HomeScreenProps {
@@ -38,7 +38,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
 
   return (
     <>
-      <TopStatusBarStyled backgroundColor={BackgroundColor.SECONDARY} />
+      <TopStatusBarStyled backgroundColor={BackgroundColor.DEPTH2_D} />
       <StatusBar barStyle="light-content" />
       <HomeStyled>
         <Calendar />
@@ -48,13 +48,13 @@ const Home = ({ navigation }: HomeScreenProps) => {
               {CalendarStore.isWeek ? <Icon type={'DROP'} /> : <Icon type={'TAKE'} />}
             </DropView>
             <TaskTitleView>
-              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.SECONDARY}>
+              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
                 내 하루 테스크{' '}
-                <CustomText font={FontType.BOLD_BODY_02} color={TextColor.MAIN}>
+                <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
                   {HomeStore.taskList.length}
                 </CustomText>
               </CustomText>
-              <CustomText font={FontType.BOLD_BODY_02} color={TextColor.PRIMARY}>
+              <CustomText font={FontType.BOLD_BODY_02} color={TextColor.PRIMARY_L}>
                 {totalPercent}% 달성
               </CustomText>
             </TaskTitleView>
@@ -86,7 +86,7 @@ const TopStatusBarStyled = styled.SafeAreaView<{ backgroundColor: string }>`
 
 const HomeStyled = styled.SafeAreaView`
   flex: 1;
-  background-color: #f2f2f4;
+  background-color: ${SurfaceColor.DEPTH2_L};
 `;
 
 const HomeView = styled.View`
@@ -94,14 +94,14 @@ const HomeView = styled.View`
   flex-direction: column;
   width: 100%;
   height: auto;
-  background-color: #292c34;
+  background-color: ${BackgroundColor.DEPTH2_D};
 `;
 
 const TaskView = styled.View`
   flex: 1;
   justify-content: space-between;
   padding: 20px;
-  background-color: #f2f2f4;
+  background-color: ${SurfaceColor.DEPTH2_L};
   border-radius: 20px 20px 0 0;
 `;
 
@@ -117,7 +117,6 @@ const TaskTitleView = styled.View`
 `;
 
 const AddTaskButton = styled.TouchableOpacity`
-  background-color: red;
   width: 64px;
   height: 64px;
   justify-content: center;
@@ -125,7 +124,7 @@ const AddTaskButton = styled.TouchableOpacity`
   position: absolute;
   right: 24px;
   bottom: 30px;
-  background-color: #513de5;
+  background-color: ${ActionColor.ACTIVE};
   border-radius: 64px;
   z-index: 5;
 `;

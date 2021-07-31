@@ -4,7 +4,7 @@ import React from 'react';
 
 import CustomText from '~/components/CustomText';
 import { TemplateTask } from '~/models/TemplateTask';
-import { BackgroundColor, GraphicColor, TextColor } from '~/utils/color';
+import { GraphicColor, SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
@@ -23,12 +23,12 @@ export const TemplateCard: React.FC<Props> = observer(({ id, name, tasks, onPres
   return (
     <TemplateCardStyled onPress={handlePress} backgroundColor={cardColor}>
       <TemplateContentStyled>
-        <CustomText font={FontType.BOLD_LARGE} color={TextColor.WHITE}>
+        <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D}>
           {name}
         </CustomText>
         <ViewStyled>
           {tasks.slice(0, 3).map((it) => (
-            <CustomText key={it.id} font={FontType.REGULAR_CAPTION} color={TextColor.WHITE}>
+            <CustomText key={it.id} font={FontType.REGULAR_CAPTION} color={TextColor.PRIMARY_D}>
               {it.taskName}
             </CustomText>
           ))}
@@ -49,7 +49,7 @@ const TemplateBeltStyled = styled.View`
   top: 0;
   bottom: 0;
   right: 16px;
-  background-color: ${BackgroundColor.PRIMARY};
+  background-color: ${SurfaceColor.DEPTH1_L};
   opacity: 0.2;
 `;
 

@@ -6,6 +6,9 @@ import CustomText from './CustomText';
 import { ToggleBoxButton } from './ToggleBoxButton';
 import { WheelPicker } from './WheelPicker';
 
+import { SurfaceColor } from '~/utils/color';
+import { Align } from '~/utils/font';
+
 interface Props {
   count: number;
 }
@@ -33,7 +36,7 @@ export const TimeSettingContainer = (props: Props) => {
             })}
           />
           <View style={{ width: 10, justifyContent: 'center', alignItems: 'center' }}>
-            <CustomText align={'center'}>:</CustomText>
+            <CustomText align={Align.CENTER}>:</CustomText>
           </View>
           <WheelPicker
             height={36}
@@ -69,7 +72,7 @@ const RightView = styled.View`
 const TimeWheelContainer = styled.View`
   width: 80px;
   height: 36px;
-  background-color: #f2f2f4;
+  background-color: ${SurfaceColor.DEPTH2_L};
   border-radius: 6px;
   overflow: hidden;
   display: flex;

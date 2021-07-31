@@ -19,7 +19,7 @@ export const TaskList: React.FC<Props> = observer(({ navigation, route }) => {
 
   const handleBackpressClick = useCallback(() => {
     navigation.pop();
-  }, []);
+  }, [navigation]);
 
   return (
     <Frame>
@@ -53,7 +53,7 @@ const Frame = styled.SafeAreaView`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: ${BackgroundColor.PRIMARY};
+  background-color: ${BackgroundColor.DEPTH2_L};
 `;
 
 const ContentScrollView = styled.View`

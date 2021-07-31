@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Pressable } from 'react-native';
 import Animated, { spring } from 'react-native-reanimated';
 
-import { BackgroundColor } from '~/utils/color';
+import { ActionColor, BackgroundColor, SurfaceColor } from '~/utils/color';
 
 interface Props {
   isOn: boolean;
@@ -43,10 +43,10 @@ export const FoldableSwitch = ({ isOn, onColor, onToggle }: Props) => {
 
   return (
     <Pressable onPress={handleSwitchToggle}>
-      <ContainerStyled style={{ backgroundColor: isOn ? '#513DE5' : '#B6B8BC' }}>
+      <ContainerStyled style={{ backgroundColor: isOn ? ActionColor.ACTIVE : ActionColor.INACTIVE }}>
         <CircleStyled
           style={[
-            { backgroundColor: '#fff' },
+            { backgroundColor: SurfaceColor.DEPTH1_L },
             {
               transform: [
                 {

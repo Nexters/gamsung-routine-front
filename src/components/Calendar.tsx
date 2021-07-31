@@ -11,7 +11,7 @@ import { WheelPicker } from './WheelPicker';
 
 import CustomText from '~/components/CustomText';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
-import { BackgroundColor, TextColor } from '~/utils/color';
+import { BackgroundColor, SurfaceColor, CalenderColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 const Calendar = () => {
@@ -27,7 +27,7 @@ const Calendar = () => {
     <CalendarWrapper
       paddingTop={insets.top}
       paddingBottom={insets.bottom}
-      backgroundColor={BackgroundColor.SECONDARY}
+      backgroundColor={BackgroundColor.DEPTH2_D}
       style={{ zIndex: 10 }}>
       <MonthHead>
         <MonthWrapper
@@ -35,7 +35,7 @@ const Calendar = () => {
             setDatePickerVisibility(true);
             CalendarStore.changeIsWeek(false);
           }}>
-          <CustomText font={FontType.REGULAR_TITLE_02} color={TextColor.WHITE}>
+          <CustomText font={FontType.REGULAR_TITLE_02} color={TextColor.PRIMARY_D}>
             {CalendarStore.month + 1}월
           </CustomText>
           <Icon type={'FULL_ARROW_DOWN'} />
@@ -47,17 +47,17 @@ const Calendar = () => {
               position: 'absolute',
               width: 51,
               height: 24,
-              backgroundColor: '#6b6d72',
+              backgroundColor: SurfaceColor.DEPTH2_D,
               borderRadius: 7,
             }}
           />
           <RadioDay onPress={() => CalendarStore.changeRadio(RADIO_TYPE.루틴)}>
-            <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.WHITE}>
+            <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_D}>
               {RADIO_TYPE.루틴}
             </CustomText>
           </RadioDay>
           <RadioWeek onPress={() => CalendarStore.changeRadio(RADIO_TYPE.리포트)}>
-            <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.WHITE}>
+            <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_D}>
               {RADIO_TYPE.리포트}
             </CustomText>
           </RadioWeek>
@@ -70,7 +70,7 @@ const Calendar = () => {
             {['월', '화', '수', '목', '금', '토', '일'].map((dayOfWeek) => {
               return (
                 <DayOfWeek key={dayOfWeek}>
-                  <CustomText color={TextColor.WHITE}>{dayOfWeek}</CustomText>
+                  <CustomText color={TextColor.PRIMARY_D}>{dayOfWeek}</CustomText>
                 </DayOfWeek>
               );
             })}
@@ -84,7 +84,7 @@ const Calendar = () => {
               style={{
                 position: 'absolute',
                 top: 0,
-                backgroundColor: '#3F4042',
+                backgroundColor: CalenderColor.UNFILL,
                 opacity: 1,
                 width: '100%',
                 height: 198,
@@ -102,13 +102,13 @@ const Calendar = () => {
                   position: 'absolute',
                   top: '50%',
                   transform: [{ translateY: -18 }],
-                  backgroundColor: '#5B5D61',
+                  backgroundColor: CalenderColor.FILL,
                   borderRadius: 8,
                 }}
               />
               <View style={{ marginRight: 40, justifyContent: 'center' }}>
                 <WheelPicker
-                  color={TextColor.WHITE}
+                  color={TextColor.PRIMARY_D}
                   onScrollEndDrag={(id) => {
                     CalendarStore.tempYear = id;
                     const date = `${CalendarStore.tempYear}-${
@@ -129,7 +129,7 @@ const Calendar = () => {
               </View>
               <View style={{ justifyContent: 'center' }}>
                 <WheelPicker
-                  color={TextColor.WHITE}
+                  color={TextColor.PRIMARY_D}
                   onScrollEndDrag={(id) => {
                     CalendarStore.tempMonth = id;
                     const date = `${CalendarStore.tempYear}-${
@@ -162,7 +162,7 @@ const BackDrop = styled.TouchableOpacity`
   width: 100%;
   flex: 1;
   height: ${`${Dimensions.get('window').height}px`};
-  background: #292a2c;
+  background: ${BackgroundColor.DEPTH2_D};
   opacity: 0.7;
 `;
 
@@ -182,14 +182,8 @@ const MonthWrapper = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const DownIcon = styled.Image`
-  margin-left: 12px;
-  width: 16px;
-  height: 8px;
-`;
-
 const RadioWrapper = styled.View`
-  background-color: #3f4042;
+  background-color: ${SurfaceColor.DEPTH1_D};
   border-radius: 7px;
   width: 108px;
   height: 28px;
@@ -311,9 +305,16 @@ const Daily = observer(() => {
               }
             }}>
             <DayOfWeek>
-              <DateWrapper backgroundColor={CalendarStore.focusDay.isSame(date, 'day') ? '#3A2E8E' : '#3F4042'}>
+              <DateWrapper
+                backgroundColor={
+                  CalendarStore.focusDay.isSame(date, 'day')
+                    ? `${CalenderColor.UNFILL_FOCUS}`
+                    : `${CalenderColor.UNFILL}`
+                }>
                 <DateGauge
-                  backgroundColor={CalendarStore.focusDay.isSame(date, 'day') ? '#5F4BF2' : '#5B5D61'}
+                  backgroundColor={
+                    CalendarStore.focusDay.isSame(date, 'day') ? `${CalenderColor.FILL_FOCUS}` : `${CalenderColor.FILL}`
+                  }
                   height={50}
                 />
                 {CalendarStore.focusDay.isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />}
@@ -322,7 +323,7 @@ const Daily = observer(() => {
             <DateTextWrapper>
               <CustomText
                 font={FontType.REGULAR_CAPTION}
-                color={CalendarStore.month === date.month() ? TextColor.ELEVATED : TextColor.SECONDARY}
+                color={CalendarStore.month === date.month() ? TextColor.PRIMARY_D : TextColor.SECONDARY_D}
                 align="center">
                 {date.date()}
               </CustomText>
@@ -358,8 +359,12 @@ const Weekly = observer(() => {
               }
             }}>
             <WeeklyRow>
-              <DateWrapper backgroundColor={day.isSame(date, 'day') ? '#3A2E8E' : '#3F4042'}>
-                <WeekGauge backgroundColor={day.isSame(date, 'day') ? '#5F4BF2' : '#5B5D61'} height={50} />
+              <DateWrapper
+                backgroundColor={day.isSame(date, 'day') ? CalenderColor.UNFILL_FOCUS : CalenderColor.UNFILL}>
+                <WeekGauge
+                  backgroundColor={day.isSame(date, 'day') ? CalenderColor.FILL_FOCUS : CalenderColor.FILL}
+                  height={50}
+                />
                 {day.isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />}
               </DateWrapper>
             </WeeklyRow>
@@ -373,7 +378,7 @@ const Weekly = observer(() => {
                       <DateTextWrapper>
                         <CustomText
                           font={FontType.REGULAR_CAPTION}
-                          color={CalendarStore.month === textDate.month() ? TextColor.ELEVATED : TextColor.SECONDARY}
+                          color={CalendarStore.month === textDate.month() ? TextColor.PRIMARY_D : TextColor.SECONDARY_L}
                           align="center">
                           {textDate.date()}
                         </CustomText>

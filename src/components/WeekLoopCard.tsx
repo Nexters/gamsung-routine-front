@@ -1,11 +1,11 @@
 import styled from '@emotion/native';
-import React, { useState, useCallback } from 'react';
+import { observer } from 'mobx-react';
+import React from 'react';
 
 import { CollapsibleCard } from './CollapsibleCard';
+import CustomText from './CustomText';
 import { DayWeekContainer } from './DayWeekContainer';
 import { FoldableContainer } from './FoldableContainer';
-import CustomText from './CustomText';
-import { observer } from 'mobx-react';
 
 interface Props {
   days: {

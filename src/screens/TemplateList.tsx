@@ -10,7 +10,7 @@ import CustomText from '~/components/CustomText';
 import { ScrollingButtonMenu } from '~/components/ScrollingButtonMenu';
 import { TemplateCard } from '~/components/TemplateCard';
 import { RootStackParamList } from '~/navigations/types';
-import { BackgroundColor } from '~/utils/color';
+import { SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
@@ -41,7 +41,7 @@ export const TemplateList: React.FC<Props> = observer(({ navigation }) => {
           <CustomText font={FontType.REGULAR_BODY_02}>
             {vm.categories.find((category) => category.id === vm.selectedCategoryId)?.name} 템플릿&nbsp;
           </CustomText>
-          <CustomText font={FontType.REGULAR_BODY_02} color={'#513DE5'}>
+          <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
             {vm.templates.length}
           </CustomText>
         </CountTextWrapStyled>
@@ -70,7 +70,7 @@ const Frame = styled.SafeAreaView`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: ${BackgroundColor.PRIMARY};
+  background-color: ${SurfaceColor.DEPTH1_L};
 `;
 
 const CountTextWrapStyled = styled.View`

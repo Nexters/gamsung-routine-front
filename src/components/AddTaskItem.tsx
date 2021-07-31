@@ -2,8 +2,7 @@ import styled from '@emotion/native';
 import React, { useCallback } from 'react';
 
 import CustomText from '~/components/CustomText';
-import SelectTaskCover from '~/components/SelectedTaskCover';
-import { TextColor } from '~/utils/color';
+import { BackgroundColor, TextColor } from '~/utils/color';
 import { Align } from '~/utils/font';
 
 interface Props {
@@ -12,17 +11,16 @@ interface Props {
   selected?: boolean;
 }
 
-const AddTaskItem = ({ taskName, onClick, selected }: Props) => {
+const AddTaskItem = ({ taskName, onClick }: Props) => {
   const handleClick = useCallback(() => {
     onClick();
   }, [onClick]);
 
   return (
     <TaskButton onPress={handleClick}>
-      <CustomText color={selected ? TextColor.MAIN : TextColor.PRIMARY} align={Align.CENTER}>
+      <CustomText color={TextColor.PRIMARY_L} align={Align.CENTER}>
         {taskName}
       </CustomText>
-      {selected && <SelectTaskCover />}
     </TaskButton>
   );
 };
@@ -34,10 +32,9 @@ const TaskButton = styled.TouchableOpacity`
   width: 100%;
   height: 70px;
   margin-bottom: 10px;
-  background-color: #fff;
+  background-color: ${BackgroundColor.DEPTH1_L};
   justify-content: center;
   text-align: center;
-  border: 1px solid #e4e5e9;
   border-radius: 8px;
 `;
 

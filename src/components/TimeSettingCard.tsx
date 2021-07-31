@@ -6,7 +6,7 @@ import { CollapsibleCard } from './CollapsibleCard';
 import { FoldableContainer } from './FoldableContainer';
 import { TimeSettingContainer } from './TimeSettingContainer';
 
-import { BackgroundColor } from '~/utils/color';
+import { BorderColor } from '~/utils/color';
 
 interface Props {
   marginTop?: number;
@@ -35,5 +35,5 @@ const DividerStyled = styled.View`
   width: 100%;
   height: 1px;
   margin: 16px 0;
-  background-color: ${BackgroundColor.ELEVATED};
+  background-color: ${BorderColor.DEPTH2_L};
 `;

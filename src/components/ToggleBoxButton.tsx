@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import CustomText from './CustomText';
 
-import { BackgroundColor, TextColor } from '~/utils/color';
+import { ActionColor, SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
@@ -28,12 +28,18 @@ export const ToggleBoxButton = (props: Props) => {
   return (
     <ToggleBoxButtonStyled>
       <ButtonStyled onPress={handleToggleClick(true)} selected={isOn}>
-        <CustomText font={FontType.MEDIUM_BODY_02} color={isOn ? TextColor.WHITE : TextColor.MAIN} align={'center'}>
+        <CustomText
+          font={FontType.MEDIUM_BODY_02}
+          color={isOn ? TextColor.PRIMARY_D : TextColor.SECONDARY_L}
+          align={'center'}>
           {props.onText}
         </CustomText>
       </ButtonStyled>
       <ButtonStyled onPress={handleToggleClick(false)} selected={!isOn}>
-        <CustomText font={FontType.MEDIUM_BODY_02} color={!isOn ? TextColor.WHITE : TextColor.MAIN} align={'center'}>
+        <CustomText
+          font={FontType.MEDIUM_BODY_02}
+          color={!isOn ? TextColor.PRIMARY_D : TextColor.SECONDARY_L}
+          align={'center'}>
           {props.offText}
         </CustomText>
       </ButtonStyled>
@@ -46,14 +52,14 @@ const ToggleBoxButtonStyled = styled.View`
   height: 36px;
   padding: 2px;
   border-radius: 6px;
-  background-color: ${BackgroundColor.ELEVATED};
+  background-color: ${SurfaceColor.DEPTH2_L};
   flex-direction: row;
 `;
 
 const ButtonStyled = styled.TouchableOpacity<{ selected: boolean }>`
   width: 51px;
   height: 32px;
-  background-color: ${({ selected }) => (selected ? '#5F4BF2' : '#F2F2F4')};
+  background-color: ${({ selected }) => (selected ? ActionColor.ACTIVE : SurfaceColor.DEPTH2_L)};
   flex: 1;
   border-radius: 6px;
   align-content: center;

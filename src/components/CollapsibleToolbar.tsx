@@ -107,12 +107,12 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
               transform: [{ translateY: backgroundSlide }],
             }}>
             <View style={{ position: 'absolute', bottom: 20, left: 20 }}>
-              <Text style={{ color: 'white' }}>ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</Text>
+              <Text style={{ color: TextColor.PRIMARY_D }}>ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</Text>
             </View>
           </Background>
           <Action style={{ transform: [{ scale: headerTitleSize }] }}>
             <View style={{ position: 'absolute', left: 20, bottom: 40 }}>
-              <Text style={{ color: 'white' }}>{title}</Text>
+              <Text style={{ color: TextColor.PRIMARY_D }}>{title}</Text>
             </View>
           </Action>
         </Header>
@@ -121,7 +121,7 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
             <Icon type={'ARROW_LEFT'} />
           </LeftHeaderItem>
           <RightHeaderItem>
-            <CustomText color={TextColor.WHITE} font={FontType.MEDIUM_BODY_01}>
+            <CustomText color={TextColor.PRIMARY_D} font={FontType.MEDIUM_BODY_01}>
               전체 담기
             </CustomText>
           </RightHeaderItem>
@@ -187,5 +187,5 @@ const Action = styled(Animated.View)`
   bottom: 0;
   z-index: 10;
   padding: 0 40px;
-  color: white;
+  color: ${TextColor.PRIMARY_D};
 `;

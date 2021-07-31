@@ -11,7 +11,7 @@ import TaskDetailPopup from '~/components/TaskDetailPopup';
 import { Weekday } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
-import { TextColor } from '~/utils/color';
+import { BackgroundColor, BorderColor, SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
@@ -73,13 +73,15 @@ const TaskListItem = observer(
               <TaskListItemViewInfo>
                 <CustomText
                   font={FontType.REGULAR_LARGE}
-                  color={!checkTodayTaskState ? TextColor.DISABLE : TextColor.PRIMARY}>
+                  color={!checkTodayTaskState ? TextColor.INACTIVE_L : TextColor.PRIMARY_L}>
                   {title}
                 </CustomText>
                 {!checkTodayTaskState && <TaskListItemLine />}
               </TaskListItemViewInfo>
               <TaskListItemViewSubTitle>
-                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
+                <CustomText
+                  font={FontType.REGULAR_CAPTION}
+                  color={!checkTodayTaskState ? TextColor.INACTIVE_L : TextColor.PRIMARY_L}>
                   주 {timesOfWeek}회 · 하루 {timesOfDay}번
                 </CustomText>
               </TaskListItemViewSubTitle>
@@ -102,14 +104,14 @@ const TaskListItem = observer(
           </TaskListItemInfoImageList>
           <TaskListItemInfoPercent>
             {CalendarStore.radio === RADIO_TYPE.루틴 && share && (
-              <CustomText color={TextColor.SECONDARY} font={FontType.REGULAR_CAPTION}>
+              <CustomText color={TextColor.PRIMARY_L} font={FontType.REGULAR_CAPTION}>
                 {shareCount}명 중 {shareFinishedCount}명이 완료
               </CustomText>
             )}
             {CalendarStore.radio === RADIO_TYPE.리포트 && (
-              <CustomText color={TextColor.SECONDARY} font={FontType.REGULAR_CAPTION}>
+              <CustomText color={TextColor.PRIMARY_L} font={FontType.REGULAR_CAPTION}>
                 {share ? `${shareCount}명의 달성률 총 ` : '나의 달성률 총 '}
-                <CustomText color={TextColor.MAIN} font={FontType.REGULAR_CAPTION}>
+                <CustomText color={TextColor.HIGHLIGHT} font={FontType.REGULAR_CAPTION}>
                   {percent}%
                 </CustomText>
               </CustomText>
@@ -126,7 +128,7 @@ const TaskListItemStyled = styled.View<{ checkLastItem: boolean }>`
   flex-direction: column;
   position: relative;
   padding: 22px 20px;
-  background-color: #fff;
+  background-color: ${SurfaceColor.DEPTH1_L};
   border-radius: 10px;
   box-shadow: 0px 1px 6px -2px rgba(0, 0, 0, 0.04), 0px 3px 10px rgba(0, 0, 0, 0.06),
     0px 5px 22px 4px rgba(0, 0, 0, 0.06);
@@ -160,7 +162,7 @@ const TaskListItemLine = styled.View`
   top: 50%;
   left: -6px;
   border-bottom-width: 1px;
-  border-bottom-color: #b6b8bc;
+  border-bottom-color: ${SurfaceColor.DEPTH2_L};
 `;
 
 const TaskListItemViewSubTitle = styled.Text``;
@@ -169,13 +171,11 @@ const MoreIconButton = styled.TouchableOpacity`
   margin-right: 12px;
 `;
 
-const MoreIconImage = styled.Image``;
-
 const TaskListItemWeekView = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: #f2f2f4;
+  background-color: ${SurfaceColor.DEPTH2_L};
   border-radius: 8px;
   padding: 8px;
   margin-top: 15px;
@@ -184,7 +184,7 @@ const TaskListItemWeekView = styled.View`
 const TaskListItemInfoView = styled.View<{ listType: RADIO_TYPE; share: boolean | undefined }>`
   flex-direction: row;
   justify-content: space-between;
-  border-top-color: #e4e5e9;
+  border-top-color: ${BorderColor.DEPTH1_L};
   border-top-width: ${({ listType, share }) => listType === RADIO_TYPE.루틴 && share && '1px'};
   padding-top: ${({ listType, share }) =>
     listType === RADIO_TYPE.루틴 && share ? '20px' : listType === RADIO_TYPE.리포트 ? '16px' : '0'};
@@ -200,10 +200,10 @@ const TaskListItemInfoImage = styled.View<{ index: number }>`
   height: 24px;
   position: absolute;
   left: ${({ index }) => 0 + index * 15 + 'px'};
-  background-color: #989898;
+  background-color: ${BackgroundColor.DEPTH1_D};
   border-radius: 24px;
   border-width: 2px;
-  border-color: #fff;
+  border-color: ${BorderColor.WHITE};
   z-index: ${({ index }) => index};
 `;
 

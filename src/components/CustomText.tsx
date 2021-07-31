@@ -14,7 +14,7 @@ interface Props {
 const CustomText = ({
   children,
   font = FontType.MEDIUM_LARGE,
-  color = TextColor.PRIMARY,
+  color = TextColor.PRIMARY_L,
   align = Align.LEFT,
 }: Props) => {
   const style = Font.getStyle(font);

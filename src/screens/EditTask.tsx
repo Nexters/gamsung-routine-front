@@ -15,7 +15,7 @@ import { TimeSettingCard } from '~/components/TimeSettingCard';
 import { WeekLoopCard } from '~/components/WeekLoopCard';
 import useModal from '~/hooks/useModal';
 import { RootStackParamList } from '~/navigations/types';
-import { TextColor } from '~/utils/color';
+import { ActionColor, TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 
 interface EditTaskScreenProps {
@@ -59,12 +59,12 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
           <EditTaskView>
             <EditSettingView>
               <TitleSettingView>
-                <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY}>
+                <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_L}>
                   {vm.taskName}
                 </CustomText>
               </TitleSettingView>
               <TimeSettingView>
-                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
+                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L}>
                   시간 설정
                 </CustomText>
                 <WeekLoopCard days={vm.day} onDayPress={handleDaySelect} />
@@ -72,7 +72,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
                 <TimeSettingCard marginTop={16} timeSettingData={vm.timeSettingData} />
               </TimeSettingView>
               <AddSettingView>
-                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
+                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L}>
                   부가 설정
                 </CustomText>
                 <AlarmSettingCard />
@@ -81,7 +81,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
           </EditTaskView>
         </ScrollView>
         <EditSubmitButton onPress={handleEditSubmitClick}>
-          <CustomText font={FontType.BOLD_LARGE} color={TextColor.WHITE} align={Align.CENTER}>
+          <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
             추가하기
           </CustomText>
         </EditSubmitButton>
@@ -132,7 +132,7 @@ const AddSettingView = styled.View`
 const EditSubmitButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
-  background-color: #513de5;
+  background-color: ${ActionColor.ACTIVE};
   border-radius: 8px;
   padding: 12px 0;
   left: 20px;

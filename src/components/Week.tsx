@@ -4,7 +4,7 @@ import React from 'react';
 import 'dayjs/locale/ko';
 
 import CustomText from '~/components/CustomText';
-import { TextColor } from '~/utils/color';
+import { ActionColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 const Week = () => {
@@ -21,9 +21,9 @@ const Week = () => {
           const dayOfTheWeek = day.date();
           return (
             <WeekItem key={index}>
-              <CustomText color={index >= 5 ? TextColor.RED : TextColor.WHITE}>{day.format('ddd')}</CustomText>
+              <CustomText color={TextColor.PRIMARY_D}>{day.format('ddd')}</CustomText>
               <WeekItemNumber selected={dayOfTheWeek === today.date()}>
-                <CustomText font={FontType.BOLD_LARGE} color={TextColor.WHITE}>
+                <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D}>
                   {dayOfTheWeek}
                 </CustomText>
               </WeekItemNumber>
@@ -52,7 +52,7 @@ const WeekItemNumber = styled.View<{ selected: boolean }>`
   height: 36px;
   justify-content: center;
   align-items: center;
-  background-color: ${({ selected }) => selected && '#604dee'};
+  background-color: ${({ selected }) => selected && ActionColor.ACTIVE};
   border-radius: 36px;
   margin-top: 10px;
 `;

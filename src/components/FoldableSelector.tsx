@@ -20,7 +20,7 @@ export const FoldableSelector = ({ isOpen, countText, onSelectorClick }: Props) 
 
   return (
     <SelectorStyled onPress={handleOpen}>
-      <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY}>
+      <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY_L}>
         {countText ?? ''}
       </CustomText>
       {isOpen ? <Icon type={'ARROW_UP'} /> : <Icon type={'ARROW_DOWN'} />}

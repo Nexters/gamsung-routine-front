@@ -1,4 +1,5 @@
 import styled from '@emotion/native';
+import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import CustomText from './CustomText';
@@ -7,7 +8,6 @@ import { FoldableSwitch } from './FoldableSwitch';
 
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-import { observer } from 'mobx-react';
 
 interface Props {
   label: string;
@@ -25,15 +25,15 @@ export const FoldableContainer: React.FC<Props> = observer(
     const handleOpen = useCallback(() => {
       setIsExpended(!isExpended);
       onOpen?.();
-    }, [onOpen]);
+    }, [onOpen, isExpended]);
 
     useEffect(() => {
       setIsExpended(isExpended);
-    }, [isOpen]);
+    }, [isOpen, isExpended]);
 
     return (
       <FoldableContainerStyled>
-        <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY}>
+        <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY_L}>
           {label}
         </CustomText>
         <RightViewStyled>
