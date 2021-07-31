@@ -25,6 +25,7 @@ const MainNavigator = () => {
     })();
   });
   if (loading) {
+    // TODO : 스플래시 추가
     return null;
   }
   return (
