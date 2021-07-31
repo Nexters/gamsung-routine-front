@@ -5,9 +5,12 @@ export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   AddTask: undefined;
-  EditTask: { taskId: TaskId, taskName: string };
+  EditTask: {
+    taskId: TaskId;
+    // taskName: string
+  };
   TaskList: { templateId: number | null; vm: AddTaskVM; headerColor?: GraphicColor };
   TemplateList: undefined;
 };
 
-export type TaskId = number | null;
+export type TaskId = string | null;

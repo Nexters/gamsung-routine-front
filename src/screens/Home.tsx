@@ -5,12 +5,14 @@ import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
 
 import { useUserProfileData } from '~/apis/authAPI';
+import { useMonthlyTasks } from '~/apis/routinAPI';
 import Calendar from '~/components/Calendar';
 import CustomText from '~/components/CustomText';
 import Icon from '~/components/Icon';
 import TaskListView from '~/components/TaskListView';
+import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
-import CalendarStore from '~/stores/CalendarStore';
+import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import HomeStore from '~/stores/HomeStore';
 import { BackgroundColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -20,20 +22,86 @@ export interface HomeScreenProps {
 }
 
 const Home = ({ navigation }: HomeScreenProps) => {
-  const totalPercent = 30;
-
   const { data, error } = useUserProfileData();
   console.log('useUserProfileData', data?.data.name, error);
 
-  const [isVisiblePopup, setIsVisiblePopup] = useState<number | null>(null);
+  const { data: TaskList } = useMonthlyTasks({
+    profileId: '1',
+    month: CalendarStore.month.toString(),
+    year: CalendarStore.tempYear.toString(),
+  });
 
-  const handleToggleTask = (id: number) => {
-    setIsVisiblePopup(null);
-    HomeStore.actionTask(id);
-  };
+  const [isVisiblePopup, setIsVisiblePopup] = useState<string | null>(null);
 
-  const handlePopupClick = (id: number | null) => {
+  const handlePopupClick = (id: string | null) => {
     setIsVisiblePopup(isVisiblePopup === id ? null : id);
+  };
+  let routine = [] as Task[];
+  let percent = 0;
+  if (CalendarStore.radio === RADIO_TYPE.루틴) {
+    const today = CalendarStore.focusDay.format('YYYYMMDD');
+    routine = TaskList?.dailyRoutines[today] || [];
+    const total = routine.reduce(
+      (prev, curr) => {
+        return {
+          completeCount: prev.completeCount + curr.completeCount,
+          timesOfDay: prev.timesOfDay + curr.timesOfDay,
+        };
+      },
+      {
+        completeCount: 0,
+        timesOfDay: 0,
+      },
+    );
+    percent = ((total?.completeCount || 0) / (total?.timesOfDay || 0) || 0) * 100;
+  } else {
+    const isSun = CalendarStore.focusDay.format('ddd') === 'Sun';
+    const today = CalendarStore.focusDay.add(isSun ? -1 : 0, 'day').day(1);
+    const temp = [
+      ...(TaskList?.dailyRoutines[today.add(0, 'day').format('YYYYMMDD')] || []),
+      ...(TaskList?.dailyRoutines[today.add(1, 'day').format('YYYYMMDD')] || []),
+      ...(TaskList?.dailyRoutines[today.add(2, 'day').format('YYYYMMDD')] || []),
+      ...(TaskList?.dailyRoutines[today.add(3, 'day').format('YYYYMMDD')] || []),
+      ...(TaskList?.dailyRoutines[today.add(4, 'day').format('YYYYMMDD')] || []),
+      ...(TaskList?.dailyRoutines[today.add(5, 'day').format('YYYYMMDD')] || []),
+      ...(TaskList?.dailyRoutines[today.add(6, 'day').format('YYYYMMDD')] || []),
+    ];
+    const total = temp.reduce(
+      (prev, curr) => {
+        return {
+          completeCount: prev.completeCount + curr.completeCount,
+          timesOfDay: prev.timesOfDay + curr.timesOfDay,
+        };
+      },
+      {
+        completeCount: 0,
+        timesOfDay: 0,
+      },
+    );
+    percent = ((total?.completeCount || 0) / (total?.timesOfDay || 0) || 0) * 100;
+    routine = temp.reduce((unique, item, currentIndex) => {
+      const index = temp.findIndex((t) => {
+        return t.id === item.id;
+      });
+      if (currentIndex === index) {
+        return [...unique, item];
+      }
+      return [];
+    }, [] as Task[]);
+  }
+
+  const handleToggleTask = (id: string) => {
+    setIsVisiblePopup(null);
+    if (!routine) {
+      return;
+    }
+    const task = routine?.find((t) => {
+      return id === t.id;
+    });
+    if (!task) {
+      return;
+    }
+    HomeStore.actionTask(task);
   };
 
   return (
@@ -51,16 +119,16 @@ const Home = ({ navigation }: HomeScreenProps) => {
               <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.SECONDARY}>
                 내 하루 테스크{' '}
                 <CustomText font={FontType.BOLD_BODY_02} color={TextColor.MAIN}>
-                  {HomeStore.taskList.length}
+                  {routine?.length || 0}
                 </CustomText>
               </CustomText>
               <CustomText font={FontType.BOLD_BODY_02} color={TextColor.PRIMARY}>
-                {totalPercent}% 달성
+                {percent}% 달성
               </CustomText>
             </TaskTitleView>
             <TaskListView
               navigation={navigation}
-              taskList={HomeStore.taskList}
+              taskList={routine || []}
               onToggleTask={handleToggleTask}
               isVisiblePopup={isVisiblePopup}
               onPopupClick={handlePopupClick}

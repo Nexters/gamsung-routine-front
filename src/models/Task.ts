@@ -1,11 +1,16 @@
 export type Weekday = { count: number; endTasks: string[] };
 
 export interface Task {
-  id: number;
-  title: string;
-  timesOfWeek: number;
+  completeCount: number;
+  completedDateList: any[];
+  date: string;
+  days: number[];
+  friendIds: any[];
+  id: string;
+  profileId: string;
+  taskId: string;
+  times: string[];
   timesOfDay: number;
-  percent: number;
-  todayOfWeek: Weekday;
-  dayOfWeek: Weekday[];
+  timesOfWeek: number;
+  title: string;
 }
