@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import Icon, { IconType } from './Icon';
+import Icon from './Icon';
 
 import CustomText from '~/components/CustomText';
 import MonsterIcon from '~/components/MonsterIcon';
@@ -86,7 +86,7 @@ const TaskListItem = observer(
             </TaskListItemViewTitle>
           </TaskListItemViewLeft>
           <MoreIconButton onPress={() => onMoreButtonClick(id)}>
-            <Icon type={IconType.MORE} />
+            <Icon type={'MORE'} />
           </MoreIconButton>
         </TaskListItemView>
         {CalendarStore.radio === RADIO_TYPE.리포트 && (

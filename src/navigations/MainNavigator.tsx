@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import CustomText from '~/components/CustomText';
-import Icon, { IconType } from '~/components/Icon';
+import Icon from '~/components/Icon';
 import { RootStackParamList } from '~/navigations/types';
 import AddTask from '~/screens/AddTask';
 import EditTask from '~/screens/EditTask';
@@ -45,7 +45,7 @@ const MainNavigator = () => {
               onPress={() => {
                 navigation.navigate('EditTask');
               }}>
-              <Icon type={IconType.ADD} />
+              <Icon type={'ADD'} />
             </TouchableOpacity>
           ),
           headerRight: () => {
