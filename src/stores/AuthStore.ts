@@ -34,9 +34,7 @@ class AuthStore {
       const fcmToken = await messaging().getToken();
 
       const {
-        data: {
-          data: { accessToken },
-        },
+        data: { accessToken },
       } = await api.post<{
         data: {
           accessToken: string;
