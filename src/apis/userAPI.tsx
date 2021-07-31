@@ -1,5 +1,5 @@
-import { SWR, useCommonSWR } from '~/utils/swr';
+import { useCommonSWR } from '~/utils/swr';
 
-export const useUserData = (userId: string): SWR<any> => {
-  return useCommonSWR(`user/${userId}`);
+export const useUserData = (userId: string): any => {
+  return useCommonSWR(`/v1/user/${userId}`);
 };

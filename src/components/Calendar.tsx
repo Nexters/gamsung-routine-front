@@ -9,6 +9,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import Icon from './Icon';
 import { WheelPicker } from './WheelPicker';
 
+import { useMonthlyTasks } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import { BackgroundColor, TextColor } from '~/utils/color';
@@ -182,12 +183,6 @@ const MonthWrapper = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const DownIcon = styled.Image`
-  margin-left: 12px;
-  width: 16px;
-  height: 8px;
-`;
-
 const RadioWrapper = styled.View`
   background-color: #3f4042;
   border-radius: 7px;
@@ -298,9 +293,26 @@ const WeekTextWrapper = styled.View`
 `;
 
 const Daily = observer(() => {
+  const { data, error } = useMonthlyTasks({
+    profileId: '1',
+    month: CalendarStore.month.toString(),
+    year: CalendarStore.tempYear.toString(),
+  });
   return (
     <>
       {CalendarStore.days.map((date) => {
+        const today = date.format('YYYYMMDD');
+        const routine = data?.dailyRoutines[today];
+        const total = routine?.reduce(
+          (prev, curr) => {
+            return {
+              completeCount: prev.completeCount + curr.completeCount,
+              timesOfDay: prev.timesOfDay + curr.timesOfDay,
+            };
+          },
+          { completeCount: 0, timesOfDay: 0 },
+        );
+        const percent = (total?.completeCount || 0) / (total?.timesOfDay || 0) || 0 * 100;
         return (
           <TouchableOpacity
             key={date.toString()}
@@ -314,9 +326,10 @@ const Daily = observer(() => {
               <DateWrapper backgroundColor={CalendarStore.focusDay.isSame(date, 'day') ? '#3A2E8E' : '#3F4042'}>
                 <DateGauge
                   backgroundColor={CalendarStore.focusDay.isSame(date, 'day') ? '#5F4BF2' : '#5B5D61'}
-                  height={50}
+                  height={percent}
                 />
-                {CalendarStore.focusDay.isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />}
+                {percent === 100 &&
+                  (CalendarStore.focusDay.isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />)}
               </DateWrapper>
             </DayOfWeek>
             <DateTextWrapper>
@@ -339,13 +352,31 @@ const Weekly = observer(() => {
     CalendarStore.focusDay.format('ddd') === 'Sun'
       ? CalendarStore.focusDay.add(-7, 'day').day(1)
       : CalendarStore.focusDay.day(1);
-
+  const { data, error } = useMonthlyTasks({
+    profileId: '1',
+    month: CalendarStore.month.toString(),
+    year: CalendarStore.tempYear.toString(),
+  });
   return (
     <WeeklyWrapper>
       {CalendarStore.days.map((date, index) => {
         if (index !== 0 && index % 7 !== 0) {
           return null;
         }
+        let total = { completeCount: 0, timesOfDay: 0 };
+        for (let i = 0; i < 7; i++) {
+          const today = date.add(i, 'day').format('YYYYMMDD');
+          const routine = data?.dailyRoutines[today];
+          if (routine) {
+            total = routine?.reduce((prev, curr) => {
+              return {
+                completeCount: prev.completeCount + curr.completeCount,
+                timesOfDay: prev.timesOfDay + curr.timesOfDay,
+              };
+            }, total);
+          }
+        }
+        const percent = (total?.completeCount || 0) / (total?.timesOfDay || 0) || 0 * 100;
 
         return (
           <TouchableOpacity
@@ -359,8 +390,8 @@ const Weekly = observer(() => {
             }}>
             <WeeklyRow>
               <DateWrapper backgroundColor={day.isSame(date, 'day') ? '#3A2E8E' : '#3F4042'}>
-                <WeekGauge backgroundColor={day.isSame(date, 'day') ? '#5F4BF2' : '#5B5D61'} height={50} />
-                {day.isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />}
+                <WeekGauge backgroundColor={day.isSame(date, 'day') ? '#5F4BF2' : '#5B5D61'} height={percent} />
+                {percent === 100 && (day.isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />)}
               </DateWrapper>
             </WeeklyRow>
             <WeekTextWrapper key={`${date}_${index}`} style={{ height: 'auto' }}>
