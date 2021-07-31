@@ -1,13 +1,13 @@
 import styled from '@emotion/native';
+import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 
 import { CollapsibleCard } from './CollapsibleCard';
 import { FoldableContainer } from './FoldableContainer';
-
-import { BackgroundColor } from '~/utils/color';
-import { observer } from 'mobx-react';
 import { WheelPicker } from './WheelPicker';
+
 import { WheelItem } from '~/models/WheelItem';
+import { BackgroundColor } from '~/utils/color';
 
 interface Props {
   marginTop?: number;

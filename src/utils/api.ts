@@ -1,6 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import AuthStore from '~/stores/AuthStore';
+
+export type APIMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 const getCommonHeaders = async () => {
   const token = AuthStore.token;
@@ -18,24 +20,54 @@ const getCommonHeaders = async () => {
 class API {
   // XXX : _ prefix를 계속 사용할지 고민
   private static _instance: API;
-  call = axios.create({
-    baseURL: 'https://gamsung-routine.herokuapp.com/api/v1',
-  });
+  private static HOSTNAME = 'https://gamsung-routine.herokuapp.com';
+  private static PREFIX = '/api/v1';
+
+  axiosInstance = axios.create();
+
+  private async request<T>(method: APIMethod, url: string, data: any, opt: any): Promise<T> {
+    return this.axiosInstance({
+      url: API.HOSTNAME + API.PREFIX + url,
+      method,
+      headers: opt.headers,
+      data: method !== 'GET' ? data : undefined,
+      params: method === 'GET' ? data : undefined,
+      timeout: opt.timeout || 10 * 1000,
+      responseType: 'json',
+    })
+      .then(async (result: AxiosResponse<any>) => {
+        if (result) {
+          const data: T = result.data;
+
+          return Promise.resolve(data);
+        }
+        // 성공에 걸리지 못하면 실패
+        return Promise.reject('결과가 올바르지 않습니다.');
+      })
+      .catch(async (result: AxiosError<any> | string) => {
+        if (typeof result === 'string') {
+          return Promise.reject(result);
+        }
+        const data = result && result.response ? result.response.data : null;
+        return Promise.reject(data ? data.statusMessage || data.message || data.error || data.errorMessage : null);
+      });
+  }
 
   public async get<T = any>(url: string, data?: any, config?: any) {
-    return this.call.get<T>(
+    return this.request<T>(
+      'GET',
       url,
-      config
-        ? { ...config, params: data }
-        : {
-            params: data,
-            headers: await getCommonHeaders(),
-          },
+      data,
+      config || {
+        params: data,
+        headers: await getCommonHeaders(),
+      },
     );
   }
 
   public async post<T = any>(url: string, data?: any, config?: any) {
-    return this.call.post<T>(
+    return this.request<T>(
+      'POST',
       url,
       data,
       config || {
@@ -45,7 +77,8 @@ class API {
   }
 
   public async put<T = any>(url: string, data?: any, config?: any) {
-    return this.call.put<T>(
+    return this.request<T>(
+      'PUT',
       url,
       data,
       config || {
@@ -55,14 +88,14 @@ class API {
   }
 
   public async delete<T = any>(url: string, data?: any, config?: any) {
-    return this.call.delete<T>(
+    return this.request<T>(
+      'DELETE',
       url,
-      config
-        ? { ...config, params: data }
-        : {
-            params: data,
-            headers: await getCommonHeaders(),
-          },
+      data,
+      config || {
+        params: data,
+        headers: await getCommonHeaders(),
+      },
     );
   }
 
