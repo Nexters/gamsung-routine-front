@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { View, Animated, Text, Dimensions, TouchableOpacity } from 'react-native';
 
 import CustomText from './CustomText';
-import Icon, { IconType } from './Icon';
+import Icon from './Icon';
 
 import { GraphicColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -118,7 +118,7 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
         </Header>
         <AppBar>
           <LeftHeaderItem onPress={handleBackpressClick}>
-            <Icon type={IconType.ARROW_LEFT} />
+            <Icon type={'ARROW_LEFT'} />
           </LeftHeaderItem>
           <RightHeaderItem>
             <CustomText color={TextColor.WHITE} font={FontType.MEDIUM_BODY_01}>

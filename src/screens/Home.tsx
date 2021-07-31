@@ -6,7 +6,7 @@ import { StatusBar } from 'react-native';
 
 import Calendar from '~/components/Calendar';
 import CustomText from '~/components/CustomText';
-import Icon, { IconType } from '~/components/Icon';
+import Icon from '~/components/Icon';
 import TaskListView from '~/components/TaskListView';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore from '~/stores/CalendarStore';
@@ -41,7 +41,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
         <HomeView>
           <TaskView>
             <DropView onPress={() => CalendarStore.changeIsWeek(!CalendarStore.isWeek)}>
-              {CalendarStore.isWeek ? <Icon type={IconType.DROP} /> : <Icon type={IconType.TAKE} />}
+              {CalendarStore.isWeek ? <Icon type={'DROP'} /> : <Icon type={'TAKE'} />}
             </DropView>
             <TaskTitleView>
               <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.SECONDARY}>
@@ -68,8 +68,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
             setIsVisiblePopup(null);
             navigation.navigate('TemplateList');
           }}>
-          {/* TODO : SVG로 바꾸기 */}
-          <Icon type={IconType.PLUS} />
+          <Icon type={'PLUS'} />
         </AddTaskButton>
       </HomeStyled>
     </>

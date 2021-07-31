@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import React from 'react';
 
 import CustomText from './CustomText';
-import Icon, { IconType } from './Icon';
+import Icon from './Icon';
 
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -23,7 +23,7 @@ export const FoldableSelector = ({ isOpen, countText, onSelectorClick }: Props) 
       <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY}>
         {countText ?? ''}
       </CustomText>
-      {isOpen ? <Icon type={IconType.ARROW_UP} /> : <Icon type={IconType.ARROW_DOWN} />}
+      {isOpen ? <Icon type={'ARROW_UP'} /> : <Icon type={'ARROW_DOWN'} />}
     </SelectorStyled>
   );
 };

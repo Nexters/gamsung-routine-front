@@ -6,7 +6,7 @@ import { Animated, Dimensions, Platform, TouchableOpacity, View } from 'react-na
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-import Icon, { IconType } from './Icon';
+import Icon from './Icon';
 import { WheelPicker } from './WheelPicker';
 
 import CustomText from '~/components/CustomText';
@@ -38,7 +38,7 @@ const Calendar = () => {
           <CustomText font={FontType.REGULAR_TITLE_02} color={TextColor.WHITE}>
             {CalendarStore.month + 1}월
           </CustomText>
-          <Icon type={IconType.FULL_ARROW_DOWN} />
+          <Icon type={'FULL_ARROW_DOWN'} />
         </MonthWrapper>
         <RadioWrapper>
           <Animated.View
@@ -316,11 +316,7 @@ const Daily = observer(() => {
                   backgroundColor={CalendarStore.focusDay.isSame(date, 'day') ? '#5F4BF2' : '#5B5D61'}
                   height={50}
                 />
-                {CalendarStore.focusDay.isSame(date, 'day') ? (
-                  <Icon type={IconType.CROWN} />
-                ) : (
-                  <Icon type={IconType.CROWN_GRAY} />
-                )}
+                {CalendarStore.focusDay.isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />}
               </DateWrapper>
             </DayOfWeek>
             <DateTextWrapper>
@@ -364,7 +360,7 @@ const Weekly = observer(() => {
             <WeeklyRow>
               <DateWrapper backgroundColor={day.isSame(date, 'day') ? '#3A2E8E' : '#3F4042'}>
                 <WeekGauge backgroundColor={day.isSame(date, 'day') ? '#5F4BF2' : '#5B5D61'} height={50} />
-                {day.isSame(date, 'day') ? <Icon type={IconType.CROWN} /> : <Icon type={IconType.CROWN_GRAY} />}
+                {day.isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />}
               </DateWrapper>
             </WeeklyRow>
             <WeekTextWrapper key={`${date}_${index}`} style={{ height: 'auto' }}>
