@@ -1,86 +1,136 @@
-const BasicColor = {
-  RED: '#E82D13',
-  WHITE: '#FFFFFF',
-  BLACK: '#000000',
-  YELLOW: '#FFBD13',
-
-  PURPLE10: '#EEECFC',
-  PURPLE20: '#DCD8FA',
-  PURPLE30: '#CBC5F7',
-  PURPLE40: '#A89EF2',
-  PURPLE50: '#7464EA',
-  PURPLE60: '#513DE5',
-  PURPLE70: '#4937CE',
-  PURPLE80: '#4131B7',
-  PURPLE90: '#312589',
-  PURPLE100: '#20185C',
-
+const GrayColor = {
   GRAY10: '#F2F2F4',
-  GRAY30: '#E4E5E9',
-  GRAY20: '#D7D9DD',
+  GRAY20: '#E4E5E9',
+  GRAY30: '#D7D9DD',
   GRAY40: '#C8CACF',
   GRAY50: '#B6B8BC',
   GRAY60: '#9B9EA5',
-  GRAY70: '#6B6D72',
-  GRAY80: '#4B4C4F',
+  GRAY70: '#5B5D61',
+  GRAY80: '#3F4042',
   GRAY90: '#333436',
-  GRAY100: '#0C0D0E',
+  GRAY100: '#292A2C',
+} as const;
 
-  GRAPHIC_RED: '#FF7B68',
-  GRAPHIC_SKYBLUE: '#89B1FF',
-  GRAPHIC_GREEN: '#52C39B',
-  GRAPHIC_YELLOW: '#FFCA42',
-  GRAPHIC_PURPLE: '#7D6BFF',
+const PrimaryColor = {
+  PURPLE10: '#EEECFC',
+  PURPLE20: '#CBC5F7',
+  PURPLE30: '#A89EF2',
+  PURPLE40: '#7D6BFF',
+  PURPLE50: '#5F4BF2',
+  PURPLE60: '#513DE5',
+  PURPLE70: '#3A2E8E',
+  PURPLE80: '#2C2469',
+  PURPLE90: '#282352',
+  PURPLE100: '#25204D',
+} as const;
+
+const SubColor = {
+  RED50: '#ED5742',
+  RED60: '#E82D13',
+  YELLOW60: '#FFBD13',
+  YELLOW: '#FFCA42',
+  SKYBLUE: '#89B1FF',
+  RED: '#FF7B68',
+  GREEN: '#52C39B',
+  WHITE: '#FFFFFF',
+  BLACK: '#000000',
 } as const;
 
 const BackgroundColor = {
-  PRIMARY: BasicColor.WHITE,
-  SECONDARY: BasicColor.GRAY90,
-  ELEVATED: BasicColor.GRAY10,
+  DEPTH1_L: SubColor.WHITE,
+  DEPTH2_L: GrayColor.GRAY10,
+  DEPTH1_D: GrayColor.GRAY90,
+  DEPTH2_D: GrayColor.GRAY100,
 } as const;
 
 const TextColor = {
-  PRIMARY: BasicColor.GRAY90,
-  SECONDARY: BasicColor.GRAY70,
-  DISABLE: BasicColor.GRAY30,
-  ELEVATED: BasicColor.GRAY10,
-  MAIN: BasicColor.PURPLE60,
-  WHITE: BasicColor.WHITE,
-  RED: BasicColor.RED,
+  PRIMARY_L: GrayColor.GRAY90,
+  PRIMARY_D: SubColor.WHITE,
+  SECONDARY_L: GrayColor.GRAY70,
+  SECONDARY_D: GrayColor.GRAY20,
+  INACTIVE_L: GrayColor.GRAY50,
+  HIGHLIGHT: PrimaryColor.PURPLE60,
 } as const;
 
-const PressedColor = {
-  PRESSED: alpha(BasicColor.GRAY100, 10), // 가이드 상 아직 정해지지 않은 칼라명
+const BorderColor = {
+  DEPTH1_L: GrayColor.GRAY10,
+  DEPTH2_L: GrayColor.GRAY20,
+  DEPTH3_L: GrayColor.GRAY50,
+  WHITE: SubColor.WHITE,
 } as const;
 
-const DimColor = {
-  DIM: alpha(BasicColor.GRAY100, 60), // 가이드 상 아직 정해지지 않은 칼라명
+const IconColor = {
+  PRIMARY_L: GrayColor.GRAY90,
+  PRIMARY_D: SubColor.WHITE,
+  SECONDARY_L: GrayColor.GRAY70,
+  SECONDARY_D: GrayColor.GRAY20,
+  TERTIARY_D: GrayColor.GRAY60,
+} as const;
+
+const ActionColor = {
+  ACTIVE: PrimaryColor.PURPLE50,
+  HOVER: PrimaryColor.PURPLE10,
+  INACTIVE: PrimaryColor.PURPLE60,
+  BG: PrimaryColor.PURPLE10,
+} as const;
+
+const CalenderColor = {
+  FILL_FOCUS: PrimaryColor.PURPLE50,
+  UNFILL_FOCUS: PrimaryColor.PURPLE10,
+  FILL: GrayColor.GRAY70,
+  UNFILL: GrayColor.GRAY90,
+} as const;
+
+const SurfaceColor = {
+  DEPTH1_D: GrayColor.GRAY90,
+  DEPTH2_D: GrayColor.GRAY70,
+  DEPTH1_L: SubColor.WHITE,
+  DEPTH2_L: GrayColor.GRAY10,
+  DEPTH3_L: GrayColor.GRAY20,
+  INACTIVE_L: GrayColor.GRAY50,
+} as const;
+
+const SystemColor = {
+  ALERT: SubColor.RED50,
+} as const;
+
+const MonsterColor = {
+  FILL: PrimaryColor.PURPLE40,
+  UNFILL: GrayColor.GRAY40,
 } as const;
 
 const GraphicColor = {
-  RED: BasicColor.GRAPHIC_RED,
-  GREEN: BasicColor.GRAPHIC_GREEN,
-  SKYBLUE: BasicColor.GRAPHIC_SKYBLUE,
-  YELLOW: BasicColor.GRAPHIC_YELLOW,
-  PURPLE: BasicColor.GRAPHIC_PURPLE,
+  YELLOW: SubColor.YELLOW,
+  SKYBLUE: SubColor.SKYBLUE,
+  RED: SubColor.RED,
+  PURPLE: PrimaryColor.PURPLE40,
+  GREEN: SubColor.GREEN,
 } as const;
 
-/**
- *
- * @param color
- * @param opacity 0 ~ 100
- */
-function alpha(color: BasicColor, opacity: number) {
-  const alpha = Math.round(opacity * 2.55).toString(16);
-  return `${color}${alpha}`;
-}
-
-type BasicColor = typeof BasicColor[keyof typeof BasicColor];
+type GrayColor = typeof GrayColor[keyof typeof GrayColor];
+type PrimaryColor = typeof PrimaryColor[keyof typeof PrimaryColor];
+type SubColor = typeof SubColor[keyof typeof SubColor];
 
 type BackgroundColor = typeof BackgroundColor[keyof typeof BackgroundColor];
 type TextColor = typeof TextColor[keyof typeof TextColor];
-type PressedColor = typeof PressedColor[keyof typeof PressedColor];
-type DimColor = typeof DimColor[keyof typeof DimColor];
+type BorderColor = typeof BorderColor[keyof typeof BorderColor];
+type IconColor = typeof IconColor[keyof typeof IconColor];
+type ActionColor = typeof ActionColor[keyof typeof ActionColor];
+type CalenderColor = typeof CalenderColor[keyof typeof CalenderColor];
+type SurfaceColor = typeof SurfaceColor[keyof typeof SurfaceColor];
+type SystemColor = typeof SystemColor[keyof typeof SystemColor];
+type MonsterColor = typeof MonsterColor[keyof typeof MonsterColor];
 type GraphicColor = typeof GraphicColor[keyof typeof GraphicColor];
 
-export { BackgroundColor, TextColor, PressedColor, DimColor, GraphicColor };
+export {
+  BackgroundColor,
+  TextColor,
+  BorderColor,
+  IconColor,
+  ActionColor,
+  CalenderColor,
+  SurfaceColor,
+  SystemColor,
+  MonsterColor,
+  GraphicColor,
+};
