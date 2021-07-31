@@ -23,7 +23,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
   const totalPercent = 30;
 
   const { data } = useUserProfileData();
-  console.log(data?.data.name);
+  console.log('useUserProfileData', data?.data.name);
 
   const [isVisiblePopup, setIsVisiblePopup] = useState<number | null>(null);
 
