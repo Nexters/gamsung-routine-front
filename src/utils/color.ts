@@ -70,13 +70,13 @@ const IconColor = {
 const ActionColor = {
   ACTIVE: PrimaryColor.PURPLE50,
   HOVER: PrimaryColor.PURPLE10,
-  INACTIVE: PrimaryColor.PURPLE60,
+  INACTIVE: GrayColor.GRAY40,
   BG: PrimaryColor.PURPLE10,
 } as const;
 
 const CalenderColor = {
   FILL_FOCUS: PrimaryColor.PURPLE50,
-  UNFILL_FOCUS: PrimaryColor.PURPLE10,
+  UNFILL_FOCUS: PrimaryColor.PURPLE70,
   FILL: GrayColor.GRAY70,
   UNFILL: GrayColor.GRAY90,
 } as const;
