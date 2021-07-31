@@ -73,9 +73,6 @@ const TaskListItem = observer(
       }
     }
 
-    // XXXX : 이거 설명해 줄 사람
-    const checkTodayTaskState = 0 - 2;
-
     const handleTaskItemClick = () => {
       CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.(id);
     };
@@ -90,10 +87,10 @@ const TaskListItem = observer(
               <TaskListItemViewInfo>
                 <CustomText
                   font={FontType.REGULAR_LARGE}
-                  color={!checkTodayTaskState ? TextColor.DISABLE : TextColor.PRIMARY}>
+                  color={percent === 100 ? TextColor.DISABLE : TextColor.PRIMARY}>
                   {title}
                 </CustomText>
-                {!checkTodayTaskState && <TaskListItemLine />}
+                {percent === 100 && <TaskListItemLine />}
               </TaskListItemViewInfo>
               <TaskListItemViewSubTitle>
                 <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY}>
