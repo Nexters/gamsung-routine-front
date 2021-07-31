@@ -25,7 +25,7 @@ class AuthStore {
   }
 
   async checkLogin() {
-    this.token = (await AsyncStorage.getItem('token')) || '';
+    this.token = this.token || (await AsyncStorage.getItem('token')) || '';
   }
 
   login = async () => {
@@ -53,7 +53,7 @@ class AuthStore {
 
       this.token = accessToken;
 
-      await AsyncStorage.setItem('token', accessToken);
+      AsyncStorage.setItem('token', accessToken);
     } catch (error) {
       // TODO: 토스트 표시
       console.error(error);
