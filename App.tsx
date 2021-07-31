@@ -1,10 +1,8 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 
 import MainNavigator from '~/navigations/MainNavigator';
-import AuthStore from '~/stores/AuthStore';
 
 const App = () => {
   // 아이폰 권한 허용 관련
@@ -34,21 +32,6 @@ const App = () => {
       console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
     return unsubscribe;
-  }, []);
-
-  const getUser = async () => {
-    try {
-      const getToken = await AsyncStorage.getItem('token');
-      if (getToken !== null) {
-        AuthStore.token = getToken;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    getUser();
   }, []);
 
   return (
