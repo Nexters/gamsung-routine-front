@@ -7,5 +7,5 @@ export const useUserProfileData = () => {
       name: string;
       profileImageUrl: string;
     };
-  }>('/profile');
+  }>('/v1/profile');
 };
