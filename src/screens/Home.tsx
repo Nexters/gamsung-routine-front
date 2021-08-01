@@ -23,7 +23,7 @@ export interface HomeScreenProps {
 
 const Home = ({ navigation }: HomeScreenProps) => {
   const { data, error } = useUserProfileData();
-  console.log('useUserProfileData', data?.data.name, error);
+  console.log('useUserProfileData', data, error);
 
   const { data: TaskList } = useMonthlyTasks({
     profileId: '1',
@@ -36,6 +36,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
   const handlePopupClick = (id: string | null) => {
     setIsVisiblePopup(isVisiblePopup === id ? null : id);
   };
+
   let routine = [] as Task[];
   let percent = 0;
   if (CalendarStore.radio === RADIO_TYPE.루틴) {

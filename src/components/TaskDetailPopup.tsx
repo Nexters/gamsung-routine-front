@@ -27,7 +27,7 @@ const TaskDetailPopup = ({ id, navigation }: Props) => {
 
   const handleEditButtonClick = () => {
     console.log(id, ' : edit');
-    navigation.navigate('EditTask', { taskId: id });
+    // navigation.navigate('EditTask', { taskId: id });
   };
 
   const handleDeleteButtonClick = () => {
