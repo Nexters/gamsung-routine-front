@@ -13,8 +13,7 @@ interface Props {
   selectedId: number | null;
 }
 
-export const ScrollingButtonMenu = observer((props: Props) => {
-  const { data, selectedId, onClick } = props;
+export const ScrollingButtonMenu = observer(({ data, selectedId, onClick }: Props) => {
   const handlePress = (id: number) => {
     onClick?.(id);
   };
@@ -23,15 +22,17 @@ export const ScrollingButtonMenu = observer((props: Props) => {
     <ViewStyled style={{ marginTop: 20 }}>
       <FlatList
         data={data}
-        renderItem={({ item }) => (
-          <MenuButtonStyled selected={item.id === selectedId} onPress={() => handlePress(item.id)}>
-            <View>
-              <CustomText color={item.id === selectedId ? TextColor.PRIMARY_D : TextColor.SECONDARY_L}>
-                {item.name}
-              </CustomText>
-            </View>
-          </MenuButtonStyled>
-        )}
+        renderItem={({ item }) => {
+          return (
+            <MenuButtonStyled selected={item.id === selectedId} onPress={() => handlePress(item.id)}>
+              <View>
+                <CustomText color={item.id === selectedId ? TextColor.PRIMARY_D : TextColor.SECONDARY_L}>
+                  {item.name}
+                </CustomText>
+              </View>
+            </MenuButtonStyled>
+          );
+        }}
         horizontal
         showsHorizontalScrollIndicator={false}
       />

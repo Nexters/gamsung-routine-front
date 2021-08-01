@@ -2,7 +2,7 @@ import { TemplateTask } from '~/models/TemplateTask';
 
 export interface Template {
   id: number;
-  title: string;
+  name: string;
   tasks: TemplateTask[];
-  templateIconSrc: string | null;
+  templateIconUrl: string | null;
 }

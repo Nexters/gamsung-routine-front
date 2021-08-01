@@ -5,6 +5,7 @@ import { TouchableOpacity } from 'react-native';
 
 import CustomText from '~/components/CustomText';
 import Icon from '~/components/Icon';
+import { Template } from '~/models/Template';
 import { RootStackParamList } from '~/navigations/types';
 import AddTask from '~/screens/AddTask';
 import EditTask from '~/screens/EditTask';
@@ -64,7 +65,7 @@ const MainNavigator = () => {
       <Stack.Screen
         name="EditTask"
         component={EditTask}
-        initialParams={{ taskId: null }}
+        initialParams={{ template: {} as Template }}
         options={() => {
           return {
             title: ' ',

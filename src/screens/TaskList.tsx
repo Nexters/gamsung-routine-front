@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 import AddTaskItem from '~/components/AddTaskItem';
 import { CollapsibleToolbar } from '~/components/CollapsibleToolbar';
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const TaskList: React.FC<Props> = observer(({ navigation, route }) => {
-  const [vm] = useState(route.params.vm);
+  const { template, headerColor } = route.params;
 
   const handleBackpressClick = useCallback(() => {
     navigation.pop();
@@ -23,24 +23,15 @@ export const TaskList: React.FC<Props> = observer(({ navigation, route }) => {
 
   return (
     <Frame>
-      <CollapsibleToolbar
-        title={vm.templates.find((it) => it.id === vm.selectedTemplateId)?.title ?? ''}
-        onBackpressClick={handleBackpressClick}
-        backgroundColor={route.params.headerColor}>
+      <CollapsibleToolbar title={template.name} onBackpressClick={handleBackpressClick} backgroundColor={headerColor}>
         <ContentScrollView style={{ marginTop: 230 }}>
-          {vm.templates
-            .find((it) => it.id === vm.selectedTemplateId)
-            ?.tasks.map((task) => {
-              return (
-                <AddTaskItem
-                  key={task.id}
-                  taskName={task.taskName}
-                  onClick={() => {
-                    navigation.navigate('EditTask', { taskId: task.id, taskName: task.taskName });
-                  }}
-                />
-              );
-            })}
+          <AddTaskItem
+            key={template.id}
+            taskName={template.name}
+            onClick={() => {
+              navigation.navigate('EditTask', { template, headerColor });
+            }}
+          />
         </ContentScrollView>
       </CollapsibleToolbar>
     </Frame>
