@@ -18,8 +18,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
-    "prepare" : "npx husky install"
-
+    "prepare": "npx husky install"
   },
   "dependencies": {
     "@emotion/native": "^11.0.0",
@@ -39,6 +38,7 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-modal": "^12.0.2",
     "react-native-reanimated": "^2.2.0",
+    "react-native-root-toast": "^3.2.1",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-safe-area-view": "^1.1.1",
     "react-native-screens": "^3.4.0",

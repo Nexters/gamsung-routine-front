@@ -17,6 +17,7 @@ import useModal from '~/hooks/useModal';
 import { RootStackParamList } from '~/navigations/types';
 import { ActionColor, TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
+import { showToast } from '~/utils/showToast';
 
 interface EditTaskScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -41,6 +42,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
   const handleShowMyTaskButtonClick = () => {
     navigation.pop(3);
     closeModal();
+    showToast('테스크 담기가 완료되었어요.');
   };
 
   const handleKeepAddingButtonClick = () => {
