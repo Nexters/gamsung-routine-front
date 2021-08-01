@@ -7,9 +7,20 @@ function fetcher<T>(url: string): Promise<any> {
   return API.get<AxiosResponse<T>>(url, {}, {}).then((res) => {
     return res;
   });
-  // .catch((error) => console.log('error', error));
+}
+function headerFetcher<T>(url: string): Promise<any> {
+  return API.get<AxiosResponse<T>>(url).then((res) => {
+    if (res.data) {
+      return res.data;
+    }
+    return res;
+  });
 }
 
 export function useCommonSWR<T>(url: string | null) {
   return useSWR<T>(url, fetcher);
+}
+
+export function useHeaderSWR<T>(url: string | null) {
+  return useSWR<T>(url, headerFetcher);
 }

@@ -31,27 +31,30 @@ class AuthStore {
   login = async () => {
     try {
       const token = await login();
+
       const fcmToken = await messaging().getToken();
+      try {
+        const {
+          data: { accessToken },
+        } = await api.post<{
+          data: {
+            accessToken: string;
+          };
+        }>(
+          '/v1/auth/sign-in/kakao',
+          {
+            accessToken: token.accessToken,
+            refreshToken: token.refreshToken,
+            pushToken: fcmToken,
+          },
+          {},
+        );
+        this.token = accessToken;
+      } catch (error) {
+        console.log('error', error);
+      }
 
-      const {
-        data: { accessToken },
-      } = await api.post<{
-        data: {
-          accessToken: string;
-        };
-      }>(
-        '/auth/sign-in/kakao',
-        {
-          accessToken: token.accessToken,
-          refreshToken: token.refreshToken,
-          pushToken: fcmToken,
-        },
-        {},
-      );
-
-      this.token = accessToken;
-
-      AsyncStorage.setItem('token', accessToken);
+      AsyncStorage.setItem('token', this.token || '');
     } catch (error) {
       // TODO: 토스트 표시
       console.error(error);

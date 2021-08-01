@@ -1,7 +1,7 @@
-import { useCommonSWR } from '~/utils/swr';
+import { useHeaderSWR } from '~/utils/swr';
 
 export const useUserProfileData = () => {
-  return useCommonSWR<{
+  return useHeaderSWR<{
     data: {
       id: string;
       name: string;
