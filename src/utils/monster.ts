@@ -5,13 +5,13 @@ import FACE4 from '~/assets/images/monster_face_4.svg';
 import FACE5 from '~/assets/images/monster_face_5.svg';
 
 const getFace = (value: number) => {
-  if (value >= 75) {
+  if (value >= 0.75) {
     return FACE5;
-  } else if (value >= 50) {
+  } else if (value >= 0.5) {
     return FACE4;
-  } else if (value >= 25) {
+  } else if (value >= 0.25) {
     return FACE3;
-  } else if (value >= 1) {
+  } else if (value >= 0.01) {
     return FACE2;
   } else {
     return FACE1;

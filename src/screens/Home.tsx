@@ -53,7 +53,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
         timesOfDay: 0,
       },
     );
-    percent = ((total?.completeCount || 0) / (total?.timesOfDay || 0) || 0) * 100;
+    percent = ((total.completeCount || 0) / (total.timesOfDay || 0) || 0) * 100;
   } else {
     const isSun = CalendarStore.focusDay.format('ddd') === 'Sun';
     const today = CalendarStore.focusDay.add(isSun ? -1 : 0, 'day').day(1);

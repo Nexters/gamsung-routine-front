@@ -116,7 +116,7 @@ const TaskListItem = observer(
             {share && sharePeople?.map((_, index) => <TaskListItemInfoImage index={index} key={index} />)}
           </TaskListItemInfoImageList>
           <TaskListItemInfoPercent>
-            {(shareFinishedCount || 0) > 0 && CalendarStore.radio === RADIO_TYPE.루틴 && share && (
+            {(shareCount || 0) > 0 && CalendarStore.radio === RADIO_TYPE.루틴 && share && (
               <CustomText color={TextColor.SECONDARY} font={FontType.REGULAR_CAPTION}>
                 {shareCount}명 중 {shareFinishedCount}명이 완료
               </CustomText>

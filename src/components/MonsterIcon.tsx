@@ -13,14 +13,15 @@ interface Props {
 }
 
 const MonsterIconBackground = ({ data }: { data: number }) => {
+  const percent = Number((data / 100).toFixed(2));
   return (
     <>
       <Svg height="28" width="28">
         <Defs>
           <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor="#C8CACF" stopOpacity="1" />
-            <Stop offset={data} stopColor="#C8CACF" stopOpacity="1" />
-            <Stop offset={data} stopColor="#7d6bff" stopOpacity="1" />
+            <Stop offset={percent} stopColor="#C8CACF" stopOpacity="1" />
+            <Stop offset={percent} stopColor="#7d6bff" stopOpacity="1" />
             <Stop offset="1" stopColor="#7d6bff" stopOpacity="1" />
           </LinearGradient>
         </Defs>
@@ -29,7 +30,7 @@ const MonsterIconBackground = ({ data }: { data: number }) => {
           fill="url(#gradient)"
         />
       </Svg>
-      <SvgXml style={{ position: 'absolute' }} xml={getFace(data)} />
+      <SvgXml style={{ position: 'absolute' }} xml={getFace(percent)} />
     </>
   );
 };
