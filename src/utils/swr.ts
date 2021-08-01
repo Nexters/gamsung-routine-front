@@ -5,6 +5,9 @@ import API from './api';
 
 function fetcher<T>(url: string): Promise<any> {
   return API.get<AxiosResponse<T>>(url, {}, {}).then((res) => {
+    if (res.data) {
+      return res.data;
+    }
     return res;
   });
   // .catch((error) => console.log('error', error));

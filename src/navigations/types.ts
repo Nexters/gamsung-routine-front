@@ -1,4 +1,4 @@
-import { AddTaskVM } from '~/screens/vm/addTaskVM';
+import { Template } from '~/models/Template';
 import { GraphicColor } from '~/utils/color';
 
 export type RootStackParamList = {
@@ -6,10 +6,10 @@ export type RootStackParamList = {
   Home: undefined;
   AddTask: undefined;
   EditTask: {
-    taskId: TaskId;
-    // taskName: string
+    template: Template;
+    headerColor?: GraphicColor;
   };
-  TaskList: { templateId: number | null; vm: AddTaskVM; headerColor?: GraphicColor };
+  TaskList: { template: Template; headerColor?: GraphicColor };
   TemplateList: undefined;
 };
 
