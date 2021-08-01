@@ -2,27 +2,27 @@ import styled from '@emotion/native';
 import React from 'react';
 import Svg, { Defs, LinearGradient, Path, Stop, SvgXml } from 'react-native-svg';
 
-import { Weekday } from '~/models/Task';
+import EmptyMonster from '~/assets/images/empty_monster.svg';
 import { RADIO_TYPE } from '~/stores/CalendarStore';
 import { MonsterColor } from '~/utils/color';
 import { getFace } from '~/utils/monster';
 
 interface Props {
   listType: RADIO_TYPE;
-  data: Weekday;
+  data: number;
+  none?: boolean;
 }
 
-const MonsterIconBackground = (props: Props['data']) => {
-  const value = Number((props.endTasks.length / props.count || 0).toFixed(2));
-
+const MonsterIconBackground = ({ data }: { data: number }) => {
+  const percent = Number((data / 100).toFixed(2));
   return (
     <>
       <Svg height="28" width="28">
         <Defs>
           <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor={MonsterColor.UNFILL} stopOpacity="1" />
-            <Stop offset={value} stopColor={MonsterColor.UNFILL} stopOpacity="1" />
-            <Stop offset={value} stopColor={MonsterColor.FILL} stopOpacity="1" />
+            <Stop offset={percent} stopColor={MonsterColor.UNFILL} stopOpacity="1" />
+            <Stop offset={percent} stopColor={MonsterColor.FILL} stopOpacity="1" />
             <Stop offset="1" stopColor={MonsterColor.FILL} stopOpacity="1" />
           </LinearGradient>
         </Defs>
@@ -31,15 +31,15 @@ const MonsterIconBackground = (props: Props['data']) => {
           fill="url(#gradient)"
         />
       </Svg>
-      <SvgXml style={{ position: 'absolute' }} xml={getFace(value)} />
+      <SvgXml style={{ position: 'absolute' }} xml={getFace(percent)} />
     </>
   );
 };
 
-const MonsterIcon = ({ listType, data }: Props) => {
+const MonsterIcon = ({ listType, data, none }: Props) => {
   return (
     <MonsterIconStyled listType={listType}>
-      <MonsterIconBackground {...data} />
+      {none ? <SvgXml xml={EmptyMonster} /> : <MonsterIconBackground data={data} />}
     </MonsterIconStyled>
   );
 };
@@ -50,10 +50,6 @@ const MonsterIconStyled = styled.View<{ listType: RADIO_TYPE }>`
   position: relative;
   margin-left: ${({ listType }) => listType === RADIO_TYPE.리포트 && '6px'};
   margin-right: ${({ listType }) => (listType === RADIO_TYPE.루틴 ? '12px' : '6px')};
-`;
-
-const MonsterIconFace = styled.Image`
-  position: absolute;
 `;
 
 export default MonsterIcon;

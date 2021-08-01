@@ -21,7 +21,7 @@ class API {
   // XXX : _ prefix를 계속 사용할지 고민
   private static _instance: API;
   private static HOSTNAME = 'https://gamsung-routine.herokuapp.com';
-  private static PREFIX = '/api/v1';
+  private static PREFIX = '/api';
 
   axiosInstance = axios.create();
 

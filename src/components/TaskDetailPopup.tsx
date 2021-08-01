@@ -11,7 +11,7 @@ import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
-  id: number;
+  id: string;
   navigation: StackNavigationProp<RootStackParamList>;
 }
 
