@@ -10,6 +10,7 @@ import { RootStackParamList } from '~/navigations/types';
 import AddTask from '~/screens/AddTask';
 import EditTask from '~/screens/EditTask';
 import Home from '~/screens/Home';
+import Intro from '~/screens/Intro';
 import Login from '~/screens/Login';
 import Setting from '~/screens/Setting';
 import { TaskList } from '~/screens/TaskList';
@@ -32,6 +33,7 @@ const MainNavigator = () => {
   }
   return (
     <Stack.Navigator>
+      <Stack.Screen name="Intro" component={Intro} options={{ headerShown: false }} />
       {!AuthStore.isLoggedIn && <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />}
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen name="AddTask" component={AddTask} options={{ headerShown: false }} />

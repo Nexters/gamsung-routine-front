@@ -6,6 +6,7 @@ import ARROW_DOWN from '~/assets/icons/icon_arrow_down.svg';
 import ARROW_LEFT from '~/assets/icons/icon_arrow_left.svg';
 import ARROW_RIGHT from '~/assets/icons/icon_arrow_right.svg';
 import ARROW_UP from '~/assets/icons/icon_arrow_up.svg';
+import CONFIRM from '~/assets/icons/icon_confirm.svg';
 import CROWN from '~/assets/icons/icon_crown.svg';
 import CROWN_GRAY from '~/assets/icons/icon_crown_gray.svg';
 import DROP from '~/assets/icons/icon_drop.svg';
@@ -31,13 +32,15 @@ const icon = {
   ARROW_LEFT,
   ADD,
   PLUS,
+  CONFIRM,
   SETTING,
   KAKAO,
 };
 interface Props {
   type: IconType;
+  className?: string;
 }
-const Icon = ({ type }: Props) => {
+const Icon = ({ type, className }: Props) => {
   return <SvgXml xml={icon[type]} />;
 };
 
