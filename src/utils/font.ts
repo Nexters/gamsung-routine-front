@@ -50,8 +50,16 @@ type Align = typeof Align[keyof typeof Align];
 type FontType = typeof FontType[keyof typeof FontType];
 type FontStyle = { size: number; weight: number };
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 namespace Font {
-  function getSize(font: FontType) {
+  export const getStyle = (font: FontType): FontStyle => {
+    return {
+      weight: getWeight(font),
+      size: getSize(font),
+    };
+  };
+
+  const getSize = (font: FontType) => {
     switch (font) {
       case FontType.BOLD_HEAD_01:
       case FontType.REGULAR_HEAD_01: {
@@ -99,9 +107,9 @@ namespace Font {
     }
 
     return FontSize.SIZE_BODY_02;
-  }
+  };
 
-  function getWeight(font: FontType) {
+  const getWeight = (font: FontType) => {
     switch (font) {
       case FontType.BOLD_HEAD_01:
       case FontType.BOLD_HEAD_02:
@@ -131,14 +139,7 @@ namespace Font {
       }
     }
     return Weight.REGULAR;
-  }
-
-  export function getStyle(font: FontType): FontStyle {
-    return {
-      weight: getWeight(font),
-      size: getSize(font),
-    };
-  }
+  };
 }
 
 export { Font, FontType, Align };
