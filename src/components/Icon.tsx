@@ -32,6 +32,7 @@ const icon = {
   ARROW_LEFT,
   ADD,
   PLUS,
+  CONFIRM,
   SETTING,
   KAKAO,
   CONFIRM,
