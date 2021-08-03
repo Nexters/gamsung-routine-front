@@ -81,7 +81,7 @@ const PageB: React.FC<{ onNextPage?: (page: number) => void }> = observer(({ onN
 
 const PageC: React.FC<{ onNextPage?: (page: number) => void }> = observer(({ onNextPage }) => {
   const handleNextPage = () => {
-    onNextPage?.(2);
+    onNextPage?.(3);
   };
 
   return (
