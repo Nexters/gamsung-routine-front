@@ -10,6 +10,7 @@ import AddTask from '~/screens/AddTask';
 import EditTask from '~/screens/EditTask';
 import Home from '~/screens/Home';
 import Login from '~/screens/Login';
+import Setting from '~/screens/Setting';
 import { TaskList } from '~/screens/TaskList';
 import { TemplateList } from '~/screens/TemplateList';
 import AuthStore from '~/stores/AuthStore';
@@ -68,6 +69,16 @@ const MainNavigator = () => {
         options={() => {
           return {
             title: ' ',
+            headerBackTitle: ' ',
+          };
+        }}
+      />
+      <Stack.Screen
+        name="Setting"
+        component={Setting}
+        options={() => {
+          return {
+            title: '앱 설정',
             headerBackTitle: ' ',
           };
         }}

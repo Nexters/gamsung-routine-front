@@ -17,6 +17,7 @@ class AuthStore {
       isLoggedIn: computed,
       checkLogin: action,
       login: action,
+      logout: action,
     });
   }
 
@@ -57,6 +58,15 @@ class AuthStore {
       AsyncStorage.setItem('token', this.token || '');
     } catch (error) {
       // TODO: 토스트 표시
+      console.error(error);
+    }
+  };
+
+  logout = async () => {
+    try {
+      await AsyncStorage.clear();
+      this.token = '';
+    } catch (error) {
       console.error(error);
     }
   };

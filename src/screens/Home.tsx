@@ -110,7 +110,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
       <TopStatusBarStyled backgroundColor={BackgroundColor.DEPTH2_D} />
       <StatusBar barStyle="light-content" />
       <HomeStyled>
-        <Calendar />
+        <Calendar navigation={navigation} />
         <HomeView>
           <TaskView>
             <DropView onPress={() => CalendarStore.changeIsWeek(!CalendarStore.isWeek)}>
