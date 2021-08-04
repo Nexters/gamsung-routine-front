@@ -1,4 +1,5 @@
 import styled from '@emotion/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
@@ -11,11 +12,16 @@ import { WheelPicker } from './WheelPicker';
 
 import { useMonthlyTasks } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
+import { RootStackParamList } from '~/navigations/types';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import { BackgroundColor, SurfaceColor, CalenderColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
-const Calendar = () => {
+export interface Props {
+  navigation: StackNavigationProp<RootStackParamList>;
+}
+
+const Calendar = ({ navigation }: Props) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const insets = useSafeAreaInsets();
 
@@ -63,7 +69,9 @@ const Calendar = () => {
             </CustomText>
           </RadioWeek>
         </RadioWrapper>
-        <SettingIcon source={require('~/assets/icons/icon_setting.svg')} />
+        <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
+          <Icon type={'SETTING'} />
+        </TouchableOpacity>
       </MonthHead>
       <CalView>
         <CalColumn>
@@ -178,7 +186,6 @@ const CalendarWrapper = styled.SafeAreaView<{
 `;
 
 const MonthWrapper = styled.TouchableOpacity`
-  margin-left: 20px;
   flex-direction: row;
   align-items: center;
 `;
@@ -256,15 +263,11 @@ const DateTextWrapper = styled.View`
   margin-bottom: 12px;
 `;
 
-const SettingIcon = styled.Image`
-  width: 20px;
-  height: 20px;
-  margin-right: 30px;
-`;
-
 const MonthHead = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  margin: 0 20px;
 `;
 
 const WeeklyWrapper = styled.View`

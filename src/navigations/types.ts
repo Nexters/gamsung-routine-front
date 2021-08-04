@@ -11,6 +11,7 @@ export type RootStackParamList = {
   };
   TaskList: { template: Template; headerColor?: GraphicColor };
   TemplateList: undefined;
+  Setting: undefined;
 };
 
 export type TaskId = string | null;
