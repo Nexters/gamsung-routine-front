@@ -10,6 +10,7 @@ import Icon from '~/components/Icon';
 import { RootStackParamList } from '~/navigations/types';
 import AuthStore from '~/stores/AuthStore';
 import { IconColor, SurfaceColor, TextColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -35,32 +36,32 @@ const Setting = ({ navigation }: Props) => {
   return (
     <SettingStyled>
       <SettingItem>
-        <CustomText font="BOLD_CAPTION" color={TextColor.HIGHLIGHT}>
+        <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
           계정
         </CustomText>
         <SettingInfoItem>
           <UserEmail>
             <Icon type="KAKAO" />
-            <CustomText font="REGULAR_BODY_01" color={IconColor.PRIMARY_L}>
+            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
               {'  ' + userEmail}
             </CustomText>
           </UserEmail>
         </SettingInfoItem>
         <SettingInfoItem>
           <LogoutButton onPress={handleLogoutButtonClick}>
-            <CustomText font="REGULAR_BODY_01" color={IconColor.PRIMARY_L}>
+            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
               로그아웃
             </CustomText>
           </LogoutButton>
         </SettingInfoItem>
       </SettingItem>
       <SettingItem>
-        <CustomText font="BOLD_CAPTION" color={TextColor.HIGHLIGHT}>
+        <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
           정보
         </CustomText>
         <SettingInfoItem>
           <TouchableOpacity onPress={() => handleLinkButtonClick('notice')}>
-            <CustomText font="REGULAR_BODY_01" color={IconColor.PRIMARY_L}>
+            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
               공지사항
             </CustomText>
           </TouchableOpacity>
@@ -68,7 +69,7 @@ const Setting = ({ navigation }: Props) => {
         </SettingInfoItem>
         <SettingInfoItem>
           <TouchableOpacity onPress={() => handleLinkButtonClick('terms')}>
-            <CustomText font="REGULAR_BODY_01" color={IconColor.PRIMARY_L}>
+            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
               약관 및 정책
             </CustomText>
           </TouchableOpacity>
@@ -76,11 +77,11 @@ const Setting = ({ navigation }: Props) => {
         </SettingInfoItem>
       </SettingItem>
       <SettingItem>
-        <CustomText font="BOLD_CAPTION" color={TextColor.HIGHLIGHT}>
+        <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
           알림
         </CustomText>
         <SettingInfoItem>
-          <CustomText font="REGULAR_BODY_01" color={IconColor.PRIMARY_L}>
+          <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
             푸시 알림
           </CustomText>
           <FoldableSwitch isOn={isOn} onToggle={setIsOn} />
