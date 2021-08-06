@@ -29,7 +29,7 @@ export const TemplateCard: React.FC<Props> = observer(({ id, name, tasks, onPres
         <ViewStyled>
           {tasks.slice(0, 3).map((it) => (
             <CustomText key={it.id} font={FontType.REGULAR_CAPTION} color={TextColor.PRIMARY_D}>
-              {it.taskName}
+              {it.name}
             </CustomText>
           ))}
         </ViewStyled>

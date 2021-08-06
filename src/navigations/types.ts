@@ -7,7 +7,8 @@ export type RootStackParamList = {
   Home: undefined;
   AddTask: undefined;
   EditTask: {
-    template: Template;
+    taskId?: number | null;
+    taskName?: string | null;
     headerColor?: GraphicColor;
   };
   TaskList: { template: Template; headerColor?: GraphicColor };
