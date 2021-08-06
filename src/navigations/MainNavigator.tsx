@@ -5,7 +5,6 @@ import { TouchableOpacity } from 'react-native';
 
 import CustomText from '~/components/CustomText';
 import Icon from '~/components/Icon';
-import { Template } from '~/models/Template';
 import { RootStackParamList } from '~/navigations/types';
 import AddTask from '~/screens/AddTask';
 import EditTask from '~/screens/EditTask';
@@ -14,6 +13,7 @@ import Login from '~/screens/Login';
 import { TaskList } from '~/screens/TaskList';
 import { TemplateList } from '~/screens/TemplateList';
 import AuthStore from '~/stores/AuthStore';
+import { BackgroundColor } from '~/utils/color';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -65,11 +65,14 @@ const MainNavigator = () => {
       <Stack.Screen
         name="EditTask"
         component={EditTask}
-        initialParams={{ template: {} as Template }}
+        initialParams={{ taskId: null, taskName: null }}
         options={() => {
           return {
             title: ' ',
             headerBackTitle: ' ',
+            headerStyle: {
+              backgroundColor: BackgroundColor.DEPTH2_L,
+            },
           };
         }}
       />

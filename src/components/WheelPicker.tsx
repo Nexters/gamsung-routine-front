@@ -31,10 +31,10 @@ export const WheelPicker = ({ items, height, onClick, initHeight = 0, onScrollEn
     <WheelPickerStyled height={height}>
       <LinearGradient />
       <ScrollView
-        onScrollEndDrag={(e) => {
-          const y = e.nativeEvent.targetContentOffset?.y || 0;
+        onMomentumScrollEnd={(e) => {
+          const y = e.nativeEvent.contentOffset?.y || 0;
           const h = height || 0;
-          const index = y / h;
+          const index = Math.round(y / h);
           if (items[index]) {
             onScrollEndDrag?.(items[index].id);
           }

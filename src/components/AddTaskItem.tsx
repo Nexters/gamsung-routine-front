@@ -18,7 +18,7 @@ const AddTaskItem = ({ taskName, onClick }: Props) => {
 
   return (
     <TaskButton onPress={handleClick}>
-      <CustomText color={TextColor.PRIMARY_L} align={Align.CENTER}>
+      <CustomText color={TextColor.PRIMARY_L} align={Align.LEFT}>
         {taskName}
       </CustomText>
     </TaskButton>
@@ -34,8 +34,8 @@ const TaskButton = styled.TouchableOpacity`
   margin-bottom: 10px;
   background-color: ${BackgroundColor.DEPTH1_L};
   justify-content: center;
-  text-align: center;
   border-radius: 8px;
+  padding: 20px;
 `;
 
 export default AddTaskItem;

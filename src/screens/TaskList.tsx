@@ -25,13 +25,15 @@ export const TaskList: React.FC<Props> = observer(({ navigation, route }) => {
     <Frame>
       <CollapsibleToolbar title={template.name} onBackpressClick={handleBackpressClick} backgroundColor={headerColor}>
         <ContentScrollView style={{ marginTop: 230 }}>
-          <AddTaskItem
-            key={template.id}
-            taskName={template.name}
-            onClick={() => {
-              navigation.navigate('EditTask', { template, headerColor });
-            }}
-          />
+          {template.tasks.map((task) => (
+            <AddTaskItem
+              key={task.id}
+              taskName={task.name}
+              onClick={() => {
+                navigation.navigate('EditTask', { taskId: task.id, taskName: task.name });
+              }}
+            />
+          ))}
         </ContentScrollView>
       </CollapsibleToolbar>
     </Frame>

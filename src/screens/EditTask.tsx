@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ScrollView } from 'react-native';
 
 import { EditTaskVM } from './vm/editTaskVM';
@@ -10,6 +10,7 @@ import { EditTaskVM } from './vm/editTaskVM';
 import { AlarmSettingCard } from '~/components/AlarmSettingCard';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
+import CustomTextInput from '~/components/CustomTextInput';
 import { DailyLoopCard } from '~/components/DailyLoopCard';
 import { TimeSettingCard } from '~/components/TimeSettingCard';
 import { WeekLoopCard } from '~/components/WeekLoopCard';
@@ -27,7 +28,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
   const { taskId, taskName } = route.params;
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
 
-  const [vm] = useState(new EditTaskVM(taskId, taskName));
+  const [vm] = useState(new EditTaskVM(taskId?.toString() ?? null, taskName ?? ''));
 
   const handleDaySelect = (id: number) => {
     vm.onSelectDay(id);
@@ -52,6 +53,24 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     vm.onChangeCountOfDay(countOfDay);
   };
 
+  const handleChangeTaskName = (name: string) => {
+    if (!vm.editableTitle) {
+      return;
+    }
+    vm.onChangeTaskName(name);
+  };
+
+  const handleChangeTimeData = useCallback(
+    (id: number, hour: number, minute: number) => {
+      vm.onChangeTimeSettingData(id, hour, minute);
+    },
+    [vm],
+  );
+
+  const handleChangeAlarm = (isAlarm: boolean) => {
+    vm.onChangeAlarm(isAlarm);
+  };
+
   return (
     <>
       <EditTaskStyled>
@@ -59,23 +78,36 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
           <EditTaskView>
             <EditSettingView>
               <TitleSettingView>
-                <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_L}>
-                  {vm.taskName}
-                </CustomText>
+                {vm.editableTitle ? (
+                  <CustomTextInput
+                    onChangeText={handleChangeTaskName}
+                    value={vm.taskName}
+                    placeHolder="태스크 명을 입력해주세요."
+                    font={FontType.BOLD_TITLE_01}
+                  />
+                ) : (
+                  <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_L}>
+                    {vm.taskName}
+                  </CustomText>
+                )}
               </TitleSettingView>
               <TimeSettingView>
                 <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L}>
                   시간 설정
                 </CustomText>
-                <WeekLoopCard days={vm.day} onDayPress={handleDaySelect} />
+                <WeekLoopCard days={vm.days} onDayPress={handleDaySelect} />
                 <DailyLoopCard marginTop={16} onSelectCountOfDay={handleCountOfDay} />
-                <TimeSettingCard marginTop={16} timeSettingData={vm.timeSettingData} />
+                <TimeSettingCard
+                  marginTop={16}
+                  timeSettingData={vm.times}
+                  onChangeTimeSettingData={handleChangeTimeData}
+                />
               </TimeSettingView>
               <AddSettingView>
                 <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L}>
                   부가 설정
                 </CustomText>
-                <AlarmSettingCard />
+                <AlarmSettingCard onChangeAlarm={handleChangeAlarm} />
               </AddSettingView>
             </EditSettingView>
           </EditTaskView>

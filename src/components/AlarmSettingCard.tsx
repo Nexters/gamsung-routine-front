@@ -12,11 +12,13 @@ import { BorderColor } from '~/utils/color';
 interface Props {
   marginTop?: number;
   marginBottom?: number;
+  onChangeAlarm?: (isAlarm: boolean) => void;
 }
 
-export const AlarmSettingCard: React.FC<Props> = observer(({ marginTop, marginBottom }) => {
+export const AlarmSettingCard: React.FC<Props> = observer(({ marginTop, marginBottom, onChangeAlarm }) => {
   const [isAlarmSettingOpen, setIsAlarmSettingOpen] = useState<boolean>(false);
 
+  // 현재 실제로 이 값을 저장하지는 않음. (alarm on/off 여부만 저장 중)
   const alarmData: WheelItem[] = [
     '설정한 시간 당시',
     '5분 전',
@@ -30,14 +32,14 @@ export const AlarmSettingCard: React.FC<Props> = observer(({ marginTop, marginBo
     name: it,
   }));
 
+  const handleChangeAlarm = () => {
+    setIsAlarmSettingOpen(!isAlarmSettingOpen);
+    onChangeAlarm?.(isAlarmSettingOpen);
+  };
+
   return (
     <CollapsibleCard marginTop={marginTop} marginBottom={marginBottom}>
-      <FoldableContainer
-        type={'SWITCH'}
-        label={'알람 설정'}
-        isOpen={isAlarmSettingOpen}
-        onOpen={() => setIsAlarmSettingOpen(!isAlarmSettingOpen)}
-      />
+      <FoldableContainer type={'SWITCH'} label={'알람 설정'} isOpen={isAlarmSettingOpen} onOpen={handleChangeAlarm} />
       {isAlarmSettingOpen && <DividerStyled />}
       {isAlarmSettingOpen && <WheelPicker items={alarmData} />}
     </CollapsibleCard>
