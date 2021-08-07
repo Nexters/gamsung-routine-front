@@ -35,15 +35,11 @@ const icon = {
   CONFIRM,
   SETTING,
   KAKAO,
-  CONFIRM,
-  SETTING,
-  KAKAO,
 };
 interface Props {
   type: IconType;
-  className?: string;
 }
-const Icon = ({ type, className }: Props) => {
+const Icon = ({ type }: Props) => {
   return <SvgXml xml={icon[type]} />;
 };
 

@@ -43,9 +43,9 @@ const Intro: React.FC<NavigationProps> = ({ navigation }) => {
   );
 };
 
-const PageA: React.FC<{ onNextPage?: (page: number) => void }> = observer(({ onNextPage }) => {
+const PageA: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
   const handleNextPage = () => {
-    onNextPage?.(1);
+    onNextPage(1);
   };
 
   // TODO 배경색 #5f4bf2 추가
@@ -62,9 +62,9 @@ const PageA: React.FC<{ onNextPage?: (page: number) => void }> = observer(({ onN
   );
 });
 
-const PageB: React.FC<{ onNextPage?: (page: number) => void }> = observer(({ onNextPage }) => {
+const PageB: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
   const handleNextPage = () => {
-    onNextPage?.(2);
+    onNextPage(2);
   };
 
   return (
@@ -79,9 +79,9 @@ const PageB: React.FC<{ onNextPage?: (page: number) => void }> = observer(({ onN
   );
 });
 
-const PageC: React.FC<{ onNextPage?: (page: number) => void }> = observer(({ onNextPage }) => {
+const PageC: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
   const handleNextPage = () => {
-    onNextPage?.(3);
+    onNextPage(3);
   };
 
   return (
