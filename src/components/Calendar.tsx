@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { Animated, Dimensions, Platform, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 import Icon from './Icon';
@@ -43,7 +44,7 @@ const Calendar = ({ navigation }: Props) => {
             CalendarStore.changeIsWeek(false);
           }}>
           <CustomText font={FontType.REGULAR_TITLE_02} color={TextColor.PRIMARY_D}>
-            {CalendarStore.month + 1}월
+            {CalendarStore.month + 1 < 10 ? `0${CalendarStore.month + 1}` : CalendarStore.month + 1}월
           </CustomText>
           <Icon type={'FULL_ARROW_DOWN'} />
         </MonthWrapper>
@@ -115,6 +116,30 @@ const Calendar = ({ navigation }: Props) => {
                   borderRadius: 8,
                 }}
               />
+              <Svg
+                height={55}
+                width={Dimensions.get('window').width}
+                style={{ position: 'absolute', top: 0, zIndex: 10 }}>
+                <Defs>
+                  <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                    <Stop offset="0" stopColor="#303133" stopOpacity="1" />
+                    <Stop offset="1" stopColor="#303133" stopOpacity="0" />
+                  </LinearGradient>
+                </Defs>
+                <Rect width={Dimensions.get('window').width} height={55} fill="url(#gradient)" />
+              </Svg>
+              <Svg
+                height={55}
+                width={Dimensions.get('window').width}
+                style={{ position: 'absolute', bottom: 0, zIndex: 10 }}>
+                <Defs>
+                  <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                    <Stop offset="0" stopColor="#303133" stopOpacity="0" />
+                    <Stop offset="1" stopColor="#303133" stopOpacity="1" />
+                  </LinearGradient>
+                </Defs>
+                <Rect width={Dimensions.get('window').width} height={55} fill="url(#gradient)" />
+              </Svg>
               <View style={{ marginRight: 40, justifyContent: 'center' }}>
                 <WheelPicker
                   color={TextColor.PRIMARY_D}
@@ -126,12 +151,13 @@ const Calendar = ({ navigation }: Props) => {
                     CalendarStore.changeIsWeek(false);
                     CalendarStore.changeFirstDay(CalendarStore.getFirstDay(date));
                   }}
-                  initHeight={(9 - (parseInt(dayjs().format('YYYY'), 10) - CalendarStore.firstDay.year())) * 36}
-                  height={36}
-                  items={Array.from({ length: 10 }, (_, index) => index).map((it) => {
+                  initHeight={(11 - (parseInt(dayjs().format('YYYY'), 10) - CalendarStore.firstDay.year() + 2)) * 36}
+                  height={36 * 5}
+                  step={36}
+                  items={Array.from({ length: 14 }, (_, index) => index).map((it) => {
                     return {
                       id: parseInt(dayjs().format('YYYY'), 10) - (9 - it),
-                      name: `${parseInt(dayjs().format('YYYY'), 10) - (9 - it)}년`,
+                      name: it < 2 || it > 11 ? '' : `${parseInt(dayjs().format('YYYY'), 10) - (11 - it)}년`,
                     };
                   })}
                 />
@@ -148,11 +174,12 @@ const Calendar = ({ navigation }: Props) => {
                     CalendarStore.changeFirstDay(CalendarStore.getFirstDay(date));
                   }}
                   initHeight={CalendarStore.month * 36}
-                  height={36}
-                  items={Array.from({ length: 12 }, (_, index) => index).map((it) => {
+                  height={36 * 5}
+                  step={36}
+                  items={Array.from({ length: 16 }, (_, index) => index).map((it) => {
                     return {
                       id: it + 1,
-                      name: `${it < 9 ? `0${it + 1}` : it + 1}월`,
+                      name: it < 2 || it > 13 ? '' : `${it < 11 ? `0${it - 1}` : it - 1}월`,
                     };
                   })}
                 />
@@ -451,7 +478,7 @@ const Container = observer(() => {
 
   const maxY = CalendarStore.translation.interpolate({
     inputRange: [0, 1],
-    outputRange: [-((Dimensions.get('window').width - 22) / 7 + 12) * (index / 7 - 1 < 0 ? 0 : index / 7 - 1), 0], // <-- value that larger than your content's height: ;
+    outputRange: [-((Dimensions.get('window').width - 22) / 7 + 12) * (Number((index / 7).toFixed(0)) - 1), 0], // <-- value that larger than your content's height: ;
   });
 
   return (

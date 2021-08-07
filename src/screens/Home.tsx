@@ -55,6 +55,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
       },
     );
     percent = ((total.completeCount || 0) / (total.timesOfDay || 0) || 0) * 100;
+    // RADIO_TYPE.리포트 일 때
   } else {
     const isSun = CalendarStore.focusDay.format('ddd') === 'Sun';
     const today = CalendarStore.focusDay.add(isSun ? -1 : 0, 'day').day(1);
@@ -118,13 +119,19 @@ const Home = ({ navigation }: HomeScreenProps) => {
             </DropView>
             <TaskTitleView>
               <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
-                내 하루 테스크{' '}
-                <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
-                  {routine?.length || 0}
-                </CustomText>
+                {`${CalendarStore.focusDay.format('M월 D일')} 테스크 `}
               </CustomText>
-              <CustomText font={FontType.BOLD_BODY_02} color={TextColor.PRIMARY_L}>
-                {percent}% 달성
+              <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
+                {routine?.length || 0}
+              </CustomText>
+              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
+                개의 달성률{' '}
+              </CustomText>
+              <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
+                {percent}
+              </CustomText>
+              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
+                % 입니다.
               </CustomText>
             </TaskTitleView>
             <TaskListView
@@ -182,7 +189,7 @@ const DropView = styled.TouchableOpacity`
 
 const TaskTitleView = styled.View`
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const AddTaskButton = styled.TouchableOpacity`

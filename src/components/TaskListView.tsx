@@ -2,12 +2,14 @@ import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React from 'react';
+import { View } from 'react-native';
 
 import CustomText from './CustomText';
 
 import TaskListItem from '~/components/TaskListItem';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
+import CalendarStore from '~/stores/CalendarStore';
 import { Align, FontType } from '~/utils/font';
 
 interface Props {
@@ -54,6 +56,9 @@ const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick, na
       )}
       {taskList.length === 0 && (
         <EmptyView>
+          {CalendarStore.isWeek && (
+            <View style={{ width: 200, height: 200, backgroundColor: 'red', marginBottom: 8 }} />
+          )}
           <CustomText font={FontType.BOLD_LARGE} align={Align.CENTER}>
             루틴이 없어요{'\n'}테스크를 추가해보세요.
           </CustomText>
