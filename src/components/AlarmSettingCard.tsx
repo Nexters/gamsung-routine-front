@@ -33,13 +33,14 @@ export const AlarmSettingCard: React.FC<Props> = observer(({ marginTop, marginBo
   }));
 
   const handleChangeAlarm = () => {
-    setIsAlarmSettingOpen(!isAlarmSettingOpen);
-    onChangeAlarm?.(isAlarmSettingOpen);
+    const _isAlarmSettingOpen = !isAlarmSettingOpen;
+    setIsAlarmSettingOpen(_isAlarmSettingOpen);
+    onChangeAlarm?.(_isAlarmSettingOpen);
   };
 
   return (
     <CollapsibleCard marginTop={marginTop} marginBottom={marginBottom}>
-      <FoldableContainer type={'SWITCH'} label={'알람 설정'} isOpen={isAlarmSettingOpen} onOpen={handleChangeAlarm} />
+      <FoldableContainer type="SWITCH" label="알람 설정" isOpen={isAlarmSettingOpen} onOpen={handleChangeAlarm} />
       {isAlarmSettingOpen && <DividerStyled />}
       {isAlarmSettingOpen && <WheelPicker items={alarmData} />}
     </CollapsibleCard>

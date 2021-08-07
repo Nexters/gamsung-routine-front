@@ -38,11 +38,27 @@ export class EditTaskVM {
     this.loadTask();
   }
 
-  loadTask() {
-    // 수정으로 접근 시 task id가 있을 경우 load한다.
-    // templateTaskId는 template에서 제공하는 task들의 id
-    // taskId는 사용자가 선택/커스텀하여 생성한 task의 id
-    // 현재 get routine api는 없음.
+  async loadTask() {
+    /**
+     * TODO
+     * templateTaskId: 제공하는 템플릿들이 가진 테스크 ID
+     * taskId: 생성된 테스크 ID
+     *
+     * 1. 템플릿으로 접근
+     *    -> 템플릿에서 제공하는 태스크 중 선택한 태스크의 ID로 데이터 조회하여 초기값 설정
+     *    (templateTaskId: none null, taskId: null)
+     *    - templateTaskId를 사용하여 조회
+     *
+     * 2. 커스텀 생성으로 접근
+     *    -> 템플릿테스크를 null로 하여 초기값 설정 (조회X)
+     *    (templateTaskId: null, taskId: null)
+     *    - 조회 X
+     *
+     * 3. 수정으로 접근
+     *    -> 만들어진 태스크의 ID로 데이터를 조회하여 초기값 설정
+     *    (templateTaskId: null, taskId: none null)
+     *    - taskId를 사용하여 조회
+     */
     this.times = [
       {
         id: 0,

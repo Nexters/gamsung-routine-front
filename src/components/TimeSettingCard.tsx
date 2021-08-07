@@ -17,7 +17,7 @@ interface Props {
 
 export const TimeSettingCard: React.FC<Props> = observer(
   ({ marginTop, marginBottom, timeSettingData, onChangeTimeSettingData }) => {
-    const [isTimeSettingOpen, setIsTimeSettingOpen] = useState<boolean>(false);
+    const [isTimeSettingOpen, setIsTimeSettingOpen] = useState(false);
 
     const handleChangeTimeData = useCallback(
       (id: number, hour: number, minute: number) => {
@@ -29,8 +29,8 @@ export const TimeSettingCard: React.FC<Props> = observer(
     return (
       <CollapsibleCard marginTop={marginTop} marginBottom={marginBottom}>
         <FoldableContainer
-          type={'SWITCH'}
-          label={'시간 설정'}
+          type="SWITCH"
+          label="시간 설정"
           isOpen={isTimeSettingOpen}
           onOpen={() => setIsTimeSettingOpen(!isTimeSettingOpen)}
         />
