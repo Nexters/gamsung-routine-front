@@ -15,6 +15,7 @@ interface Props {
   height?: number;
   onClick?: (id: number) => void;
   initHeight?: number;
+  step?: number;
   onScrollEndDrag?: (id: number) => void;
   selectedItems?: number;
 }
@@ -26,6 +27,7 @@ export const WheelPicker = ({
   initHeight = 0,
   onScrollEndDrag,
   color,
+  step,
   selectedItems,
 }: Props) => {
   const ref = useRef<ScrollView>(null);
@@ -41,10 +43,10 @@ export const WheelPicker = ({
     <WheelPickerStyled height={height}>
       <LinearGradient />
       <ScrollView
-        onMomentumScrollEnd={(e) => {
-          const y = e.nativeEvent.contentOffset?.y || 0;
-          const h = height || 0;
-          const index = Math.round(y / h);
+        onScrollEndDrag={(e) => {
+          const y = e.nativeEvent.targetContentOffset?.y || 0;
+          const h = step || height || 0;
+          const index = y / h;
           if (items[index]) {
             onScrollEndDrag?.(items[index].id);
           }
@@ -53,7 +55,7 @@ export const WheelPicker = ({
         nestedScrollEnabled
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
-        snapToInterval={height}>
+        snapToInterval={step || height}>
         {items.map((it) => (
           <PickerItemStyled key={it.id} onPress={handleItemClick(it.id)} selected={selectedItems === it.id}>
             <CustomText font={FontType.MEDIUM_BODY_02} color={color}>
