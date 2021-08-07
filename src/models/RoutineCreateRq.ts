@@ -1,4 +1,4 @@
-export interface RoutineCreateRs {
+export interface RoutineCreateRq {
   id: string | null;
   profileId: string;
   title: string;

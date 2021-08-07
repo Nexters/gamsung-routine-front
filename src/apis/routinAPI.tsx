@@ -1,4 +1,4 @@
-import { RoutineCreateRs } from '~/models/RoutineCreateRs';
+import { RoutineCreateRq } from '~/models/RoutineCreateRq';
 import { Task } from '~/models/Task';
 import api from '~/utils/api';
 import { useCommonSWR } from '~/utils/swr';
@@ -14,6 +14,6 @@ export const useMonthlyTasks = ({ profileId, year, month }: { profileId: string;
   }>(`/routine/weekly/${profileId}?year=${year}&month=${month}`);
 };
 
-export const useCreateRoutine = (rs: RoutineCreateRs) => {
-  return api.post('/routine', { rs });
+export const useCreateRoutine = (rq: RoutineCreateRq) => {
+  return api.post('/routine', { rq });
 };

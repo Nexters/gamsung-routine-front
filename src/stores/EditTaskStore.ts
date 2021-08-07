@@ -1,4 +1,4 @@
-import { RoutineCreateRs } from '~/models/RoutineCreateRs';
+import { RoutineCreateRq } from '~/models/RoutineCreateRq';
 import api from '~/utils/api';
 
 class EditTaskStore {
@@ -14,7 +14,7 @@ class EditTaskStore {
     templateId: string | null = null,
     order: number | null = 1,
   ) {
-    const item: RoutineCreateRs = {
+    const item: RoutineCreateRq = {
       id,
       profileId: '1',
       title,
