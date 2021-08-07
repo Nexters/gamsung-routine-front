@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import CustomText from './CustomText';
@@ -15,19 +15,27 @@ interface Props {
   onConfirmClick?: () => void;
 }
 
-export const SpeachBubble: React.FC<Props> = observer(({ text, onConfirmClick, speaker }) => {
+export const SpeechBubble: React.FC<Props> = observer(({ text, onConfirmClick, speaker }) => {
+  const [iconVisible, setIconVisible] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIconVisible((iconVisible) => !iconVisible);
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const handlePress = () => {
     onConfirmClick?.();
   };
 
   return (
-    <SpeachBubbleStyled>
+    <SpeachBubbleStyled onPress={handlePress}>
       <CustomText font={FontType.REGULAR_LARGE} color={TextColor.PRIMARY_D}>
         {text}
       </CustomText>
-      <IconFrame onPress={handlePress}>
-        <Icon type="CONFIRM" />
-      </IconFrame>
+      <IconFrame>{iconVisible && <Icon type="CONFIRM" />}</IconFrame>
       {speaker && (
         <SpeakerFrame>
           <CustomText font={FontType.BOLD_TITLE_02} color={TextColor.PRIMARY_D}>
@@ -39,7 +47,7 @@ export const SpeachBubble: React.FC<Props> = observer(({ text, onConfirmClick, s
   );
 });
 
-const SpeachBubbleStyled = styled.View`
+const SpeachBubbleStyled = styled(TouchableOpacity)`
   width: 100%;
   height: 180px;
   background-color: ${SurfaceColor.DEPTH2_D};
@@ -55,8 +63,8 @@ const IconFrame = styled(TouchableOpacity)`
 
 const SpeakerFrame = styled.View`
   position: absolute;
-  top: -20;
-  left: 20;
+  top: -20px;
+  left: 20px;
   width: 90px;
   height: 42px;
   border: 3px solid ${IconColor.PRIMARY_L};

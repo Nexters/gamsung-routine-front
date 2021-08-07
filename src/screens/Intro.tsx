@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native';
 
 import CustomText from '~/components/CustomText';
 import { Slider } from '~/components/Slider';
-import { SpeachBubble } from '~/components/SpeachBubble';
+import { SpeechBubble } from '~/components/SpeechBubble';
 import { RootStackParamList } from '~/navigations/types';
 import { BackgroundColor, TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
@@ -69,12 +69,12 @@ const PageB: React.FC<{ onNextPage?: (page: number) => void }> = observer(({ onN
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
-      <SpeachBubbleWrap>
-        <SpeachBubble
+      <SpeechBubbleWrap>
+        <SpeechBubble
           text={`작심삼일 김본캐는\n오늘도 습관을 지키지 못해 흥청망청\n시간을 보내다 잠들어 버리는데..`}
           onConfirmClick={handleNextPage}
         />
-      </SpeachBubbleWrap>
+      </SpeechBubbleWrap>
     </PageFrame>
   );
 });
@@ -86,13 +86,13 @@ const PageC: React.FC<{ onNextPage?: (page: number) => void }> = observer(({ onN
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
-      <SpeachBubbleWrap>
-        <SpeachBubble
+      <SpeechBubbleWrap>
+        <SpeechBubble
           text={`김본캐 : 오잉..? 여긴 어디지..?\n외딴 섬 같은데..`}
           onConfirmClick={handleNextPage}
           speaker="김본캐"
         />
-      </SpeachBubbleWrap>
+      </SpeechBubbleWrap>
     </PageFrame>
   );
 });
@@ -104,13 +104,13 @@ const PageD: React.FC<NavigationProps> = observer(({ navigation }) => {
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
-      <SpeachBubbleWrap>
-        <SpeachBubble
+      <SpeechBubbleWrap>
+        <SpeechBubble
           text={`어서오게, 게으름뱅이여. 나는 그대의\n다짐들을 방해하는 미루미라고 하네.`}
           onConfirmClick={handleNextPage}
           speaker="???"
         />
-      </SpeachBubbleWrap>
+      </SpeechBubbleWrap>
     </PageFrame>
   );
 });
@@ -155,7 +155,7 @@ const PageAStartButton = styled(TouchableOpacity)`
   border-radius: 12px;
 `;
 
-const SpeachBubbleWrap = styled.View`
+const SpeechBubbleWrap = styled.View`
   margin: auto 20px 45px;
 `;
 
