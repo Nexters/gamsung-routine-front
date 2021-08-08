@@ -35,7 +35,7 @@ export const DailyLoopCard = ({ marginTop, marginBottom, dayOfTime = 1, onSelect
         label="하루동안"
         isOpen={isDailyTimeWheelOpen}
         countText={countDaily(dailyTime)}
-        onOpen={() => setIsDailyTimeWheelOpen(!isDailyTimeWheelOpen)}
+        setIsOpen={() => setIsDailyTimeWheelOpen(!isDailyTimeWheelOpen)}
       />
       {isDailyTimeWheelOpen && <DividerStyled />}
       {isDailyTimeWheelOpen && (
