@@ -121,30 +121,28 @@ const Calendar = ({ navigation }: Props) => {
                   borderRadius: 8,
                 }}
               />
-              <Svg
-                height={55}
-                width={Dimensions.get('window').width}
-                style={{ position: 'absolute', top: 0, zIndex: 10 }}>
-                <Defs>
-                  <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-                    <Stop offset="0" stopColor="#303133" stopOpacity="1" />
-                    <Stop offset="1" stopColor="#303133" stopOpacity="0" />
-                  </LinearGradient>
-                </Defs>
-                <Rect width={Dimensions.get('window').width} height={55} fill="url(#gradient)" />
-              </Svg>
-              <Svg
-                height={55}
-                width={Dimensions.get('window').width}
-                style={{ position: 'absolute', bottom: 0, zIndex: 10 }}>
-                <Defs>
-                  <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-                    <Stop offset="0" stopColor="#303133" stopOpacity="0" />
-                    <Stop offset="1" stopColor="#303133" stopOpacity="1" />
-                  </LinearGradient>
-                </Defs>
-                <Rect width={Dimensions.get('window').width} height={55} fill="url(#gradient)" />
-              </Svg>
+              <View pointerEvents="none" style={{ position: 'absolute', top: 0, zIndex: 10 }}>
+                <Svg height={55} width={Dimensions.get('window').width}>
+                  <Defs>
+                    <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                      <Stop offset="0" stopColor="#303133" stopOpacity="1" />
+                      <Stop offset="1" stopColor="#303133" stopOpacity="0" />
+                    </LinearGradient>
+                  </Defs>
+                  <Rect width={Dimensions.get('window').width} height={55} fill="url(#gradient)" />
+                </Svg>
+              </View>
+              <View pointerEvents="none" style={{ position: 'absolute', bottom: 0, zIndex: 10 }}>
+                <Svg height={55} width={Dimensions.get('window').width}>
+                  <Defs>
+                    <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                      <Stop offset="0" stopColor="#303133" stopOpacity="0" />
+                      <Stop offset="1" stopColor="#303133" stopOpacity="1" />
+                    </LinearGradient>
+                  </Defs>
+                  <Rect width={Dimensions.get('window').width} height={55} fill="url(#gradient)" />
+                </Svg>
+              </View>
               <View style={{ marginRight: 40, justifyContent: 'center' }}>
                 <WheelPicker
                   onClick={(target) => {
@@ -169,7 +167,7 @@ const Calendar = ({ navigation }: Props) => {
                     CalendarStore.changeIsWeek(false);
                     CalendarStore.changeFirstDay(CalendarStore.getFirstDay(date));
                   }}
-                  initHeight={(11 - (parseInt(dayjs().format('YYYY'), 10) - CalendarStore.firstDay.year() + 2)) * 36}
+                  initHeight={(11 - (parseInt(dayjs().format('YYYY'), 10) - CalendarStore.tempYear + 2)) * 36}
                   height={36 * 5}
                   step={36}
                   items={Array.from({ length: YEAR_PICKER_NUMBER }, (_, index) => index).map((it) => {
@@ -188,9 +186,13 @@ const Calendar = ({ navigation }: Props) => {
                       return;
                     }
                     CalendarStore.tempMonth = id;
+                    console.log(1111, CalendarStore.tempYear);
+
                     const date = `${CalendarStore.tempYear}-${
                       CalendarStore.tempMonth < 9 ? `0${CalendarStore.tempMonth}` : CalendarStore.tempMonth
                     }-01`;
+                    console.log(222, date);
+
                     CalendarStore.changeIsWeek(false);
                     CalendarStore.changeFirstDay(CalendarStore.getFirstDay(date));
                   }}

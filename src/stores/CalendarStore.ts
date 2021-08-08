@@ -34,6 +34,7 @@ class CalendarStore {
       isWeek: observable,
       days: observable,
       radio: observable,
+      tempYear: observable,
 
       changeFirstDay: action,
       changeIsWeek: action,
