@@ -14,22 +14,22 @@ interface Props {
   type: 'SELECTOR' | 'SWITCH' | 'NONE';
   isOpen?: boolean;
   countText?: string;
-  onOpen?: () => void;
+  setIsOpen?: () => void;
   children?: React.ReactNode;
 }
 
 export const FoldableContainer: React.FC<Props> = observer(
-  ({ label, type, isOpen = false, countText, onOpen, children }) => {
-    const [isExpended, setIsExpended] = useState(isOpen);
+  ({ label, type, isOpen = false, countText, setIsOpen, children }) => {
+    const [isExpanded, setIsExpanded] = useState(isOpen);
 
     const handleOpen = useCallback(() => {
-      setIsExpended(!isExpended);
-      onOpen?.();
-    }, [onOpen, isExpended]);
+      setIsExpanded(!isExpanded);
+      setIsOpen?.();
+    }, [setIsOpen, isExpanded]);
 
     useEffect(() => {
-      setIsExpended(isExpended);
-    }, [isOpen, isExpended]);
+      setIsExpanded(isOpen);
+    }, [isOpen]);
 
     return (
       <FoldableContainerStyled>
@@ -38,9 +38,9 @@ export const FoldableContainer: React.FC<Props> = observer(
         </CustomText>
         <RightViewStyled>
           {type === 'SELECTOR' && (
-            <FoldableSelector countText={countText} isOpen={isExpended} onSelectorClick={handleOpen} />
+            <FoldableSelector countText={countText} isOpen={isExpanded} onSelectorClick={handleOpen} />
           )}
-          {type === 'SWITCH' && <FoldableSwitch isOn={isExpended} onToggle={handleOpen} />}
+          {type === 'SWITCH' && <FoldableSwitch isOn={isExpanded} onToggle={handleOpen} />}
           {type === 'NONE' && children}
         </RightViewStyled>
       </FoldableContainerStyled>
