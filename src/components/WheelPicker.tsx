@@ -6,7 +6,8 @@ import { LinearGradient } from 'react-native-svg';
 import CustomText from './CustomText';
 
 import { WheelItem } from '~/models/WheelItem';
-import { TextColor } from '~/utils/color';
+import { ActionColor, TextColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
 
 interface Props {
   color?: TextColor;
@@ -15,9 +16,18 @@ interface Props {
   onClick?: (id: number) => void;
   initHeight?: number;
   onScrollEndDrag?: (id: number) => void;
+  selectedItems?: number;
 }
 
-export const WheelPicker = ({ items, height, onClick, initHeight = 0, onScrollEndDrag, color }: Props) => {
+export const WheelPicker = ({
+  items,
+  height,
+  onClick,
+  initHeight = 0,
+  onScrollEndDrag,
+  color,
+  selectedItems,
+}: Props) => {
   const ref = useRef<ScrollView>(null);
   const handleItemClick = (id: number) => () => {
     onClick?.(id);
@@ -45,8 +55,10 @@ export const WheelPicker = ({ items, height, onClick, initHeight = 0, onScrollEn
         showsVerticalScrollIndicator={false}
         snapToInterval={height}>
         {items.map((it) => (
-          <PickerItemStyled key={it.id} onPress={handleItemClick(it.id)}>
-            <CustomText color={color}>{it.name}</CustomText>
+          <PickerItemStyled key={it.id} onPress={handleItemClick(it.id)} selected={selectedItems === it.id}>
+            <CustomText font={FontType.MEDIUM_BODY_02} color={color}>
+              {it.name}
+            </CustomText>
           </PickerItemStyled>
         ))}
       </ScrollView>
@@ -58,10 +70,12 @@ const WheelPickerStyled = styled.View<{ height?: number }>`
   height: ${({ height }) => `${height ?? 96}px`};
 `;
 
-const PickerItemStyled = styled.TouchableOpacity`
+const PickerItemStyled = styled.TouchableOpacity<{ selected: boolean }>`
   width: 100%;
   height: 36px;
   align-items: center;
   align-content: center;
   justify-content: center;
+  background-color: ${({ selected }) => selected && ActionColor.BG};
+  border-radius: 6px;
 `;
