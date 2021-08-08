@@ -53,7 +53,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     vm.onSelectDay(id);
   };
 
-  const handleEditSubmitClick = () => {
+  const handleEditSubmitClick = async () => {
     setModalContent('테스크 추가가 완료되었어요.');
     setModalSubContent('미루미를 없애기 위한\n테스크를 계속 추가하시겠어요?');
     setModalLeftButtonText('내 테스크 보기');
@@ -61,9 +61,9 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     setModalType('SAVE');
 
     if (id) {
-      vm.onSave(id);
+      await vm.onSave(id);
+      openModal();
     }
-    openModal();
   };
 
   const handleLeftButtonClick = () => {

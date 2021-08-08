@@ -54,6 +54,11 @@ export class EditTaskStore {
         }
       });
       this.timeOfDay = templateTask?.defaultTimes ?? 1;
+      this.times = Array.from({ length: this.timeOfDay }).map((_, index) => ({
+        id: index,
+        hour: 9,
+        minute: 0,
+      }));
       return;
     }
 
@@ -85,6 +90,7 @@ export class EditTaskStore {
     // 커스텀 생성으로 접근
     this.templateTaskId = null;
     this.days.forEach((it) => (it.selected = true));
+    this.timeOfDay = 1;
     this.times = [
       {
         id: 0,
@@ -134,24 +140,31 @@ export class EditTaskStore {
     }
   }
 
-  onSave(profileUserId: string) {
+  async onSave(profileUserId: string) {
+    if (!profileUserId) {
+      return;
+    }
     const item: RoutineTaskUnit = {
       id: this.taskId?.toString() ?? null,
       profileId: profileUserId,
       title: this.taskName,
       notify: this.alarm,
       days: this.days.filter((day) => day.selected).map((day) => day.id),
-      times: this.times.map((time) => `${time.hour}:${time.minute}`),
+      times: this.times.map((time) => {
+        const t = time.hour < 10 ? `0${time.hour}` : time.hour;
+        const m = time.minute < 10 ? `0${time.minute}` : time.minute;
+        return `${t}:${m}`;
+      }),
       category: '1', // null로 보낼 경우 에러 발생
       templateId: this.templateTaskId?.toString() ?? '1', // null로 보낼 경우 에러 발생
       order: 1,
     };
 
     if (this.taskId) {
-      RoutineAPI.instance().updateTask(item);
+      await RoutineAPI.instance().updateTask(item);
       return;
     }
-    RoutineAPI.instance().saveTask(item);
+    await RoutineAPI.instance().saveTask(item);
   }
 
   get editableTitle() {
