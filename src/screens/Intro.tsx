@@ -114,7 +114,7 @@ const PageD: React.FC<NavigationProps> = observer(({ navigation }) => {
   );
 });
 
-const IntroFrame = styled.View`
+const IntroFrame = styled.SafeAreaView`
   width: 100%;
   height: 100%;
 `;
