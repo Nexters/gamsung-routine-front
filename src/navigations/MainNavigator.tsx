@@ -33,8 +33,12 @@ const MainNavigator = () => {
   }
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Intro" component={Intro} options={{ headerShown: false }} />
-      {!AuthStore.isLoggedIn && <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />}
+      {!AuthStore.isLoggedIn && (
+        <>
+          <Stack.Screen name="Intro" component={Intro} options={{ headerShown: false }} />
+          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+        </>
+      )}
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen name="AddTask" component={AddTask} options={{ headerShown: false }} />
       <Stack.Screen name="TaskList" component={TaskList} options={{ headerShown: false }} />
