@@ -104,7 +104,7 @@ export class EditTaskStore {
   onChangeCountOfDay(time: number) {
     this.timeOfDay = time;
     const timeSettingData = Array.from({ length: time }).map(() => ({
-      id: EditTaskVM.nextId,
+      id: EditTaskStore.nextId,
       hour: 9,
       minute: 0,
     }));
@@ -147,6 +147,10 @@ export class EditTaskStore {
       order: 1,
     };
 
+    if (this.taskId) {
+      RoutineAPI.instance().updateTask(item);
+      return;
+    }
     RoutineAPI.instance().saveTask(item);
   }
 
