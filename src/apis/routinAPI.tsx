@@ -22,7 +22,7 @@ export class RoutineAPI {
   }
 
   async saveTask(item: RoutineTaskUnit) {
-    await api.post('/routine', { item });
+    await api.post('/routine', item);
   }
 
   async updateTask(item: RoutineTaskUnit) {
