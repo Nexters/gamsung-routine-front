@@ -30,7 +30,7 @@ export const TaskList: React.FC<Props> = observer(({ navigation, route }) => {
               key={task.id}
               taskName={task.name}
               onClick={() => {
-                navigation.navigate('EditTask', { taskId: task.id, taskName: task.name });
+                navigation.navigate('EditTask', { templateTask: task, taskId: null });
               }}
             />
           ))}

@@ -5,16 +5,18 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
 import { ScrollView } from 'react-native';
 
-import { EditTaskVM } from './vm/editTaskVM';
+import { EditTaskStore } from '../stores/editTaskStore';
 
 import { AlarmSettingCard } from '~/components/AlarmSettingCard';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
 import CustomTextInput from '~/components/CustomTextInput';
 import { DailyLoopCard } from '~/components/DailyLoopCard';
+import { FriendInviteCard } from '~/components/FriendInviteCard';
 import { TimeSettingCard } from '~/components/TimeSettingCard';
 import { WeekLoopCard } from '~/components/WeekLoopCard';
 import useModal from '~/hooks/useModal';
+import useModalContent from '~/hooks/useModalContent';
 import { RootStackParamList } from '~/navigations/types';
 import { ActionColor, TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
@@ -26,16 +28,30 @@ interface EditTaskScreenProps {
 }
 
 const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
-  const { taskId, taskName } = route.params;
+  const { templateTask, taskId } = route.params;
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
+  const {
+    modalContent,
+    setModalContent,
+    modalSubContent,
+    setModalSubContent,
+    modalLeftButtonText,
+    setModalLeftButtonText,
+    modalRightButtonText,
+    setModalRightButtonText,
+  } = useModalContent();
 
-  const [vm] = useState(new EditTaskVM(taskId?.toString() ?? null, taskName ?? ''));
+  const [vm] = useState(new EditTaskStore(taskId, templateTask));
 
   const handleDaySelect = (id: number) => {
     vm.onSelectDay(id);
   };
 
   const handleEditSubmitClick = () => {
+    setModalContent('테스크 추가가 완료되었어요.');
+    setModalSubContent('미루미를 없애기 위한\n테스크를 계속 추가하시겠어요?');
+    setModalLeftButtonText('내 테스크 보기');
+    setModalRightButtonText('계속 추가하기');
     vm.onSave();
     openModal();
   };
@@ -73,10 +89,19 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     vm.onChangeAlarm(isAlarm);
   };
 
+  const handleEndTaskClick = () => {
+    setModalContent('테스크를 종료하시겠어요?');
+    setModalSubContent('테스크를 종료하면 되돌리실 수 없어요!');
+    setModalLeftButtonText('취소');
+    setModalRightButtonText('삭제하기');
+
+    vm.onTaskEnd();
+  };
+
   return (
     <>
       <EditTaskStyled>
-        <ScrollView style={{ width: '100%', height: '100%', marginBottom: 70 }}>
+        <ScrollView style={{ width: '100%', height: '100%', marginBottom: 100 }}>
           <EditTaskView>
             <EditSettingView>
               <TitleSettingView>
@@ -98,7 +123,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
                 <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L} marginBottom={8}>
                   시간 설정
                 </CustomText>
-                <WeekLoopCard days={vm.days} onDayPress={handleDaySelect} />
+                <WeekLoopCard days={vm.days} onDayPress={handleDaySelect} marginTop={8} />
                 <DailyLoopCard marginTop={16} onSelectCountOfDay={handleCountOfDay} />
                 <TimeSettingCard
                   marginTop={16}
@@ -110,24 +135,40 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
                 <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L} marginBottom={8}>
                   부가 설정
                 </CustomText>
-                <AlarmSettingCard onChangeAlarm={handleChangeAlarm} />
+                <AlarmSettingCard onChangeAlarm={handleChangeAlarm} marginTop={8} />
               </AddSettingView>
+              {vm.isEditMode && (
+                <>
+                  <AddPartyView>
+                    <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L}>
+                      파티원 설정
+                    </CustomText>
+                    <FriendInviteCard friend={[]} marginTop={16} />
+                  </AddPartyView>
+                  <FinishTaskTextButton onPress={handleEndTaskClick}>
+                    <CustomText font={FontType.MEDIUM_BODY_02} color={TextColor.RED}>
+                      테스크 종료
+                    </CustomText>
+                  </FinishTaskTextButton>
+                </>
+              )}
             </EditSettingView>
           </EditTaskView>
         </ScrollView>
-        <EditSubmitButton onPress={handleEditSubmitClick}>
+        <EditSubmitButton onPress={handleEditSubmitClick} disabled={!vm.isValidSave}>
           <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
-            추가하기
+            {vm.isEditMode ? '수정하기' : '추가하기'}
           </CustomText>
         </EditSubmitButton>
       </EditTaskStyled>
       <CustomModal
         isVisible={isModalVisible}
         onClose={closeModal}
-        content={'테스크 추가가\n완료되었습니다.'}
-        leftButtonText="내 테스크 보기"
+        content={modalContent}
+        subContent={modalSubContent}
+        leftButtonText={modalLeftButtonText}
         onLeftButtonClick={handleShowMyTaskButtonClick}
-        rightButtonText="계속 추가하기"
+        rightButtonText={modalRightButtonText}
         onRightButtonClick={handleKeepAddingButtonClick}
       />
     </>
@@ -164,10 +205,18 @@ const AddSettingView = styled.View`
   padding-top: 40px;
 `;
 
-const EditSubmitButton = styled.TouchableOpacity`
+const AddPartyView = styled.View`
+  padding-top: 40px;
+`;
+
+const FinishTaskTextButton = styled.TouchableOpacity`
+  padding-top: 40px;
+`;
+
+const EditSubmitButton = styled.TouchableOpacity<{ disabled: boolean }>`
   justify-content: center;
   align-items: center;
-  background-color: ${ActionColor.ACTIVE};
+  background-color: ${({ disabled }) => (disabled ? ActionColor.INACTIVE : ActionColor.ACTIVE)};
   border-radius: 8px;
   padding: 12px 0;
   left: 20px;

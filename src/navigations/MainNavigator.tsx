@@ -6,7 +6,6 @@ import { TouchableOpacity } from 'react-native';
 import CustomText from '~/components/CustomText';
 import Icon from '~/components/Icon';
 import { RootStackParamList } from '~/navigations/types';
-import AddTask from '~/screens/AddTask';
 import EditTask from '~/screens/EditTask';
 import Home from '~/screens/Home';
 import Intro from '~/screens/Intro';
@@ -40,7 +39,6 @@ const MainNavigator = () => {
         </>
       )}
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-      <Stack.Screen name="AddTask" component={AddTask} options={{ headerShown: false }} />
       <Stack.Screen name="TaskList" component={TaskList} options={{ headerShown: false }} />
       <Stack.Screen
         name="TemplateList"
@@ -72,7 +70,7 @@ const MainNavigator = () => {
       <Stack.Screen
         name="EditTask"
         component={EditTask}
-        initialParams={{ taskId: null, taskName: null }}
+        initialParams={{ templateTask: null, taskId: null }}
         options={() => {
           return {
             title: ' ',

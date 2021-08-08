@@ -4,8 +4,6 @@ import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 
-import { AddTaskVM } from './vm/addTaskVM';
-
 import { useGetCategory, useTemplates } from '~/apis/templateAPI';
 import CustomText from '~/components/CustomText';
 import { ScrollingButtonMenu } from '~/components/ScrollingButtonMenu';
@@ -23,8 +21,6 @@ export const TemplateList: React.FC<Props> = observer(({ navigation }) => {
   const { data: categories = [] } = useGetCategory();
   const [selectedCategoryId, setSelectedCategoryId] = useState(categories?.[0]?.id || 0);
   const { data: templates = [] } = useTemplates(selectedCategoryId);
-
-  const [vm] = useState<AddTaskVM>(new AddTaskVM());
 
   useEffect(() => {
     if (!selectedCategoryId && categories?.[0]?.id) {
