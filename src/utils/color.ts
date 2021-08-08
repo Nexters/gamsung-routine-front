@@ -51,6 +51,8 @@ const TextColor = {
   SECONDARY_D: GrayColor.GRAY20,
   INACTIVE_L: GrayColor.GRAY50,
   HIGHLIGHT: PrimaryColor.PURPLE60,
+  RED: SubColor.RED50, // 이름 변경 필요
+  BLACK: SubColor.BLACK, // 이름 변경 필요
 } as const;
 
 const BorderColor = {

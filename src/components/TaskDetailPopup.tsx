@@ -6,6 +6,7 @@ import CustomModal from './CustomModal';
 
 import CustomText from '~/components/CustomText';
 import useModal from '~/hooks/useModal';
+import useModalContent from '~/hooks/useModalContent';
 import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -17,6 +18,9 @@ interface Props {
 
 const TaskDetailPopup = ({ id, navigation }: Props) => {
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
+
+  const { modalContent, setModalContent, modalSubContent, setModalSubContent } = useModalContent();
+
   const handleCancelButtonClick = () => {
     console.log(id, ' : cancel');
   };
@@ -26,12 +30,13 @@ const TaskDetailPopup = ({ id, navigation }: Props) => {
   };
 
   const handleEditButtonClick = () => {
-    console.log(id, ' : edit');
-    // navigation.navigate('EditTask', { taskId: id });
+    navigation.navigate('EditTask', { templateTask: null, taskId: Number(id) });
   };
 
   const handleDeleteButtonClick = () => {
     console.log(id, ' : delete');
+    setModalContent('태스크를 종료하시겠어요?');
+    setModalSubContent('태스크를 종료하면 되돌릴 수 없어요!');
     openModal();
   };
 
@@ -64,9 +69,12 @@ const TaskDetailPopup = ({ id, navigation }: Props) => {
       <CustomModal
         isVisible={isModalVisible}
         onClose={closeModal}
-        content={'테스크를\n삭제하겠습니까?'}
+        content={modalContent}
+        subContent={modalSubContent}
         leftButtonText="취소"
         onLeftButtonClick={() => {
+          setModalContent('');
+          setModalSubContent('');
           closeModal();
         }}
         rightButtonText="확인"

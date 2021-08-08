@@ -1,4 +1,5 @@
 import { Template } from '~/models/Template';
+import { TemplateTask } from '~/models/TemplateTask';
 import { GraphicColor } from '~/utils/color';
 
 export type RootStackParamList = {
@@ -7,9 +8,8 @@ export type RootStackParamList = {
   Home: undefined;
   AddTask: undefined;
   EditTask: {
-    taskId?: number | null;
-    taskName?: string | null;
-    headerColor?: GraphicColor;
+    templateTask: TemplateTask | null;
+    taskId: number | null;
   };
   TaskList: { template: Template; headerColor?: GraphicColor };
   TemplateList: undefined;

@@ -11,33 +11,40 @@ interface Props {
   isVisible: boolean;
   onClose?: () => void;
   content: string;
+  subContent: string;
   leftButtonText?: string;
   onLeftButtonClick?: () => void;
   rightButtonText: string;
   onRightButtonClick: () => void;
+  backgroundOpacity?: number;
 }
 
 const CustomModal = ({
   isVisible,
   onClose,
   content,
+  subContent,
   leftButtonText,
   onLeftButtonClick,
   rightButtonText,
   onRightButtonClick,
+  backgroundOpacity = 0.4,
 }: Props) => {
   return (
     <Modal
       style={styles.modal}
-      backdropOpacity={0.4}
+      backdropOpacity={backgroundOpacity}
       isVisible={isVisible}
       onBackButtonPress={onClose}
       hideModalContentWhileAnimating={true}
       useNativeDriver={true}>
       <ModalStyled>
         <ModalContentView>
-          <CustomText font={FontType.REGULAR_BODY_01} color={TextColor.PRIMARY_L} align={Align.CENTER}>
+          <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.BLACK} align={Align.CENTER}>
             {content}
+          </CustomText>
+          <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L} align={Align.CENTER}>
+            {subContent}
           </CustomText>
         </ModalContentView>
         <ModalButtonView>

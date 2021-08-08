@@ -1,4 +1,4 @@
-export interface RoutineCreateRq {
+export interface RoutineTaskUnit {
   id: string | null;
   profileId: string;
   title: string;
