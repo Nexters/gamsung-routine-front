@@ -48,9 +48,8 @@ const PageA: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNe
     onNextPage(1);
   };
 
-  // TODO 배경색 #5f4bf2 추가
   return (
-    <PageFrame backgroundColor="#5f4bf2">
+    <PageFrame backgroundColor={BackgroundColor.HIGHLIGHTER}>
       <PageABottomBackground>
         <PageAStartButton onPress={handleNextPage}>
           <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
