@@ -18,6 +18,11 @@ import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import { BackgroundColor, SurfaceColor, CalenderColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
+// ''/''/01/02/03 or 01/02/03/04/05 or 10/11/12/''/'' 노출을 위해 앞뒤로 2씩 4을 더함
+const MONTH_PICKER_NUMBER = 2 + 12 + 2;
+// 올해부터 앞 10년을 노출. 휠피커를 지원하기 위해 앞뒤로 2씩 더함
+const YEAR_PICKER_NUMBER = 2 + 10 + 2;
+
 export interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
 }
@@ -154,7 +159,7 @@ const Calendar = ({ navigation }: Props) => {
                   initHeight={(11 - (parseInt(dayjs().format('YYYY'), 10) - CalendarStore.firstDay.year() + 2)) * 36}
                   height={36 * 5}
                   step={36}
-                  items={Array.from({ length: 14 }, (_, index) => index).map((it) => {
+                  items={Array.from({ length: YEAR_PICKER_NUMBER }, (_, index) => index).map((it) => {
                     return {
                       id: parseInt(dayjs().format('YYYY'), 10) - (9 - it),
                       name: it < 2 || it > 11 ? '' : `${parseInt(dayjs().format('YYYY'), 10) - (11 - it)}년`,
@@ -176,7 +181,7 @@ const Calendar = ({ navigation }: Props) => {
                   initHeight={CalendarStore.month * 36}
                   height={36 * 5}
                   step={36}
-                  items={Array.from({ length: 16 }, (_, index) => index).map((it) => {
+                  items={Array.from({ length: MONTH_PICKER_NUMBER }, (_, index) => index).map((it) => {
                     return {
                       id: it + 1,
                       name: it < 2 || it > 13 ? '' : `${it < 11 ? `0${it - 1}` : it - 1}월`,
