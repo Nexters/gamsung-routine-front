@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { Animated, Dimensions, Platform, TouchableOpacity, View } from 'react-native';
+import { Animated, Dimensions, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -186,12 +186,10 @@ const Calendar = ({ navigation }: Props) => {
                       return;
                     }
                     CalendarStore.tempMonth = id;
-                    console.log(1111, CalendarStore.tempYear);
 
                     const date = `${CalendarStore.tempYear}-${
                       CalendarStore.tempMonth < 9 ? `0${CalendarStore.tempMonth}` : CalendarStore.tempMonth
                     }-01`;
-                    console.log(222, date);
 
                     CalendarStore.changeIsWeek(false);
                     CalendarStore.changeFirstDay(CalendarStore.getFirstDay(date));
@@ -334,10 +332,13 @@ const WeeklyWrapper = styled.View`
 `;
 
 const WeeklyRow = styled.View`
-  flex-grow: 1;
-  height: 24px;
-  margin: 0 20px;
-  overflow: hidden;
+  width: 100%;
+  height: ${`${(Dimensions.get('window').width - 22) / 7}px`};
+  padding: 9px;
+  margin: -9px 0;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 13px;
 `;
 
 const WeekGauge = styled(DateGauge)`
@@ -360,6 +361,7 @@ const Daily = observer(() => {
     month: CalendarStore.month.toString(),
     year: CalendarStore.tempYear.toString(),
   });
+
   return (
     <>
       {CalendarStore.days.map((date) => {
@@ -450,7 +452,7 @@ const Weekly = observer(() => {
 
         return (
           <TouchableOpacity
-            style={{ height: Platform.OS === 'ios' ? 'auto' : (Dimensions.get('window').width - 22) / 7 }}
+            // style={{ height: Platform.OS === 'ios' ? 'auto' : (Dimensions.get('window').width - 22) / 7 }}
             key={date.toString()}
             onPress={() => {
               CalendarStore.changeFocusDay(date);
@@ -468,13 +470,13 @@ const Weekly = observer(() => {
                 {percent === 100 && (day.isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />)}
               </DateWrapper>
             </WeeklyRow>
-            <WeekTextWrapper key={`${date}_${index}`} style={{ height: 'auto' }}>
+            <WeekTextWrapper key={`${date}_${index}`}>
               {Array(7)
                 .fill(0)
                 .map((_, idx) => {
                   const textDate = date.add(idx, 'day');
                   return (
-                    <DayOfWeek key={textDate.toString()} style={{ height: 'auto' }}>
+                    <DayOfWeek key={textDate.toString()}>
                       <DateTextWrapper>
                         <CustomText
                           font={FontType.REGULAR_CAPTION}
@@ -501,7 +503,7 @@ const Container = observer(() => {
     inputRange: [0, 1],
     outputRange: [
       (Dimensions.get('window').width - 22) / 7 + 12,
-      Math.ceil(CalendarStore.days.length / 7 + 2) * ((Dimensions.get('window').width - 22) / 7),
+      (CalendarStore.days.length / 7 + 2) * ((Dimensions.get('window').width - 22) / 7),
     ], // <-- value that larger than your content's height: ;
   });
 
@@ -511,11 +513,18 @@ const Container = observer(() => {
 
   const maxY = CalendarStore.translation.interpolate({
     inputRange: [0, 1],
-    outputRange: [-((Dimensions.get('window').width - 22) / 7 + 12) * ((Number((index / 7).toFixed(0)) || 1) - 1), 0], // <-- value that larger than your content's height: ;
+    outputRange: [
+      -((Dimensions.get('window').width - 22) / 7 + 12 + Math.floor(index / 7) * 1) * Math.floor(index / 7),
+      0,
+    ], // <-- value that larger than your content's height: ;
   });
 
   return (
-    <Animated.View style={{ maxHeight: maxHeight, overflow: 'hidden' }}>
+    <Animated.View
+      style={{
+        maxHeight: maxHeight,
+        overflow: 'hidden',
+      }}>
       <Animated.View
         style={{
           // transform: [{ translateY: CalendarStore.isWeek ? 0 : maxY }],
