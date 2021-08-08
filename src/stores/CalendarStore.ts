@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { action, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import { Animated, Easing } from 'react-native';
 
 export enum RADIO_TYPE {
@@ -65,7 +65,6 @@ class CalendarStore {
   changeIsWeek(isWeek: boolean) {
     this.isWeek = isWeek;
     if (!isWeek) {
-      this.days = this.getDays();
       Animated.parallel([
         Animated.timing(this.translation, {
           toValue: 1,
@@ -77,7 +76,7 @@ class CalendarStore {
           toValue: 1,
           duration: 300,
           easing: Easing.linear,
-          useNativeDriver: false,
+          useNativeDriver: true,
         }),
       ]).start();
     } else {
@@ -92,15 +91,17 @@ class CalendarStore {
           toValue: 0,
           duration: 300,
           easing: Easing.linear,
-          useNativeDriver: false,
+          useNativeDriver: true,
         }),
       ]).start(() => {
-        if (this.focusDay.month() === this.month) {
-          this.changeWeekDay(this.getMonday(this.focusDay));
-        } else {
-          this.changeWeekDay(this.days[0]);
-        }
-        this.days = this.getDays();
+        runInAction(() => {
+          if (this.focusDay.month() === this.month) {
+            this.changeWeekDay(this.getMonday(this.focusDay));
+          } else {
+            this.changeWeekDay(this.days[0]);
+          }
+          this.days = this.getDays();
+        });
       });
     }
   }
@@ -148,19 +149,6 @@ class CalendarStore {
   getDays() {
     let nextWeek = this.firstDay;
     let arr = [] as dayjs.Dayjs[];
-
-    if (this.isWeek) {
-      let today = this.weekDay;
-      if (today.format('ddd') === 'Sun') {
-        today = today.add(-7, 'day');
-      }
-      today = today.day(1);
-      return Array(7)
-        .fill(0)
-        .map((_, index) => {
-          return today.add(index, 'day');
-        });
-    }
     do {
       arr = [
         ...arr,
