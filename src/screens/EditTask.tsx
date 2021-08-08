@@ -41,6 +41,8 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     setModalRightButtonText,
   } = useModalContent();
 
+  const [modalType, setModalType] = useState<'DELETE' | 'SAVE'>('SAVE');
+
   const [vm] = useState(new EditTaskStore(taskId, templateTask));
 
   const handleDaySelect = (id: number) => {
@@ -52,8 +54,38 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     setModalSubContent('미루미를 없애기 위한\n테스크를 계속 추가하시겠어요?');
     setModalLeftButtonText('내 테스크 보기');
     setModalRightButtonText('계속 추가하기');
+    setModalType('SAVE');
     vm.onSave();
     openModal();
+  };
+
+  const handleLeftButtonClick = () => {
+    switch (modalType) {
+      case 'SAVE': {
+        handleShowMyTaskButtonClick();
+        return;
+      }
+      case 'DELETE': {
+        closeModal();
+        return;
+      }
+    }
+  };
+
+  const handleRightButtonClick = () => {
+    switch (modalType) {
+      case 'SAVE': {
+        handleKeepAddingButtonClick();
+        return;
+      }
+      case 'DELETE': {
+        vm.onTaskEnd();
+        closeModal();
+        navigation.pop();
+        showToast('테스크가 종료되었어요.');
+        return;
+      }
+    }
   };
 
   const handleShowMyTaskButtonClick = () => {
@@ -166,9 +198,9 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
         content={modalContent}
         subContent={modalSubContent}
         leftButtonText={modalLeftButtonText}
-        onLeftButtonClick={handleShowMyTaskButtonClick}
+        onLeftButtonClick={handleLeftButtonClick}
         rightButtonText={modalRightButtonText}
-        onRightButtonClick={handleKeepAddingButtonClick}
+        onRightButtonClick={handleRightButtonClick}
       />
     </>
   );
