@@ -23,7 +23,7 @@ const Intro: React.FC<NavigationProps> = ({ navigation }) => {
   };
 
   const handleSkipClick = () => {
-    navigation.push('Login');
+    navigation.replace('Login');
   };
 
   return (
