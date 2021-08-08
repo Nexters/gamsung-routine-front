@@ -20,7 +20,7 @@ export const FoldableSelector = ({ isOpen, countText, onSelectorClick }: Props) 
 
   return (
     <SelectorStyled onPress={handleOpen}>
-      <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY_L}>
+      <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY_L} marginRight={6}>
         {countText ?? ''}
       </CustomText>
       {isOpen ? <Icon type={'ARROW_UP'} /> : <Icon type={'ARROW_DOWN'} />}
@@ -30,4 +30,6 @@ export const FoldableSelector = ({ isOpen, countText, onSelectorClick }: Props) 
 
 const SelectorStyled = styled.TouchableOpacity`
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;

@@ -50,6 +50,8 @@ export const FoldableContainer: React.FC<Props> = observer(
 
 const FoldableContainerStyled = styled.View`
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 const RightViewStyled = styled.View`

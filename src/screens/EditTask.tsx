@@ -86,6 +86,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
                     value={vm.taskName}
                     placeHolder="태스크 명을 입력해주세요."
                     font={FontType.BOLD_TITLE_01}
+                    color={TextColor.PRIMARY_L}
                   />
                 ) : (
                   <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_L}>
@@ -94,7 +95,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
                 )}
               </TitleSettingView>
               <TimeSettingView>
-                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L}>
+                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L} marginBottom={8}>
                   시간 설정
                 </CustomText>
                 <WeekLoopCard days={vm.days} onDayPress={handleDaySelect} />
@@ -106,7 +107,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
                 />
               </TimeSettingView>
               <AddSettingView>
-                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L}>
+                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L} marginBottom={8}>
                   부가 설정
                 </CustomText>
                 <AlarmSettingCard onChangeAlarm={handleChangeAlarm} />

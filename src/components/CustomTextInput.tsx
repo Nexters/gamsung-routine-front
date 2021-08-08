@@ -37,6 +37,7 @@ const CustomTextInput = ({
       onChangeText={handleChange}
       value={value}
       placeholder={placeHolder}
+      placeholderTextColor={TextColor.INACTIVE_L}
     />
   );
 };

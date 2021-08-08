@@ -16,7 +16,7 @@ interface Props {
 
 export const DailyLoopCard = ({ marginTop, marginBottom, dayOfTime = 1, onSelectCountOfDay }: Props) => {
   const countDaily = useCallback((time) => {
-    return `${time} 회`;
+    return `${time}회`;
   }, []);
 
   const [dailyTime, setDailyTime] = useState<number>(dayOfTime);
@@ -42,6 +42,7 @@ export const DailyLoopCard = ({ marginTop, marginBottom, dayOfTime = 1, onSelect
         <WheelPicker
           items={Array.from({ length: 7 }, (_, index) => ({ id: index + 1, name: countDaily(index + 1) }))}
           onClick={handleWheelItemClick}
+          selectedItems={dailyTime}
         />
       )}
     </CollapsibleCard>

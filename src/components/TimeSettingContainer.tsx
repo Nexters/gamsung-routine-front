@@ -7,8 +7,8 @@ import CustomText from './CustomText';
 import { ToggleBoxButton } from './ToggleBoxButton';
 import { WheelPicker } from './WheelPicker';
 
-import { SurfaceColor } from '~/utils/color';
-import { Align } from '~/utils/font';
+import { SurfaceColor, TextColor } from '~/utils/color';
+import { Align, FontType } from '~/utils/font';
 
 const WHEEL_ITEM_HEIGHT = 36;
 
@@ -71,7 +71,9 @@ export const TimeSettingContainer: React.FC<Props> = observer(
 
     return (
       <TimeSettingContainerStyled>
-        <CustomText>{count}회</CustomText>
+        <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.PRIMARY_L}>
+          {count}회
+        </CustomText>
         <RightView>
           <ToggleBoxButton isOn={isAm} onText="오전" offText="오후" onToggleClick={handleToggleBoxClick} />
           <TimeWheelContainer>
@@ -82,7 +84,9 @@ export const TimeSettingContainer: React.FC<Props> = observer(
               initHeight={WHEEL_ITEM_HEIGHT * (hourValue % 12)}
             />
             <View style={{ width: 10, justifyContent: 'center', alignItems: 'center' }}>
-              <CustomText align={Align.CENTER}>:</CustomText>
+              <CustomText font={FontType.MEDIUM_BODY_02} color={TextColor.PRIMARY_L} align={Align.CENTER}>
+                :
+              </CustomText>
             </View>
             <WheelPicker
               height={36}
