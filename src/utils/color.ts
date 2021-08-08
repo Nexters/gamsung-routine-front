@@ -41,6 +41,7 @@ const BackgroundColor = {
   DEPTH2_L: GrayColor.GRAY10,
   DEPTH1_D: GrayColor.GRAY90,
   DEPTH2_D: GrayColor.GRAY100,
+  HIGHLIGHTER: PrimaryColor.PURPLE50,
 } as const;
 
 const TextColor = {
