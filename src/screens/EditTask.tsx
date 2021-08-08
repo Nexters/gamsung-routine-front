@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
 import { ScrollView } from 'react-native';
 
+import { useUserProfileData } from '~/apis/authAPI';
 import { AlarmSettingCard } from '~/components/AlarmSettingCard';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
@@ -40,9 +41,13 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     setModalRightButtonText,
   } = useModalContent();
 
+  const {
+    data: { id },
+  } = useUserProfileData();
+
   const [modalType, setModalType] = useState<'DELETE' | 'SAVE'>('SAVE');
 
-  const [vm] = useState(new EditTaskStore(taskId, templateTask));
+  const [vm] = useState<EditTaskStore>(new EditTaskStore(taskId, templateTask));
 
   const handleDaySelect = (id: number) => {
     vm.onSelectDay(id);
@@ -54,7 +59,10 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     setModalLeftButtonText('내 테스크 보기');
     setModalRightButtonText('계속 추가하기');
     setModalType('SAVE');
-    vm.onSave();
+
+    if (id) {
+      vm.onSave(id);
+    }
     openModal();
   };
 

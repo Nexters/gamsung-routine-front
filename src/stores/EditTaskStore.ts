@@ -134,16 +134,16 @@ export class EditTaskStore {
     }
   }
 
-  onSave() {
+  onSave(profileUserId: string) {
     const item: RoutineTaskUnit = {
       id: this.taskId?.toString() ?? null,
-      profileId: '1',
+      profileId: profileUserId,
       title: this.taskName,
       notify: this.alarm,
       days: this.days.filter((day) => day.selected).map((day) => day.id),
       times: this.times.map((time) => `${time.hour}:${time.minute}`),
-      category: null,
-      templateId: this.templateTaskId?.toString() ?? null,
+      category: '1', // null로 보낼 경우 에러 발생
+      templateId: this.templateTaskId?.toString() ?? '1', // null로 보낼 경우 에러 발생
       order: 1,
     };
 
