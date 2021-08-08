@@ -348,6 +348,7 @@ const Daily = observer(() => {
           { completeCount: 0, timesOfDay: 0 },
         );
         const percent = ((total?.completeCount || 0) / (total?.timesOfDay || 0) || 0) * 100;
+
         return (
           <TouchableOpacity
             key={date.toString()}
@@ -371,7 +372,7 @@ const Daily = observer(() => {
                   height={percent}
                 />
                 {percent === 100 &&
-                  (CalendarStore.focusDay.isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />)}
+                  (CalendarStore.focusDay.isSame(date, 'day') ? <Icon type="CROWN" /> : <Icon type="CROWN_GRAY" />)}
               </DateWrapper>
             </DayOfWeek>
             <DateTextWrapper>
@@ -483,13 +484,14 @@ const Container = observer(() => {
 
   const maxY = CalendarStore.translation.interpolate({
     inputRange: [0, 1],
-    outputRange: [-((Dimensions.get('window').width - 22) / 7 + 12) * (Number((index / 7).toFixed(0)) - 1), 0], // <-- value that larger than your content's height: ;
+    outputRange: [-((Dimensions.get('window').width - 22) / 7 + 12) * ((Number((index / 7).toFixed(0)) || 1) - 1), 0], // <-- value that larger than your content's height: ;
   });
 
   return (
     <Animated.View style={{ maxHeight: maxHeight, overflow: 'hidden' }}>
       <Animated.View
         style={{
+          // transform: [{ translateY: CalendarStore.isWeek ? 0 : maxY }],
           transform: [{ translateY: maxY }],
         }}>
         <GestureRecognizer
