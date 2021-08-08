@@ -147,6 +147,19 @@ const Calendar = ({ navigation }: Props) => {
               </Svg>
               <View style={{ marginRight: 40, justifyContent: 'center' }}>
                 <WheelPicker
+                  onClick={(target) => {
+                    const id = target - 2;
+                    const year = parseInt(dayjs().format('YYYY'), 10);
+                    if (year - 10 >= id || id > year) {
+                      return;
+                    }
+                    CalendarStore.tempYear = id;
+                    const date = `${CalendarStore.tempYear}-${
+                      CalendarStore.tempMonth < 9 ? `0${CalendarStore.tempMonth}` : CalendarStore.tempMonth
+                    }-01`;
+                    CalendarStore.changeIsWeek(false);
+                    CalendarStore.changeFirstDay(CalendarStore.getFirstDay(date));
+                  }}
                   color={TextColor.PRIMARY_D}
                   onScrollEndDrag={(id) => {
                     CalendarStore.tempYear = id;
@@ -169,6 +182,18 @@ const Calendar = ({ navigation }: Props) => {
               </View>
               <View style={{ justifyContent: 'center' }}>
                 <WheelPicker
+                  onClick={(target) => {
+                    const id = target - 2;
+                    if (id <= 0 || id > 12) {
+                      return;
+                    }
+                    CalendarStore.tempMonth = id;
+                    const date = `${CalendarStore.tempYear}-${
+                      CalendarStore.tempMonth < 9 ? `0${CalendarStore.tempMonth}` : CalendarStore.tempMonth
+                    }-01`;
+                    CalendarStore.changeIsWeek(false);
+                    CalendarStore.changeFirstDay(CalendarStore.getFirstDay(date));
+                  }}
                   color={TextColor.PRIMARY_D}
                   onScrollEndDrag={(id) => {
                     CalendarStore.tempMonth = id;
