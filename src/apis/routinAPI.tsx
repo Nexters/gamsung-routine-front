@@ -25,6 +25,10 @@ export class RoutineAPI {
     await api.post('/routine', { item });
   }
 
+  async updateTask(item: RoutineTaskUnit) {
+    await api.put('/routine', { item });
+  }
+
   async deleteTask(taskId: string) {
     await api.delete(`/routine/${taskId}`);
   }
