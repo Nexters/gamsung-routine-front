@@ -5,8 +5,6 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
 import { ScrollView } from 'react-native';
 
-import { EditTaskStore } from '../stores/editTaskStore';
-
 import { AlarmSettingCard } from '~/components/AlarmSettingCard';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
@@ -18,6 +16,7 @@ import { WeekLoopCard } from '~/components/WeekLoopCard';
 import useModal from '~/hooks/useModal';
 import useModalContent from '~/hooks/useModalContent';
 import { RootStackParamList } from '~/navigations/types';
+import { EditTaskStore } from '~/stores/EditTaskStore';
 import { ActionColor, TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import { showToast } from '~/utils/showToast';
