@@ -1,16 +1,22 @@
 import styled from '@emotion/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView } from 'react-native';
+import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView, TouchableOpacity } from 'react-native';
 
-import { IconColor } from '~/utils/color';
+import CustomText from './CustomText';
+
+import { RootStackParamList } from '~/navigations/types';
+import { IconColor, TextColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
 
 interface Props {
   nextPage?: { page: number };
+  navigation: StackNavigationProp<RootStackParamList>;
   children?: React.ReactNode;
 }
 
-export const Slider: React.FC<Props> = observer(({ children, nextPage = { page: 0 } }) => {
+export const Slider: React.FC<Props> = observer(({ navigation, children, nextPage = { page: 0 } }) => {
   const scrollRef = useRef<ScrollView>(null);
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -40,6 +46,10 @@ export const Slider: React.FC<Props> = observer(({ children, nextPage = { page: 
     setCurrentPage(page);
   };
 
+  const handleSkipClick = () => {
+    navigation.replace('Login');
+  };
+
   useEffect(() => {
     setTotalPage(childComponents.length);
   }, [childComponents]);
@@ -56,6 +66,11 @@ export const Slider: React.FC<Props> = observer(({ children, nextPage = { page: 
   return (
     <SliderFrame>
       <Indicator totalPage={totalPage} selectedPage={currentPage} onIndicatorClick={handleIndicatorClick} />
+      <SkipButton onPress={handleSkipClick}>
+        <CustomText font={FontType.REGULAR_LARGE} color={TextColor.PRIMARY_D}>
+          Skip
+        </CustomText>
+      </SkipButton>
       <ScrollView
         ref={scrollRef}
         horizontal
@@ -110,4 +125,12 @@ const IndicatorDot = styled.TouchableOpacity<{ selected: boolean }>`
   border-radius: 4px;
   margin-right: 4px;
   background-color: ${({ selected }) => (selected ? IconColor.PRIMARY_D : IconColor.TERTIARY_D)};
+`;
+
+const SkipButton = styled(TouchableOpacity)`
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background-color: transparent;
+  z-index: 10;
 `;
