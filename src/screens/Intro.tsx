@@ -2,8 +2,16 @@ import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
+import { SvgXml } from 'react-native-svg';
 
+import introHouse from '~/assets/images/intro_house.svg';
+import introHouse2 from '~/assets/images/intro_house_2.svg';
+import introKimBonKae2 from '~/assets/images/intro_kim_bonkae_2.svg';
+import introMainKimBonKae1 from '~/assets/images/intro_main_kim_bonkae_1.svg';
+import introMainTitle from '~/assets/images/intro_main_title.svg';
+import introMonster1 from '~/assets/images/intro_monster_1.svg';
+import introMonster2 from '~/assets/images/intro_monster_2.svg';
 import CustomText from '~/components/CustomText';
 import { Slider } from '~/components/Slider';
 import { SpeechBubble } from '~/components/SpeechBubble';
@@ -22,22 +30,16 @@ const Intro: React.FC<NavigationProps> = ({ navigation }) => {
     setPage({ page: page });
   };
 
-  const handleSkipClick = () => {
-    navigation.replace('Login');
-  };
-
   return (
     <IntroFrame>
-      <SkipButton onPress={handleSkipClick}>
-        <CustomText font={FontType.REGULAR_LARGE} color={TextColor.PRIMARY_D}>
-          Skip
-        </CustomText>
-      </SkipButton>
-      <Slider nextPage={page}>
+      <Slider nextPage={page} navigation={navigation}>
         <PageA onNextPage={handleNextPage} />
         <PageB onNextPage={handleNextPage} />
         <PageC onNextPage={handleNextPage} />
-        <PageD navigation={navigation} />
+        <PageD onNextPage={handleNextPage} />
+        <PageE onNextPage={handleNextPage} />
+        <PageF onNextPage={handleNextPage} />
+        <PageG navigation={navigation} />
       </Slider>
     </IntroFrame>
   );
@@ -50,6 +52,28 @@ const PageA: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNe
 
   return (
     <PageFrame backgroundColor={BackgroundColor.HIGHLIGHTER}>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 400,
+          zIndex: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+        }}>
+        <SvgXml xml={introMainTitle} />
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 180,
+          zIndex: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+        }}>
+        <SvgXml xml={introMainKimBonKae1} />
+      </View>
       <PageABottomBackground>
         <PageAStartButton onPress={handleNextPage}>
           <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
@@ -68,6 +92,17 @@ const PageB: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNe
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 320,
+          zIndex: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+        }}>
+        <SvgXml xml={introHouse} />
+      </View>
       <SpeechBubbleWrap>
         <SpeechBubble
           text={`작심삼일 김본캐는\n오늘도 습관을 지키지 못해 흥청망청\n시간을 보내다 잠들어 버리는데..`}
@@ -85,6 +120,26 @@ const PageC: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNe
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 365,
+          zIndex: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+        }}>
+        <SvgXml xml={introHouse2} />
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 200,
+          right: 20,
+          zIndex: 10,
+        }}>
+        <SvgXml xml={introKimBonKae2} />
+      </View>
       <SpeechBubbleWrap>
         <SpeechBubble
           text={`김본캐 : 오잉..? 여긴 어디지..?\n외딴 섬 같은데..`}
@@ -96,13 +151,24 @@ const PageC: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNe
   );
 });
 
-const PageD: React.FC<NavigationProps> = observer(({ navigation }) => {
+const PageD: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
   const handleNextPage = () => {
-    navigation.push('Login');
+    onNextPage(4);
   };
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 277,
+          zIndex: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+        }}>
+        <SvgXml xml={introMonster1} />
+      </View>
       <SpeechBubbleWrap>
         <SpeechBubble
           text={`어서오게, 게으름뱅이여. 나는 그대의\n다짐들을 방해하는 미루미라고 하네.`}
@@ -114,17 +180,114 @@ const PageD: React.FC<NavigationProps> = observer(({ navigation }) => {
   );
 });
 
+const PageE: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
+  const handleNextPage = () => {
+    onNextPage(5);
+  };
+
+  return (
+    <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 365,
+          zIndex: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+        }}>
+        <SvgXml xml={introHouse2} />
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 210,
+          right: 40,
+          zIndex: 10,
+        }}>
+        <SvgXml xml={introMonster2} />
+      </View>
+      <SpeechBubbleWrap>
+        <SpeechBubble
+          text={`이곳은 '미뤄왔섬'이라네.\n그대가 이제까지 다짐을 수없이 미뤄왔기 때문에 이곳에 유배되었다네.`}
+          onConfirmClick={handleNextPage}
+          speaker="미루미"
+        />
+      </SpeechBubbleWrap>
+    </PageFrame>
+  );
+});
+
+const PageF: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
+  const handleNextPage = () => {
+    onNextPage(6);
+  };
+
+  return (
+    <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 365,
+          zIndex: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+        }}>
+        <SvgXml xml={introHouse2} />
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 200,
+          right: 20,
+          zIndex: 10,
+        }}>
+        <SvgXml xml={introKimBonKae2} />
+      </View>
+      <SpeechBubbleWrap>
+        <SpeechBubble
+          text={`헉, 유배라뇨.\n저는 집에 갈 수 없는건가요?`}
+          onConfirmClick={handleNextPage}
+          speaker="미루미"
+        />
+      </SpeechBubbleWrap>
+    </PageFrame>
+  );
+});
+
+const PageG: React.FC<NavigationProps> = observer(({ navigation }) => {
+  const handleNextPage = () => {
+    navigation.push('Login');
+  };
+
+  return (
+    <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 277,
+          zIndex: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+        }}>
+        <SvgXml xml={introMonster1} />
+      </View>
+      <SpeechBubbleWrap>
+        <SpeechBubble
+          text={`그대가 이 섬을 벗어나는 방법은\n단 하나! 루틴을 잘 지켜서 미루미 몬스터들을 없애는거라네.`}
+          onConfirmClick={handleNextPage}
+          speaker="미루미"
+        />
+      </SpeechBubbleWrap>
+    </PageFrame>
+  );
+});
+
 const IntroFrame = styled.SafeAreaView`
   width: 100%;
   height: 100%;
-`;
-
-const SkipButton = styled(TouchableOpacity)`
-  position: absolute;
-  top: 20px;
-  right: 24px;
-  background-color: transparent;
-  z-index: 10;
 `;
 
 const PageFrame = styled.View<{ backgroundColor: string }>`
