@@ -18,7 +18,7 @@ import { FontType } from '~/utils/font';
 interface Props {
   layerIndex: number;
   totalCount: number;
-  id: string;
+  taskId: string;
   title: string;
   timesOfWeek: number;
   timesOfDay: number;
@@ -38,7 +38,7 @@ const TaskListItem = observer(
   ({
     layerIndex,
     totalCount,
-    id,
+    taskId,
     title,
     timesOfWeek,
     timesOfDay,
@@ -53,7 +53,6 @@ const TaskListItem = observer(
     navigation,
   }: Props) => {
     const { data, error } = useMonthlyTasks({
-      profileId: '1',
       month: CalendarStore.month.toString(),
       year: CalendarStore.tempYear.toString(),
     });
@@ -67,14 +66,14 @@ const TaskListItem = observer(
         const routine = data?.dailyRoutines[today.add(i, 'day').format('YYYYMMDD')] || ([] as Task[]);
         const r =
           routine.find((rr) => {
-            return rr.id === id;
+            return rr.taskId === taskId;
           }) || ({} as Task);
         dayOfWeek.push(r);
       }
     }
 
     const handleTaskItemClick = () => {
-      CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.(id);
+      CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.(taskId);
     };
 
     return (
@@ -93,15 +92,13 @@ const TaskListItem = observer(
                 {percent === 100 && <TaskListItemLine />}
               </TaskListItemViewInfo>
               <TaskListItemViewSubTitle>
-                <CustomText
-                  font={FontType.REGULAR_CAPTION}
-                  color={!checkTodayTaskState ? TextColor.INACTIVE_L : TextColor.PRIMARY_L}>
+                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.PRIMARY_L}>
                   주 {timesOfWeek}회 · 하루 {timesOfDay}번
                 </CustomText>
               </TaskListItemViewSubTitle>
             </TaskListItemViewTitle>
           </TaskListItemViewLeft>
-          <MoreIconButton onPress={() => onMoreButtonClick(id)}>
+          <MoreIconButton onPress={() => onMoreButtonClick(taskId)}>
             <Icon type={'MORE'} />
           </MoreIconButton>
         </TaskListItemView>
@@ -109,7 +106,9 @@ const TaskListItem = observer(
           <TaskListItemWeekView>
             {dayOfWeek?.map((item, index) => {
               const dayOfWeekPercent = ((item.completeCount || 0) / (item.timesOfDay || 0) || 0) * 100;
-              return <MonsterIcon key={index} listType={CalendarStore.radio} data={dayOfWeekPercent} none={!item.id} />;
+              return (
+                <MonsterIcon key={index} listType={CalendarStore.radio} data={dayOfWeekPercent} none={!item.taskId} />
+              );
             })}
           </TaskListItemWeekView>
         )}
@@ -133,7 +132,7 @@ const TaskListItem = observer(
             )}
           </TaskListItemInfoPercent>
         </TaskListItemInfoView>
-        {isVisiblePopup === id && <TaskDetailPopup id={id} navigation={navigation} />}
+        {isVisiblePopup === taskId && <TaskDetailPopup taskId={taskId} navigation={navigation} />}
       </TaskListItemStyled>
     );
   },
