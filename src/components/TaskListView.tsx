@@ -31,6 +31,7 @@ const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick, na
         <TaskListViewStyled>
           {taskList.map((task, index) => {
             return (
+              // TODO: delay (미뤄진 상태인지에 대한 여부), isDelay (미룰 수 있는지에 대한 여부) 값 연동 필요
               <TaskListItem
                 navigation={navigation}
                 layerIndex={index}
@@ -40,8 +41,10 @@ const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick, na
                 title={task.title}
                 timesOfWeek={task.timesOfWeek}
                 timesOfDay={task.timesOfDay}
+                completedDateList={task.completedDateList}
                 days={task.days}
                 delay={false}
+                isDelay={true}
                 percent={(task.completeCount || 0) / (task.timesOfDay || 0) || 0}
                 share={false}
                 shareCount={3}

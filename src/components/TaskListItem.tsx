@@ -23,8 +23,10 @@ interface Props {
   title: string;
   timesOfWeek: number;
   timesOfDay: number;
+  completedDateList: { date: string }[] | [];
   days: number[];
   delay: boolean;
+  isDelay: boolean;
   percent: number;
   share?: boolean;
   shareCount?: number;
@@ -45,8 +47,10 @@ const TaskListItem = observer(
     title,
     timesOfWeek,
     timesOfDay,
+    completedDateList,
     days,
     delay,
+    isDelay,
     percent,
     share,
     shareCount,
@@ -148,7 +152,14 @@ const TaskListItem = observer(
             )}
           </TaskListItemInfoPercent>
         </TaskListItemInfoView>
-        {isVisiblePopup === taskId && <TaskDetailPopup taskId={taskId} navigation={navigation} delay={delay} />}
+        {isVisiblePopup === taskId && (
+          <TaskDetailPopup
+            taskId={taskId}
+            navigation={navigation}
+            completedCount={completedDateList.length}
+            isDelay={isDelay}
+          />
+        )}
       </TaskListItemStyled>
     );
   },

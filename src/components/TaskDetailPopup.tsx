@@ -14,10 +14,11 @@ import { FontType } from '~/utils/font';
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
   taskId: string;
-  delay: boolean;
+  isDelay: boolean;
+  completedCount: number;
 }
 
-const TaskDetailPopup = ({ navigation, taskId, delay }: Props) => {
+const TaskDetailPopup = ({ navigation, taskId, isDelay, completedCount }: Props) => {
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
 
   const { modalContent, setModalContent, modalSubContent, setModalSubContent } = useModalContent();
@@ -42,15 +43,23 @@ const TaskDetailPopup = ({ navigation, taskId, delay }: Props) => {
   };
 
   return (
-    <TaskDetailPopupStyled source={require('~/assets/images/popup_task_detail.png')} resizeMode="cover">
-      {delay ? (
+    <TaskDetailPopupStyled
+      check={completedCount === 0 && !isDelay}
+      source={
+        completedCount === 0 && !isDelay
+          ? require('~/assets/images/popup_task_detail_2.png')
+          : require('~/assets/images/popup_task_detail_3.png')
+      }
+      resizeMode="cover">
+      {completedCount > 0 && (
         <TaskDetailPopupButton onPress={handleCancelButtonClick}>
           <TaskDetailPopupButtonImage source={require('~/assets/images/button_cancel.png')} />
           <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
             되돌리기
           </CustomText>
         </TaskDetailPopupButton>
-      ) : (
+      )}
+      {completedCount === 0 && isDelay && (
         <TaskDetailPopupButton onPress={handleDelayButtonClick}>
           <TaskDetailPopupButtonImage source={require('~/assets/images/button_delay.png')} />
           <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
@@ -90,8 +99,8 @@ const TaskDetailPopup = ({ navigation, taskId, delay }: Props) => {
   );
 };
 
-const TaskDetailPopupStyled = styled.ImageBackground`
-  width: 205px;
+const TaskDetailPopupStyled = styled.ImageBackground<{ check: boolean }>`
+  width: ${({ check }) => (check ? 150 : 205) + 'px'};
   height: 85px;
   flex-direction: row;
   justify-content: center;
