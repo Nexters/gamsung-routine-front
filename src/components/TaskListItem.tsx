@@ -13,6 +13,7 @@ import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import { BackgroundColor, BorderColor, SurfaceColor, TextColor } from '~/utils/color';
+import { getDay, getWeek } from '~/utils/days';
 import { FontType } from '~/utils/font';
 
 interface Props {
@@ -22,6 +23,8 @@ interface Props {
   title: string;
   timesOfWeek: number;
   timesOfDay: number;
+  days: number[];
+  delay: boolean;
   percent: number;
   share?: boolean;
   shareCount?: number;
@@ -42,6 +45,8 @@ const TaskListItem = observer(
     title,
     timesOfWeek,
     timesOfDay,
+    days,
+    delay,
     percent,
     share,
     shareCount,
@@ -85,6 +90,7 @@ const TaskListItem = observer(
             <TaskListItemViewTitle>
               <TaskListItemViewInfo>
                 <CustomText
+                  marginTop={-3}
                   font={FontType.REGULAR_LARGE}
                   color={percent === 100 ? TextColor.INACTIVE_L : TextColor.PRIMARY_L}>
                   {title}
@@ -93,7 +99,11 @@ const TaskListItem = observer(
               </TaskListItemViewInfo>
               <TaskListItemViewSubTitle>
                 <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.PRIMARY_L}>
-                  주 {timesOfWeek}회 · 하루 {timesOfDay}번
+                  {days &&
+                    days.map((day, index) => {
+                      return `${getDay(day) + (index !== days.length - 1 ? ',' : '')}`;
+                    })}{' '}
+                  · 하루 {timesOfDay}번 {delay && '· 미뤄짐'}
                 </CustomText>
               </TaskListItemViewSubTitle>
             </TaskListItemViewTitle>
@@ -107,7 +117,12 @@ const TaskListItem = observer(
             {dayOfWeek?.map((item, index) => {
               const dayOfWeekPercent = ((item.completeCount || 0) / (item.timesOfDay || 0) || 0) * 100;
               return (
-                <MonsterIcon key={index} listType={CalendarStore.radio} data={dayOfWeekPercent} none={!item.taskId} />
+                <MonsterIconStyled key={index}>
+                  <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L} marginBottom={3}>
+                    {getDay(index + 1)}
+                  </CustomText>
+                  <MonsterIcon key={index} listType={CalendarStore.radio} data={dayOfWeekPercent} none={!item.taskId} />
+                </MonsterIconStyled>
               );
             })}
           </TaskListItemWeekView>
@@ -124,6 +139,7 @@ const TaskListItem = observer(
             )}
             {CalendarStore.radio === RADIO_TYPE.리포트 && (
               <CustomText color={TextColor.PRIMARY_L} font={FontType.REGULAR_CAPTION}>
+                {`${CalendarStore.focusDay.format('M월')} ${getWeek()}주 `}
                 {share ? `${shareCount}명의 달성률 총 ` : '나의 달성률 총 '}
                 <CustomText color={TextColor.HIGHLIGHT} font={FontType.REGULAR_CAPTION}>
                   {percent}%
@@ -132,7 +148,7 @@ const TaskListItem = observer(
             )}
           </TaskListItemInfoPercent>
         </TaskListItemInfoView>
-        {isVisiblePopup === taskId && <TaskDetailPopup taskId={taskId} navigation={navigation} />}
+        {isVisiblePopup === taskId && <TaskDetailPopup taskId={taskId} navigation={navigation} delay={delay} />}
       </TaskListItemStyled>
     );
   },
@@ -191,8 +207,14 @@ const TaskListItemWeekView = styled.View`
   justify-content: center;
   background-color: ${SurfaceColor.DEPTH2_L};
   border-radius: 8px;
-  padding: 8px;
+  padding: 10px;
   margin-top: 15px;
+`;
+
+const MonsterIconStyled = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const TaskListItemInfoView = styled.View<{ listType: RADIO_TYPE; share: boolean | undefined }>`

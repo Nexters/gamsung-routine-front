@@ -40,11 +40,13 @@ const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick, na
                 title={task.title}
                 timesOfWeek={task.timesOfWeek}
                 timesOfDay={task.timesOfDay}
+                days={task.days}
+                delay={false}
                 percent={(task.completeCount || 0) / (task.timesOfDay || 0) || 0}
                 share={false}
                 shareCount={3}
                 shareFinishedCount={0}
-                sharePeople={[]}
+                sharePeople={['1', '2', '3']}
                 sharePercent={30}
                 onTaskItemClick={(id: string) => onToggleTask(id)}
                 isVisiblePopup={isVisiblePopup}
