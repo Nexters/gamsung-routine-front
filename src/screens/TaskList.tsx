@@ -6,6 +6,8 @@ import React, { useCallback } from 'react';
 
 import AddTaskItem from '~/components/AddTaskItem';
 import { CollapsibleToolbar } from '~/components/CollapsibleToolbar';
+import CustomModal from '~/components/CustomModal';
+import useModal from '~/hooks/useModal';
 import { RootStackParamList } from '~/navigations/types';
 import { BackgroundColor } from '~/utils/color';
 
@@ -16,27 +18,52 @@ interface Props {
 
 export const TaskList: React.FC<Props> = observer(({ navigation, route }) => {
   const { template, headerColor } = route.params;
+  const { isVisible: isModalVisible, openModal, closeModal } = useModal();
 
   const handleBackpressClick = useCallback(() => {
     navigation.pop();
   }, [navigation]);
 
+  const handleAddAllTaskClick = () => {
+    openModal();
+  };
+
+  const handleModalAllTaskItemClick = () => {
+    console.log('모두 담기 api 연결');
+  };
+
   return (
-    <Frame>
-      <CollapsibleToolbar title={template.name} onBackpressClick={handleBackpressClick} backgroundColor={headerColor}>
-        <ContentScrollView style={{ marginTop: 230 }}>
-          {template.tasks.map((task) => (
-            <AddTaskItem
-              key={task.id}
-              taskName={task.name}
-              onClick={() => {
-                navigation.navigate('EditTask', { templateTask: task, taskId: null });
-              }}
-            />
-          ))}
-        </ContentScrollView>
-      </CollapsibleToolbar>
-    </Frame>
+    <>
+      <Frame>
+        <CollapsibleToolbar
+          title={template.name}
+          onBackpressClick={handleBackpressClick}
+          backgroundColor={headerColor}
+          onAddAllTaskClick={handleAddAllTaskClick}>
+          <ContentScrollView style={{ marginTop: 230 }}>
+            {template.tasks.map((task) => (
+              <AddTaskItem
+                key={task.id}
+                taskName={task.name}
+                onClick={() => {
+                  navigation.navigate('EditTask', { templateTask: task, taskId: null });
+                }}
+              />
+            ))}
+          </ContentScrollView>
+        </CollapsibleToolbar>
+      </Frame>
+      <CustomModal
+        isVisible={isModalVisible}
+        onClose={closeModal}
+        content="테스크 전체 담기를 하시겠어요?"
+        subContent="세부 내역은 수정할 수 없습니다."
+        leftButtonText="취소"
+        onLeftButtonClick={() => closeModal()}
+        rightButtonText="전체담기"
+        onRightButtonClick={handleModalAllTaskItemClick}
+      />
+    </>
   );
 });
 

@@ -20,11 +20,12 @@ interface Props {
   title: string;
   children: React.ReactNode;
   onBackpressClick?: () => void;
+  onAddAllTaskClick?: () => void;
   backgroundColor?: GraphicColor;
 }
 
 export const CollapsibleToolbar: React.FC<Props> = observer(
-  ({ title, children, onBackpressClick, backgroundColor = GraphicColor.RED }) => {
+  ({ title, children, onBackpressClick, backgroundColor = GraphicColor.RED, onAddAllTaskClick }) => {
     const [scrollY] = useState(new Animated.Value(0));
 
     const headerHeight = scrollY.interpolate({
@@ -81,6 +82,10 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
       onBackpressClick?.();
     };
 
+    const handleAddAllTaskClick = () => {
+      onAddAllTaskClick?.();
+    };
+
     return (
       <CollapsibleToolbarStyled>
         <Animated.ScrollView
@@ -120,7 +125,7 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
           <LeftHeaderItem onPress={handleBackpressClick}>
             <Icon type={'ARROW_LEFT'} />
           </LeftHeaderItem>
-          <RightHeaderItem>
+          <RightHeaderItem onPress={handleAddAllTaskClick}>
             <CustomText color={TextColor.PRIMARY_D} font={FontType.MEDIUM_BODY_01}>
               전체 담기
             </CustomText>
