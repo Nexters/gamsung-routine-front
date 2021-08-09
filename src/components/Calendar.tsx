@@ -357,7 +357,6 @@ const WeekTextWrapper = styled.View`
 
 const Daily = observer(() => {
   const { data, error } = useMonthlyTasks({
-    profileId: '1',
     month: CalendarStore.month.toString(),
     year: CalendarStore.tempYear.toString(),
   });
@@ -425,7 +424,6 @@ const Weekly = observer(() => {
       ? CalendarStore.focusDay.add(-7, 'day').day(1)
       : CalendarStore.focusDay.day(1);
   const { data, error } = useMonthlyTasks({
-    profileId: '1',
     month: CalendarStore.month.toString(),
     year: CalendarStore.tempYear.toString(),
   });

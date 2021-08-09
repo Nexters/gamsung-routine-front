@@ -4,8 +4,8 @@ import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
 
-import { useUserProfileData } from '~/apis/authAPI';
 import { useMonthlyTasks } from '~/apis/routinAPI';
+import { useGetCategory, useTemplates } from '~/apis/templateAPI';
 import Calendar from '~/components/Calendar';
 import CustomText from '~/components/CustomText';
 import Icon from '~/components/Icon';
@@ -22,11 +22,11 @@ export interface HomeScreenProps {
 }
 
 const Home = ({ navigation }: HomeScreenProps) => {
-  const { data, error } = useUserProfileData();
-  console.log('useUserProfileData', data, error);
+  // Category 이동 시에 데이터가 로딩되어 있으면 좋겠다...
+  const { data: categories = [] } = useGetCategory();
+  const { data: templates = [] } = useTemplates(categories?.[0]?.id || 0);
 
   const { data: TaskList } = useMonthlyTasks({
-    profileId: '1',
     month: CalendarStore.month.toString(),
     year: CalendarStore.tempYear.toString(),
   });
@@ -83,12 +83,12 @@ const Home = ({ navigation }: HomeScreenProps) => {
     percent = ((total?.completeCount || 0) / (total?.timesOfDay || 0) || 0) * 100;
     routine = temp.reduce((unique, item, currentIndex) => {
       const index = temp.findIndex((t) => {
-        return t.id === item.id;
+        return t.taskId === item.taskId;
       });
       if (currentIndex === index) {
         return [...unique, item];
       }
-      return [];
+      return unique;
     }, [] as Task[]);
   }
 

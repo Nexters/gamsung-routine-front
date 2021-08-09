@@ -12,29 +12,29 @@ import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
-  id: string;
+  taskId: string;
   navigation: StackNavigationProp<RootStackParamList>;
 }
 
-const TaskDetailPopup = ({ id, navigation }: Props) => {
+const TaskDetailPopup = ({ taskId, navigation }: Props) => {
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
 
   const { modalContent, setModalContent, modalSubContent, setModalSubContent } = useModalContent();
 
   const handleCancelButtonClick = () => {
-    console.log(id, ' : cancel');
+    console.log(taskId, ' : cancel');
   };
 
   const handleDelayButtonClick = () => {
-    console.log(id, ' : delay');
+    console.log(taskId, ' : delay');
   };
 
   const handleEditButtonClick = () => {
-    navigation.navigate('EditTask', { templateTask: null, taskId: Number(id) });
+    navigation.navigate('EditTask', { templateTask: null, taskId: Number(taskId) });
   };
 
   const handleDeleteButtonClick = () => {
-    console.log(id, ' : delete');
+    console.log(taskId, ' : delete');
     setModalContent('태스크를 종료하시겠어요?');
     setModalSubContent('태스크를 종료하면 되돌릴 수 없어요!');
     openModal();

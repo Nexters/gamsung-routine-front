@@ -1,17 +1,18 @@
+import { useUserProfileData } from './authAPI';
+
 import { RoutineTaskUnit } from '~/models/RoutineTaskUnit';
 import { Task } from '~/models/Task';
 import api from '~/utils/api';
 import { useCommonSWR } from '~/utils/swr';
 
-export const useMonthlyTasks = ({ profileId, year, month }: { profileId: string; year: string; month: string }) => {
-  profileId = 'testprofile';
-  year = '2021';
-  month = '08';
+export const useMonthlyTasks = ({ year, month }: { year: string; month: string }) => {
+  const { data: profile } = useUserProfileData();
+  const profileId = profile?.id;
   return useCommonSWR<{
     dailyRoutines: {
       [key: string]: Task[];
     };
-  }>(`/routine/weekly/${profileId}?year=${year}&month=${month}`);
+  }>(profileId ? `/routine/monthly/${profileId}?year=${year}&month=${month}` : null);
 };
 
 export class RoutineAPI {
