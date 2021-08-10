@@ -32,7 +32,7 @@ const TaskDetailPopup = ({ navigation, taskId, isDelay, completedCount }: Props)
   };
 
   const handleEditButtonClick = () => {
-    navigation.navigate('EditTask', { templateTask: null, taskId: Number(taskId) });
+    navigation.navigate('EditTask', { templateTask: null, taskId: taskId });
   };
 
   const handleDeleteButtonClick = () => {

@@ -9,7 +9,7 @@ export type RootStackParamList = {
   AddTask: undefined;
   EditTask: {
     templateTask: TemplateTask | null;
-    taskId: number | null;
+    taskId: string | null;
   };
   TaskList: { template: Template; headerColor?: GraphicColor };
   TemplateList: undefined;
