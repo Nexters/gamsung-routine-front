@@ -16,11 +16,11 @@ interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
   taskList: Task[];
   onToggleTask: (id: string) => void;
-  isVisiblePopup: string | null;
-  onPopupClick: (id: string) => void;
+  visiblePopup: string | null;
+  onPopupClick: (id: string | null) => void;
 }
 
-const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick, navigation }: Props) => {
+const TaskListView = ({ taskList, onToggleTask, visiblePopup, onPopupClick, navigation }: Props) => {
   const handleMoreButtonClick = (id: string) => {
     onPopupClick(id);
   };
@@ -52,7 +52,7 @@ const TaskListView = ({ taskList, onToggleTask, isVisiblePopup, onPopupClick, na
                 sharePeople={['1', '2', '3']}
                 sharePercent={30}
                 onTaskItemClick={(id: string) => onToggleTask(id)}
-                isVisiblePopup={isVisiblePopup}
+                visiblePopup={visiblePopup}
                 onMoreButtonClick={handleMoreButtonClick}
               />
             );
