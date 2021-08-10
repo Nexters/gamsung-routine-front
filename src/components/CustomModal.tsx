@@ -17,6 +17,7 @@ interface Props {
   rightButtonText: string;
   onRightButtonClick: () => void;
   backgroundOpacity?: number;
+  children?: React.ReactNode;
 }
 
 const CustomModal = ({
@@ -29,6 +30,7 @@ const CustomModal = ({
   rightButtonText,
   onRightButtonClick,
   backgroundOpacity = 0.4,
+  children,
 }: Props) => {
   return (
     <Modal
@@ -62,6 +64,7 @@ const CustomModal = ({
           </RightButton>
         </ModalButtonView>
       </ModalStyled>
+      {children}
     </Modal>
   );
 };
