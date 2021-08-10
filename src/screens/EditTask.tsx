@@ -133,8 +133,6 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     setModalSubContent('테스크를 종료하면 되돌리실 수 없어요!');
     setModalLeftButtonText('취소');
     setModalRightButtonText('삭제하기');
-
-    vm.onTaskEnd();
   };
 
   return (
@@ -182,7 +180,13 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
                     <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L}>
                       파티원 설정
                     </CustomText>
-                    <FriendInviteCard friend={[]} marginTop={16} />
+                    <FriendInviteCard
+                      friends={[
+                        { id: 1, name: '김헌진' },
+                        { id: 2, name: '김헌진' },
+                      ]}
+                      marginTop={16}
+                    />
                   </AddPartyView>
                   <FinishTaskTextButton onPress={handleEndTaskClick}>
                     <CustomText font={FontType.MEDIUM_BODY_02} color={TextColor.RED}>

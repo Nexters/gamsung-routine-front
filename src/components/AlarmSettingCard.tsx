@@ -40,7 +40,7 @@ export const AlarmSettingCard: React.FC<Props> = observer(({ marginTop, marginBo
 
   return (
     <CollapsibleCard marginTop={marginTop} marginBottom={marginBottom}>
-      <FoldableContainer type="SWITCH" label="알람 설정" isOpen={isAlarmSettingOpen} onOpen={handleChangeAlarm} />
+      <FoldableContainer type="SWITCH" label="알람 설정" isOpen={isAlarmSettingOpen} setIsOpen={handleChangeAlarm} />
       {isAlarmSettingOpen && <DividerStyled />}
       {isAlarmSettingOpen && <WheelPicker items={alarmData} />}
     </CollapsibleCard>

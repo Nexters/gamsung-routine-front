@@ -32,7 +32,7 @@ export const TimeSettingCard: React.FC<Props> = observer(
           type="SWITCH"
           label="시간 설정"
           isOpen={isTimeSettingOpen}
-          onOpen={() => setIsTimeSettingOpen(!isTimeSettingOpen)}
+          setIsOpen={() => setIsTimeSettingOpen(!isTimeSettingOpen)}
         />
         {isTimeSettingOpen && <DividerStyled />}
         {isTimeSettingOpen &&
