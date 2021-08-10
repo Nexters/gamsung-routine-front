@@ -134,9 +134,9 @@ export class EditTaskStore {
     this.alarm = isAlarm;
   }
 
-  onTaskEnd() {
+  async onTaskEnd() {
     if (this.taskId) {
-      RoutineAPI.instance().deleteTask(this.taskId.toString());
+      await RoutineAPI.instance().deleteTask(this.taskId);
     }
   }
 

@@ -79,14 +79,14 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     }
   };
 
-  const handleRightButtonClick = () => {
+  const handleRightButtonClick = async () => {
     switch (modalType) {
       case 'SAVE': {
         handleKeepAddingButtonClick();
         return;
       }
       case 'DELETE': {
-        vm.onTaskEnd();
+        await vm.onTaskEnd();
         closeModal();
         navigation.pop();
         showToast('테스크가 종료되었어요.');
@@ -133,6 +133,9 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     setModalSubContent('테스크를 종료하면 되돌리실 수 없어요!');
     setModalLeftButtonText('취소');
     setModalRightButtonText('삭제하기');
+    setModalType('DELETE');
+
+    openModal();
   };
 
   return (

@@ -4,9 +4,9 @@ import React from 'react';
 
 import CustomModal from './CustomModal';
 
+import { RoutineAPI } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
 import useModal from '~/hooks/useModal';
-import useModalContent from '~/hooks/useModalContent';
 import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -21,8 +21,6 @@ interface Props {
 const TaskDetailPopup = ({ navigation, taskId, isDelay, completedCount }: Props) => {
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
 
-  const { modalContent, setModalContent, modalSubContent, setModalSubContent } = useModalContent();
-
   const handleCancelButtonClick = () => {
     console.log(taskId, ' : cancel');
   };
@@ -36,10 +34,16 @@ const TaskDetailPopup = ({ navigation, taskId, isDelay, completedCount }: Props)
   };
 
   const handleDeleteButtonClick = () => {
-    console.log(taskId, ' : delete');
-    setModalContent('태스크를 종료하시겠어요?');
-    setModalSubContent('태스크를 종료하면 되돌릴 수 없어요!');
     openModal();
+  };
+
+  const handleModalDeleteClick = () => {
+    RoutineAPI.instance().deleteTask(taskId);
+    closeModal();
+  };
+
+  const handleModalCancelClick = () => {
+    closeModal();
   };
 
   return (
@@ -82,18 +86,12 @@ const TaskDetailPopup = ({ navigation, taskId, isDelay, completedCount }: Props)
       <CustomModal
         isVisible={isModalVisible}
         onClose={closeModal}
-        content={modalContent}
-        subContent={modalSubContent}
+        content="태스크를 종료하시겠어요?"
+        subContent="태스크를 종료하면 되돌릴 수 없어요!"
         leftButtonText="취소"
-        onLeftButtonClick={() => {
-          setModalContent('');
-          setModalSubContent('');
-          closeModal();
-        }}
+        onLeftButtonClick={handleModalDeleteClick}
         rightButtonText="확인"
-        onRightButtonClick={() => {
-          closeModal();
-        }}
+        onRightButtonClick={handleModalCancelClick}
       />
     </TaskDetailPopupStyled>
   );
