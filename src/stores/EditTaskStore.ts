@@ -23,7 +23,7 @@ export class EditTaskStore {
   timeOfDay = 1;
   alarm = false;
 
-  constructor(readonly taskId: number | null = null, templateTask: TemplateTask | null = null) {
+  constructor(readonly taskId: string | null = null, templateTask: TemplateTask | null = null) {
     makeObservable(this, {
       days: observable,
       taskName: observable,
@@ -145,7 +145,7 @@ export class EditTaskStore {
       return;
     }
     const item: RoutineTaskUnit = {
-      id: this.taskId?.toString() ?? null,
+      id: this.taskId ?? null,
       profileId: profileUserId,
       title: this.taskName,
       notify: this.alarm,
