@@ -18,7 +18,7 @@ import useModal from '~/hooks/useModal';
 import useModalContent from '~/hooks/useModalContent';
 import { RootStackParamList } from '~/navigations/types';
 import { EditTaskStore } from '~/stores/EditTaskStore';
-import { ActionColor, TextColor } from '~/utils/color';
+import { ActionColor, GraphicColor, TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import { showToast } from '~/utils/showToast';
 
@@ -213,7 +213,21 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
         onLeftButtonClick={handleLeftButtonClick}
         rightButtonText={modalRightButtonText}
         onRightButtonClick={handleRightButtonClick}
-      />
+        backgroundOpacity={0.8}>
+        {modalType === 'SAVE' && (
+          <FriendInviteView>
+            <KakaoInviteButton>
+              <KakaoIcon source={require('~/assets/icons/icon_kakao_login.png')} />
+              <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_L} align={Align.CENTER}>
+                테스크 파티원 초대하기
+              </CustomText>
+            </KakaoInviteButton>
+            <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_D} align={Align.CENTER}>
+              나중에 테스크 수정을 통해서도 초대가 가능해요.
+            </CustomText>
+          </FriendInviteView>
+        )}
+      </CustomModal>
     </>
   );
 };
@@ -266,6 +280,31 @@ const EditSubmitButton = styled.TouchableOpacity<{ disabled: boolean }>`
   right: 20px;
   position: absolute;
   bottom: 34px;
+`;
+
+const FriendInviteView = styled.View`
+  position: absolute;
+  bottom: 50px;
+  left: 37px;
+  right: 37px;
+`;
+
+const KakaoInviteButton = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: ${GraphicColor.YELLOW};
+  padding: 12px 0;
+  margin-top: auto;
+  margin-bottom: 10px;
+  border-radius: 8px;
+`;
+
+const KakaoIcon = styled.Image`
+  width: 17px;
+  height: 16px;
+  margin-right: 8px;
 `;
 
 export default observer(EditTask);
