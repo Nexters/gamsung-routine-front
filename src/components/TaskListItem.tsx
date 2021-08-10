@@ -34,7 +34,7 @@ interface Props {
   sharePeople?: string[];
   sharePercent?: number;
   onTaskItemClick: (id: string) => void;
-  isVisiblePopup: string | null;
+  visiblePopup: string | null;
   onMoreButtonClick: (id: string) => void;
   navigation: StackNavigationProp<RootStackParamList>;
 }
@@ -57,7 +57,7 @@ const TaskListItem = observer(
     shareFinishedCount,
     sharePeople,
     onTaskItemClick,
-    isVisiblePopup,
+    visiblePopup,
     onMoreButtonClick,
     navigation,
   }: Props) => {
@@ -152,7 +152,7 @@ const TaskListItem = observer(
             )}
           </TaskListItemInfoPercent>
         </TaskListItemInfoView>
-        {isVisiblePopup === taskId && (
+        {visiblePopup === taskId && (
           <TaskDetailPopup
             taskId={taskId}
             navigation={navigation}

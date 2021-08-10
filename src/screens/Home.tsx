@@ -31,10 +31,10 @@ const Home = ({ navigation }: HomeScreenProps) => {
     year: CalendarStore.tempYear.toString(),
   });
 
-  const [isVisiblePopup, setIsVisiblePopup] = useState<string | null>(null);
+  const [visiblePopup, setVisiblePopup] = useState<string | null>(null);
 
   const handlePopupClick = (id: string | null) => {
-    setIsVisiblePopup(isVisiblePopup === id ? null : id);
+    setVisiblePopup(visiblePopup === id ? null : id);
   };
 
   let routine = [] as Task[];
@@ -93,7 +93,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
   }
 
   const handleToggleTask = (id: string) => {
-    setIsVisiblePopup(null);
+    setVisiblePopup(null);
     if (!routine) {
       return;
     }
@@ -138,14 +138,14 @@ const Home = ({ navigation }: HomeScreenProps) => {
               navigation={navigation}
               taskList={routine || []}
               onToggleTask={handleToggleTask}
-              isVisiblePopup={isVisiblePopup}
+              visiblePopup={visiblePopup}
               onPopupClick={handlePopupClick}
             />
           </TaskView>
         </HomeView>
         <AddTaskButton
           onPress={() => {
-            setIsVisiblePopup(null);
+            setVisiblePopup(null);
             navigation.navigate('TemplateList');
           }}>
           <Icon type={'PLUS'} />
