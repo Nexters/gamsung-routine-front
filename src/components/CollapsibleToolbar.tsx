@@ -31,17 +31,24 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
       extrapolate: 'clamp',
     });
 
-    const headerSlideX = scrollY.interpolate({
-      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-      outputRange: [0, 100],
-      extrapolate: 'clamp',
-    });
-
-    const headerSlideY = scrollY.interpolate({
-      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-      outputRange: [0, 53],
-      extrapolate: 'clamp',
-    });
+    const position = {
+      transform: [
+        {
+          translateX: scrollY.interpolate({
+            inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
+            outputRange: [0, 100],
+            extrapolate: 'clamp',
+          }),
+        },
+        {
+          translateY: scrollY.interpolate({
+            inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
+            outputRange: [0, 53],
+            extrapolate: 'clamp',
+          }),
+        },
+      ],
+    };
 
     const backgroundSlide = scrollY.interpolate({
       inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
@@ -99,12 +106,10 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
             </View>
           </Background>
           <Action style={{ transform: [{ scale: headerTitleSize }] }}>
-            <Animated.View style={{ position: 'absolute', left: 20, transform: [{ translateX: headerSlideX }] }}>
-              <Animated.View style={{ position: 'absolute', bottom: 70, transform: [{ translateY: headerSlideY }] }}>
-                <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_D}>
-                  {title}
-                </CustomText>
-              </Animated.View>
+            <Animated.View style={{ position: 'absolute', left: 20, bottom: 70, ...position }}>
+              <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_D}>
+                {title}
+              </CustomText>
             </Animated.View>
           </Action>
         </Header>
