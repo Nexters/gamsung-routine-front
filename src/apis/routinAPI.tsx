@@ -34,6 +34,10 @@ export class RoutineAPI {
     await api.delete(`/routine/${taskId}`);
   }
 
+  async saveMultiTask(items: RoutineTaskUnit[]) {
+    await api.post('/routine/multi', items);
+  }
+
   static instance() {
     if (!this._instance) {
       this._instance = new RoutineAPI();
