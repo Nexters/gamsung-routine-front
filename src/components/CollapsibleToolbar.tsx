@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { View, Animated, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Animated, TouchableOpacity } from 'react-native';
 
 import CustomText from './CustomText';
 import Icon from './Icon';
@@ -11,10 +11,6 @@ import { FontType } from '~/utils/font';
 
 const HEADER_EXPANDED_HEIGHT = 215;
 const HEADER_COLLAPSED_HEIGHT = 56;
-
-const TITLE_EXPANDED_HEIGHT = 24;
-const TITLE_COLLAPSED_HEIGHT = 16;
-const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
 interface Props {
   title: string;
@@ -29,31 +25,27 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
   ({ title, description, children, onBackpressClick, backgroundColor = GraphicColor.RED, onAddAllTaskClick }) => {
     const [scrollY] = useState(new Animated.Value(0));
 
-    const headerHeight = scrollY.interpolate({
-      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-      outputRange: [HEADER_EXPANDED_HEIGHT, HEADER_COLLAPSED_HEIGHT],
-      extrapolate: 'clamp',
-    });
-
     const headerSlide = scrollY.interpolate({
       inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
       outputRange: [0, HEADER_COLLAPSED_HEIGHT - HEADER_EXPANDED_HEIGHT],
       extrapolate: 'clamp',
     });
 
-    const backgroundSlide = scrollY.interpolate({
+    const headerSlideX = scrollY.interpolate({
       inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
       outputRange: [0, 100],
       extrapolate: 'clamp',
     });
 
-    const headerTitleSlide = scrollY.interpolate({
-      inputRange: [
-        0,
-        (HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT) / 2,
-        HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT,
-      ],
-      outputRange: [0, 0, -8],
+    const headerSlideY = scrollY.interpolate({
+      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
+      outputRange: [0, 53],
+      extrapolate: 'clamp',
+    });
+
+    const backgroundSlide = scrollY.interpolate({
+      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
+      outputRange: [0, 100],
       extrapolate: 'clamp',
     });
 
@@ -64,18 +56,6 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
         HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT,
       ],
       outputRange: [1, 1, 0.8],
-      extrapolate: 'clamp',
-    });
-
-    const headerTitleOpacity = scrollY.interpolate({
-      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    });
-
-    const imageOpacity = scrollY.interpolate({
-      inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-      outputRange: [0.5, 0],
       extrapolate: 'clamp',
     });
 
@@ -112,14 +92,20 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
               height: HEADER_EXPANDED_HEIGHT,
               transform: [{ translateY: backgroundSlide }],
             }}>
-            <View style={{ position: 'absolute', bottom: 20, left: 20 }}>
-              <Text style={{ color: TextColor.PRIMARY_D }}>{description}</Text>
+            <View style={{ position: 'absolute', bottom: 40, left: 20 }}>
+              <CustomText font={FontType.MEDIUM_BODY_02} color={TextColor.PRIMARY_D}>
+                {description}
+              </CustomText>
             </View>
           </Background>
           <Action style={{ transform: [{ scale: headerTitleSize }] }}>
-            <View style={{ position: 'absolute', left: 20, bottom: 40 }}>
-              <Text style={{ color: TextColor.PRIMARY_D }}>{title}</Text>
-            </View>
+            <Animated.View style={{ position: 'absolute', left: 20, transform: [{ translateX: headerSlideX }] }}>
+              <Animated.View style={{ position: 'absolute', bottom: 70, transform: [{ translateY: headerSlideY }] }}>
+                <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_D}>
+                  {title}
+                </CustomText>
+              </Animated.View>
+            </Animated.View>
           </Action>
         </Header>
         <AppBar>
