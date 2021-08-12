@@ -36,7 +36,7 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
         {
           translateX: scrollY.interpolate({
             inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-            outputRange: [0, 100],
+            outputRange: [0, 0],
             extrapolate: 'clamp',
           }),
         },
@@ -99,15 +99,15 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
               height: HEADER_EXPANDED_HEIGHT,
               transform: [{ translateY: backgroundSlide }],
             }}>
-            <View style={{ position: 'absolute', bottom: 40, left: 20 }}>
-              <CustomText font={FontType.MEDIUM_BODY_02} color={TextColor.PRIMARY_D}>
+            <View style={{ position: 'absolute', bottom: 25, left: 20, right: 20 }}>
+              <CustomText font={FontType.MEDIUM_BODY_02} color={TextColor.PRIMARY_D} numberOfLines={2}>
                 {description}
               </CustomText>
             </View>
           </Background>
           <Action style={{ transform: [{ scale: headerTitleSize }] }}>
-            <Animated.View style={{ position: 'absolute', left: 20, bottom: 70, ...position }}>
-              <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_D}>
+            <Animated.View style={{ position: 'absolute', left: 20, right: 80, bottom: 70, ...position }}>
+              <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_D} numberOfLines={1}>
                 {title}
               </CustomText>
             </Animated.View>
