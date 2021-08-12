@@ -13,6 +13,7 @@ import introMainTitle from '~/assets/images/intro_main_title.svg';
 import introMonster1 from '~/assets/images/intro_monster_1.svg';
 import introMonster2 from '~/assets/images/intro_monster_2.svg';
 import CustomText from '~/components/CustomText';
+import SkipButton from '~/components/SkipButton';
 import { Slider } from '~/components/Slider';
 import { SpeechBubble } from '~/components/SpeechBubble';
 import { RootStackParamList } from '~/navigations/types';
@@ -24,16 +25,20 @@ interface NavigationProps {
 }
 
 const Intro: React.FC<NavigationProps> = ({ navigation }) => {
-  const [page, setPage] = useState({ page: 0 }); // 강제로 변경 이벤트를 넣기 위해 객체로 넣음
+  const [isStart, setIsStart] = useState(false);
+  const [page, setPage] = useState(0); // 강제로 변경 이벤트를 넣기 위해 객체로 넣음
 
-  const handleNextPage = (page: number) => {
-    setPage({ page: page });
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
   };
+
+  if (!isStart) {
+    return <Start navigation={navigation} onNextPage={() => setIsStart(true)} />;
+  }
 
   return (
     <IntroFrame>
-      <Slider nextPage={page} navigation={navigation}>
-        <PageA onNextPage={handleNextPage} />
+      <Slider page={page} navigation={navigation}>
         <PageB onNextPage={handleNextPage} />
         <PageC onNextPage={handleNextPage} />
         <PageD onNextPage={handleNextPage} />
@@ -45,49 +50,56 @@ const Intro: React.FC<NavigationProps> = ({ navigation }) => {
   );
 };
 
-const PageA: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
-  const handleNextPage = () => {
-    onNextPage(1);
-  };
+interface PageProps {
+  onNextPage: () => void;
+}
 
+interface StartProp extends PageProps {
+  navigation: StackNavigationProp<RootStackParamList>;
+}
+
+const Start: React.FC<StartProp> = observer(({ navigation, onNextPage }) => {
   return (
-    <PageFrame backgroundColor={BackgroundColor.HIGHLIGHTER}>
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 400,
-          zIndex: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-        }}>
-        <SvgXml xml={introMainTitle} />
-      </View>
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 180,
-          zIndex: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-        }}>
-        <SvgXml xml={introMainKimBonKae1} />
-      </View>
-      <PageABottomBackground>
-        <PageAStartButton onPress={handleNextPage}>
-          <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
-            시작하기
-          </CustomText>
-        </PageAStartButton>
-      </PageABottomBackground>
-    </PageFrame>
+    <IntroFrame>
+      <PageFrame backgroundColor={BackgroundColor.HIGHLIGHTER}>
+        <SkipButton navigation={navigation} />
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 400,
+            zIndex: 10,
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+          }}>
+          <SvgXml xml={introMainTitle} />
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 180,
+            zIndex: 10,
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+          }}>
+          <SvgXml xml={introMainKimBonKae1} />
+        </View>
+        <PageABottomBackground>
+          <PageAStartButton onPress={onNextPage}>
+            <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
+              시작하기
+            </CustomText>
+          </PageAStartButton>
+        </PageABottomBackground>
+      </PageFrame>
+    </IntroFrame>
   );
 });
 
-const PageB: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
+const PageB: React.FC<PageProps> = observer(({ onNextPage }) => {
   const handleNextPage = () => {
-    onNextPage(2);
+    onNextPage();
   };
 
   return (
@@ -113,9 +125,9 @@ const PageB: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNe
   );
 });
 
-const PageC: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
+const PageC: React.FC<PageProps> = observer(({ onNextPage }) => {
   const handleNextPage = () => {
-    onNextPage(3);
+    onNextPage();
   };
 
   return (
@@ -151,9 +163,9 @@ const PageC: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNe
   );
 });
 
-const PageD: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
+const PageD: React.FC<PageProps> = observer(({ onNextPage }) => {
   const handleNextPage = () => {
-    onNextPage(4);
+    onNextPage();
   };
 
   return (
@@ -180,9 +192,9 @@ const PageD: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNe
   );
 });
 
-const PageE: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
+const PageE: React.FC<PageProps> = observer(({ onNextPage }) => {
   const handleNextPage = () => {
-    onNextPage(5);
+    onNextPage();
   };
 
   return (
@@ -218,9 +230,9 @@ const PageE: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNe
   );
 });
 
-const PageF: React.FC<{ onNextPage: (page: number) => void }> = observer(({ onNextPage }) => {
+const PageF: React.FC<PageProps> = observer(({ onNextPage }) => {
   const handleNextPage = () => {
-    onNextPage(6);
+    onNextPage();
   };
 
   return (
