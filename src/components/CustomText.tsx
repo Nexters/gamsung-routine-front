@@ -13,6 +13,7 @@ interface Props {
   marginBottom?: number;
   marginLeft?: number;
   marginRight?: number;
+  numberOfLines?: number;
 }
 
 const CustomText = ({
@@ -24,6 +25,7 @@ const CustomText = ({
   marginBottom = 0,
   marginLeft = 0,
   marginRight = 0,
+  numberOfLines,
 }: Props) => {
   const style = Font.getStyle(font);
   return (
@@ -35,7 +37,8 @@ const CustomText = ({
       marginTop={marginTop}
       marginBottom={marginBottom}
       marginLeft={marginLeft}
-      marginRight={marginRight}>
+      marginRight={marginRight}
+      numberOfLines={numberOfLines}>
       {children}
     </CustomTextStyled>
   );
