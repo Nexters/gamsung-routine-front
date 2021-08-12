@@ -18,6 +18,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
 interface Props {
   title: string;
+  description: string;
   children: React.ReactNode;
   onBackpressClick?: () => void;
   onAddAllTaskClick?: () => void;
@@ -25,7 +26,7 @@ interface Props {
 }
 
 export const CollapsibleToolbar: React.FC<Props> = observer(
-  ({ title, children, onBackpressClick, backgroundColor = GraphicColor.RED, onAddAllTaskClick }) => {
+  ({ title, description, children, onBackpressClick, backgroundColor = GraphicColor.RED, onAddAllTaskClick }) => {
     const [scrollY] = useState(new Animated.Value(0));
 
     const headerHeight = scrollY.interpolate({
@@ -112,7 +113,7 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
               transform: [{ translateY: backgroundSlide }],
             }}>
             <View style={{ position: 'absolute', bottom: 20, left: 20 }}>
-              <Text style={{ color: TextColor.PRIMARY_D }}>ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</Text>
+              <Text style={{ color: TextColor.PRIMARY_D }}>{description}</Text>
             </View>
           </Background>
           <Action style={{ transform: [{ scale: headerTitleSize }] }}>

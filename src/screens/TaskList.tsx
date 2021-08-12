@@ -37,6 +37,7 @@ export const TaskList: React.FC<Props> = observer(({ navigation, route }) => {
       <Frame>
         <CollapsibleToolbar
           title={template.name}
+          description={template.description}
           onBackpressClick={handleBackpressClick}
           backgroundColor={headerColor}
           onAddAllTaskClick={handleAddAllTaskClick}>

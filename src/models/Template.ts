@@ -5,4 +5,5 @@ export interface Template {
   name: string;
   tasks: TemplateTask[];
   templateIconUrl: string | null;
+  description: string;
 }
