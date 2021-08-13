@@ -33,8 +33,6 @@ const Home = ({ navigation }: HomeScreenProps) => {
 
   const [visiblePopup, setVisiblePopup] = useState<string | null>(null);
 
-  console.log('TaskList', TaskList?.dailyRoutines['20210814']);
-
   const handlePopupClick = (id: string | null) => {
     setVisiblePopup(visiblePopup === id ? null : id);
   };
