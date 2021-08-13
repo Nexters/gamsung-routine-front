@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
 
-import { useMonthlyTasks } from '~/apis/routinAPI';
+import { RoutineAPI, useMonthlyTasks } from '~/apis/routinAPI';
 import { useGetCategory, useTemplates } from '~/apis/templateAPI';
 import Calendar from '~/components/Calendar';
 import CustomText from '~/components/CustomText';
@@ -13,9 +13,9 @@ import TaskListView from '~/components/TaskListView';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
-import HomeStore from '~/stores/HomeStore';
 import { ActionColor, BackgroundColor, SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import { showToast } from '~/utils/showToast';
 
 export interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -26,12 +26,14 @@ const Home = ({ navigation }: HomeScreenProps) => {
   const { data: categories = [] } = useGetCategory();
   const { data: templates = [] } = useTemplates(categories?.[0]?.id || 0);
 
-  const { data: TaskList } = useMonthlyTasks({
+  const { data: TaskList, revalidate } = useMonthlyTasks({
     month: CalendarStore.month.toString(),
     year: CalendarStore.tempYear.toString(),
   });
 
   const [visiblePopup, setVisiblePopup] = useState<string | null>(null);
+
+  console.log('TaskList', TaskList?.dailyRoutines['20210814']);
 
   const handlePopupClick = (id: string | null) => {
     setVisiblePopup(visiblePopup === id ? null : id);
@@ -42,6 +44,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
   if (CalendarStore.radio === RADIO_TYPE.루틴) {
     const today = CalendarStore.focusDay.format('YYYYMMDD');
     routine = TaskList?.dailyRoutines[today] || [];
+
     const total = routine.reduce(
       (prev, curr) => {
         return {
@@ -54,7 +57,9 @@ const Home = ({ navigation }: HomeScreenProps) => {
         timesOfDay: 0,
       },
     );
+
     percent = ((total.completeCount || 0) / (total.timesOfDay || 0) || 0) * 100;
+
     // RADIO_TYPE.리포트 일 때
   } else {
     const isSun = CalendarStore.focusDay.format('ddd') === 'Sun';
@@ -92,18 +97,18 @@ const Home = ({ navigation }: HomeScreenProps) => {
     }, [] as Task[]);
   }
 
-  const handleToggleTask = (id: string) => {
+  const handleToggleTask = async (taskId: string) => {
     setVisiblePopup(null);
     if (!routine) {
       return;
     }
-    const task = routine?.find((t) => {
-      return id === t.id;
-    });
-    if (!task) {
-      return;
+    try {
+      const focusDay = CalendarStore.focusDay.format('YYYYMMDD');
+      await RoutineAPI.instance().completeTask(taskId, focusDay);
+      revalidate();
+    } catch (e) {
+      showToast(e);
     }
-    HomeStore.actionTask(task);
   };
 
   return (
@@ -128,7 +133,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
                 개의 달성률{' '}
               </CustomText>
               <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
-                {percent}
+                {percent.toFixed(0)}
               </CustomText>
               <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
                 % 입니다.
