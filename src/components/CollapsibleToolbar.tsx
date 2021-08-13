@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { View, Animated, TouchableOpacity } from 'react-native';
+import { Animated, TouchableOpacity } from 'react-native';
 
 import CustomText from './CustomText';
 import Icon from './Icon';
@@ -99,18 +99,18 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
               height: HEADER_EXPANDED_HEIGHT,
               transform: [{ translateY: backgroundSlide }],
             }}>
-            <View style={{ position: 'absolute', bottom: 25, left: 20, right: 20 }}>
+            <DescriptionView>
               <CustomText font={FontType.MEDIUM_BODY_02} color={TextColor.PRIMARY_D} numberOfLines={2}>
                 {description}
               </CustomText>
-            </View>
+            </DescriptionView>
           </Background>
           <Action style={{ transform: [{ scale: headerTitleSize }] }}>
-            <Animated.View style={{ position: 'absolute', left: 20, right: 80, bottom: 70, ...position }}>
+            <TitleView style={{ ...position }}>
               <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_D} numberOfLines={1}>
                 {title}
               </CustomText>
-            </Animated.View>
+            </TitleView>
           </Action>
         </Header>
         <AppBar>
@@ -143,11 +143,6 @@ const RightHeaderItem = styled(TouchableOpacity)`
   position: absolute;
   right: 20px;
   top: 15px;
-`;
-
-const Container = styled(Animated.View)`
-  flex: 1;
-  width: 100%;
 `;
 
 const AppBar = styled.View`
@@ -185,4 +180,18 @@ const Action = styled(Animated.View)`
   z-index: 10;
   padding: 0 40px;
   color: ${TextColor.PRIMARY_D};
+`;
+
+const DescriptionView = styled.View`
+  position: absolute;
+  bottom: 25;
+  left: 20;
+  right: 20;
+`;
+
+const TitleView = styled(Animated.View)`
+  position: absolute;
+  left: 20;
+  right: 80;
+  bottom: 70;
 `;
