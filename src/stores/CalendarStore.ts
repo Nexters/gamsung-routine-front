@@ -12,6 +12,7 @@ class CalendarStore {
   private static _instance: CalendarStore;
   focusDay = dayjs().locale('ko');
   firstDay = this.getFirstDay();
+  // 0~11로 표시된다.
   month = this.getFirstDay().add(7, 'day').month();
   isWeek = true;
   weekDay = this.getMonday(this.focusDay);

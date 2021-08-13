@@ -12,7 +12,8 @@ export const useMonthlyTasks = ({ year, month }: { year: string; month: string }
     dailyRoutines: {
       [key: string]: Task[];
     };
-  }>(profileId ? `/routine/monthly/${profileId}?year=${year}&month=${month}` : null);
+    // 달은 0~11이라서 1을 플러스 해줘야한다.
+  }>(profileId ? `/routine/monthly/${profileId}?year=${year}&month=${Number(month) + 1}` : null);
 };
 
 export class RoutineAPI {
@@ -36,6 +37,11 @@ export class RoutineAPI {
 
   async saveMultiTask(items: RoutineTaskUnit[]) {
     await api.post('/routine/multi', items);
+  }
+
+  // Task 1회 완료하기
+  async completeTask(unitId: string, date: string) {
+    await api.patch(`/routine/unit/complete/${unitId}?date=${date}`);
   }
 
   static instance() {

@@ -33,7 +33,7 @@ interface Props {
   shareFinishedCount?: number;
   sharePeople?: string[];
   sharePercent?: number;
-  onTaskItemClick: (id: string) => void;
+  onTaskItemClick: () => void;
   visiblePopup: string | null;
   onMoreButtonClick: (id: string) => void;
   navigation: StackNavigationProp<RootStackParamList>;
@@ -45,7 +45,6 @@ const TaskListItem = observer(
     totalCount,
     taskId,
     title,
-    timesOfWeek,
     timesOfDay,
     completedDateList,
     days,
@@ -82,7 +81,7 @@ const TaskListItem = observer(
     }
 
     const handleTaskItemClick = () => {
-      CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.(taskId);
+      CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.();
     };
 
     return (

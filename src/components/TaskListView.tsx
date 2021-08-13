@@ -15,7 +15,7 @@ import { Align, FontType } from '~/utils/font';
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
   taskList: Task[];
-  onToggleTask: (id: string) => void;
+  onToggleTask: (taskId: string) => void;
   visiblePopup: string | null;
   onPopupClick: (id: string | null) => void;
 }
@@ -51,7 +51,7 @@ const TaskListView = ({ taskList, onToggleTask, visiblePopup, onPopupClick, navi
                 shareFinishedCount={0}
                 sharePeople={['1', '2', '3']}
                 sharePercent={30}
-                onTaskItemClick={(id: string) => onToggleTask(id)}
+                onTaskItemClick={() => onToggleTask(task.taskId)}
                 visiblePopup={visiblePopup}
                 onMoreButtonClick={handleMoreButtonClick}
               />

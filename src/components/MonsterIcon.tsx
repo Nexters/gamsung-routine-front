@@ -14,7 +14,7 @@ interface Props {
 }
 
 const MonsterIconBackground = ({ data }: { data: number }) => {
-  const percent = Number((data / 100).toFixed(2));
+  const percent = Number(data.toFixed(2));
   return (
     <>
       <Svg height="28" width="28">

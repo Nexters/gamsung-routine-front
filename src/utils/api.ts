@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import AuthStore from '~/stores/AuthStore';
 
-export type APIMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+export type APIMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 const getCommonHeaders = async () => {
   const token = AuthStore.token;
@@ -68,6 +68,17 @@ class API {
   public async post<T = any>(url: string, data?: any, config?: any) {
     return this.request<T>(
       'POST',
+      url,
+      data,
+      config || {
+        headers: await getCommonHeaders(),
+      },
+    );
+  }
+
+  public async patch<T = any>(url: string, data?: any, config?: any) {
+    return this.request<T>(
+      'PATCH',
       url,
       data,
       config || {
