@@ -1,15 +1,18 @@
 import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import CustomModal from './CustomModal';
 
-import { RoutineAPI } from '~/apis/routinAPI';
+import { RoutineAPI, useMonthlyTasks } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
 import useModal from '~/hooks/useModal';
 import { RootStackParamList } from '~/navigations/types';
+import CalendarStore from '~/stores/CalendarStore';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import { showToast } from '~/utils/showToast';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -18,11 +21,22 @@ interface Props {
   completedCount: number;
 }
 
-const TaskDetailPopup = ({ navigation, taskId, isDelay, completedCount }: Props) => {
+const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount }: Props) => {
+  const { data, error, revalidate } = useMonthlyTasks({
+    month: CalendarStore.month.toString(),
+    year: CalendarStore.tempYear.toString(),
+  });
+
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
 
-  const handleCancelButtonClick = () => {
-    console.log(taskId, ' : cancel');
+  const handleCancelButtonClick = async () => {
+    try {
+      await RoutineAPI.instance().backTask(taskId, CalendarStore.focusDay.format('YYYYMMDD'));
+      revalidate();
+      closeModal();
+    } catch (e) {
+      showToast(e);
+    }
   };
 
   const handleDelayButtonClick = () => {
@@ -95,7 +109,7 @@ const TaskDetailPopup = ({ navigation, taskId, isDelay, completedCount }: Props)
       />
     </TaskDetailPopupStyled>
   );
-};
+});
 
 const TaskDetailPopupStyled = styled.ImageBackground<{ check: boolean }>`
   width: ${({ check }) => (check ? 150 : 205) + 'px'};

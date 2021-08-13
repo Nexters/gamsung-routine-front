@@ -44,6 +44,11 @@ export class RoutineAPI {
     await api.patch(`/routine/unit/complete/${unitId}?date=${date}`);
   }
 
+  // Task 1회 되돌리기
+  async backTask(unitId: string, date: string) {
+    await api.patch(`/routine/unit/back/${unitId}?date=${date}`);
+  }
+
   static instance() {
     if (!this._instance) {
       this._instance = new RoutineAPI();
