@@ -184,14 +184,14 @@ const Action = styled(Animated.View)`
 
 const DescriptionView = styled.View`
   position: absolute;
-  bottom: 25;
-  left: 20;
-  right: 20;
+  bottom: 25px;
+  left: 20px;
+  right: 20px;
 `;
 
 const TitleView = styled(Animated.View)`
   position: absolute;
-  left: 20;
-  right: 80;
-  bottom: 70;
+  left: 20px;
+  right: 80px;
+  bottom: 70px;
 `;
