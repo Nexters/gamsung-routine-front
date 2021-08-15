@@ -1,10 +1,14 @@
 import messaging from '@react-native-firebase/messaging';
 import { NavigationContainer } from '@react-navigation/native';
+import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
+import { ActivityIndicator, Dimensions } from 'react-native';
 
 import MainNavigator from '~/navigations/MainNavigator';
+import IndicatorStore from '~/stores/IndicatorStore';
+import { BackgroundColor } from '~/utils/color';
 
-const App = () => {
+const App = observer(() => {
   // 아이폰 권한 허용 관련
   useEffect(() => {
     const requestUserPermission = async () => {
@@ -35,10 +39,25 @@ const App = () => {
   }, []);
 
   return (
-    <NavigationContainer>
-      <MainNavigator />
-    </NavigationContainer>
+    <>
+      {IndicatorStore.count > 0 && (
+        <ActivityIndicator
+          size="large"
+          style={{
+            position: 'absolute',
+            width: Dimensions.get('window').width,
+            height: Dimensions.get('window').height,
+            backgroundColor: BackgroundColor.DEPTH2_D,
+            opacity: 0.7,
+            zIndex: 1,
+          }}
+        />
+      )}
+      <NavigationContainer>
+        <MainNavigator />
+      </NavigationContainer>
+    </>
   );
-};
+});
 
 export default App;
