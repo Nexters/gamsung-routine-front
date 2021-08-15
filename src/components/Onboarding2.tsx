@@ -1,7 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LottieView from 'lottie-react-native';
 import React, { useState, useEffect } from 'react';
-import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, TouchableOpacity, View } from 'react-native';
+
+import CustomText from './CustomText';
 
 import onboarding1 from '~/assets/lottie/onboarding1.json';
 import onboarding2 from '~/assets/lottie/onboarding2.json';
@@ -36,14 +38,14 @@ const Onboarding2 = () => {
           height: Dimensions.get('window').height,
           justifyContent: 'center',
         }}
-        onPress={() => {
-          if (phase < 3) {
+        onPress={async () => {
+          if (phase < 2) {
             return setPhase((phase) => phase + 1);
           }
           AsyncStorage.setItem('onboarding2', 'true');
           setShow(false);
         }}>
-        <Text>
+        <CustomText>
           <LottieView
             style={{
               width: Dimensions.get('window').width,
@@ -52,7 +54,7 @@ const Onboarding2 = () => {
             autoPlay
             loop
           />
-        </Text>
+        </CustomText>
       </TouchableOpacity>
     </View>
   );
