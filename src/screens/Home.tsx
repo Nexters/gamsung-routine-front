@@ -9,6 +9,7 @@ import { useGetCategory, useTemplates } from '~/apis/templateAPI';
 import Calendar from '~/components/Calendar';
 import CustomText from '~/components/CustomText';
 import Icon from '~/components/Icon';
+import Onboarding2 from '~/components/Onboarding2';
 import TaskListView from '~/components/TaskListView';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
@@ -108,9 +109,9 @@ const Home = ({ navigation }: HomeScreenProps) => {
       showToast(e);
     }
   };
-
   return (
     <>
+      <Onboarding2 />
       <TopStatusBarStyled backgroundColor={BackgroundColor.DEPTH2_D} />
       <StatusBar barStyle="light-content" />
       <HomeStyled>
