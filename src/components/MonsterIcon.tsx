@@ -1,8 +1,13 @@
 import styled from '@emotion/native';
+import LottieView from 'lottie-react-native';
 import React from 'react';
+import { View } from 'react-native';
 import Svg, { Defs, LinearGradient, Path, Stop, SvgXml } from 'react-native-svg';
 
+import CustomText from './CustomText';
+
 import EmptyMonster from '~/assets/images/empty_monster.svg';
+import dieMonster from '~/assets/lottie/dieMonster.json';
 import { RADIO_TYPE } from '~/stores/CalendarStore';
 import { MonsterColor } from '~/utils/color';
 import { getFace } from '~/utils/monster';
@@ -15,6 +20,7 @@ interface Props {
 
 const MonsterIconBackground = ({ data }: { data: number }) => {
   const percent = Number(data.toFixed(2));
+
   return (
     <>
       <Svg height="28" width="28">
@@ -31,7 +37,15 @@ const MonsterIconBackground = ({ data }: { data: number }) => {
           fill="url(#gradient)"
         />
       </Svg>
-      <SvgXml style={{ position: 'absolute' }} xml={getFace(percent)} />
+      {percent === 1 ? (
+        <View style={{ position: 'absolute', zIndex: 1 }}>
+          <CustomText>
+            <LottieView style={{ width: 28, height: 28 }} source={dieMonster} autoPlay loop />
+          </CustomText>
+        </View>
+      ) : (
+        <SvgXml style={{ position: 'absolute' }} xml={getFace(percent)} />
+      )}
     </>
   );
 };

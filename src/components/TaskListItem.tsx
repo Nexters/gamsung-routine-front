@@ -98,7 +98,7 @@ const TaskListItem = observer(
                   color={percent === 100 ? TextColor.INACTIVE_L : TextColor.PRIMARY_L}>
                   {title}
                 </CustomText>
-                {percent === 100 && <TaskListItemLine />}
+                {percent === 1 && <TaskListItemLine />}
               </TaskListItemViewInfo>
               <TaskListItemViewSubTitle>
                 <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.PRIMARY_L}>
@@ -200,7 +200,7 @@ const TaskListItemLine = styled.View`
   width: 115%;
   position: absolute;
   top: 50%;
-  left: -6px;
+  left: -15px;
   border-bottom-width: 1px;
   border-bottom-color: ${SurfaceColor.DEPTH2_L};
 `;
