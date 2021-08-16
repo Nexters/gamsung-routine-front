@@ -7,23 +7,32 @@ interface Props {
   children: React.ReactNode;
   marginTop?: number;
   marginBottom?: number;
+  backgroundColor?: string;
 }
 
-export const CollapsibleCard = ({ children, marginBottom, marginTop }: Props) => {
+export const CollapsibleCard = ({
+  children,
+  marginBottom,
+  marginTop,
+  backgroundColor = BackgroundColor.DEPTH1_L,
+}: Props) => {
   return (
-    <CollapsibleCardStyled marginTop={marginTop || 0} marginBottom={marginBottom || 0}>
+    <CollapsibleCardStyled
+      marginTop={marginTop || 0}
+      marginBottom={marginBottom || 0}
+      backgroundColor={backgroundColor}>
       {children}
     </CollapsibleCardStyled>
   );
 };
 
-const CollapsibleCardStyled = styled.View<{ marginTop: number; marginBottom: number }>`
+const CollapsibleCardStyled = styled.View<{ marginTop: number; marginBottom: number; backgroundColor: string }>`
   flex-direction: column;
   min-height: 56px;
   width: 100%;
   border-radius: 8px;
-  background-color: ${BackgroundColor.DEPTH1_L};
-  padding: 16px;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  padding: 20px;
   margin-top: ${({ marginTop }) => `${marginTop}px`};
   margin-bottom: ${({ marginBottom }) => `${marginBottom}px`};
 `;

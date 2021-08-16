@@ -9,6 +9,9 @@ import { RootStackParamList } from '~/navigations/types';
 import EditTask from '~/screens/EditTask';
 import Home from '~/screens/Home';
 import Intro from '~/screens/Intro';
+import InviteAccept from '~/screens/InviteAccept';
+import InviteDetail from '~/screens/InviteDetail';
+import InviteIntro from '~/screens/InviteIntro';
 import Login from '~/screens/Login';
 import Setting from '~/screens/Setting';
 import { TaskList } from '~/screens/TaskList';
@@ -32,65 +35,94 @@ const MainNavigator = () => {
   }
   return (
     <Stack.Navigator>
-      {!AuthStore.isLoggedIn && (
+      {!AuthStore.isLoggedIn ? (
         <>
           <Stack.Screen name="Intro" component={Intro} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         </>
+      ) : (
+        <>
+          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          <Stack.Screen name="TaskList" component={TaskList} options={{ headerShown: false }} />
+          <Stack.Screen
+            name="TemplateList"
+            component={TemplateList}
+            options={({ navigation }) => ({
+              headerTitleAlign: 'center',
+              headerLeft: () => (
+                <TouchableOpacity
+                  style={{ marginLeft: 20 }}
+                  onPress={() => {
+                    navigation.navigate('EditTask');
+                  }}>
+                  <Icon type={'ADD'} />
+                </TouchableOpacity>
+              ),
+              headerRight: () => {
+                return (
+                  <TouchableOpacity
+                    style={{ marginRight: 20 }}
+                    onPress={() => {
+                      navigation.pop();
+                    }}>
+                    <CustomText>닫기</CustomText>
+                  </TouchableOpacity>
+                );
+              },
+            })}
+          />
+          <Stack.Screen
+            name="EditTask"
+            component={EditTask}
+            initialParams={{ templateTask: null, taskId: null }}
+            options={() => {
+              return {
+                title: ' ',
+                headerBackTitle: ' ',
+                headerStyle: {
+                  backgroundColor: BackgroundColor.DEPTH2_L,
+                },
+              };
+            }}
+          />
+          <Stack.Screen
+            name="Setting"
+            component={Setting}
+            options={() => {
+              return {
+                title: '앱 설정',
+                headerBackTitle: ' ',
+              };
+            }}
+          />
+          <Stack.Screen
+            name="InviteIntro"
+            component={InviteIntro}
+            options={{
+              headerShown: false,
+              headerBackTitleVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="InviteAccept"
+            component={InviteAccept}
+            initialParams={{ task: undefined }}
+            options={{
+              headerShown: false,
+              headerBackTitleVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="InviteDetail"
+            component={InviteDetail}
+            initialParams={{ task: undefined }}
+            options={{
+              headerShown: false,
+              headerBackTitleVisible: false,
+            }}
+          />
+        </>
       )}
-      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-      <Stack.Screen name="TaskList" component={TaskList} options={{ headerShown: false }} />
-      <Stack.Screen
-        name="TemplateList"
-        component={TemplateList}
-        options={({ navigation }) => ({
-          headerTitleAlign: 'center',
-          headerLeft: () => (
-            <TouchableOpacity
-              style={{ marginLeft: 20 }}
-              onPress={() => {
-                navigation.navigate('EditTask');
-              }}>
-              <Icon type={'ADD'} />
-            </TouchableOpacity>
-          ),
-          headerRight: () => {
-            return (
-              <TouchableOpacity
-                style={{ marginRight: 20 }}
-                onPress={() => {
-                  navigation.pop();
-                }}>
-                <CustomText>닫기</CustomText>
-              </TouchableOpacity>
-            );
-          },
-        })}
-      />
-      <Stack.Screen
-        name="EditTask"
-        component={EditTask}
-        initialParams={{ templateTask: null, taskId: null }}
-        options={() => {
-          return {
-            title: ' ',
-            headerBackTitle: ' ',
-            headerStyle: {
-              backgroundColor: BackgroundColor.DEPTH2_L,
-            },
-          };
-        }}
-      />
-      <Stack.Screen
-        name="Setting"
-        component={Setting}
-        options={() => {
-          return {
-            title: '앱 설정',
-            headerBackTitle: ' ',
-          };
-        }}
-      />
     </Stack.Navigator>
   );
 };
