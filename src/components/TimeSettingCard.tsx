@@ -13,10 +13,11 @@ interface Props {
   marginBottom?: number;
   timeSettingData: { id: number; hour: number; minute: number }[];
   onChangeTimeSettingData?: (id: number, hour: number, minute: number) => void;
+  disable?: boolean;
 }
 
 export const TimeSettingCard: React.FC<Props> = observer(
-  ({ marginTop, marginBottom, timeSettingData, onChangeTimeSettingData }) => {
+  ({ marginTop, marginBottom, timeSettingData, onChangeTimeSettingData, disable = false }) => {
     const [isTimeSettingOpen, setIsTimeSettingOpen] = useState(false);
 
     const handleChangeTimeData = useCallback(
@@ -33,6 +34,7 @@ export const TimeSettingCard: React.FC<Props> = observer(
           label="시간 설정"
           isOpen={isTimeSettingOpen}
           setIsOpen={() => setIsTimeSettingOpen(!isTimeSettingOpen)}
+          disable={disable}
         />
         {isTimeSettingOpen && <DividerStyled />}
         {isTimeSettingOpen &&

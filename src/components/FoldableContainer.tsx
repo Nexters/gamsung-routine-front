@@ -16,16 +16,18 @@ interface Props {
   countText?: string;
   setIsOpen?: () => void;
   children?: React.ReactNode;
+  disable?: boolean;
 }
 
 export const FoldableContainer: React.FC<Props> = observer(
-  ({ label, type, isOpen = false, countText, setIsOpen, children }) => {
+  ({ label, type, isOpen = false, countText, setIsOpen, children, disable = false }) => {
     const [isExpanded, setIsExpanded] = useState(isOpen);
 
     const handleOpen = useCallback(() => {
+      if (disable) return;
       setIsExpanded(!isExpanded);
       setIsOpen?.();
-    }, [setIsOpen, isExpanded]);
+    }, [setIsOpen, isExpanded, disable]);
 
     useEffect(() => {
       setIsExpanded(isOpen);
