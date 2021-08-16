@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import { SvgXml } from 'react-native-svg';
 
 import ADD from '~/assets/icons/icon_add.svg';
@@ -36,11 +36,11 @@ const icon = {
   SETTING,
   KAKAO,
 };
-interface Props {
+interface Props extends Omit<ComponentProps<typeof SvgXml>, 'xml'> {
   type: IconType;
 }
-const Icon = ({ type }: Props) => {
-  return <SvgXml xml={icon[type]} />;
+const Icon = ({ type, ...props }: Props) => {
+  return <SvgXml xml={icon[type]} {...props} />;
 };
 
 export default Icon;

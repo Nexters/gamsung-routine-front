@@ -18,13 +18,15 @@ interface Props {
   }[];
   marginTop?: number;
   marginBottom?: number;
+  disable?: boolean;
   onDayPress?: (id: number) => void;
 }
 
-export const WeekLoopCard = observer(({ marginBottom, marginTop, days, onDayPress }: Props) => {
+export const WeekLoopCard = observer(({ marginBottom, marginTop, days, onDayPress, disable = false }: Props) => {
   const isSelected = days.some((currentValue) => currentValue.selected === true);
 
   const handleDayPress = (id: number) => {
+    if (disable) return;
     onDayPress?.(id);
   };
 

@@ -3,17 +3,11 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
-import { ScrollView } from 'react-native';
 
 import { useUserProfileData } from '~/apis/authAPI';
-import { AlarmSettingCard } from '~/components/AlarmSettingCard';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
-import CustomTextInput from '~/components/CustomTextInput';
-import { DailyLoopCard } from '~/components/DailyLoopCard';
-import { FriendInviteCard } from '~/components/FriendInviteCard';
-import { TimeSettingCard } from '~/components/TimeSettingCard';
-import { WeekLoopCard } from '~/components/WeekLoopCard';
+import EdisTaskView from '~/components/EditTaskView';
 import useModal from '~/hooks/useModal';
 import useModalContent from '~/hooks/useModalContent';
 import { RootStackParamList } from '~/navigations/types';
@@ -141,66 +135,15 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
   return (
     <>
       <EditTaskStyled>
-        <ScrollView style={{ width: '100%', height: '100%', marginBottom: 100 }}>
-          <EditTaskView>
-            <EditSettingView>
-              <TitleSettingView>
-                {vm.editableTitle ? (
-                  <CustomTextInput
-                    onChangeText={handleChangeTaskName}
-                    value={vm.taskName}
-                    placeHolder="태스크 명을 입력해주세요."
-                    font={FontType.BOLD_TITLE_01}
-                    color={TextColor.PRIMARY_L}
-                  />
-                ) : (
-                  <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_L}>
-                    {vm.taskName}
-                  </CustomText>
-                )}
-              </TitleSettingView>
-              <TimeSettingView>
-                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L} marginBottom={8}>
-                  시간 설정
-                </CustomText>
-                <WeekLoopCard days={vm.days} onDayPress={handleDaySelect} marginTop={8} />
-                <DailyLoopCard marginTop={16} onSelectCountOfDay={handleCountOfDay} />
-                <TimeSettingCard
-                  marginTop={16}
-                  timeSettingData={vm.times}
-                  onChangeTimeSettingData={handleChangeTimeData}
-                />
-              </TimeSettingView>
-              <AddSettingView>
-                <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L} marginBottom={8}>
-                  부가 설정
-                </CustomText>
-                <AlarmSettingCard onChangeAlarm={handleChangeAlarm} marginTop={8} />
-              </AddSettingView>
-              {vm.isEditMode && (
-                <>
-                  <AddPartyView>
-                    <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L}>
-                      파티원 설정
-                    </CustomText>
-                    <FriendInviteCard
-                      friends={[
-                        { id: 1, name: '김헌진' },
-                        { id: 2, name: '김헌진' },
-                      ]}
-                      marginTop={16}
-                    />
-                  </AddPartyView>
-                  <FinishTaskTextButton onPress={handleEndTaskClick}>
-                    <CustomText font={FontType.MEDIUM_BODY_02} color={TextColor.RED}>
-                      테스크 종료
-                    </CustomText>
-                  </FinishTaskTextButton>
-                </>
-              )}
-            </EditSettingView>
-          </EditTaskView>
-        </ScrollView>
+        <EdisTaskView
+          vm={vm}
+          onChangeTaskName={handleChangeTaskName}
+          onDaySelect={handleDaySelect}
+          onCountOfDay={handleCountOfDay}
+          onChangeTimeData={handleChangeTimeData}
+          onChangeAlarm={handleChangeAlarm}
+          onEndTaskClick={handleEndTaskClick}
+        />
         <EditSubmitButton onPress={handleEditSubmitClick} disabled={!vm.isValidSave}>
           <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
             {vm.isEditMode ? '수정하기' : '추가하기'}
@@ -241,36 +184,6 @@ const EditTaskStyled = styled.SafeAreaView`
   height: 100%;
   justify-content: center;
   align-items: center;
-`;
-
-const EditTaskView = styled.View`
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0 20px;
-`;
-
-const EditSettingView = styled.View`
-  margin-top: 26px;
-`;
-
-const TitleSettingView = styled.View``;
-
-const TimeSettingView = styled.View`
-  padding-top: 40px;
-`;
-
-const AddSettingView = styled.View`
-  padding-top: 40px;
-`;
-
-const AddPartyView = styled.View`
-  padding-top: 40px;
-`;
-
-const FinishTaskTextButton = styled.TouchableOpacity`
-  padding-top: 40px;
 `;
 
 const EditSubmitButton = styled.TouchableOpacity<{ disabled: boolean }>`
