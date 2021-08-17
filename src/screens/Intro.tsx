@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
 import introHouse from '~/assets/images/intro_house.svg';
@@ -63,28 +63,18 @@ const Start: React.FC<StartProp> = observer(({ navigation, onNextPage }) => {
     <IntroFrame>
       <PageFrame backgroundColor={BackgroundColor.HIGHLIGHTER}>
         <SkipButton navigation={navigation} />
-        <View
+        <IntroMainTitleStyled
           style={{
-            position: 'absolute',
-            bottom: 400,
             zIndex: 10,
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
           }}>
           <SvgXml xml={introMainTitle} />
-        </View>
-        <View
+        </IntroMainTitleStyled>
+        <IntroMainKimBonKae1Styled
           style={{
-            position: 'absolute',
-            bottom: 180,
             zIndex: 10,
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
           }}>
           <SvgXml xml={introMainKimBonKae1} />
-        </View>
+        </IntroMainKimBonKae1Styled>
         <PageABottomBackground>
           <PageAStartButton onPress={onNextPage}>
             <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
@@ -104,17 +94,12 @@ const PageB: React.FC<PageProps> = observer(({ onNextPage }) => {
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
-      <View
+      <IntroHouseStyled
         style={{
-          position: 'absolute',
-          bottom: 320,
           zIndex: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
         }}>
         <SvgXml xml={introHouse} />
-      </View>
+      </IntroHouseStyled>
       <SpeechBubbleWrap>
         <SpeechBubble
           text={`작심삼일 김본캐는\n오늘도 습관을 지키지 못해 흥청망청\n시간을 보내다 잠들어 버리는데..`}
@@ -132,26 +117,18 @@ const PageC: React.FC<PageProps> = observer(({ onNextPage }) => {
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
-      <View
+      <IntroHouse2Styled
         style={{
-          position: 'absolute',
-          bottom: 365,
           zIndex: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
         }}>
         <SvgXml xml={introHouse2} />
-      </View>
-      <View
+      </IntroHouse2Styled>
+      <IntroKimBonKae2Styled
         style={{
-          position: 'absolute',
-          bottom: 200,
-          right: 20,
           zIndex: 10,
         }}>
         <SvgXml xml={introKimBonKae2} />
-      </View>
+      </IntroKimBonKae2Styled>
       <SpeechBubbleWrap>
         <SpeechBubble
           text={`김본캐 : 오잉..? 여긴 어디지..?\n외딴 섬 같은데..`}
@@ -170,17 +147,12 @@ const PageD: React.FC<PageProps> = observer(({ onNextPage }) => {
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
-      <View
+      <IntroMonster1Styled
         style={{
-          position: 'absolute',
-          bottom: 277,
           zIndex: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
         }}>
         <SvgXml xml={introMonster1} />
-      </View>
+      </IntroMonster1Styled>
       <SpeechBubbleWrap>
         <SpeechBubble
           text={`어서오게, 게으름뱅이여. 나는 그대의\n다짐들을 방해하는 미루미라고 하네.`}
@@ -199,26 +171,18 @@ const PageE: React.FC<PageProps> = observer(({ onNextPage }) => {
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
-      <View
+      <IntroHouse2Styled
         style={{
-          position: 'absolute',
-          bottom: 365,
           zIndex: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
         }}>
         <SvgXml xml={introHouse2} />
-      </View>
-      <View
+      </IntroHouse2Styled>
+      <IntroMonster2Styled
         style={{
-          position: 'absolute',
-          bottom: 210,
-          right: 40,
           zIndex: 10,
         }}>
         <SvgXml xml={introMonster2} />
-      </View>
+      </IntroMonster2Styled>
       <SpeechBubbleWrap>
         <SpeechBubble
           text={`이곳은 '미뤄왔섬'이라네.\n그대가 이제까지 다짐을 수없이 미뤄왔기 때문에 이곳에 유배되었다네.`}
@@ -237,26 +201,18 @@ const PageF: React.FC<PageProps> = observer(({ onNextPage }) => {
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
-      <View
+      <IntroHouse2Styled
         style={{
-          position: 'absolute',
-          bottom: 365,
           zIndex: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
         }}>
         <SvgXml xml={introHouse2} />
-      </View>
-      <View
+      </IntroHouse2Styled>
+      <IntroKimBonKae2Styled
         style={{
-          position: 'absolute',
-          bottom: 200,
-          right: 20,
           zIndex: 10,
         }}>
         <SvgXml xml={introKimBonKae2} />
-      </View>
+      </IntroKimBonKae2Styled>
       <SpeechBubbleWrap>
         <SpeechBubble
           text={`헉, 유배라뇨.\n저는 집에 갈 수 없는건가요?`}
@@ -275,17 +231,12 @@ const PageG: React.FC<NavigationProps> = observer(({ navigation }) => {
 
   return (
     <PageFrame backgroundColor={BackgroundColor.DEPTH2_D}>
-      <View
+      <IntroMonster1Styled
         style={{
-          position: 'absolute',
-          bottom: 277,
           zIndex: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
         }}>
         <SvgXml xml={introMonster1} />
-      </View>
+      </IntroMonster1Styled>
       <SpeechBubbleWrap>
         <SpeechBubble
           text={`그대가 이 섬을 벗어나는 방법은\n단 하나! 루틴을 잘 지켜서 미루미 몬스터들을 없애는거라네.`}
@@ -311,7 +262,7 @@ const PageFrame = styled.View<{ backgroundColor: string }>`
 
 const PageABottomBackground = styled.View`
   width: 100%;
-  height: 200px;
+  height: 140px;
   justify-content: center;
   align-items: center;
   margin-bottom: 0;
@@ -331,6 +282,58 @@ const PageAStartButton = styled(TouchableOpacity)`
 
 const SpeechBubbleWrap = styled.View`
   margin: auto 20px 45px;
+`;
+
+const IntroMainTitleStyled = styled.View`
+  position: absolute;
+  top: 6%;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const IntroMainKimBonKae1Styled = styled.View`
+  position: absolute;
+  bottom: 120px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const IntroHouseStyled = styled.View`
+  position: absolute;
+  bottom: 320px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const IntroHouse2Styled = styled.View`
+  position: absolute;
+  bottom: 365px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const IntroKimBonKae2Styled = styled.View`
+  position: absolute;
+  bottom: 200px;
+  right: 20px;
+`;
+
+const IntroMonster1Styled = styled.View`
+  position: absolute;
+  bottom: 277px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const IntroMonster2Styled = styled.View`
+  position: absolute;
+  bottom: 210px;
+  right: 40px;
 `;
 
 export default observer(Intro);
