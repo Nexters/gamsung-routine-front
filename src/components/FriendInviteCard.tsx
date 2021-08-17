@@ -15,7 +15,7 @@ interface Props {
   friends: Friend[];
   marginTop?: number;
   marginBottom?: number;
-  backgroundColor?: string;
+  backgroundColor?: BackgroundColor;
   disable?: boolean;
 }
 

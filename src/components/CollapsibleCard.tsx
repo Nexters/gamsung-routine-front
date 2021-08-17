@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode;
   marginTop?: number;
   marginBottom?: number;
-  backgroundColor?: string;
+  backgroundColor?: BackgroundColor;
 }
 
 export const CollapsibleCard = ({

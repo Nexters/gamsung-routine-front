@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import React from 'react';
 import { ScrollView } from 'react-native';
 
-import { AlarmSettingCard } from '~/components/AlarmSettingCard';
+import AlarmSettingCard from '~/components/AlarmSettingCard';
 import CustomText from '~/components/CustomText';
 import CustomTextInput from '~/components/CustomTextInput';
 import { DailyLoopCard } from '~/components/DailyLoopCard';
