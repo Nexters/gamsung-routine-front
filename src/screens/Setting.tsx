@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { Linking, TouchableOpacity } from 'react-native';
 
+import { useUserProfileData } from '~/apis/authAPI';
 import CustomText from '~/components/CustomText';
 import { FoldableSwitch } from '~/components/FoldableSwitch';
 import Icon from '~/components/Icon';
@@ -17,7 +18,7 @@ interface Props {
 }
 
 const Setting = ({ navigation }: Props) => {
-  const userEmail = 'test.com';
+  const { data: profile } = useUserProfileData();
   const [isOn, setIsOn] = useState(false);
 
   const handleLogoutButtonClick = async () => {
@@ -42,8 +43,8 @@ const Setting = ({ navigation }: Props) => {
         <SettingInfoItem>
           <UserEmail>
             <Icon type="KAKAO" />
-            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
-              {'  ' + userEmail}
+            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L} marginLeft={8}>
+              {profile?.name}
             </CustomText>
           </UserEmail>
         </SettingInfoItem>
