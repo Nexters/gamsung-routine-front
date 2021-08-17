@@ -29,18 +29,15 @@ const MainNavigator = () => {
       setLoading(false);
     })();
   });
+
   if (loading) {
     // TODO : 스플래시 추가
     return null;
   }
+
   return (
     <Stack.Navigator>
-      {!AuthStore.isLoggedIn ? (
-        <>
-          <Stack.Screen name="Intro" component={Intro} options={{ headerShown: false }} />
-          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-        </>
-      ) : (
+      {AuthStore.isLoggedIn && (
         <>
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
           <Stack.Screen name="TaskList" component={TaskList} options={{ headerShown: false }} />
@@ -123,6 +120,8 @@ const MainNavigator = () => {
           />
         </>
       )}
+      <Stack.Screen name="Intro" component={Intro} options={{ headerShown: false }} />
+      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
