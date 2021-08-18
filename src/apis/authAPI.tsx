@@ -5,5 +5,7 @@ export const useUserProfileData = () => {
     id: string;
     name: string;
     profileImageUrl: string;
+    pushNotification: boolean;
+    thumbnailImageUrl: string;
   }>('/v1/profile');
 };

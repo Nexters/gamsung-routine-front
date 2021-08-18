@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Linking, TouchableOpacity } from 'react-native';
 
 import { useUserProfileData } from '~/apis/authAPI';
+import { patchPushNotification } from '~/apis/userAPI';
 import CustomText from '~/components/CustomText';
 import { FoldableSwitch } from '~/components/FoldableSwitch';
 import Icon from '~/components/Icon';
@@ -19,7 +20,7 @@ interface Props {
 
 const Setting = ({ navigation }: Props) => {
   const { data: profile } = useUserProfileData();
-  const [isOn, setIsOn] = useState(false);
+  const [isOn, setIsOn] = useState(!!profile?.pushNotification);
 
   const handleLogoutButtonClick = async () => {
     await AuthStore.logout();
@@ -31,6 +32,15 @@ const Setting = ({ navigation }: Props) => {
       await Linking.openURL('https://naver.com');
     } else if (type === 'terms') {
       await Linking.openURL('https://google.com');
+    }
+  };
+
+  const handleSwitchClick = async () => {
+    setIsOn((prev) => !prev);
+    try {
+      await patchPushNotification();
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -85,7 +95,7 @@ const Setting = ({ navigation }: Props) => {
           <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
             푸시 알림
           </CustomText>
-          <FoldableSwitch isOn={isOn} onToggle={setIsOn} />
+          <FoldableSwitch isOn={isOn} onToggle={handleSwitchClick} />
         </SettingInfoItem>
       </SettingItem>
     </SettingStyled>
