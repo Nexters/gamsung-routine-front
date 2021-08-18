@@ -13,9 +13,10 @@ interface Props {
   marginTop?: number;
   marginBottom?: number;
   onChangeAlarm?: (isAlarm: boolean) => void;
+  disable?: boolean;
 }
 
-export const AlarmSettingCard: React.FC<Props> = observer(({ marginTop, marginBottom, onChangeAlarm }) => {
+const AlarmSettingCard: React.FC<Props> = observer(({ marginTop, marginBottom, onChangeAlarm, disable = false }) => {
   const [isAlarmSettingOpen, setIsAlarmSettingOpen] = useState<boolean>(false);
 
   // 현재 실제로 이 값을 저장하지는 않음. (alarm on/off 여부만 저장 중)
@@ -40,7 +41,13 @@ export const AlarmSettingCard: React.FC<Props> = observer(({ marginTop, marginBo
 
   return (
     <CollapsibleCard marginTop={marginTop} marginBottom={marginBottom}>
-      <FoldableContainer type="SWITCH" label="알람 설정" isOpen={isAlarmSettingOpen} setIsOpen={handleChangeAlarm} />
+      <FoldableContainer
+        type="SWITCH"
+        label="알람 설정"
+        isOpen={isAlarmSettingOpen}
+        setIsOpen={handleChangeAlarm}
+        disable={disable}
+      />
       {isAlarmSettingOpen && <DividerStyled />}
       {isAlarmSettingOpen && <WheelPicker items={alarmData} />}
     </CollapsibleCard>
@@ -53,3 +60,5 @@ const DividerStyled = styled.View`
   margin: 16px 0;
   background-color: ${BorderColor.DEPTH2_L};
 `;
+
+export default AlarmSettingCard;

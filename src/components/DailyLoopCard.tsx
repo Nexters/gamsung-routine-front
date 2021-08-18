@@ -12,9 +12,16 @@ interface Props {
   marginBottom?: number;
   dayOfTime?: number;
   onSelectCountOfDay?: (dayOfTime: number) => void;
+  disable?: boolean;
 }
 
-export const DailyLoopCard = ({ marginTop, marginBottom, dayOfTime = 1, onSelectCountOfDay }: Props) => {
+export const DailyLoopCard = ({
+  marginTop,
+  marginBottom,
+  dayOfTime = 1,
+  onSelectCountOfDay,
+  disable = false,
+}: Props) => {
   const countDaily = useCallback((time) => {
     return `${time}회`;
   }, []);
@@ -36,6 +43,7 @@ export const DailyLoopCard = ({ marginTop, marginBottom, dayOfTime = 1, onSelect
         isOpen={isDailyTimeWheelOpen}
         countText={countDaily(dailyTime)}
         setIsOpen={() => setIsDailyTimeWheelOpen(!isDailyTimeWheelOpen)}
+        disable={disable}
       />
       {isDailyTimeWheelOpen && <DividerStyled />}
       {isDailyTimeWheelOpen && (
