@@ -30,6 +30,16 @@
 				<string>ab2480c11a0ef7777f464945485060ae</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>bonkae-master</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>bonkae-master</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
