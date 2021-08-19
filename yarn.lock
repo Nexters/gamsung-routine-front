@@ -1230,6 +1230,11 @@
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
+"@react-native-firebase/dynamic-links@^12.6.1":
+  version "12.6.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-12.6.1.tgz#427ff02aedc9a80679d6ca617462ae79ce890ff7"
+  integrity sha512-FeRcv4AhPjEqYjnUUYgECCxXgVC3G/n6hf8n5zsROcAS422wielAP6ZcqMXWWdv1jRbJJyniBz1wCIEPoozBfA==
+
 "@react-native-firebase/messaging@^12.3.0":
   version "12.3.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-12.3.0.tgz#99f0617256f8d4d52aabac7317c42cd68ae23724"
@@ -6384,6 +6389,11 @@ react-native-iphone-x-helper@^1.3.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
+
+react-native-kakao-links@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-kakao-links/-/react-native-kakao-links-1.0.6.tgz#f77b2ca0ac9d040b89c2891928ce1a83af291717"
+  integrity sha512-qi0SYMuOThr0RPulemf2JUXROAqBqvfBT8eM3YoUcofYSX3Z58bWIO+RwRP2Cv6oX6be67HioVwvocSILEAsTA==
 
 react-native-modal@^12.0.2:
   version "12.0.2"

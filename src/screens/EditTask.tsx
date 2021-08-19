@@ -3,6 +3,8 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
+import { ScrollView } from 'react-native';
+import RNKakaoLink from 'react-native-kakao-links';
 
 import { useUserProfileData } from '~/apis/authAPI';
 import CustomModal from '~/components/CustomModal';
@@ -132,6 +134,36 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     openModal();
   };
 
+  const handleKakaoInvite = async () => {
+    const linkObject = {
+      webURL: `https://bonkae.page.link/vgNL`, //optional
+      mobileWebURL: `https://bonkae.page.link/vgNL`, //optional
+      androidExecutionParams: `bonkae-master://editTask?taskId=${taskId}`, //optional For Linking URL
+      iosExecutionParams: `bonkae-master://editTask?taskId=${taskId}`, //optional For Linking URL
+    };
+
+    const contentObject = {
+      title: '본캐 마스터',
+      link: linkObject,
+      imageURL: 'http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
+
+      desc: '일해라 닝겐!', //optional
+      imageWidth: 240, //optional
+      imageHeight: 240, //optional
+    };
+    try {
+      const options = {
+        objectType: 'feed', //required
+        content: contentObject, //required
+      };
+
+      const response = await RNKakaoLink.link(options);
+      console.log(response);
+    } catch (e) {
+      console.warn(e);
+    }
+  };
+
   return (
     <>
       <EditTaskStyled>
@@ -162,7 +194,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
         backgroundOpacity={0.8}>
         {modalType === 'SAVE' && (
           <FriendInviteView>
-            <KakaoInviteButton>
+            <KakaoInviteButton onPress={handleKakaoInvite}>
               <KakaoIcon source={require('~/assets/icons/icon_kakao_login.png')} />
               <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_L} align={Align.CENTER}>
                 테스크 파티원 초대하기

@@ -1,12 +1,63 @@
+import dynamicLinks, { FirebaseDynamicLinksTypes } from '@react-native-firebase/dynamic-links';
 import messaging from '@react-native-firebase/messaging';
-import { NavigationContainer } from '@react-navigation/native';
 import { observer } from 'mobx-react';
+import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, Dimensions } from 'react-native';
+import { Linking } from 'react-native';
 
 import MainNavigator from '~/navigations/MainNavigator';
 import IndicatorStore from '~/stores/IndicatorStore';
 import { BackgroundColor } from '~/utils/color';
+
+const config = {
+  screens: {
+    Intro: 'intro',
+    Home: 'home',
+    TemplateList: 'TemplateList',
+    EditTask: 'EditTask',
+  },
+};
+
+const linking: LinkingOptions = {
+  prefixes: ['bonkae-master://', 'https://bonkae.page.link', 'http://bonkae.page.link'],
+  async getInitialURL(): Promise<string> {
+    const url = await Linking.getInitialURL();
+    const dynamicLinkUrl = await dynamicLinks().getInitialLink();
+
+    if (dynamicLinkUrl) {
+      const links = dynamicLinkUrl.url.split('/');
+      const deepLink = links[links.length - 2];
+      const taskId = links[links.length - 1];
+
+      if (deepLink === 'tasks') {
+        return `bonkae-master://EditTask?taskId=${taskId}`;
+      }
+    }
+
+    if (url) {
+      const links = url.split('?');
+      const taskIdObject = links[links.length - 1].split('=');
+      const taskId = taskIdObject[taskIdObject.length - 1];
+
+      return `bonkae-master://EditTask?taskId=${taskId}`;
+    }
+    return 'bonkae-master://intro';
+  },
+  subscribe(listener: (deeplink: string) => void) {
+    const onReceiveURL = ({ url }: { url: string }) => listener(url);
+    Linking.addEventListener('url', onReceiveURL);
+    const handleDynamicLink = (dynamicLink: FirebaseDynamicLinksTypes.DynamicLink) => {
+      listener(dynamicLink.url);
+    };
+    const unsubscribeToDynamicLinks = dynamicLinks().onLink(handleDynamicLink);
+    return () => {
+      unsubscribeToDynamicLinks();
+      Linking.removeEventListener('url', onReceiveURL);
+    };
+  },
+  config: config,
+};
 
 const App = observer(() => {
   // 아이폰 권한 허용 관련
@@ -53,7 +104,7 @@ const App = observer(() => {
           }}
         />
       )}
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <MainNavigator />
       </NavigationContainer>
     </>

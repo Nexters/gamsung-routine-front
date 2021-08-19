@@ -20,6 +20,22 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <data android:scheme="@string/kakao_scheme" android:host="@string/kakaolink_host" />
+        </intent-filter>
+        <intent-filter android:autoVerify="true">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="http" android:host="gamsung-routine.herokuapp.com" android:pathPrefix="/tasks" />
+            <data android:scheme="https" android:host="gamsung-routine.herokuapp.com" android:pathPrefix="/tasks" />
+            
+            <data android:scheme="bonkae-master" />
+        </intent-filter>
       </activity>
       <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
         <intent-filter>
@@ -32,5 +48,9 @@
                 android:scheme="kakaoab2480c11a0ef7777f464945485060ae" />
         </intent-filter>
       </activity>
+      <meta-data
+        android:name="com.kakao.sdk.AppKey"
+        android:value="@string/kakao_app_key"
+      />
     </application>
 </manifest>
