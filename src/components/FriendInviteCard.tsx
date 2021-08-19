@@ -23,7 +23,14 @@ interface Props {
 }
 
 export const FriendInviteCard: React.FC<Props> = observer(
-  ({ marginTop, marginBottom, friends, backgroundColor = BackgroundColor.DEPTH1_L, disable = false, onInviteClick }) => {
+  ({
+    marginTop,
+    marginBottom,
+    friends,
+    backgroundColor = BackgroundColor.DEPTH1_L,
+    disable = false,
+    onInviteClick,
+  }) => {
     const handleInviteClick = () => {
       onInviteClick?.();
     };

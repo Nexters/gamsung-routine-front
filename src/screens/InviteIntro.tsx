@@ -1,4 +1,5 @@
 import styled from '@emotion/native';
+import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -13,9 +14,14 @@ import { IconColor } from '~/utils/color';
 
 export interface InviteIntroScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
+  route: RouteProp<RootStackParamList, 'InviteIntro'>;
 }
 
-const InviteIntro = ({ navigation }: InviteIntroScreenProps) => {
+const InviteIntro = ({ navigation, route }: InviteIntroScreenProps) => {
+  const { taskId } = route.params;
+
+  console.log('taskId', taskId);
+
   const task: Task = {
     completeCount: 3,
     completedDateList: ['1', '2'],

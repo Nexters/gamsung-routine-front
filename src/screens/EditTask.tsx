@@ -3,7 +3,6 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
-import { ScrollView } from 'react-native';
 import RNKakaoLink from 'react-native-kakao-links';
 
 import { useUserProfileData } from '~/apis/authAPI';
@@ -138,8 +137,8 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     const linkObject = {
       webURL: `https://bonkae.page.link/vgNL`, //optional
       mobileWebURL: `https://bonkae.page.link/vgNL`, //optional
-      androidExecutionParams: `bonkae-master://editTask?taskId=${taskId}`, //optional For Linking URL
-      iosExecutionParams: `bonkae-master://editTask?taskId=${taskId}`, //optional For Linking URL
+      androidExecutionParams: `bonkae-master://InviteIntro?taskId=${taskId}`, //optional For Linking URL
+      iosExecutionParams: `bonkae-master://InviteIntro?taskId=${taskId}`, //optional For Linking URL
     };
 
     const contentObject = {
