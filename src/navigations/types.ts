@@ -15,7 +15,7 @@ export type RootStackParamList = {
   TaskList: { template: Template; headerColor?: GraphicColor };
   TemplateList: undefined;
   Setting: undefined;
-  InviteIntro: undefined;
+  InviteIntro: { taskId: string };
   InviteAccept: {
     task: Task;
   };

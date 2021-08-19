@@ -1,10 +1,9 @@
 import dynamicLinks, { FirebaseDynamicLinksTypes } from '@react-native-firebase/dynamic-links';
 import messaging from '@react-native-firebase/messaging';
-import { observer } from 'mobx-react';
 import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
+import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Dimensions } from 'react-native';
-import { Linking } from 'react-native';
+import { ActivityIndicator, Dimensions, Linking } from 'react-native';
 
 import MainNavigator from '~/navigations/MainNavigator';
 import IndicatorStore from '~/stores/IndicatorStore';
@@ -16,6 +15,7 @@ const config = {
     Home: 'home',
     TemplateList: 'TemplateList',
     EditTask: 'EditTask',
+    InviteIntro: 'InviteIntro',
   },
 };
 
@@ -31,7 +31,7 @@ const linking: LinkingOptions = {
       const taskId = links[links.length - 1];
 
       if (deepLink === 'tasks') {
-        return `bonkae-master://EditTask?taskId=${taskId}`;
+        return `bonkae-master://InviteIntro?taskId=${taskId}`;
       }
     }
 
@@ -40,7 +40,7 @@ const linking: LinkingOptions = {
       const taskIdObject = links[links.length - 1].split('=');
       const taskId = taskIdObject[taskIdObject.length - 1];
 
-      return `bonkae-master://EditTask?taskId=${taskId}`;
+      return `bonkae-master://InviteIntro?taskId=${taskId}`;
     }
     return 'bonkae-master://intro';
   },
