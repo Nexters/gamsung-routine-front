@@ -2,15 +2,17 @@ import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, View } from 'react-native';
 
 import { RoutineAPI, useMonthlyTasks } from '~/apis/routinAPI';
 import { useGetCategory, useTemplates } from '~/apis/templateAPI';
 import Calendar from '~/components/Calendar';
+import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
 import Icon from '~/components/Icon';
 import Onboarding2 from '~/components/Onboarding2';
 import TaskListView from '~/components/TaskListView';
+import useModal from '~/hooks/useModal';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
@@ -31,6 +33,9 @@ const Home = ({ navigation }: HomeScreenProps) => {
     month: CalendarStore.month.toString(),
     year: CalendarStore.tempYear.toString(),
   });
+
+  const { isVisible: isModalVisible, openModal, closeModal } = useModal();
+  const [endTaskDay, setEndTaskDay] = useState(false);
 
   const [visiblePopup, setVisiblePopup] = useState<string | null>(null);
 
@@ -108,7 +113,14 @@ const Home = ({ navigation }: HomeScreenProps) => {
     } catch (e) {
       showToast(e);
     }
+    routine.map((task) => {
+      if (task.taskId === taskId && task.timesOfDay === task.completeCount + 1) {
+        setEndTaskDay(true);
+        openModal();
+      }
+    });
   };
+
   return (
     <>
       <Onboarding2 />
@@ -155,6 +167,17 @@ const Home = ({ navigation }: HomeScreenProps) => {
           <Icon type={'PLUS'} />
         </AddTaskButton>
       </HomeStyled>
+      <CustomModal
+        isVisible={isModalVisible}
+        onClose={closeModal}
+        subContent={
+          endTaskDay ? `오늘 테스크를 ${'\n'} 모두 달성했어요!` : `이 테스크를 이번주에 ${'\n'} 모두 달성했어요!`
+        }
+        noneTitle={true}
+        modalImage={<View style={{ width: 120, height: 100, backgroundColor: '#000' }} />}
+        rightButtonText="확인"
+        onRightButtonClick={() => closeModal()}
+      />
     </>
   );
 };

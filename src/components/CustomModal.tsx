@@ -10,8 +10,10 @@ import { Align, FontType } from '~/utils/font';
 interface Props {
   isVisible: boolean;
   onClose?: () => void;
-  content: string;
-  subContent: string;
+  content?: string;
+  subContent?: string;
+  noneTitle?: boolean;
+  modalImage?: React.ReactNode;
   leftButtonText?: string;
   onLeftButtonClick?: () => void;
   rightButtonText: string;
@@ -25,6 +27,8 @@ const CustomModal = ({
   onClose,
   content,
   subContent,
+  noneTitle = false,
+  modalImage,
   leftButtonText,
   onLeftButtonClick,
   rightButtonText,
@@ -41,11 +45,15 @@ const CustomModal = ({
       hideModalContentWhileAnimating={true}
       useNativeDriver={true}>
       <ModalStyled>
+        <ModalImageStyled>{modalImage}</ModalImageStyled>
         <ModalContentView>
           <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.BLACK} align={Align.CENTER}>
             {content}
           </CustomText>
-          <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L} align={Align.CENTER}>
+          <CustomText
+            font={noneTitle ? FontType.MEDIUM_BODY_01 : FontType.REGULAR_BODY_02}
+            color={TextColor.PRIMARY_L}
+            align={Align.CENTER}>
             {subContent}
           </CustomText>
         </ModalContentView>
@@ -82,9 +90,17 @@ const ModalStyled = styled.View`
   width: 256px;
   height: 216px;
   position: relative;
-  overflow: hidden;
   background-color: ${BackgroundColor.DEPTH1_L};
   border-radius: 20px;
+`;
+
+const ModalImageStyled = styled.View`
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 160px;
+  position: absolute;
+  top: -130px;
 `;
 
 const ModalContentView = styled.View`
@@ -100,7 +116,10 @@ const ModalButtonView = styled.View`
   flex-direction: row;
   justify-content: space-between;
   position: absolute;
+  overflow: hidden;
   bottom: 0;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 `;
 
 const LeftButton = styled.TouchableOpacity`
