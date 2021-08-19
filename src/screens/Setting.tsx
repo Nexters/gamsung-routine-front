@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { Linking, TouchableOpacity } from 'react-native';
 
 import { useUserProfileData } from '~/apis/authAPI';
@@ -20,7 +20,11 @@ interface Props {
 
 const Setting = ({ navigation }: Props) => {
   const { data: profile } = useUserProfileData();
-  const [isOn, setIsOn] = useState(!!profile?.pushNotification);
+  const [isOn, setIsOn] = useState(false);
+
+  useLayoutEffect(() => {
+    setIsOn(!!profile?.pushNotification);
+  }, [profile?.pushNotification]);
 
   const handleLogoutButtonClick = async () => {
     await AuthStore.logout();
