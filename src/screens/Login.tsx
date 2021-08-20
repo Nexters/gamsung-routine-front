@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import { View } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
 import introKimBonKae3 from '~/assets/images/intro_kim_bonkae_3.svg';
@@ -24,39 +24,48 @@ const Login = ({ navigation }: HomeScreenProps) => {
   };
 
   return (
-    <LoginStyled>
-      <LoginView>
-        <IntroSubTitleStyled
-          style={{
-            zIndex: 1000,
-          }}>
-          <SvgXml xml={introSubTitle} />
-        </IntroSubTitleStyled>
-        <LoginTitleStyled
-          style={{
-            zIndex: 100,
-          }}>
-          <SvgXml xml={loginTitle} />
-        </LoginTitleStyled>
-        <IntroKimBonKae3Styled
-          style={{
-            zIndex: 10,
-          }}>
-          <SvgXml xml={introKimBonKae3} />
-        </IntroKimBonKae3Styled>
-        <View />
-        <KakaoLoginButtonStyled>
-          <KakaoLoginButton onPress={onLogin}>
-            <KakaoLoginIcon source={require('~/assets/icons/icon_kakao_login.png')} />
-            <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_L} align={Align.CENTER}>
-              카카오 로그인 하기
-            </CustomText>
-          </KakaoLoginButton>
-        </KakaoLoginButtonStyled>
-      </LoginView>
-    </LoginStyled>
+    <>
+      <TopStatusBarStyled backgroundColor={BackgroundColor.HIGHLIGHTER} />
+      <StatusBar barStyle="light-content" backgroundColor={BackgroundColor.HIGHLIGHTER} />
+      <LoginStyled>
+        <LoginView>
+          <IntroSubTitleStyled
+            style={{
+              zIndex: 1000,
+            }}>
+            <SvgXml xml={introSubTitle} />
+          </IntroSubTitleStyled>
+          <LoginTitleStyled
+            style={{
+              zIndex: 100,
+            }}>
+            <SvgXml xml={loginTitle} />
+          </LoginTitleStyled>
+          <IntroKimBonKae3Styled
+            style={{
+              zIndex: 10,
+            }}>
+            <SvgXml xml={introKimBonKae3} />
+          </IntroKimBonKae3Styled>
+          <View />
+          <KakaoLoginButtonStyled>
+            <KakaoLoginButton onPress={onLogin}>
+              <KakaoLoginIcon source={require('~/assets/icons/icon_kakao_login.png')} />
+              <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_L} align={Align.CENTER}>
+                카카오 로그인 하기
+              </CustomText>
+            </KakaoLoginButton>
+          </KakaoLoginButtonStyled>
+        </LoginView>
+      </LoginStyled>
+    </>
   );
 };
+
+const TopStatusBarStyled = styled.SafeAreaView<{ backgroundColor: string }>`
+  flex: 0;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`;
 
 const LoginStyled = styled.SafeAreaView`
   flex: 1;

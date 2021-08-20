@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, StatusBar } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
 import introHouse from '~/assets/images/intro_house.svg';
@@ -37,16 +37,20 @@ const Intro: React.FC<NavigationProps> = ({ navigation }) => {
   }
 
   return (
-    <IntroFrame>
-      <Slider page={page} navigation={navigation}>
-        <PageB onNextPage={handleNextPage} />
-        <PageC onNextPage={handleNextPage} />
-        <PageD onNextPage={handleNextPage} />
-        <PageE onNextPage={handleNextPage} />
-        <PageF onNextPage={handleNextPage} />
-        <PageG navigation={navigation} />
-      </Slider>
-    </IntroFrame>
+    <>
+      <TopStatusBarStyled backgroundColor={BackgroundColor.DEPTH2_D} />
+      <StatusBar barStyle="light-content" backgroundColor={BackgroundColor.DEPTH2_D} />
+      <IntroFrame>
+        <Slider page={page} navigation={navigation}>
+          <PageB onNextPage={handleNextPage} />
+          <PageC onNextPage={handleNextPage} />
+          <PageD onNextPage={handleNextPage} />
+          <PageE onNextPage={handleNextPage} />
+          <PageF onNextPage={handleNextPage} />
+          <PageG navigation={navigation} />
+        </Slider>
+      </IntroFrame>
+    </>
   );
 };
 
@@ -247,6 +251,11 @@ const PageG: React.FC<NavigationProps> = observer(({ navigation }) => {
     </PageFrame>
   );
 });
+
+const TopStatusBarStyled = styled.SafeAreaView<{ backgroundColor: string }>`
+  flex: 0;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`;
 
 const IntroFrame = styled.SafeAreaView`
   width: 100%;

@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { TouchableOpacity, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 
 import CustomText from '~/components/CustomText';
 import { FriendInviteCard } from '~/components/FriendInviteCard';
@@ -36,21 +36,17 @@ const InviteAccept = ({ route, navigation }: InviteAcceptScreenProps) => {
   return (
     <>
       <TopStatusBarStyled backgroundColor={BackgroundColor.HIGHLIGHTER} />
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" backgroundColor={BackgroundColor.HIGHLIGHTER} />
+      <Header
+        navigation={navigation}
+        goBackButton={true}
+        goBackButtonStroke={IconColor.PRIMARY_D}
+        goBackButtonTitle="파티원 초대"
+        goBackButtonTitleColor={TextColor.PRIMARY_D}
+        backgroundColor={BackgroundColor.HIGHLIGHTER}
+      />
       <InviteAcceptStyled>
         <InviteAcceptView>
-          <Header
-            left={
-              <>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Icon type="ARROW_LEFT" color={IconColor.PRIMARY_D} />
-                </TouchableOpacity>
-                <CustomText font={FontType.MEDIUM_LARGE} color={TextColor.PRIMARY_D} marginLeft={22}>
-                  파티원 초대
-                </CustomText>
-              </>
-            }
-          />
           <BackgroundView />
           <DetailCardView onPress={() => navigation.navigate('InviteDetail', { task: task })}>
             <DetailCardInfo>

@@ -8,10 +8,11 @@ import { useUserProfileData } from '~/apis/authAPI';
 import { patchPushNotification } from '~/apis/userAPI';
 import CustomText from '~/components/CustomText';
 import { FoldableSwitch } from '~/components/FoldableSwitch';
+import Header from '~/components/Header';
 import Icon from '~/components/Icon';
 import { RootStackParamList } from '~/navigations/types';
 import AuthStore from '~/stores/AuthStore';
-import { IconColor, SurfaceColor, TextColor } from '~/utils/color';
+import { BackgroundColor, IconColor, SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
@@ -49,64 +50,67 @@ const Setting = ({ navigation }: Props) => {
   };
 
   return (
-    <SettingStyled>
-      <SettingItem>
-        <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
-          계정
-        </CustomText>
-        <SettingInfoItem>
-          <UserEmail>
-            <Icon type="KAKAO" />
-            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L} marginLeft={8}>
-              {profile?.name}
-            </CustomText>
-          </UserEmail>
-        </SettingInfoItem>
-        <SettingInfoItem>
-          <LogoutButton onPress={handleLogoutButtonClick}>
-            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
-              로그아웃
-            </CustomText>
-          </LogoutButton>
-        </SettingInfoItem>
-      </SettingItem>
-      <SettingItem>
-        <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
-          정보
-        </CustomText>
-        <SettingInfoItem>
-          <TouchableOpacity onPress={() => handleLinkButtonClick('notice')}>
-            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
-              공지사항
-            </CustomText>
-          </TouchableOpacity>
-          <Icon type="ARROW_RIGHT" />
-        </SettingInfoItem>
-        <SettingInfoItem>
-          <TouchableOpacity onPress={() => handleLinkButtonClick('terms')}>
-            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
-              약관 및 정책
-            </CustomText>
-          </TouchableOpacity>
-          <Icon type="ARROW_RIGHT" />
-        </SettingInfoItem>
-      </SettingItem>
-      <SettingItem>
-        <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
-          알림
-        </CustomText>
-        <SettingInfoItem>
-          <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
-            푸시 알림
+    <>
+      <Header navigation={navigation} goBackButton={true} title="앱 설정" backgroundColor={BackgroundColor.DEPTH1_L} />
+      <SettingStyled>
+        <SettingItem>
+          <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
+            계정
           </CustomText>
-          <FoldableSwitch isOn={isOn} onToggle={handleSwitchClick} />
-        </SettingInfoItem>
-      </SettingItem>
-    </SettingStyled>
+          <SettingInfoItem>
+            <UserEmail>
+              <Icon type="KAKAO" />
+              <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L} marginLeft={8}>
+                {profile?.name}
+              </CustomText>
+            </UserEmail>
+          </SettingInfoItem>
+          <SettingInfoItem>
+            <LogoutButton onPress={handleLogoutButtonClick}>
+              <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
+                로그아웃
+              </CustomText>
+            </LogoutButton>
+          </SettingInfoItem>
+        </SettingItem>
+        <SettingItem>
+          <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
+            정보
+          </CustomText>
+          <SettingInfoItem>
+            <TouchableOpacity onPress={() => handleLinkButtonClick('notice')}>
+              <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
+                공지사항
+              </CustomText>
+            </TouchableOpacity>
+            <Icon type="ARROW_RIGHT" />
+          </SettingInfoItem>
+          <SettingInfoItem>
+            <TouchableOpacity onPress={() => handleLinkButtonClick('terms')}>
+              <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
+                약관 및 정책
+              </CustomText>
+            </TouchableOpacity>
+            <Icon type="ARROW_RIGHT" />
+          </SettingInfoItem>
+        </SettingItem>
+        <SettingItem>
+          <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
+            알림
+          </CustomText>
+          <SettingInfoItem>
+            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
+              푸시 알림
+            </CustomText>
+            <FoldableSwitch isOn={isOn} onToggle={handleSwitchClick} />
+          </SettingInfoItem>
+        </SettingItem>
+      </SettingStyled>
+    </>
   );
 };
 
-const SettingStyled = styled.View`
+const SettingStyled = styled.SafeAreaView`
   width: 100%;
   height: 100%;
   padding: 0 20px;
