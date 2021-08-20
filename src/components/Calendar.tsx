@@ -401,7 +401,7 @@ const Daily = observer(() => {
         const total = routine?.reduce(
           (prev, curr) => {
             return {
-              completeCount: prev.completeCount + curr.completeCount,
+              completeCount: prev.completeCount + curr.completedDateList.length,
               timesOfDay: prev.timesOfDay + curr.timesOfDay,
             };
           },
@@ -474,7 +474,7 @@ const Weekly = observer(() => {
           if (routine) {
             total = routine?.reduce((prev, curr) => {
               return {
-                completeCount: prev.completeCount + curr.completeCount,
+                completeCount: prev.completeCount + curr.completedDateList.length,
                 timesOfDay: prev.timesOfDay + curr.timesOfDay,
               };
             }, total);
