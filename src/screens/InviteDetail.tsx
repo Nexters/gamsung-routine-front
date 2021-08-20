@@ -3,15 +3,14 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { TouchableOpacity, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 
 import EditTaskView from '~/components/EditTaskView';
 import Header from '~/components/Header';
-import Icon from '~/components/Icon';
 import InviteButton from '~/components/InviteButton';
 import { RootStackParamList } from '~/navigations/types';
 import { EditTaskStore } from '~/stores/EditTaskStore';
-import { IconColor } from '~/utils/color';
+import { BackgroundColor } from '~/utils/color';
 
 export interface InviteDetailScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -34,16 +33,11 @@ const InviteDetail = ({ route, navigation }: InviteDetailScreenProps) => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <TopStatusBarStyled backgroundColor={BackgroundColor.DEPTH2_L} />
+      <StatusBar barStyle="dark-content" backgroundColor={BackgroundColor.DEPTH2_L} />
+      <Header navigation={navigation} goBackButton={true} />
       <InviteDetailStyled>
         <InviteDetailView>
-          <Header
-            left={
-              <TouchableOpacity aria-label="뒤로가기" onPress={() => navigation.goBack()}>
-                <Icon type="ARROW_LEFT" color={IconColor.PRIMARY_L} />
-              </TouchableOpacity>
-            }
-          />
           <EditTaskView vm={vm} disable={true} />
           <InviteButton onCancelButtonClick={handleCancelButtonClick} onAcceptButtonClick={handleAcceptButtonClick} />
         </InviteDetailView>
@@ -51,6 +45,11 @@ const InviteDetail = ({ route, navigation }: InviteDetailScreenProps) => {
     </>
   );
 };
+
+const TopStatusBarStyled = styled.SafeAreaView<{ backgroundColor: string }>`
+  flex: 0;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`;
 
 const InviteDetailStyled = styled.SafeAreaView`
   flex: 1;

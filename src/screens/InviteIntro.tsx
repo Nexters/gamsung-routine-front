@@ -3,14 +3,13 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { StatusBar, TouchableOpacity, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 
 import Header from '~/components/Header';
-import Icon from '~/components/Icon';
 import InviteMessageView from '~/components/InviteMessageView';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
-import { IconColor } from '~/utils/color';
+import { BackgroundColor } from '~/utils/color';
 
 export interface InviteIntroScreenProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -47,16 +46,11 @@ const InviteIntro = ({ navigation, route }: InviteIntroScreenProps) => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <TopStatusBarStyled backgroundColor={BackgroundColor.DEPTH2_L} />
+      <StatusBar barStyle="dark-content" backgroundColor={BackgroundColor.DEPTH2_L} />
+      <Header navigation={navigation} goBackButton={true} />
       <InviteIntroStyled>
         <View style={{ flex: 1, width: '100%' }}>
-          <Header
-            left={
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Icon type="ARROW_LEFT" color={IconColor.PRIMARY_L} />
-              </TouchableOpacity>
-            }
-          />
           <InviteMessageView
             title={'파티원 초대가 도착했어요'}
             subText={'수락할 시 테스크를 함께 수행할 수 있어요'}
@@ -68,6 +62,11 @@ const InviteIntro = ({ navigation, route }: InviteIntroScreenProps) => {
     </>
   );
 };
+
+const TopStatusBarStyled = styled.SafeAreaView<{ backgroundColor: string }>`
+  flex: 0;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`;
 
 const InviteIntroStyled = styled.SafeAreaView`
   flex: 1;

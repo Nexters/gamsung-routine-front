@@ -2,15 +2,17 @@ import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 
 import { useGetCategory, useTemplates } from '~/apis/templateAPI';
 import CustomText from '~/components/CustomText';
+import Header from '~/components/Header';
+import Icon from '~/components/Icon';
 import { ScrollingButtonMenu } from '~/components/ScrollingButtonMenu';
 import { TemplateCard } from '~/components/TemplateCard';
 import { Template } from '~/models/Template';
 import { RootStackParamList } from '~/navigations/types';
-import { GraphicColor, SurfaceColor, TextColor } from '~/utils/color';
+import { BackgroundColor, GraphicColor, SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
@@ -40,6 +42,27 @@ export const TemplateList: React.FC<Props> = observer(({ navigation }) => {
 
   return (
     <Frame>
+      <Header
+        navigation={navigation}
+        title="테스크 추가"
+        left={
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('EditTask', { templateTask: null, taskId: null });
+            }}>
+            <Icon type={'ADD'} />
+          </TouchableOpacity>
+        }
+        right={
+          <TouchableOpacity
+            onPress={() => {
+              navigation.pop();
+            }}>
+            <Icon type={'CANCEL'} />
+          </TouchableOpacity>
+        }
+        backgroundColor={BackgroundColor.DEPTH1_L}
+      />
       <CategoryViewStyled>
         <ScrollingButtonMenu data={categories} selectedId={selectedCategoryId} onClick={handleCategoryPress} />
         <CountTextWrapStyled>
@@ -97,6 +120,6 @@ const CategoryViewStyled = styled.SafeAreaView`
   width: 100%;
   height: 100%;
   justify-content: center;
-  padding: 10px;
+  padding: 0 10px;
   flex: 1;
 `;

@@ -1,6 +1,5 @@
 import styled from '@emotion/native';
 import React from 'react';
-import { ScrollView } from 'react-native';
 
 import AlarmSettingCard from '~/components/AlarmSettingCard';
 import CustomText from '~/components/CustomText';
@@ -65,7 +64,7 @@ const EditTaskView = ({
   };
 
   return (
-    <ScrollView style={{ width: '100%', height: '100%', marginBottom: 100 }}>
+    <EditTaskScrollView>
       <EditTaskViewStyled>
         <EditSettingView>
           <TitleSettingView>
@@ -129,9 +128,15 @@ const EditTaskView = ({
           )}
         </EditSettingView>
       </EditTaskViewStyled>
-    </ScrollView>
+    </EditTaskScrollView>
   );
 };
+
+const EditTaskScrollView = styled.ScrollView`
+  width: 100%;
+  height: 100%;
+  margin-bottom: 100px;
+`;
 
 const EditTaskViewStyled = styled.View`
   width: 100%;

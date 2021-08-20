@@ -19,7 +19,7 @@ export const ScrollingButtonMenu = observer(({ data, selectedId, onClick }: Prop
   };
 
   return (
-    <ViewStyled style={{ marginTop: 20 }}>
+    <ViewStyled style={{ marginTop: 16 }}>
       <FlatList
         data={data}
         renderItem={({ item }) => {

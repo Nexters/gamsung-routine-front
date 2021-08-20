@@ -36,14 +36,21 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
         {
           translateX: scrollY.interpolate({
             inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-            outputRange: [0, 0],
+            outputRange: [0, -10],
             extrapolate: 'clamp',
           }),
         },
         {
           translateY: scrollY.interpolate({
             inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-            outputRange: [0, 53],
+            outputRange: [0, 55],
+            extrapolate: 'clamp',
+          }),
+        },
+        {
+          scale: scrollY.interpolate({
+            inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
+            outputRange: [1, 0.9],
             extrapolate: 'clamp',
           }),
         },
@@ -115,7 +122,7 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
         </Header>
         <AppBar>
           <LeftHeaderItem onPress={handleBackpressClick}>
-            <Icon type={'ARROW_LEFT'} />
+            <Icon type={'ARROW_LEFT_WHITE'} />
           </LeftHeaderItem>
           <RightHeaderItem onPress={handleAddAllTaskClick}>
             <CustomText color={TextColor.PRIMARY_D} font={FontType.MEDIUM_BODY_01}>
@@ -136,22 +143,22 @@ const CollapsibleToolbarStyled = styled.SafeAreaView`
 const LeftHeaderItem = styled(TouchableOpacity)`
   position: absolute;
   left: 20px;
-  top: 15px;
 `;
 
 const RightHeaderItem = styled(TouchableOpacity)`
   position: absolute;
   right: 20px;
-  top: 15px;
 `;
 
 const AppBar = styled.View`
+  width: 100%;
+  height: 56px;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  padding: 20px 24px;
-  justify-content: space-between;
   background-color: transparent;
 `;
 

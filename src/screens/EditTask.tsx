@@ -9,6 +9,7 @@ import { useUserProfileData } from '~/apis/authAPI';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
 import EdisTaskView from '~/components/EditTaskView';
+import Header from '~/components/Header';
 import useModal from '~/hooks/useModal';
 import useModalContent from '~/hooks/useModalContent';
 import { RootStackParamList } from '~/navigations/types';
@@ -165,6 +166,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
 
   return (
     <>
+      <Header navigation={navigation} goBackButton={true} />
       <EditTaskStyled>
         <EdisTaskView
           vm={vm}
