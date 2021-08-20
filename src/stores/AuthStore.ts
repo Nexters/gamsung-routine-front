@@ -10,6 +10,7 @@ class AuthStore {
   private static _instance: AuthStore;
 
   token?: string = '';
+  // 'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJLQUtBTyAxODExNzg1NzYyIiwiaWF0IjoxNjI4ODY5NjQ1LCJleHAiOjE3MTUxODMyNDV9.JH-6odNnUuBMb9muUpIqqeMicKoLNWrTFjfOxMKsNsTDsOklgch5aq-S5mvcMb0f';
 
   constructor() {
     makeObservable(this, {
@@ -31,10 +32,18 @@ class AuthStore {
 
   login = async () => {
     try {
+      console.log(8888);
       const token = await login();
+      console.log(999, token);
 
       const fcmToken = await messaging().getToken();
       try {
+        console.log(10101, {
+          accessToken: token.accessToken,
+          refreshToken: token.refreshToken,
+          pushToken: fcmToken,
+        });
+
         const {
           data: { accessToken },
         } = await api.post<{
@@ -50,6 +59,8 @@ class AuthStore {
           },
           {},
         );
+        console.log(222, accessToken);
+
         this.token = accessToken;
       } catch (error) {
         console.log('error', error);

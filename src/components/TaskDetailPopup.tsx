@@ -39,8 +39,14 @@ const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount 
     }
   };
 
-  const handleDelayButtonClick = () => {
-    console.log(taskId, ' : delay');
+  const handleDelayButtonClick = async () => {
+    try {
+      await RoutineAPI.instance().delayTask(taskId, CalendarStore.focusDay.format('YYYYMMDD'));
+      revalidate();
+      closeModal();
+    } catch (e) {
+      showToast(e);
+    }
   };
 
   const handleEditButtonClick = () => {
@@ -48,11 +54,16 @@ const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount 
   };
 
   const handleDeleteButtonClick = () => {
+    console.log('handleDeleteButtonClick');
+
     openModal();
   };
 
-  const handleModalDeleteClick = () => {
-    RoutineAPI.instance().deleteTask(taskId);
+  const handleModalDeleteClick = async () => {
+    console.log('handleModalDeleteClick');
+
+    await RoutineAPI.instance().deleteTask(taskId);
+    revalidate();
     closeModal();
   };
 
@@ -77,14 +88,14 @@ const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount 
           </CustomText>
         </TaskDetailPopupButton>
       )}
-      {CalendarStore.radio === RADIO_TYPE.루틴 && completedCount === 0 && isDelay && (
+      {/* {CalendarStore.radio === RADIO_TYPE.루틴 && completedCount === 0 && isDelay && (
         <TaskDetailPopupButton onPress={handleDelayButtonClick}>
           <TaskDetailPopupButtonImage source={require('~/assets/images/button_delay.png')} />
           <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
             미루기
           </CustomText>
         </TaskDetailPopupButton>
-      )}
+      )} */}
       <TaskDetailPopupButton onPress={handleEditButtonClick}>
         <TaskDetailPopupButtonImage source={require('~/assets/images/button_edit.png')} />
         <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
@@ -103,9 +114,9 @@ const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount 
         content="태스크를 종료하시겠어요?"
         subContent="태스크를 종료하면 되돌릴 수 없어요!"
         leftButtonText="취소"
-        onLeftButtonClick={handleModalDeleteClick}
+        onLeftButtonClick={handleModalCancelClick}
         rightButtonText="확인"
-        onRightButtonClick={handleModalCancelClick}
+        onRightButtonClick={handleModalDeleteClick}
       />
     </TaskDetailPopupStyled>
   );

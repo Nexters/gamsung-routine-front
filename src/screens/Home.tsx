@@ -52,7 +52,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
     const total = routine.reduce(
       (prev, curr) => {
         return {
-          completeCount: prev.completeCount + curr.completeCount,
+          completeCount: prev.completeCount + curr.completedDateList.length,
           timesOfDay: prev.timesOfDay + curr.timesOfDay,
         };
       },
@@ -80,7 +80,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
     const total = temp.reduce(
       (prev, curr) => {
         return {
-          completeCount: prev.completeCount + curr.completeCount,
+          completeCount: prev.completeCount + curr.completedDateList.length,
           timesOfDay: prev.timesOfDay + curr.timesOfDay,
         };
       },

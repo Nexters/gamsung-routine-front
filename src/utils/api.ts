@@ -28,6 +28,7 @@ class API {
 
   private async request<T>(method: APIMethod, url: string, data: any, opt: any): Promise<T> {
     IndicatorStore.up();
+
     return this.axiosInstance({
       url: API.HOSTNAME + API.PREFIX + url,
       method,
@@ -53,7 +54,9 @@ class API {
         const data = result && result.response ? result.response.data : null;
         return Promise.reject(data ? data.statusMessage || data.message || data.error || data.errorMessage : null);
       })
-      .finally(() => IndicatorStore.down());
+      .finally(() => {
+        IndicatorStore.down();
+      });
   }
 
   public async get<T = any>(url: string, data?: any, config?: any) {

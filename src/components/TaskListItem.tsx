@@ -5,7 +5,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-import { useMonthlyTasks } from '~/apis/routinAPI';
+import { useMonthlyTasks, useSpecificPeriodTask } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
 import MonsterIcon from '~/components/MonsterIcon';
 import TaskDetailPopup from '~/components/TaskDetailPopup';
@@ -64,6 +64,8 @@ const TaskListItem = observer(
       month: CalendarStore.month.toString(),
       year: CalendarStore.tempYear.toString(),
     });
+    const { data: specificPeriodTask, error: specificPeriodTaskError } = useSpecificPeriodTask(taskId);
+    console.log('se', specificPeriodTask, specificPeriodTaskError);
 
     const dayOfWeek = [] as Task[];
 
@@ -118,7 +120,7 @@ const TaskListItem = observer(
         {CalendarStore.radio === RADIO_TYPE.리포트 && (
           <TaskListItemWeekView>
             {dayOfWeek?.map((item, index) => {
-              const dayOfWeekPercent = ((item.completeCount || 0) / (item.timesOfDay || 0) || 0) * 100;
+              const dayOfWeekPercent = ((item.completedDateList?.length || 0) / (item.timesOfDay || 0) || 0) * 100;
               return (
                 <MonsterIconStyled key={index}>
                   <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L} marginBottom={3}>

@@ -8,6 +8,7 @@ import RNKakaoLink from 'react-native-kakao-links';
 import { SvgXml, Svg, Defs, Stop, Rect, LinearGradient } from 'react-native-svg';
 
 import { useUserProfileData } from '~/apis/authAPI';
+import { useMonthlyTasks } from '~/apis/routinAPI';
 import POPUP_MONSTER from '~/assets/images/popup_monster.svg';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
@@ -16,6 +17,7 @@ import Header from '~/components/Header';
 import useModal from '~/hooks/useModal';
 import useModalContent from '~/hooks/useModalContent';
 import { RootStackParamList } from '~/navigations/types';
+import CalendarStore from '~/stores/CalendarStore';
 import { EditTaskStore } from '~/stores/EditTaskStore';
 import { ActionColor, GraphicColor, TextColor, SurfaceColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
@@ -27,6 +29,10 @@ interface EditTaskScreenProps {
 }
 
 const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
+  const { revalidate } = useMonthlyTasks({
+    month: CalendarStore.month.toString(),
+    year: CalendarStore.tempYear.toString(),
+  });
   const { templateTask, taskId } = route.params;
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
   const {
@@ -61,6 +67,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
 
     if (id) {
       await vm.onSave(id);
+      revalidate();
       openModal();
     }
   };
