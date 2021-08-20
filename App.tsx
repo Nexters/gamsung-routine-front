@@ -21,7 +21,7 @@ const config = {
 
 const linking: LinkingOptions = {
   prefixes: ['bonkae-master://', 'https://bonkae.page.link', 'http://bonkae.page.link'],
-  async getInitialURL(): Promise<string> {
+  async getInitialURL(): Promise<string | null> {
     const url = await Linking.getInitialURL();
     const dynamicLinkUrl = await dynamicLinks().getInitialLink();
 
@@ -42,7 +42,7 @@ const linking: LinkingOptions = {
 
       return `bonkae-master://InviteIntro?taskId=${taskId}`;
     }
-    return 'bonkae-master://intro';
+    return null;
   },
   subscribe(listener: (deeplink: string) => void) {
     const onReceiveURL = ({ url }: { url: string }) => listener(url);
