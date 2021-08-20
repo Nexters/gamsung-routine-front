@@ -21,6 +21,7 @@ interface Props {
   onChangeTimeData?: (id: number, hour: number, minute: number) => void;
   onChangeAlarm?: (isAlarm: boolean) => void;
   onEndTaskClick?: () => void;
+  onInviteClick?: () => void;
   disable?: boolean;
 }
 
@@ -32,6 +33,7 @@ const EditTaskView = ({
   onChangeTimeData,
   onChangeAlarm,
   onEndTaskClick,
+  onInviteClick,
   disable = false,
 }: Props) => {
   const handleChangeTaskName = (name: string) => {
@@ -56,6 +58,10 @@ const EditTaskView = ({
 
   const handleEndTaskClick = () => {
     onEndTaskClick?.();
+  };
+
+  const handleInviteClick = () => {
+    onInviteClick?.();
   };
 
   return (
@@ -109,6 +115,7 @@ const EditTaskView = ({
                   ]}
                   marginTop={16}
                   disable={disable}
+                  onInviteClick={handleInviteClick}
                 />
               </AddPartyView>
               {!disable && (

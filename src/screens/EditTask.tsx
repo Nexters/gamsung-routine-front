@@ -174,6 +174,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
           onChangeTimeData={handleChangeTimeData}
           onChangeAlarm={handleChangeAlarm}
           onEndTaskClick={handleEndTaskClick}
+          onInviteClick={handleKakaoInvite}
         />
         <EditSubmitButton onPress={handleEditSubmitClick} disabled={!vm.isValidSave}>
           <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
