@@ -16,7 +16,7 @@ import CustomText from '~/components/CustomText';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import { BackgroundColor, SurfaceColor, CalenderColor, TextColor } from '~/utils/color';
-import { FontType } from '~/utils/font';
+import { Align, FontType } from '~/utils/font';
 
 // ''/''/01/02/03 or 01/02/03/04/05 or 10/11/12/''/'' 노출을 위해 앞뒤로 2씩 4을 더함
 const MONTH_PICKER_NUMBER = 2 + 12 + 2;
@@ -33,12 +33,12 @@ const Calendar = ({ navigation }: Props) => {
 
   const left = CalendarStore.left.interpolate({
     inputRange: [0, 1],
-    outputRange: [3, 53],
+    outputRange: [3, 56],
   });
 
   return (
     <CalendarWrapper
-      paddingTop={insets.top}
+      paddingTop={insets.top + 15}
       paddingBottom={insets.bottom}
       backgroundColor={BackgroundColor.DEPTH2_D}
       style={{ zIndex: 10 }}>
@@ -48,7 +48,7 @@ const Calendar = ({ navigation }: Props) => {
             setDatePickerVisibility(true);
             CalendarStore.changeIsWeek(false);
           }}>
-          <CustomText font={FontType.REGULAR_TITLE_02} color={TextColor.PRIMARY_D}>
+          <CustomText font={FontType.REGULAR_TITLE_02} color={TextColor.PRIMARY_D} marginRight={4}>
             {CalendarStore.month + 1 < 10 ? `0${CalendarStore.month + 1}` : CalendarStore.month + 1}월
           </CustomText>
           <Icon type={'FULL_ARROW_DOWN'} />
@@ -58,26 +58,26 @@ const Calendar = ({ navigation }: Props) => {
             style={{
               left,
               position: 'absolute',
-              width: 51,
+              width: CalendarStore.radio === RADIO_TYPE.루틴 ? 52 : 54,
               height: 24,
               backgroundColor: SurfaceColor.DEPTH2_D,
-              borderRadius: 7,
+              borderRadius: 6,
             }}
           />
           <RadioDay onPress={() => CalendarStore.changeRadio(RADIO_TYPE.루틴)}>
-            <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_D}>
+            <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_D} align={Align.CENTER}>
               {RADIO_TYPE.루틴}
             </CustomText>
           </RadioDay>
           <RadioWeek onPress={() => CalendarStore.changeRadio(RADIO_TYPE.리포트)}>
-            <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_D}>
+            <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_D} align={Align.CENTER}>
               {RADIO_TYPE.리포트}
             </CustomText>
           </RadioWeek>
         </RadioWrapper>
-        <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
+        <SettingButton onPress={() => navigation.navigate('Setting')}>
           <Icon type={'SETTING'} />
-        </TouchableOpacity>
+        </SettingButton>
       </MonthHead>
       <CalView>
         <CalColumn>
@@ -85,7 +85,9 @@ const Calendar = ({ navigation }: Props) => {
             {['월', '화', '수', '목', '금', '토', '일'].map((dayOfWeek) => {
               return (
                 <DayOfWeek key={dayOfWeek}>
-                  <CustomText color={TextColor.PRIMARY_D}>{dayOfWeek}</CustomText>
+                  <CustomText color={TextColor.PRIMARY_D} font={FontType.REGULAR_CAPTION}>
+                    {dayOfWeek}
+                  </CustomText>
                 </DayOfWeek>
               );
             })}
@@ -240,21 +242,24 @@ const CalendarWrapper = styled.SafeAreaView<{
   padding-top: ${({ paddingTop }) => paddingTop}px;
   padding-bottom: ${({ paddingBottom }) => paddingBottom}px;
   background-color: ${({ backgroundColor }) => backgroundColor};
+  align-items: center;
+  justify-content: center;
 `;
 
 const MonthWrapper = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
+  position: absolute;
+  left: 20px;
 `;
 
 const RadioWrapper = styled.View`
   background-color: ${SurfaceColor.DEPTH1_D};
   border-radius: 7px;
-  width: 108px;
-  height: 28px;
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  padding: 2px;
 `;
 
 const RadioDay = styled.TouchableOpacity`
@@ -285,8 +290,18 @@ const CalColumn = styled(Week)`
   flex-direction: column;
 `;
 
+const DateTextView = styled.View<{ checkToday: boolean }>`
+  width: 25px;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ checkToday }) => (checkToday ? SurfaceColor.DEPTH1_D : 'transparent')};
+  border-radius: 100px;
+  margin-top: 2px;
+`;
+
 const DayOfWeek = styled.View`
-  width: ${`${(Dimensions.get('window').width - 22) / 7}px`};
+  width: ${`${(Dimensions.get('window').width - 22) / 7 - 2}px`};
   height: ${`${(Dimensions.get('window').width - 22) / 7}px`};
   padding: 9px;
   margin: -9px 0;
@@ -316,13 +331,24 @@ const DateGauge = styled.View<{ backgroundColor: string; height: number }>`
 `;
 
 const DateTextWrapper = styled.View`
-  margin-top: 4px;
-  margin-bottom: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const SettingButton = styled.TouchableOpacity`
+  align-items: center;
+  position: absolute;
+  right: 20px;
 `;
 
 const MonthHead = styled.View`
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin: 0 20px;
 `;
@@ -404,12 +430,14 @@ const Daily = observer(() => {
               </DateWrapper>
             </DayOfWeek>
             <DateTextWrapper>
-              <CustomText
-                font={FontType.REGULAR_CAPTION}
-                color={CalendarStore.month === date.month() ? TextColor.PRIMARY_D : TextColor.SECONDARY_D}
-                align="center">
-                {date.date()}
-              </CustomText>
+              <DateTextView checkToday={dayjs().isSame(date, 'day')}>
+                <CustomText
+                  font={FontType.MEDIUM_CAPTION}
+                  color={CalendarStore.month === date.month() ? TextColor.PRIMARY_D : TextColor.SECONDARY_D}
+                  align={Align.CENTER}>
+                  {date.date()}
+                </CustomText>
+              </DateTextView>
             </DateTextWrapper>
           </TouchableOpacity>
         );
@@ -459,14 +487,17 @@ const Weekly = observer(() => {
               }
             }}>
             <WeeklyRow>
-              <DateWrapper
-                backgroundColor={day.isSame(date, 'day') ? CalenderColor.UNFILL_FOCUS : CalenderColor.UNFILL}>
-                <WeekGauge
-                  backgroundColor={day.isSame(date, 'day') ? CalenderColor.FILL_FOCUS : CalenderColor.FILL}
-                  height={percent}
-                />
-                {percent === 100 && (day.isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />)}
-              </DateWrapper>
+              <View style={{ width: Dimensions.get('window').width - 40, height: '100%' }}>
+                <DateWrapper
+                  backgroundColor={day.isSame(date, 'day') ? CalenderColor.UNFILL_FOCUS : CalenderColor.UNFILL}>
+                  <WeekGauge
+                    backgroundColor={day.isSame(date, 'day') ? CalenderColor.FILL_FOCUS : CalenderColor.FILL}
+                    height={percent}
+                  />
+                  {percent === 100 &&
+                    (dayjs().isSame(date, 'day') ? <Icon type={'CROWN'} /> : <Icon type={'CROWN_GRAY'} />)}
+                </DateWrapper>
+              </View>
             </WeeklyRow>
             <WeekTextWrapper key={`${date}_${index}`}>
               {Array(7)
@@ -476,12 +507,14 @@ const Weekly = observer(() => {
                   return (
                     <DayOfWeek key={textDate.toString()}>
                       <DateTextWrapper>
-                        <CustomText
-                          font={FontType.REGULAR_CAPTION}
-                          color={CalendarStore.month === textDate.month() ? TextColor.PRIMARY_D : TextColor.SECONDARY_L}
-                          align="center">
-                          {textDate.date()}
-                        </CustomText>
+                        <DateTextView checkToday={dayjs().isSame(textDate, 'day')}>
+                          <CustomText
+                            font={FontType.MEDIUM_CAPTION}
+                            color={CalendarStore.month === date.month() ? TextColor.PRIMARY_D : TextColor.SECONDARY_D}
+                            align={Align.CENTER}>
+                            {textDate.date()}
+                          </CustomText>
+                        </DateTextView>
                       </DateTextWrapper>
                     </DayOfWeek>
                   );
@@ -511,10 +544,7 @@ const Container = observer(() => {
 
   const maxY = CalendarStore.translation.interpolate({
     inputRange: [0, 1],
-    outputRange: [
-      -((Dimensions.get('window').width - 22) / 7 + 12 + Math.floor(index / 7) * 1) * Math.floor(index / 7),
-      0,
-    ], // <-- value that larger than your content's height: ;
+    outputRange: [-(Dimensions.get('window').width / 7 + 12 + Math.floor(index / 7) * 1) * Math.floor(index / 7), 0], // <-- value that larger than your content's height: ;
   });
 
   return (

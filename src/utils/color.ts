@@ -86,7 +86,7 @@ const CalenderColor = {
 
 const SurfaceColor = {
   DEPTH1_D: GrayColor.GRAY90,
-  DEPTH2_D: GrayColor.GRAY70,
+  DEPTH2_D: GrayColor.GRAY80,
   DEPTH1_L: SubColor.WHITE,
   DEPTH2_L: GrayColor.GRAY10,
   DEPTH3_L: GrayColor.GRAY20,

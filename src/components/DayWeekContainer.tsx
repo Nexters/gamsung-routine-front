@@ -4,7 +4,7 @@ import React from 'react';
 import CustomText from './CustomText';
 
 import { ActionColor, BorderColor, SurfaceColor, TextColor } from '~/utils/color';
-import { FontType } from '~/utils/font';
+import { Align, FontType } from '~/utils/font';
 
 interface Props {
   days: {
@@ -24,7 +24,10 @@ export const DayWeekContainer: React.FC<Props> = ({ days, onDayPress }) => {
     <DayWeekContainerStyled>
       {days.map((day) => (
         <DayStyled selected={day.selected} onPress={handleDayPress(day.id)} key={day.id}>
-          <CustomText font={FontType.MEDIUM_BODY_01} color={day.selected ? TextColor.PRIMARY_D : TextColor.INACTIVE_L}>
+          <CustomText
+            font={FontType.MEDIUM_BODY_01}
+            color={day.selected ? TextColor.PRIMARY_D : TextColor.INACTIVE_L}
+            align={Align.CENTER}>
             {day.day}
           </CustomText>
         </DayStyled>
@@ -40,8 +43,8 @@ const DayWeekContainerStyled = styled.View`
 
 const DayStyled = styled.TouchableOpacity<{ selected: boolean }>`
   width: 34px;
-  height: 34px;
-  margin-right: 10px;
+  height: 38px;
+  margin: 0 5px;
   border: 1px solid ${({ selected }) => (selected ? BorderColor.WHITE : BorderColor.DEPTH2_L)};
   border-radius: 8px;
   align-items: center;

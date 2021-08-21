@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
 import introKimBonKae3 from '~/assets/images/intro_kim_bonkae_3.svg';
@@ -47,16 +47,15 @@ const Login = ({ navigation }: HomeScreenProps) => {
             }}>
             <SvgXml xml={introKimBonKae3} />
           </IntroKimBonKae3Styled>
-          <View />
-          <KakaoLoginButtonStyled>
-            <KakaoLoginButton onPress={onLogin}>
-              <KakaoLoginIcon source={require('~/assets/icons/icon_kakao_login.png')} />
-              <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_L} align={Align.CENTER}>
-                카카오 로그인 하기
-              </CustomText>
-            </KakaoLoginButton>
-          </KakaoLoginButtonStyled>
         </LoginView>
+        <KakaoLoginButtonStyled>
+          <KakaoLoginButton onPress={onLogin}>
+            <KakaoLoginIcon source={require('~/assets/icons/icon_kakao_login.png')} />
+            <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_L} align={Align.CENTER}>
+              카카오 로그인 하기
+            </CustomText>
+          </KakaoLoginButton>
+        </KakaoLoginButtonStyled>
       </LoginStyled>
     </>
   );

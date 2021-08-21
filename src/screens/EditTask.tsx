@@ -4,8 +4,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
 import RNKakaoLink from 'react-native-kakao-links';
+import { SvgXml } from 'react-native-svg';
 
 import { useUserProfileData } from '~/apis/authAPI';
+import POPUP_MONSTER from '~/assets/images/popup_monster.svg';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
 import EdisTaskView from '~/components/EditTaskView';
@@ -187,6 +189,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
       <CustomModal
         isVisible={isModalVisible}
         onClose={closeModal}
+        modalImage={<SvgXml xml={POPUP_MONSTER} />}
         content={modalContent}
         subContent={modalSubContent}
         leftButtonText={modalLeftButtonText}

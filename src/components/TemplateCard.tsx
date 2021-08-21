@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import CustomText from '~/components/CustomText';
+import Icon from '~/components/Icon';
 import { TemplateTask } from '~/models/TemplateTask';
 import { GraphicColor, SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -27,10 +28,13 @@ export const TemplateCard: React.FC<Props> = observer(({ id, name, tasks, onPres
           {name}
         </CustomText>
         <ViewStyled>
-          {tasks.slice(0, 3).map((it) => (
-            <CustomText key={it.id} font={FontType.REGULAR_CAPTION} color={TextColor.PRIMARY_D}>
-              {it.name}
-            </CustomText>
+          {tasks.slice(0, 3).map((it, index) => (
+            <CheckStyled key={index}>
+              <Icon type={'CHECK'} />
+              <CustomText key={it.id} font={FontType.REGULAR_CAPTION} color={TextColor.PRIMARY_D} marginLeft={7}>
+                {it.name}
+              </CustomText>
+            </CheckStyled>
           ))}
         </ViewStyled>
       </TemplateContentStyled>
@@ -40,6 +44,7 @@ export const TemplateCard: React.FC<Props> = observer(({ id, name, tasks, onPres
 });
 
 const TemplateContentStyled = styled.View`
+  width: 100%;
   height: 100%;
 `;
 
@@ -55,15 +60,22 @@ const TemplateBeltStyled = styled.View`
 
 const TemplateCardStyled = styled.TouchableOpacity<{ backgroundColor: GraphicColor }>`
   width: 160px;
-  height: 184px;
+  height: 200px;
   flex: 1;
   flex-direction: row;
+  align-items: center;
   margin: 10px;
-  padding: 18px;
+  padding: 20px;
+  padding-top: 32px;
   background-color: ${({ backgroundColor }) => backgroundColor};
-  border-radius: 9px;
+  border-radius: 10px;
 `;
 
 const ViewStyled = styled.View`
-  margin-top: 24px;
+  margin-top: 36px;
+`;
+
+const CheckStyled = styled.View`
+  flex-direction: row;
+  align-items: center;
 `;

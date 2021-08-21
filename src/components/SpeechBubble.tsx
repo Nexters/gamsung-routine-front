@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native';
 import CustomText from './CustomText';
 import Icon from './Icon';
 
-import { CalenderColor, IconColor, SurfaceColor, TextColor } from '~/utils/color';
+import { IconColor, SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 interface Props {
@@ -69,7 +69,7 @@ const SpeakerFrame = styled.View`
   height: 42px;
   border: 3px solid ${IconColor.PRIMARY_L};
   border-radius: 10px;
-  background-color: ${CalenderColor.UNFILL};
+  background-color: ${SurfaceColor.DEPTH2_D};
   justify-content: center;
   align-items: center;
 `;

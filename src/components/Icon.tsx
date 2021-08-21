@@ -8,6 +8,7 @@ import ARROW_LEFT_WHITE from '~/assets/icons/icon_arrow_left_white.svg';
 import ARROW_RIGHT from '~/assets/icons/icon_arrow_right.svg';
 import ARROW_UP from '~/assets/icons/icon_arrow_up.svg';
 import CANCEL from '~/assets/icons/icon_cancel.svg';
+import CHECK from '~/assets/icons/icon_check.svg';
 import CONFIRM from '~/assets/icons/icon_confirm.svg';
 import CROWN from '~/assets/icons/icon_crown.svg';
 import CROWN_GRAY from '~/assets/icons/icon_crown_gray.svg';
@@ -39,6 +40,7 @@ const icon = {
   SETTING,
   KAKAO,
   CANCEL,
+  CHECK,
 };
 interface Props extends Omit<ComponentProps<typeof SvgXml>, 'xml'> {
   type: IconType;

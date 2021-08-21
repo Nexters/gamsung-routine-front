@@ -34,7 +34,7 @@ const Setting = ({ navigation }: Props) => {
 
   const handleLinkButtonClick = async (type: 'notice' | 'terms') => {
     if (type === 'notice') {
-      await Linking.openURL('https://naver.com');
+      await Linking.openURL('https://www.notion.so/hushershe/f787649fd3f3441d841aaef5427f85cf');
     } else if (type === 'terms') {
       await Linking.openURL('https://google.com');
     }
@@ -54,7 +54,7 @@ const Setting = ({ navigation }: Props) => {
       <Header navigation={navigation} goBackButton={true} title="앱 설정" backgroundColor={BackgroundColor.DEPTH1_L} />
       <SettingStyled>
         <SettingItem>
-          <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
+          <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.HIGHLIGHT}>
             계정
           </CustomText>
           <SettingInfoItem>
@@ -74,13 +74,13 @@ const Setting = ({ navigation }: Props) => {
           </SettingInfoItem>
         </SettingItem>
         <SettingItem>
-          <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
+          <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.HIGHLIGHT}>
             정보
           </CustomText>
           <SettingInfoItem>
             <TouchableOpacity onPress={() => handleLinkButtonClick('notice')}>
               <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
-                공지사항
+                이용방법 및 공지사항
               </CustomText>
             </TouchableOpacity>
             <Icon type="ARROW_RIGHT" />
@@ -95,7 +95,7 @@ const Setting = ({ navigation }: Props) => {
           </SettingInfoItem>
         </SettingItem>
         <SettingItem>
-          <CustomText font={FontType.BOLD_CAPTION} color={TextColor.HIGHLIGHT}>
+          <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.HIGHLIGHT}>
             알림
           </CustomText>
           <SettingInfoItem>
@@ -124,6 +124,7 @@ const SettingItem = styled.View`
 const SettingInfoItem = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin-top: 20px;
 `;
 

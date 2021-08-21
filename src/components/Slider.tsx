@@ -110,7 +110,7 @@ const IndicatorStyled = styled.View`
   position: absolute;
   flex-direction: row;
   left: 24px;
-  top: 30px;
+  top: 38px;
   z-index: 10;
 `;
 
@@ -118,6 +118,6 @@ const IndicatorDot = styled.TouchableOpacity<{ selected: boolean }>`
   width: 8px;
   height: 8px;
   border-radius: 4px;
-  margin-right: 4px;
+  margin-right: 8px;
   background-color: ${({ selected }) => (selected ? IconColor.PRIMARY_D : IconColor.TERTIARY_D)};
 `;
