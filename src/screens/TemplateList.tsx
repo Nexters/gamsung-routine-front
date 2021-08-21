@@ -46,12 +46,15 @@ export const TemplateList: React.FC<Props> = observer(({ navigation }) => {
         navigation={navigation}
         title="테스크 추가"
         left={
-          <TouchableOpacity
+          <AddButton
             onPress={() => {
               navigation.navigate('EditTask', { templateTask: null, taskId: null });
             }}>
             <Icon type={'ADD'} />
-          </TouchableOpacity>
+            <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.HIGHLIGHT} marginLeft={3}>
+              직접 추가
+            </CustomText>
+          </AddButton>
         }
         right={
           <TouchableOpacity
@@ -112,8 +115,9 @@ const Frame = styled.SafeAreaView`
 `;
 
 const CountTextWrapStyled = styled.View`
-  margin-left: 10px;
   flex-direction: row;
+  margin-left: 10px;
+  margin-bottom: 15px;
 `;
 
 const CategoryViewStyled = styled.SafeAreaView`
@@ -122,4 +126,9 @@ const CategoryViewStyled = styled.SafeAreaView`
   justify-content: center;
   padding: 0 10px;
   flex: 1;
+`;
+
+const AddButton = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
 `;

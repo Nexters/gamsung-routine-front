@@ -104,7 +104,7 @@ export const TimeSettingContainer: React.FC<Props> = observer(
 const TimeSettingContainerStyled = styled.View`
   display: flex;
   flex-direction: row;
-  margin-top: 6px;
+  margin-top: 10px;
   justify-content: center;
   align-items: center;
 `;

@@ -9,7 +9,7 @@ import { RoutineAPI, useMonthlyTasks } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
 import useModal from '~/hooks/useModal';
 import { RootStackParamList } from '~/navigations/types';
-import CalendarStore from '~/stores/CalendarStore';
+import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 import { showToast } from '~/utils/showToast';
@@ -62,14 +62,14 @@ const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount 
 
   return (
     <TaskDetailPopupStyled
-      check={completedCount === 0 && !isDelay}
+      check={(completedCount === 0 && !isDelay) || CalendarStore.radio === RADIO_TYPE.리포트}
       source={
-        completedCount === 0 && !isDelay
+        (completedCount === 0 && !isDelay) || CalendarStore.radio === RADIO_TYPE.리포트
           ? require('~/assets/images/popup_task_detail_2.png')
           : require('~/assets/images/popup_task_detail_3.png')
       }
       resizeMode="cover">
-      {completedCount > 0 && (
+      {CalendarStore.radio === RADIO_TYPE.루틴 && completedCount > 0 && (
         <TaskDetailPopupButton onPress={handleCancelButtonClick}>
           <TaskDetailPopupButtonImage source={require('~/assets/images/button_cancel.png')} />
           <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
@@ -77,7 +77,7 @@ const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount 
           </CustomText>
         </TaskDetailPopupButton>
       )}
-      {completedCount === 0 && isDelay && (
+      {CalendarStore.radio === RADIO_TYPE.루틴 && completedCount === 0 && isDelay && (
         <TaskDetailPopupButton onPress={handleDelayButtonClick}>
           <TaskDetailPopupButtonImage source={require('~/assets/images/button_delay.png')} />
           <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>

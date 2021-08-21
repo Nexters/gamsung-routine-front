@@ -1,10 +1,13 @@
 import styled from '@emotion/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 
 import CustomText from './CustomText';
 
+import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+
 const SkipButton = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList> }) => {
   const handleSkipClick = () => {
     navigation.replace('Login');
@@ -21,7 +24,7 @@ const SkipButton = ({ navigation }: { navigation: StackNavigationProp<RootStackP
 
 const StyledSkipButton = styled.TouchableOpacity`
   position: absolute;
-  top: 20px;
+  top: 25px;
   right: 24px;
   background-color: transparent;
   z-index: 10;

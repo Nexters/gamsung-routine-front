@@ -2,14 +2,15 @@ import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { View } from 'react-native';
+import { SvgXml } from 'react-native-svg';
 
-import CustomText from './CustomText';
-
+import EmptyImage from '~/assets/images/empty_image.svg';
+import CustomText from '~/components/CustomText';
 import TaskListItem from '~/components/TaskListItem';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore from '~/stores/CalendarStore';
+import { TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 
 interface Props {
@@ -61,11 +62,13 @@ const TaskListView = ({ taskList, onToggleTask, visiblePopup, onPopupClick, navi
       )}
       {taskList.length === 0 && (
         <EmptyView>
-          {CalendarStore.isWeek && (
-            <View style={{ width: 200, height: 200, backgroundColor: 'red', marginBottom: 8 }} />
-          )}
-          <CustomText font={FontType.BOLD_LARGE} align={Align.CENTER}>
-            루틴이 없어요{'\n'}테스크를 추가해보세요.
+          {CalendarStore.isWeek && <SvgXml xml={EmptyImage} />}
+          <CustomText
+            font={FontType.MEDIUM_LARGE}
+            color={TextColor.INACTIVE_L}
+            align={Align.CENTER}
+            marginTop={CalendarStore.isWeek ? 16 : 0}>
+            {CalendarStore.isWeek ? `루틴이 없어요${'\n'}테스크를 추가해보세요.` : '테스크가 없어요.'}
           </CustomText>
         </EmptyView>
       )}

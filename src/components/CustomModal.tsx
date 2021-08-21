@@ -47,7 +47,7 @@ const CustomModal = ({
       <ModalStyled>
         <ModalImageStyled>{modalImage}</ModalImageStyled>
         <ModalContentView>
-          <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.BLACK} align={Align.CENTER}>
+          <CustomText font={FontType.MEDIUM_BODY_01} color={TextColor.BLACK} align={Align.CENTER} marginBottom={8}>
             {content}
           </CustomText>
           <CustomText
@@ -80,6 +80,7 @@ const CustomModal = ({
 const styles = StyleSheet.create({
   modal: {
     width: '100%',
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     margin: 0,
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
 });
 
 const ModalStyled = styled.View`
-  width: 256px;
+  width: 70%;
   height: 216px;
   position: relative;
   background-color: ${BackgroundColor.DEPTH1_L};

@@ -50,5 +50,5 @@ const MenuButtonStyled = styled.TouchableOpacity<{ selected: boolean }>`
 
 const ViewStyled = styled.View`
   padding: 0 10px;
-  margin-bottom: 36px;
+  margin-bottom: 22px;
 `;

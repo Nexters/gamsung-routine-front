@@ -43,7 +43,7 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
         {
           translateY: scrollY.interpolate({
             inputRange: [0, HEADER_EXPANDED_HEIGHT - HEADER_COLLAPSED_HEIGHT],
-            outputRange: [0, 55],
+            outputRange: [0, 65],
             extrapolate: 'clamp',
           }),
         },
@@ -109,6 +109,8 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
             <DescriptionView>
               <CustomText font={FontType.MEDIUM_BODY_02} color={TextColor.PRIMARY_D} numberOfLines={2}>
                 {description}
+                {'\n'}
+                테스트용 라인
               </CustomText>
             </DescriptionView>
           </Background>
@@ -200,5 +202,5 @@ const TitleView = styled(Animated.View)`
   position: absolute;
   left: 20px;
   right: 80px;
-  bottom: 70px;
+  bottom: 80px;
 `;
