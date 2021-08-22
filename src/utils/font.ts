@@ -140,6 +140,21 @@ namespace Font {
     }
     return Weight.REGULAR;
   };
+
+  export const getFamily = (weight: number) => {
+    switch (weight) {
+      case Weight.BOLD: {
+        return 'Pretendard-Bold';
+      }
+      case Weight.MEDIUM: {
+        return 'Pretendard-Medium';
+      }
+      case Weight.REGULAR: {
+        return 'Pretendard-Regular';
+      }
+    }
+    return 'Pretendard-Regular';
+  };
 }
 
 export { Font, FontType, Align };

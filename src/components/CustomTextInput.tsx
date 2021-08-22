@@ -30,6 +30,7 @@ const CustomTextInput = ({
 
   return (
     <CustomTextInputStyled
+      family={Font.getFamily(style.weight)}
       size={style.size}
       weight={style.weight}
       color={color}
@@ -42,8 +43,14 @@ const CustomTextInput = ({
   );
 };
 
-const CustomTextInputStyled = styled.TextInput<{ size: number; weight: number; color: TextColor; align: Align }>`
-  font-family: 'Pretendard';
+const CustomTextInputStyled = styled.TextInput<{
+  family: string;
+  size: number;
+  weight: number;
+  color: TextColor;
+  align: Align;
+}>`
+  font-family: ${({ family }) => family};
   font-size: ${({ size }) => `${size}px`};
   font-weight: ${({ weight }) => weight};
   color: ${({ color }) => color};

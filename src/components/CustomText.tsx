@@ -30,6 +30,7 @@ const CustomText = ({
   const style = Font.getStyle(font);
   return (
     <CustomTextStyled
+      family={Font.getFamily(style.weight)}
       size={style.size}
       weight={style.weight}
       color={color}
@@ -45,6 +46,7 @@ const CustomText = ({
 };
 
 const CustomTextStyled = styled.Text<{
+  family: string;
   size: number;
   weight: number;
   color: TextColor;
@@ -54,7 +56,7 @@ const CustomTextStyled = styled.Text<{
   marginLeft: number;
   marginRight: number;
 }>`
-  font-family: 'Pretendard';
+  font-family: ${({ family }) => family};
   font-size: ${({ size }) => `${size}px`};
   font-weight: ${({ weight }) => weight};
   color: ${({ color }) => color};
