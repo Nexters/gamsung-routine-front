@@ -18,6 +18,8 @@ interface Props {
   step?: number;
   onScrollEndDrag?: (id: number) => void;
   selectedItems?: number;
+  textDecoration?: boolean;
+  backgroundDecoration?: boolean;
 }
 
 export const WheelPicker = ({
@@ -29,6 +31,8 @@ export const WheelPicker = ({
   color,
   step,
   selectedItems,
+  textDecoration = false,
+  backgroundDecoration = true,
 }: Props) => {
   const ref = useRef<ScrollView>(null);
   const handleItemClick = (id: number) => () => {
@@ -43,10 +47,10 @@ export const WheelPicker = ({
     <WheelPickerStyled height={height}>
       <LinearGradient />
       <ScrollView
-        onScrollEndDrag={(e) => {
-          const y = e.nativeEvent.targetContentOffset?.y || 0;
+        onMomentumScrollEnd={(e) => {
+          const y = e?.nativeEvent?.contentOffset?.y || 0;
           const h = step || height || 0;
-          const index = y / h;
+          const index = Math.round(y / h);
           if (items[index]) {
             onScrollEndDrag?.(items[index].id);
           }
@@ -57,8 +61,14 @@ export const WheelPicker = ({
         showsVerticalScrollIndicator={false}
         snapToInterval={step || height}>
         {items.map((it) => (
-          <PickerItemStyled key={it.id} onPress={handleItemClick(it.id)} selected={selectedItems === it.id}>
-            <CustomText font={FontType.MEDIUM_BODY_02} color={color}>
+          <PickerItemStyled
+            key={it.id}
+            onPress={handleItemClick(it.id)}
+            selected={selectedItems === it.id}
+            backgroundDecoration={backgroundDecoration}>
+            <CustomText
+              font={textDecoration && selectedItems === it.id ? FontType.MEDIUM_BODY_01 : FontType.MEDIUM_BODY_02}
+              color={color}>
               {it.name}
             </CustomText>
           </PickerItemStyled>
@@ -72,12 +82,12 @@ const WheelPickerStyled = styled.View<{ height?: number }>`
   height: ${({ height }) => `${height ?? 96}px`};
 `;
 
-const PickerItemStyled = styled.TouchableOpacity<{ selected: boolean }>`
+const PickerItemStyled = styled.TouchableOpacity<{ selected: boolean; backgroundDecoration: boolean }>`
   width: 100%;
   height: 36px;
   align-items: center;
   align-content: center;
   justify-content: center;
-  background-color: ${({ selected }) => selected && ActionColor.BG};
+  background-color: ${({ selected, backgroundDecoration }) => backgroundDecoration && selected && ActionColor.BG};
   border-radius: 6px;
 `;
