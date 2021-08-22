@@ -3,8 +3,9 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
+import { Dimensions } from 'react-native';
 import RNKakaoLink from 'react-native-kakao-links';
-import { SvgXml } from 'react-native-svg';
+import { SvgXml, Svg, Defs, Stop, Rect, LinearGradient } from 'react-native-svg';
 
 import { useUserProfileData } from '~/apis/authAPI';
 import POPUP_MONSTER from '~/assets/images/popup_monster.svg';
@@ -16,7 +17,7 @@ import useModal from '~/hooks/useModal';
 import useModalContent from '~/hooks/useModalContent';
 import { RootStackParamList } from '~/navigations/types';
 import { EditTaskStore } from '~/stores/EditTaskStore';
-import { ActionColor, GraphicColor, TextColor } from '~/utils/color';
+import { ActionColor, GraphicColor, TextColor, SurfaceColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import { showToast } from '~/utils/showToast';
 
@@ -180,11 +181,22 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
           onEndTaskClick={handleEndTaskClick}
           onInviteClick={handleKakaoInvite}
         />
-        <EditSubmitButton onPress={handleEditSubmitClick} disabled={!vm.isValidSave}>
-          <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
-            {vm.isEditMode ? '수정하기' : '추가하기'}
-          </CustomText>
-        </EditSubmitButton>
+        <EditSubmitButtonStyled>
+          <Svg height={80} width="100%">
+            <Defs>
+              <LinearGradient id="gradient" x1="0" y1="1" x2="0" y2="0">
+                <Stop offset="0" stopColor={SurfaceColor.DEPTH2_L} stopOpacity="1" />
+                <Stop offset="1" stopColor={SurfaceColor.DEPTH2_L} stopOpacity="0" />
+              </LinearGradient>
+            </Defs>
+            <Rect width="100%" height={80} fill="url(#gradient)" />
+          </Svg>
+          <EditSubmitButton onPress={handleEditSubmitClick} disabled={!vm.isValidSave}>
+            <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
+              {vm.isEditMode ? '수정하기' : '추가하기'}
+            </CustomText>
+          </EditSubmitButton>
+        </EditSubmitButtonStyled>
       </EditTaskStyled>
       <CustomModal
         isVisible={isModalVisible}
@@ -223,16 +235,20 @@ const EditTaskStyled = styled.SafeAreaView`
   align-items: center;
 `;
 
+const EditSubmitButtonStyled = styled.View`
+  width: 100%;
+  position: absolute;
+  left: 20px;
+  bottom: 34px;
+`;
+
 const EditSubmitButton = styled.TouchableOpacity<{ disabled: boolean }>`
+  width: ${`${Dimensions.get('window').width - 40}px`};
   justify-content: center;
   align-items: center;
   background-color: ${({ disabled }) => (disabled ? ActionColor.INACTIVE : ActionColor.ACTIVE)};
   border-radius: 8px;
   padding: 12px 0;
-  left: 20px;
-  right: 20px;
-  position: absolute;
-  bottom: 34px;
 `;
 
 const FriendInviteView = styled.View`
