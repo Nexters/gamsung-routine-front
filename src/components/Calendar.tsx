@@ -178,6 +178,9 @@ const Calendar = ({ navigation }: Props) => {
                       name: it < 2 || it > 11 ? '' : `${parseInt(dayjs().format('YYYY'), 10) - (11 - it)}년`,
                     };
                   })}
+                  selectedItems={CalendarStore.tempYear + 2}
+                  textDecoration={true}
+                  backgroundDecoration={false}
                 />
               </View>
               <View style={{ justifyContent: 'center' }}>
@@ -214,6 +217,9 @@ const Calendar = ({ navigation }: Props) => {
                       name: it < 2 || it > 13 ? '' : `${it < 11 ? `0${it - 1}` : it - 1}월`,
                     };
                   })}
+                  selectedItems={CalendarStore.tempMonth + 2}
+                  textDecoration={true}
+                  backgroundDecoration={false}
                 />
               </View>
             </View>
