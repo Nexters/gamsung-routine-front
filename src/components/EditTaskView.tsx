@@ -144,6 +144,7 @@ const EditTaskViewStyled = styled.View`
   flex-direction: column;
   justify-content: space-between;
   padding: 0 20px;
+  padding-bottom: 50px;
 `;
 
 const EditSettingView = styled.View`
