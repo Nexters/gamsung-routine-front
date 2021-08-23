@@ -24,9 +24,8 @@ const InviteIntro = ({ navigation, route }: InviteIntroScreenProps) => {
 
   useEffect(() => {
     async function getTask() {
-      const t = await RoutineAPI.instance().getSingleTask(taskId);
-      console.log('ttt', t);
-      setTask(t);
+      const _task = await RoutineAPI.instance().getSingleTask(taskId);
+      setTask(_task);
     }
     getTask();
   }, [taskId]);
