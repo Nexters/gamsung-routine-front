@@ -1,11 +1,14 @@
 import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import LottieView from 'lottie-react-native';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
 
 import { RoutineAPI, useMonthlyTasks } from '~/apis/routinAPI';
 import { useGetCategory, useTemplates } from '~/apis/templateAPI';
+import castle from '~/assets/lottie/castle.json';
+import crown from '~/assets/lottie/crown.json';
 import Calendar from '~/components/Calendar';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
@@ -174,7 +177,13 @@ const Home = ({ navigation }: HomeScreenProps) => {
           endTaskDay ? `오늘 테스크를 ${'\n'} 모두 달성했어요!` : `이 테스크를 이번주에 ${'\n'} 모두 달성했어요!`
         }
         noneTitle={true}
-        modalImage={<View style={{ width: 120, height: 100, backgroundColor: '#000' }} />}
+        modalImage={
+          endTaskDay ? (
+            <LottieView style={{ width: 120, height: 100 }} source={crown} autoPlay />
+          ) : (
+            <LottieView style={{ width: 120, height: 100 }} source={castle} autoPlay />
+          )
+        }
         rightButtonText="확인"
         onRightButtonClick={() => closeModal()}
       />
