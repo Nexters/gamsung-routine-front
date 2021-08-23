@@ -47,7 +47,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
   } = useModalContent();
 
   const {
-    data: { id },
+    data: { id, name },
   } = useUserProfileData();
 
   const [modalType, setModalType] = useState<'DELETE' | 'SAVE'>('SAVE');
@@ -157,11 +157,10 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     };
 
     const contentObject = {
-      title: '본캐 마스터',
+      title: `${name}님이 파티를 요청했어요!`,
       link: linkObject,
       imageURL: 'http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
-
-      desc: `${vm.taskName}`, //optional
+      desc: `${vm.taskName} 테스크를 같이 수행하려면 아래 버튼을 클릭해주세요.`, //optional
       imageWidth: 240, //optional
       imageHeight: 240, //optional
     };
@@ -169,6 +168,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
       const options = {
         objectType: 'feed', //required
         content: contentObject, //required
+        buttonTitle: '파티 참여하기',
       };
 
       await RNKakaoLink.link(options);
