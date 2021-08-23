@@ -1,4 +1,4 @@
-import { Task } from '~/models/Task';
+import { RoutineTaskUnit } from '~/models/RoutineTaskUnit';
 import { Template } from '~/models/Template';
 import { TemplateTask } from '~/models/TemplateTask';
 import { GraphicColor } from '~/utils/color';
@@ -17,10 +17,10 @@ export type RootStackParamList = {
   Setting: undefined;
   InviteIntro: { taskId: string };
   InviteAccept: {
-    task: Task;
+    task: RoutineTaskUnit;
   };
   InviteDetail: {
-    task: Task;
+    taskId: string;
   };
 };
 

@@ -5,6 +5,8 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { StatusBar } from 'react-native';
 
+import { useUserProfileData } from '~/apis/authAPI';
+import { RoutineAPI } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
 import { FriendInviteCard } from '~/components/FriendInviteCard';
 import Header from '~/components/Header';
@@ -23,13 +25,17 @@ export interface InviteAcceptScreenProps {
 const InviteAccept = ({ route, navigation }: InviteAcceptScreenProps) => {
   const { task } = route.params;
 
+  const { data: profile } = useUserProfileData();
+
   const handleCancelButtonClick = () => {
-    console.log('cancel');
     navigation.navigate('Home');
   };
 
-  const handleAcceptButtonClick = () => {
-    console.log('accept');
+  const handleAcceptButtonClick = async () => {
+    if (!task || !task.id || !profile || profile.id) {
+      return;
+    }
+    await RoutineAPI.instance().inviteRoutine(task.id, profile?.id);
     navigation.navigate('Home');
   };
 
@@ -53,13 +59,14 @@ const InviteAccept = ({ route, navigation }: InviteAcceptScreenProps) => {
               <CustomText font={FontType.REGULAR_LARGE} color={TextColor.PRIMARY_L}>
                 {task.title}
               </CustomText>
+
               <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.PRIMARY_L}>
                 {task.days?.map(getDay).join(',')} · 하루 {task.timesOfDay}번
               </CustomText>
             </DetailCardInfo>
             <Icon type="ARROW_RIGHT" />
           </DetailCardView>
-          <FriendInviteCard friends={task.friendIds} backgroundColor={BackgroundColor.DEPTH2_L} disable={true} />
+          <FriendInviteCard friends={task.friendIds ?? []} backgroundColor={BackgroundColor.DEPTH2_L} disable={true} />
           <InviteButton onCancelButtonClick={handleCancelButtonClick} onAcceptButtonClick={handleAcceptButtonClick} />
         </InviteAcceptView>
       </InviteAcceptStyled>
