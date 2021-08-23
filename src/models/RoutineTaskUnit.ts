@@ -1,3 +1,5 @@
+import { Friend } from './Friend';
+
 export interface RoutineTaskUnit {
   id: string | null;
   profileId: string;
@@ -8,4 +10,5 @@ export interface RoutineTaskUnit {
   category: string | null;
   templateId: string | null;
   order: number | null;
+  friends: Friend[];
 }

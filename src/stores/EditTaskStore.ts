@@ -1,6 +1,7 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 
 import { RoutineAPI } from '~/apis/routinAPI';
+import { Friend } from '~/models/Friend';
 import { RoutineTaskUnit } from '~/models/RoutineTaskUnit';
 import { TemplateTask } from '~/models/TemplateTask';
 
@@ -23,6 +24,8 @@ export class EditTaskStore {
   timeOfDay = 1;
   alarm = false;
 
+  friends: Friend[] = [];
+
   constructor(readonly taskId: string | null = null, templateTask: TemplateTask | null = null) {
     makeObservable(this, {
       days: observable,
@@ -30,6 +33,7 @@ export class EditTaskStore {
       timeOfDay: observable,
       times: observable,
       alarm: observable,
+      friends: observable,
       onSelectDay: action,
       onChangeCountOfDay: action,
       onChangeTaskName: action,
@@ -83,7 +87,7 @@ export class EditTaskStore {
             minute: Number(temp[1]),
           };
         }) ?? [];
-
+      this.friends = data?.friends;
       return;
     }
 
@@ -158,6 +162,7 @@ export class EditTaskStore {
       category: '1', // null로 보낼 경우 에러 발생
       templateId: this.templateTaskId?.toString() ?? '1', // null로 보낼 경우 에러 발생
       order: 1,
+      friends: this.friends,
     };
 
     if (this.taskId) {
@@ -165,6 +170,11 @@ export class EditTaskStore {
       return;
     }
     await RoutineAPI.instance().saveTask(item);
+  }
+
+  async onDeleteFriends(friendId: string, taskId: string) {
+    await RoutineAPI.instance().deleteTask(taskId);
+    this.friends = this.friends.filter((friend) => friend.profileId !== friendId);
   }
 
   get editableTitle() {

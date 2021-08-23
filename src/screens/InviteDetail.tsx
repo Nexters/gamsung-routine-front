@@ -5,6 +5,8 @@ import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
 
+import { useUserProfileData } from '~/apis/authAPI';
+import { RoutineAPI } from '~/apis/routinAPI';
 import EditTaskView from '~/components/EditTaskView';
 import Header from '~/components/Header';
 import InviteButton from '~/components/InviteButton';
@@ -18,17 +20,20 @@ export interface InviteDetailScreenProps {
 }
 
 const InviteDetail = ({ route, navigation }: InviteDetailScreenProps) => {
-  const { task } = route.params;
-  const [vm] = useState<EditTaskStore>(new EditTaskStore(task.taskId, null));
+  const { taskId } = route.params;
+  const [vm] = useState<EditTaskStore>(new EditTaskStore(taskId, null));
+  const { data: profile } = useUserProfileData();
 
   const handleCancelButtonClick = () => {
-    console.log('cancel');
-    navigation.navigate('Home');
+    navigation.replace('Home');
   };
 
-  const handleAcceptButtonClick = () => {
-    console.log('accept');
-    navigation.navigate('Home');
+  const handleAcceptButtonClick = async () => {
+    if (!profile || !profile.id) {
+      return;
+    }
+    await RoutineAPI.instance().inviteRoutine(taskId, profile.id);
+    navigation.replace('Home');
   };
 
   return (

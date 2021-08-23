@@ -55,7 +55,7 @@ const MainNavigator = () => {
           <Stack.Screen
             name="InviteDetail"
             component={InviteDetail}
-            initialParams={{ task: undefined }}
+            initialParams={{ taskId: undefined }}
             options={{ headerShown: false }}
           />
         </>

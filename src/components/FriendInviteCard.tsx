@@ -20,6 +20,7 @@ interface Props {
   backgroundColor?: BackgroundColor;
   disable?: boolean;
   onInviteClick?: () => void;
+  onDeleteFriendClick?: (friendId: string, taskId: string) => void;
 }
 
 export const FriendInviteCard: React.FC<Props> = observer(
@@ -30,9 +31,17 @@ export const FriendInviteCard: React.FC<Props> = observer(
     backgroundColor = BackgroundColor.DEPTH1_L,
     disable = false,
     onInviteClick,
+    onDeleteFriendClick,
   }) => {
     const handleInviteClick = () => {
       onInviteClick?.();
+    };
+
+    const handleDeleteFriendClick = (friendId: string, taskId: string) => {
+      if (disable) {
+        return;
+      }
+      onDeleteFriendClick?.(friendId, taskId);
     };
 
     return (
@@ -54,8 +63,16 @@ export const FriendInviteCard: React.FC<Props> = observer(
               </CustomText>
             </TextWrap>
             {friends.map((friend, index) => (
-              <React.Fragment key={friend.id}>
-                <FriendBox id={friend.id} name={friend.name} leader={friend.leader} disable={disable} />
+              <React.Fragment key={friend.profileId}>
+                <FriendBox
+                  id={friend.profileId}
+                  taskId={friend.taskId}
+                  profileImageUrl={friend.profileImageUrl}
+                  name={friend.name}
+                  leader={friend.leader}
+                  disable={disable}
+                  onDeleteClick={handleDeleteFriendClick}
+                />
                 {friends.length > index + 1 && <View style={{ padding: 5 }} />}
               </React.Fragment>
             ))}
