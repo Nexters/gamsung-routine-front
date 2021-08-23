@@ -22,6 +22,7 @@ interface Props {
   onChangeAlarm?: (isAlarm: boolean) => void;
   onEndTaskClick?: () => void;
   onInviteClick?: () => void;
+  onDeleteFriendClick?: (friendId: string, taskId: string) => void;
   disable?: boolean;
 }
 
@@ -34,6 +35,7 @@ const EditTaskView = ({
   onChangeAlarm,
   onEndTaskClick,
   onInviteClick,
+  onDeleteFriendClick,
   disable = false,
 }: Props) => {
   const handleChangeTaskName = (name: string) => {
@@ -62,6 +64,10 @@ const EditTaskView = ({
 
   const handleInviteClick = () => {
     onInviteClick?.();
+  };
+
+  const handleDeleteFriendClick = (friendId: string, taskId: string) => {
+    onDeleteFriendClick?.(friendId, taskId);
   };
 
   return (
@@ -109,13 +115,11 @@ const EditTaskView = ({
                   파티원 설정
                 </CustomText>
                 <FriendInviteCard
-                  friends={[
-                    { id: 1, name: '김헌진' },
-                    { id: 2, name: '김헌진' },
-                  ]}
+                  friends={vm.friends}
                   marginTop={16}
                   disable={disable}
                   onInviteClick={handleInviteClick}
+                  onDeleteFriendClick={handleDeleteFriendClick}
                 />
               </AddPartyView>
               {!disable && (

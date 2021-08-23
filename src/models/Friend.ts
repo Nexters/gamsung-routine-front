@@ -1,6 +1,8 @@
 export interface Friend {
-  id: number;
+  profileId: string;
+  taskId: string;
   name: string;
   profileImageUrl?: string;
   leader?: boolean;
+  thumbnailImageUrl?: string;
 }

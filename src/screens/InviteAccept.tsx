@@ -28,15 +28,15 @@ const InviteAccept = ({ route, navigation }: InviteAcceptScreenProps) => {
   const { data: profile } = useUserProfileData();
 
   const handleCancelButtonClick = () => {
-    navigation.navigate('Home');
+    navigation.replace('Home');
   };
 
   const handleAcceptButtonClick = async () => {
-    if (!task || !task.id || !profile || profile.id) {
+    if (!task || !task.id || !profile || !profile.id) {
       return;
     }
     await RoutineAPI.instance().inviteRoutine(task.id, profile?.id);
-    navigation.navigate('Home');
+    navigation.replace('Home');
   };
 
   return (
@@ -54,19 +54,19 @@ const InviteAccept = ({ route, navigation }: InviteAcceptScreenProps) => {
       <InviteAcceptStyled>
         <InviteAcceptView>
           <BackgroundView />
-          <DetailCardView onPress={() => navigation.navigate('InviteDetail', { task: task })}>
+          <DetailCardView onPress={() => navigation.navigate('InviteDetail', { taskId: task.id! })}>
             <DetailCardInfo>
               <CustomText font={FontType.REGULAR_LARGE} color={TextColor.PRIMARY_L}>
                 {task.title}
               </CustomText>
 
               <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.PRIMARY_L}>
-                {task.days?.map(getDay).join(',')} · 하루 {task.timesOfDay}번
+                {task.days?.map(getDay).join(',')} · 하루 {task.times.length}번
               </CustomText>
             </DetailCardInfo>
             <Icon type="ARROW_RIGHT" />
           </DetailCardView>
-          <FriendInviteCard friends={task.friendIds ?? []} backgroundColor={BackgroundColor.DEPTH2_L} disable={true} />
+          <FriendInviteCard friends={task.friends ?? []} backgroundColor={BackgroundColor.DEPTH2_L} disable={true} />
           <InviteButton onCancelButtonClick={handleCancelButtonClick} onAcceptButtonClick={handleAcceptButtonClick} />
         </InviteAcceptView>
       </InviteAcceptStyled>

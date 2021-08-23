@@ -144,6 +144,10 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     openModal();
   };
 
+  const handleDeleteFriendClick = (friendId: string, taskId: string) => {
+    vm.onDeleteFriends(friendId, taskId);
+  };
+
   const handleKakaoInvite = async () => {
     const linkObject = {
       webURL: `https://bonkae.page.link/vgNL`, //optional
@@ -157,7 +161,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
       link: linkObject,
       imageURL: 'http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
 
-      desc: '일해라 닝겐!', //optional
+      desc: `${vm.taskName}`, //optional
       imageWidth: 240, //optional
       imageHeight: 240, //optional
     };
@@ -167,8 +171,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
         content: contentObject, //required
       };
 
-      const response = await RNKakaoLink.link(options);
-      console.log(response);
+      await RNKakaoLink.link(options);
     } catch (e) {
       console.warn(e);
     }
@@ -187,6 +190,7 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
           onChangeAlarm={handleChangeAlarm}
           onEndTaskClick={handleEndTaskClick}
           onInviteClick={handleKakaoInvite}
+          onDeleteFriendClick={handleDeleteFriendClick}
         />
         <EditSubmitButtonStyled>
           <Svg height={80} width="100%">

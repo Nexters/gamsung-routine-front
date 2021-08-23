@@ -49,13 +49,13 @@ export class RoutineAPI {
     await api.patch(`/routine/unit/back/${unitId}?date=${date}`);
   }
 
-  async inviteRoutine(taskId: string, profileId: string) {
-    await api.get(`/routine/invite/${taskId}/${profileId}`);
-  }
-
   // Task 1회 미루기
   async delayTask(unitId: string, date: string) {
     await api.patch(`/routine/unit/delay/${unitId}?date=${date}`);
+  }
+
+  async inviteRoutine(taskId: string, profileId: string) {
+    await api.post(`/routine/invite/${taskId}/${profileId}`);
   }
 
   static instance() {
