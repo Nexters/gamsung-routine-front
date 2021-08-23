@@ -117,7 +117,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
       showToast(e);
     }
     routine.map((task) => {
-      if (task.taskId === taskId && task.timesOfDay === task.completeCount + 1) {
+      if (task.taskId === taskId && task.timesOfDay === task.completedDateList?.length + 1) {
         setEndTaskDay(true);
         openModal();
       }

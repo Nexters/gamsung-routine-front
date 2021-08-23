@@ -32,6 +32,8 @@ const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount 
   const handleCancelButtonClick = async () => {
     try {
       await RoutineAPI.instance().backTask(taskId, CalendarStore.focusDay.format('YYYYMMDD'));
+      console.log(999);
+
       revalidate();
       closeModal();
     } catch (e) {
