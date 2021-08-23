@@ -1,4 +1,5 @@
 import styled from '@emotion/native';
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import AlarmSettingCard from '~/components/AlarmSettingCard';
@@ -169,4 +170,4 @@ const FinishTaskTextButton = styled.TouchableOpacity`
   padding-top: 40px;
 `;
 
-export default EditTaskView;
+export default observer(EditTaskView);
