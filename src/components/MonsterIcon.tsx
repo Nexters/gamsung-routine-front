@@ -4,8 +4,6 @@ import React from 'react';
 import { View } from 'react-native';
 import Svg, { Path, SvgXml } from 'react-native-svg';
 
-import CustomText from './CustomText';
-
 import EmptyMonster from '~/assets/images/empty_monster.svg';
 import dieMonster from '~/assets/lottie/dieMonster.json';
 import { RADIO_TYPE } from '~/stores/CalendarStore';
@@ -29,10 +27,8 @@ const MonsterIconBackground = ({ data }: { data: number }) => {
         />
       </Svg>
       {percent === 1 ? (
-        <View style={{ position: 'absolute', zIndex: 1 }}>
-          <CustomText>
-            <LottieView style={{ width: 28, height: 28 }} source={dieMonster} autoPlay loop />
-          </CustomText>
+        <View style={{ position: 'absolute', top: -2, left: 0.5, zIndex: 1 }}>
+          <LottieView style={{ width: 30, height: 30 }} source={dieMonster} autoPlay loop />
         </View>
       ) : (
         <SvgXml style={{ position: 'absolute' }} xml={getFace(percent)} />
