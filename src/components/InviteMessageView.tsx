@@ -24,7 +24,7 @@ const InviteMessageView = ({ title, subText, buttonText, onInviteMessageButtonCl
     <InviteMessageViewStyled>
       <View />
       <InviteContentView>
-        <LottieView style={{ width: 245, height: 238 }} source={letter} autoPlay />
+        <LottieView style={{ width: 245, height: 238 }} source={letter} autoPlay loop />
         <CustomText font={FontType.BOLD_TITLE_01} color={TextColor.PRIMARY_L} marginTop={31}>
           {title}
         </CustomText>

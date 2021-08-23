@@ -179,9 +179,9 @@ const Home = ({ navigation }: HomeScreenProps) => {
         noneTitle={true}
         modalImage={
           endTaskDay ? (
-            <LottieView style={{ width: 120, height: 100 }} source={crown} autoPlay />
+            <LottieView style={{ width: 120, height: 100 }} source={crown} autoPlay loop />
           ) : (
-            <LottieView style={{ width: 120, height: 100 }} source={castle} autoPlay />
+            <LottieView style={{ width: 120, height: 100 }} source={castle} autoPlay loop />
           )
         }
         rightButtonText="확인"
