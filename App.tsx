@@ -93,14 +93,17 @@ const App = observer(() => {
     <>
       {IndicatorStore.count > 0 && (
         <ActivityIndicator
+          color="#0000ff"
           size="large"
           style={{
-            position: 'absolute',
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
             backgroundColor: BackgroundColor.DEPTH2_D,
             opacity: 0.7,
-            zIndex: 1,
+            top: 0,
+            left: 0,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         />
       )}

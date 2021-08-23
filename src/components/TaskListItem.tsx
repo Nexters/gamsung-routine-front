@@ -5,7 +5,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-import { useMonthlyTasks, useSpecificPeriodTask } from '~/apis/routinAPI';
+import { useMonthlyTasks } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
 import MonsterIcon from '~/components/MonsterIcon';
 import TaskDetailPopup from '~/components/TaskDetailPopup';
@@ -64,8 +64,6 @@ const TaskListItem = observer(
       month: CalendarStore.month.toString(),
       year: CalendarStore.tempYear.toString(),
     });
-    const { data: specificPeriodTask, error: specificPeriodTaskError } = useSpecificPeriodTask(taskId);
-    console.log('se', specificPeriodTask, specificPeriodTaskError);
 
     const dayOfWeek = [] as Task[];
 
@@ -81,6 +79,16 @@ const TaskListItem = observer(
         dayOfWeek.push(r);
       }
     }
+
+    const weekPercent = dayOfWeek.reduce(
+      (prev, curr) => {
+        if (!curr.timesOfDay) {
+          return prev;
+        }
+        return { timesOfDay: curr.timesOfDay + prev.timesOfDay, len: curr.completedDateList?.length || 0 + prev.len };
+      },
+      { timesOfDay: 0, len: 0 },
+    );
 
     const handleTaskItemClick = () => {
       CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.();
@@ -147,7 +155,7 @@ const TaskListItem = observer(
                 {`${CalendarStore.focusDay.format('M월')} ${getWeek()}주 `}
                 {share ? `${shareCount}명의 달성률 총 ` : '나의 달성률 총 '}
                 <CustomText color={TextColor.HIGHLIGHT} font={FontType.REGULAR_CAPTION}>
-                  {percent}%
+                  {((weekPercent.len / weekPercent.timesOfDay) * 100).toFixed(0)}%
                 </CustomText>
               </CustomText>
             )}

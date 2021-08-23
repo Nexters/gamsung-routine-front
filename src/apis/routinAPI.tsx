@@ -2,7 +2,6 @@ import { useUserProfileData } from './authAPI';
 
 import { RoutineTaskUnit } from '~/models/RoutineTaskUnit';
 import { Task } from '~/models/Task';
-import CalendarStore from '~/stores/CalendarStore';
 import api from '~/utils/api';
 import { useCommonSWR } from '~/utils/swr';
 
@@ -15,23 +14,6 @@ export const useMonthlyTasks = ({ year, month }: { year: string; month: string }
     };
     // 달은 0~11이라서 1을 플러스 해줘야한다.
   }>(profileId ? `/routine/monthly/${profileId}?year=${year}&month=${Number(month) + 1}` : null);
-};
-
-// 특정기간 Task unit 조회
-export const useSpecificPeriodTask = (taskId: string) => {
-  const { data: profile } = useUserProfileData();
-  const profileId = profile?.id;
-
-  const isSun = CalendarStore.focusDay.format('ddd') === 'Sun';
-  const firstDay = CalendarStore.focusDay.add(isSun ? -1 : 0, 'day').day(1);
-
-  return useCommonSWR(
-    profileId
-      ? `/routine/unit/day/${profileId}/${taskId}?fromDate=${firstDay.format('YYYYMMDD')}&toDate=${firstDay
-          .add(6, 'day')
-          .format('YYYYMMDD')}`
-      : null,
-  );
 };
 
 export class RoutineAPI {
