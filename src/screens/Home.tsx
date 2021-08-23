@@ -211,7 +211,7 @@ const HomeView = styled.View`
 
 const TaskView = styled.View`
   flex: 1;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 20px;
   background-color: ${SurfaceColor.DEPTH2_L};
   border-radius: 20px 20px 0 0;
