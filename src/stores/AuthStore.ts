@@ -59,7 +59,6 @@ class AuthStore {
           },
           {},
         );
-        console.log(222, accessToken);
 
         this.token = accessToken;
       } catch (error) {
