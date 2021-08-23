@@ -230,7 +230,7 @@ const PageF: React.FC<PageProps> = observer(({ onNextPage }) => {
 
 const PageG: React.FC<NavigationProps> = observer(({ navigation }) => {
   const handleNextPage = () => {
-    navigation.push('Login');
+    navigation.replace('Login');
   };
 
   return (
