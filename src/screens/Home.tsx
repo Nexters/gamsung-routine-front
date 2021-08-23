@@ -112,16 +112,50 @@ const Home = ({ navigation }: HomeScreenProps) => {
     try {
       const focusDay = CalendarStore.focusDay.format('YYYYMMDD');
       await RoutineAPI.instance().completeTask(taskId, focusDay);
+
+      const isSun = CalendarStore.focusDay.format('ddd') === 'Sun';
+      const today = CalendarStore.focusDay.add(isSun ? -1 : 0, 'day').day(1);
+      const temp = [
+        ...(TaskList?.dailyRoutines[today.add(0, 'day').format('YYYYMMDD')] || []),
+        ...(TaskList?.dailyRoutines[today.add(1, 'day').format('YYYYMMDD')] || []),
+        ...(TaskList?.dailyRoutines[today.add(2, 'day').format('YYYYMMDD')] || []),
+        ...(TaskList?.dailyRoutines[today.add(3, 'day').format('YYYYMMDD')] || []),
+        ...(TaskList?.dailyRoutines[today.add(4, 'day').format('YYYYMMDD')] || []),
+        ...(TaskList?.dailyRoutines[today.add(5, 'day').format('YYYYMMDD')] || []),
+        ...(TaskList?.dailyRoutines[today.add(6, 'day').format('YYYYMMDD')] || []),
+      ];
+      const total = temp.reduce(
+        (prev, curr) => {
+          if (curr.taskId !== taskId) {
+            return prev;
+          }
+          return {
+            completeCount: prev.completeCount + curr.completedDateList.length,
+            timesOfDay: prev.timesOfDay + curr.timesOfDay,
+          };
+        },
+        {
+          completeCount: 0,
+          timesOfDay: 0,
+        },
+      );
+      percent = (((total?.completeCount || 0) + 1) / (total?.timesOfDay || 0) || 0) * 100;
+      if (percent === 100) {
+        setEndTaskDay(false);
+        openModal();
+      } else {
+        routine.map((task) => {
+          if (task.taskId === taskId && task.timesOfDay === (task.completedDateList?.length || 0) + 1) {
+            setEndTaskDay(true);
+            openModal();
+          }
+        });
+      }
+
       revalidate();
     } catch (e) {
       showToast(e);
     }
-    routine.map((task) => {
-      if (task.taskId === taskId && task.timesOfDay === (task.completedDateList?.length || 0) + 1) {
-        setEndTaskDay(true);
-        openModal();
-      }
-    });
   };
 
   return (
