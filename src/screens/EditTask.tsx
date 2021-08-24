@@ -159,10 +159,10 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     const contentObject = {
       title: `${name}님이 파티를 요청했어요!`,
       link: linkObject,
-      imageURL: 'http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
+      imageURL: 'https://gamsung-routine.herokuapp.com/assets/images/invite.png',
       desc: `${vm.taskName} 테스크를 같이 수행하려면 아래 버튼을 클릭해주세요.`, //optional
       imageWidth: 240, //optional
-      imageHeight: 240, //optional
+      imageHeight: 180, //optional
     };
     try {
       const options = {
