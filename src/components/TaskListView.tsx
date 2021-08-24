@@ -58,11 +58,7 @@ const TaskListView = ({ taskList, onToggleTask, visiblePopup, onPopupClick, navi
                     delay={false}
                     isDelay={true}
                     percent={(task.completedDateList.length || 0) / (task.timesOfDay || 0) || 0}
-                    share={false}
-                    shareCount={3}
-                    shareFinishedCount={0}
-                    sharePeople={['1', '2', '3']}
-                    sharePercent={30}
+                    task={task}
                     onTaskItemClick={() => onToggleTask(task.taskId)}
                     visiblePopup={visiblePopup}
                     onMoreButtonClick={handleMoreButtonClick}

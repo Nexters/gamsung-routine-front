@@ -28,15 +28,11 @@ interface Props {
   delay: boolean;
   isDelay: boolean;
   percent: number;
-  share?: boolean;
-  shareCount?: number;
-  shareFinishedCount?: number;
-  sharePeople?: string[];
-  sharePercent?: number;
   onTaskItemClick: () => void;
   visiblePopup: string | null;
   onMoreButtonClick: (id: string) => void;
   navigation: StackNavigationProp<RootStackParamList>;
+  task: Task;
 }
 
 const TaskListItem = observer(
@@ -51,14 +47,11 @@ const TaskListItem = observer(
     delay,
     isDelay,
     percent,
-    share,
-    shareCount,
-    shareFinishedCount,
-    sharePeople,
     onTaskItemClick,
     visiblePopup,
     onMoreButtonClick,
     navigation,
+    task,
   }: Props) => {
     const { data, error } = useMonthlyTasks({
       month: CalendarStore.month.toString(),
@@ -82,13 +75,27 @@ const TaskListItem = observer(
 
     const weekPercent = dayOfWeek.reduce(
       (prev, curr) => {
+        console.log('curr', curr);
         if (!curr.timesOfDay) {
           return prev;
         }
-        return { timesOfDay: curr.timesOfDay + prev.timesOfDay, len: curr.completedDateList?.length || 0 + prev.len };
+        if (curr.friends.length > 1) {
+          let len = 0;
+          let timesOfDay = 0;
+          curr.friends.forEach((c) => {
+            console.log('c', c);
+
+            len += c.completedDateList.length;
+            timesOfDay += curr.timesOfDay;
+          });
+          return { timesOfDay: timesOfDay + prev.timesOfDay, len: len + prev.len };
+        } else {
+          return { timesOfDay: curr.timesOfDay + prev.timesOfDay, len: curr.completedDateList?.length || 0 + prev.len };
+        }
       },
       { timesOfDay: 0, len: 0 },
     );
+    console.log('weekPercent', weekPercent);
 
     const handleTaskItemClick = () => {
       CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.();
@@ -140,20 +147,28 @@ const TaskListItem = observer(
             })}
           </TaskListItemWeekView>
         )}
-        <TaskListItemInfoView listType={CalendarStore.radio} share={share}>
+        <TaskListItemInfoView listType={CalendarStore.radio} share={task.friends?.length > 1}>
           <TaskListItemInfoImageList>
-            {share && sharePeople?.map((_, index) => <TaskListItemInfoImage index={index} key={index} />)}
+            {task.friends?.length > 1 &&
+              task.friends.map((_, index) => <TaskListItemInfoImage index={index} key={index} />)}
           </TaskListItemInfoImageList>
           <TaskListItemInfoPercent>
-            {(shareCount || 0) > 0 && CalendarStore.radio === RADIO_TYPE.루틴 && share && (
+            {(task.friends?.length || 0) > 1 && CalendarStore.radio === RADIO_TYPE.루틴 && (
               <CustomText color={TextColor.PRIMARY_L} font={FontType.REGULAR_CAPTION}>
-                {shareCount}명 중 {shareFinishedCount}명이 완료
+                {task.friends?.length}명 중{' '}
+                {task.friends.reduce((prev, curr) => {
+                  if (task.timesOfDay === curr.completedDateList.length) {
+                    prev += 1;
+                  }
+                  return prev;
+                }, 0)}
+                명이 완료
               </CustomText>
             )}
             {CalendarStore.radio === RADIO_TYPE.리포트 && (
               <CustomText color={TextColor.PRIMARY_L} font={FontType.REGULAR_CAPTION}>
                 {`${CalendarStore.focusDay.format('M월')} ${getWeek()}주 `}
-                {share ? `${shareCount}명의 달성률 총 ` : '나의 달성률 총 '}
+                {task.friends?.length ? `${task.friends?.length}명의 달성률 총 ` : '나의 달성률 총 '}
                 <CustomText color={TextColor.HIGHLIGHT} font={FontType.REGULAR_CAPTION}>
                   {((weekPercent.len / weekPercent.timesOfDay) * 100).toFixed(0)}%
                 </CustomText>

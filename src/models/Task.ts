@@ -13,4 +13,12 @@ export interface Task {
   timesOfDay: number;
   timesOfWeek: number;
   title: string;
+  friends: {
+    completedDateList: string[];
+    name: string;
+    profileId: string;
+    profileImageUrl: string;
+    taskId: string;
+    thumbnailImageUrl: string;
+  }[];
 }
