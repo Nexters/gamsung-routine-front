@@ -75,7 +75,6 @@ const TaskListItem = observer(
 
     const weekPercent = dayOfWeek.reduce(
       (prev, curr) => {
-        console.log('curr', curr);
         if (!curr.timesOfDay) {
           return prev;
         }
@@ -83,8 +82,6 @@ const TaskListItem = observer(
           let len = 0;
           let timesOfDay = 0;
           curr.friends.forEach((c) => {
-            console.log('c', c);
-
             len += c.completedDateList.length;
             timesOfDay += curr.timesOfDay;
           });
@@ -135,7 +132,7 @@ const TaskListItem = observer(
         {CalendarStore.radio === RADIO_TYPE.리포트 && (
           <TaskListItemWeekView>
             {dayOfWeek?.map((item, index) => {
-              const dayOfWeekPercent = ((item.completedDateList?.length || 0) / (item.timesOfDay || 0) || 0) * 100;
+              const dayOfWeekPercent = (item.completedDateList?.length || 0) / (item.timesOfDay || 0) || 0;
               return (
                 <MonsterIconStyled key={index}>
                   <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L} marginBottom={3}>
