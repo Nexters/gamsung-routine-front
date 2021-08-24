@@ -158,7 +158,9 @@ const TaskListItem = observer(
         <TaskListItemInfoView listType={CalendarStore.radio} share={task.friends?.length > 1}>
           <TaskListItemInfoImageList>
             {task.friends?.length > 1 &&
-              task.friends.map((_, index) => <TaskListItemInfoImage index={index} key={index} />)}
+              task.friends.map((t, index) => (
+                <TaskListItemInfoImage source={{ uri: t.thumbnailImageUrl }} index={index} key={index} />
+              ))}
           </TaskListItemInfoImageList>
           <TaskListItemInfoPercent>
             {(task.friends?.length || 0) > 1 && CalendarStore.radio === RADIO_TYPE.루틴 && (
@@ -274,7 +276,7 @@ const TaskListItemInfoImageList = styled.View`
   flex-direction: row;
 `;
 
-const TaskListItemInfoImage = styled.View<{ index: number }>`
+const TaskListItemInfoImage = styled.Image<{ index: number }>`
   width: 24px;
   height: 24px;
   position: absolute;
