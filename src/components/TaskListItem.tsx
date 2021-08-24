@@ -112,7 +112,7 @@ const TaskListItem = observer(
                   color={percent === 100 ? TextColor.INACTIVE_L : TextColor.PRIMARY_L}>
                   {title}
                 </CustomText>
-                {percent === 1 && <TaskListItemLine />}
+                {CalendarStore.radio === RADIO_TYPE.루틴 && percent === 1 && <TaskListItemLine />}
               </TaskListItemViewInfo>
               <TaskListItemViewSubTitle>
                 <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.PRIMARY_L}>
@@ -132,7 +132,18 @@ const TaskListItem = observer(
         {CalendarStore.radio === RADIO_TYPE.리포트 && (
           <TaskListItemWeekView>
             {dayOfWeek?.map((item, index) => {
-              const dayOfWeekPercent = (item.completedDateList?.length || 0) / (item.timesOfDay || 0) || 0;
+              let dayOfWeekPercent = 0;
+              if (item.friends?.length > 1) {
+                let len = 0;
+                let timesOfDay = 0;
+                item.friends.forEach((c) => {
+                  len += c.completedDateList.length;
+                  timesOfDay += item.timesOfDay;
+                });
+                dayOfWeekPercent = len / timesOfDay;
+              } else {
+                dayOfWeekPercent = (item.completedDateList?.length || 0) / (item.timesOfDay || 0) || 0;
+              }
               return (
                 <MonsterIconStyled key={index}>
                   <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L} marginBottom={3}>
