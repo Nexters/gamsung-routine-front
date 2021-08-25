@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 
+import Loading from '~/components/Loading';
 import { RootStackParamList } from '~/navigations/types';
 import EditTask from '~/screens/EditTask';
 import Home from '~/screens/Home';
@@ -19,6 +20,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const MainNavigator = () => {
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     (async () => {
       await AuthStore.checkLogin();
@@ -27,8 +29,7 @@ const MainNavigator = () => {
   });
 
   if (loading) {
-    // TODO : 스플래시 추가
-    return null;
+    return <Loading />;
   }
 
   return (
