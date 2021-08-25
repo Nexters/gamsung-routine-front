@@ -13,7 +13,6 @@ import Calendar from '~/components/Calendar';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
 import Icon from '~/components/Icon';
-import Onboarding2 from '~/components/Onboarding2';
 import TaskListView from '~/components/TaskListView';
 import useModal from '~/hooks/useModal';
 import { Task } from '~/models/Task';
@@ -160,7 +159,6 @@ const Home = ({ navigation }: HomeScreenProps) => {
 
   return (
     <>
-      <Onboarding2 />
       <TopStatusBarStyled backgroundColor={BackgroundColor.DEPTH2_D} />
       <StatusBar barStyle="light-content" backgroundColor={BackgroundColor.DEPTH2_D} />
       <HomeStyled>
