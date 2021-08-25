@@ -3,6 +3,7 @@ import messaging from '@react-native-firebase/messaging';
 import { login } from '@react-native-seoul/kakao-login';
 import { observable, action, makeObservable, computed } from 'mobx';
 
+import IndicatorStore from '~/stores/IndicatorStore';
 import api from '~/utils/api';
 
 class AuthStore {
@@ -32,6 +33,7 @@ class AuthStore {
 
   login = async () => {
     try {
+      IndicatorStore.up();
       const token = await login();
 
       const fcmToken = await messaging().getToken();
@@ -58,6 +60,7 @@ class AuthStore {
       }
 
       AsyncStorage.setItem('token', this.token || '');
+      IndicatorStore.down();
     } catch (error) {
       // TODO: 토스트 표시
       console.error(error);

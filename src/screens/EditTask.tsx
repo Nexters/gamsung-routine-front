@@ -14,11 +14,13 @@ import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
 import EdisTaskView from '~/components/EditTaskView';
 import Header from '~/components/Header';
+import Loading from '~/components/Loading';
 import useModal from '~/hooks/useModal';
 import useModalContent from '~/hooks/useModalContent';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore from '~/stores/CalendarStore';
 import { EditTaskStore } from '~/stores/EditTaskStore';
+import IndicatorStore from '~/stores/IndicatorStore';
 import { ActionColor, GraphicColor, TextColor, SurfaceColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import { showToast } from '~/utils/showToast';
@@ -181,33 +183,39 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     <>
       <Header navigation={navigation} goBackButton={true} />
       <EditTaskStyled>
-        <EdisTaskView
-          vm={vm}
-          onChangeTaskName={handleChangeTaskName}
-          onDaySelect={handleDaySelect}
-          onCountOfDay={handleCountOfDay}
-          onChangeTimeData={handleChangeTimeData}
-          onChangeAlarm={handleChangeAlarm}
-          onEndTaskClick={handleEndTaskClick}
-          onInviteClick={handleKakaoInvite}
-          onDeleteFriendClick={handleDeleteFriendClick}
-        />
-        <EditSubmitButtonStyled>
-          <Svg height={80} width="100%">
-            <Defs>
-              <LinearGradient id="gradient" x1="0" y1="1" x2="0" y2="0">
-                <Stop offset="0" stopColor={SurfaceColor.DEPTH2_L} stopOpacity="1" />
-                <Stop offset="1" stopColor={SurfaceColor.DEPTH2_L} stopOpacity="0" />
-              </LinearGradient>
-            </Defs>
-            <Rect width="100%" height={80} fill="url(#gradient)" />
-          </Svg>
-          <EditSubmitButton onPress={handleEditSubmitClick} disabled={!vm.isValidSave}>
-            <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
-              {vm.isEditMode ? '수정하기' : '추가하기'}
-            </CustomText>
-          </EditSubmitButton>
-        </EditSubmitButtonStyled>
+        {IndicatorStore.count > 0 ? (
+          <Loading />
+        ) : (
+          <>
+            <EdisTaskView
+              vm={vm}
+              onChangeTaskName={handleChangeTaskName}
+              onDaySelect={handleDaySelect}
+              onCountOfDay={handleCountOfDay}
+              onChangeTimeData={handleChangeTimeData}
+              onChangeAlarm={handleChangeAlarm}
+              onEndTaskClick={handleEndTaskClick}
+              onInviteClick={handleKakaoInvite}
+              onDeleteFriendClick={handleDeleteFriendClick}
+            />
+            <EditSubmitButtonStyled>
+              <Svg height={80} width="100%">
+                <Defs>
+                  <LinearGradient id="gradient" x1="0" y1="1" x2="0" y2="0">
+                    <Stop offset="0" stopColor={SurfaceColor.DEPTH2_L} stopOpacity="1" />
+                    <Stop offset="1" stopColor={SurfaceColor.DEPTH2_L} stopOpacity="0" />
+                  </LinearGradient>
+                </Defs>
+                <Rect width="100%" height={80} fill="url(#gradient)" />
+              </Svg>
+              <EditSubmitButton onPress={handleEditSubmitClick} disabled={!vm.isValidSave}>
+                <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_D} align={Align.CENTER}>
+                  {vm.isEditMode ? '수정하기' : '추가하기'}
+                </CustomText>
+              </EditSubmitButton>
+            </EditSubmitButtonStyled>
+          </>
+        )}
       </EditTaskStyled>
       <CustomModal
         isVisible={isModalVisible}

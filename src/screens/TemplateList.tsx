@@ -8,10 +8,12 @@ import { useGetCategory, useTemplates } from '~/apis/templateAPI';
 import CustomText from '~/components/CustomText';
 import Header from '~/components/Header';
 import Icon from '~/components/Icon';
+import Loading from '~/components/Loading';
 import { ScrollingButtonMenu } from '~/components/ScrollingButtonMenu';
 import { TemplateCard } from '~/components/TemplateCard';
 import { Template } from '~/models/Template';
 import { RootStackParamList } from '~/navigations/types';
+import IndicatorStore from '~/stores/IndicatorStore';
 import { BackgroundColor, GraphicColor, SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
@@ -67,39 +69,45 @@ export const TemplateList: React.FC<Props> = observer(({ navigation }) => {
         backgroundColor={BackgroundColor.DEPTH1_L}
       />
       <CategoryViewStyled>
-        <ScrollingButtonMenu data={categories} selectedId={selectedCategoryId} onClick={handleCategoryPress} />
-        <CountTextWrapStyled>
-          <CustomText font={FontType.REGULAR_BODY_02}>
-            {categories.find((category) => category.id === selectedCategoryId)?.name} 템플릿&nbsp;
-          </CustomText>
-          <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
-            {templates.length}
-          </CustomText>
-        </CountTextWrapStyled>
-        <FlatList
-          data={templates}
-          renderItem={({ item: template }) => {
-            const GRAPHIC_COLORS = [
-              GraphicColor.RED,
-              GraphicColor.SKYBLUE,
-              GraphicColor.GREEN,
-              GraphicColor.YELLOW,
-              GraphicColor.PURPLE,
-            ];
-            const headerColor = GRAPHIC_COLORS[template.id % GRAPHIC_COLORS.length];
-            return (
-              <TemplateCard
-                id={template.id}
-                name={template.name}
-                tasks={template.tasks}
-                onPress={() => handleTemplatePress(template, headerColor)}
-                cardColor={headerColor}
-              />
-            );
-          }}
-          numColumns={2}
-          showsVerticalScrollIndicator={false}
-        />
+        {IndicatorStore.count > 0 ? (
+          <Loading />
+        ) : (
+          <>
+            <ScrollingButtonMenu data={categories} selectedId={selectedCategoryId} onClick={handleCategoryPress} />
+            <CountTextWrapStyled>
+              <CustomText font={FontType.REGULAR_BODY_02}>
+                {categories.find((category) => category.id === selectedCategoryId)?.name} 템플릿&nbsp;
+              </CustomText>
+              <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
+                {templates.length}
+              </CustomText>
+            </CountTextWrapStyled>
+            <FlatList
+              data={templates}
+              renderItem={({ item: template }) => {
+                const GRAPHIC_COLORS = [
+                  GraphicColor.RED,
+                  GraphicColor.SKYBLUE,
+                  GraphicColor.GREEN,
+                  GraphicColor.YELLOW,
+                  GraphicColor.PURPLE,
+                ];
+                const headerColor = GRAPHIC_COLORS[template.id % GRAPHIC_COLORS.length];
+                return (
+                  <TemplateCard
+                    id={template.id}
+                    name={template.name}
+                    tasks={template.tasks}
+                    onPress={() => handleTemplatePress(template, headerColor)}
+                    cardColor={headerColor}
+                  />
+                );
+              }}
+              numColumns={2}
+              showsVerticalScrollIndicator={false}
+            />
+          </>
+        )}
       </CategoryViewStyled>
     </Frame>
   );

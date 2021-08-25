@@ -13,12 +13,14 @@ import Calendar from '~/components/Calendar';
 import CustomModal from '~/components/CustomModal';
 import CustomText from '~/components/CustomText';
 import Icon from '~/components/Icon';
+import Loading from '~/components/Loading';
 import Onboarding2 from '~/components/Onboarding2';
 import TaskListView from '~/components/TaskListView';
 import useModal from '~/hooks/useModal';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
+import IndicatorStore from '~/stores/IndicatorStore';
 import { ActionColor, BackgroundColor, SurfaceColor, TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 import { showToast } from '~/utils/showToast';
@@ -170,30 +172,36 @@ const Home = ({ navigation }: HomeScreenProps) => {
             <DropView onPress={() => CalendarStore.changeIsWeek(!CalendarStore.isWeek)}>
               {CalendarStore.isWeek ? <Icon type={'DROP'} /> : <Icon type={'TAKE'} />}
             </DropView>
-            <TaskTitleView>
-              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
-                {`${CalendarStore.focusDay.format('M월 D일')} 테스크 `}
-              </CustomText>
-              <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
-                {routine?.length || 0}
-              </CustomText>
-              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
-                개의 달성률{' '}
-              </CustomText>
-              <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
-                {percent.toFixed(0)}
-              </CustomText>
-              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
-                % 입니다.
-              </CustomText>
-            </TaskTitleView>
-            <TaskListView
-              navigation={navigation}
-              taskList={routine || []}
-              onToggleTask={handleToggleTask}
-              visiblePopup={visiblePopup}
-              onPopupClick={handlePopupClick}
-            />
+            {IndicatorStore.count > 0 ? (
+              <Loading />
+            ) : (
+              <>
+                <TaskTitleView>
+                  <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
+                    {`${CalendarStore.focusDay.format('M월 D일')} 테스크 `}
+                  </CustomText>
+                  <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
+                    {routine?.length || 0}
+                  </CustomText>
+                  <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
+                    개의 달성률{' '}
+                  </CustomText>
+                  <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
+                    {percent.toFixed(0)}
+                  </CustomText>
+                  <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
+                    % 입니다.
+                  </CustomText>
+                </TaskTitleView>
+                <TaskListView
+                  navigation={navigation}
+                  taskList={routine || []}
+                  onToggleTask={handleToggleTask}
+                  visiblePopup={visiblePopup}
+                  onPopupClick={handlePopupClick}
+                />
+              </>
+            )}
           </TaskView>
         </HomeView>
         <AddTaskButton

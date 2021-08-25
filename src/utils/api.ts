@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import AuthStore from '~/stores/AuthStore';
-import IndicatorStore from '~/stores/IndicatorStore';
 
 export type APIMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -27,8 +26,6 @@ class API {
   axiosInstance = axios.create();
 
   private async request<T>(method: APIMethod, url: string, data: any, opt: any): Promise<T> {
-    IndicatorStore.up();
-
     return this.axiosInstance({
       url: API.HOSTNAME + API.PREFIX + url,
       method,
@@ -53,9 +50,6 @@ class API {
         }
         const data = result && result.response ? result.response.data : null;
         return Promise.reject(data ? data.statusMessage || data.message || data.error || data.errorMessage : null);
-      })
-      .finally(() => {
-        IndicatorStore.down();
       });
   }
 
