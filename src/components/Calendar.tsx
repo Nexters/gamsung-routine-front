@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import { Animated, Dimensions, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
-import GestureRecognizer from 'react-native-swipe-gestures';
 
 import Icon from './Icon';
 import { WheelPicker } from './WheelPicker';
@@ -564,17 +563,9 @@ const Container = observer(() => {
           // transform: [{ translateY: CalendarStore.isWeek ? 0 : maxY }],
           transform: [{ translateY: maxY }],
         }}>
-        <GestureRecognizer
-          onSwipeUp={() => {
-            CalendarStore.changeIsWeek(true);
-          }}
-          onSwipeDown={() => {
-            CalendarStore.changeIsWeek(false);
-          }}>
-          <Week>
-            <ViewType />
-          </Week>
-        </GestureRecognizer>
+        <Week>
+          <ViewType />
+        </Week>
       </Animated.View>
     </Animated.View>
   );

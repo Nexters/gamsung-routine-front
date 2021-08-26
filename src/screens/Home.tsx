@@ -4,6 +4,7 @@ import LottieView from 'lottie-react-native';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 import { RoutineAPI, useMonthlyTasks } from '~/apis/routinAPI';
 import { useGetCategory, useTemplates } from '~/apis/templateAPI';
@@ -162,38 +163,47 @@ const Home = ({ navigation }: HomeScreenProps) => {
       <TopStatusBarStyled backgroundColor={BackgroundColor.DEPTH2_D} />
       <StatusBar barStyle="light-content" backgroundColor={BackgroundColor.DEPTH2_D} />
       <HomeStyled>
-        <Calendar navigation={navigation} />
-        <HomeView>
-          <TaskView>
-            <DropView onPress={() => CalendarStore.changeIsWeek(!CalendarStore.isWeek)}>
-              {CalendarStore.isWeek ? <Icon type={'DROP'} /> : <Icon type={'TAKE'} />}
-            </DropView>
-            <TaskTitleView>
-              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
-                {`${CalendarStore.focusDay.format('M월 D일')} 테스크 `}
-              </CustomText>
-              <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
-                {routine?.length || 0}
-              </CustomText>
-              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
-                개의 달성률{' '}
-              </CustomText>
-              <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
-                {percent.toFixed(0)}
-              </CustomText>
-              <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
-                % 입니다.
-              </CustomText>
-            </TaskTitleView>
-            <TaskListView
-              navigation={navigation}
-              taskList={routine || []}
-              onToggleTask={handleToggleTask}
-              visiblePopup={visiblePopup}
-              onPopupClick={handlePopupClick}
-            />
-          </TaskView>
-        </HomeView>
+        <GestureRecognizer
+          style={{ backgroundColor: 'red', flex: 1 }}
+          onSwipeUp={() => {
+            CalendarStore.changeIsWeek(true);
+          }}
+          onSwipeDown={() => {
+            CalendarStore.changeIsWeek(false);
+          }}>
+          <Calendar navigation={navigation} />
+          <HomeView>
+            <TaskView>
+              <DropView onPress={() => CalendarStore.changeIsWeek(!CalendarStore.isWeek)}>
+                {CalendarStore.isWeek ? <Icon type={'DROP'} /> : <Icon type={'TAKE'} />}
+              </DropView>
+              <TaskTitleView>
+                <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
+                  {`${CalendarStore.focusDay.format('M월 D일')} 테스크 `}
+                </CustomText>
+                <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
+                  {routine?.length || 0}
+                </CustomText>
+                <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
+                  개의 달성률{' '}
+                </CustomText>
+                <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
+                  {percent.toFixed(0)}
+                </CustomText>
+                <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
+                  % 입니다.
+                </CustomText>
+              </TaskTitleView>
+              <TaskListView
+                navigation={navigation}
+                taskList={routine || []}
+                onToggleTask={handleToggleTask}
+                visiblePopup={visiblePopup}
+                onPopupClick={handlePopupClick}
+              />
+            </TaskView>
+          </HomeView>
+        </GestureRecognizer>
         <AddTaskButton
           onPress={() => {
             setVisiblePopup(null);
