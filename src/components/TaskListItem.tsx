@@ -177,7 +177,7 @@ const TaskListItem = observer(
             {CalendarStore.radio === RADIO_TYPE.리포트 && (
               <CustomText color={TextColor.PRIMARY_L} font={FontType.REGULAR_CAPTION}>
                 {`${CalendarStore.focusDay.format('M월')} ${getWeek()}주 `}
-                {task.friends?.length ? `${task.friends?.length}명의 달성률 총 ` : '나의 달성률 총 '}
+                {task.friends?.length > 1 ? `${task.friends?.length}명의 달성률 총 ` : '나의 달성률 총 '}
                 <CustomText color={TextColor.HIGHLIGHT} font={FontType.REGULAR_CAPTION}>
                   {((weekPercent.len / weekPercent.timesOfDay) * 100).toFixed(0)}%
                 </CustomText>

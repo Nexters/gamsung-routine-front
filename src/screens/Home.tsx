@@ -162,7 +162,6 @@ const Home = ({ navigation }: HomeScreenProps) => {
 
   return (
     <>
-      <Onboarding2 />
       <TopStatusBarStyled backgroundColor={BackgroundColor.DEPTH2_D} />
       <StatusBar barStyle="light-content" backgroundColor={BackgroundColor.DEPTH2_D} />
       <HomeStyled>
