@@ -25,8 +25,6 @@ interface Props {
   timesOfDay: number;
   completedDateList: { date: string }[] | [];
   days: number[];
-  delay: boolean;
-  isDelay: boolean;
   percent: number;
   onTaskItemClick: () => void;
   visiblePopup: string | null;
@@ -44,8 +42,6 @@ const TaskListItem = observer(
     timesOfDay,
     completedDateList,
     days,
-    delay,
-    isDelay,
     percent,
     onTaskItemClick,
     visiblePopup,
@@ -119,7 +115,7 @@ const TaskListItem = observer(
                     days.map((day, index) => {
                       return `${getDay(day) + (index !== days.length - 1 ? ',' : '')}`;
                     })}{' '}
-                  · 하루 {timesOfDay}번 {delay && '· 미뤄짐'}
+                  · 하루 {timesOfDay}번{/* {delay && '· 미뤄짐'} */}
                 </CustomText>
               </TaskListItemViewSubTitle>
             </TaskListItemViewTitle>
@@ -186,12 +182,7 @@ const TaskListItem = observer(
           </TaskListItemInfoPercent>
         </TaskListItemInfoView>
         {visiblePopup === taskId && (
-          <TaskDetailPopup
-            taskId={taskId}
-            navigation={navigation}
-            completedCount={completedDateList.length}
-            isDelay={isDelay}
-          />
+          <TaskDetailPopup taskId={taskId} navigation={navigation} completedCount={completedDateList.length} />
         )}
       </TaskListItemStyled>
     );

@@ -55,8 +55,6 @@ const TaskListView = ({ taskList, onToggleTask, visiblePopup, onPopupClick, navi
                     timesOfDay={task.timesOfDay}
                     completedDateList={task.completedDateList}
                     days={task.days}
-                    delay={false}
-                    isDelay={true}
                     percent={(task.completedDateList.length || 0) / (task.timesOfDay || 0) || 0}
                     task={task}
                     onTaskItemClick={() => onToggleTask(task.taskId)}

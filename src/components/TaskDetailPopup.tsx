@@ -5,7 +5,7 @@ import React from 'react';
 
 import CustomModal from './CustomModal';
 
-import { RoutineAPI, useMonthlyTasks } from '~/apis/routinAPI';
+import { RoutineAPI, useIsDelay, useMonthlyTasks } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
 import useModal from '~/hooks/useModal';
 import { RootStackParamList } from '~/navigations/types';
@@ -17,15 +17,15 @@ import { showToast } from '~/utils/showToast';
 interface Props {
   navigation: StackNavigationProp<RootStackParamList>;
   taskId: string;
-  isDelay: boolean;
   completedCount: number;
 }
 
-const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount }: Props) => {
+const TaskDetailPopup = observer(({ navigation, taskId, completedCount }: Props) => {
   const { data, error, revalidate } = useMonthlyTasks({
     month: CalendarStore.month.toString(),
     year: CalendarStore.tempYear.toString(),
   });
+  const { data: isDelay, error: isDelayError } = useIsDelay(taskId);
 
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
 
@@ -88,14 +88,14 @@ const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount 
           </CustomText>
         </TaskDetailPopupButton>
       )}
-      {/* {CalendarStore.radio === RADIO_TYPE.루틴 && completedCount === 0 && isDelay && (
+      {CalendarStore.radio === RADIO_TYPE.루틴 && completedCount === 0 && isDelay && (
         <TaskDetailPopupButton onPress={handleDelayButtonClick}>
           <TaskDetailPopupButtonImage source={require('~/assets/images/button_delay.png')} />
           <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
             미루기
           </CustomText>
         </TaskDetailPopupButton>
-      )} */}
+      )}
       <TaskDetailPopupButton onPress={handleEditButtonClick}>
         <TaskDetailPopupButtonImage source={require('~/assets/images/button_edit.png')} />
         <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>

@@ -3,7 +3,7 @@ import { useUserProfileData } from './authAPI';
 import { RoutineTaskUnit } from '~/models/RoutineTaskUnit';
 import { Task } from '~/models/Task';
 import api from '~/utils/api';
-import { useCommonSWR } from '~/utils/swr';
+import { useCommonSWR, useHeaderPatchSWR } from '~/utils/swr';
 
 export const useMonthlyTasks = ({ year, month }: { year: string; month: string }) => {
   const { data: profile } = useUserProfileData();
@@ -14,6 +14,10 @@ export const useMonthlyTasks = ({ year, month }: { year: string; month: string }
     };
     // 달은 0~11이라서 1을 플러스 해줘야한다.
   }>(profileId ? `/routine/monthly/${profileId}?year=${year}&month=${Number(month) + 1}` : null);
+};
+
+export const useIsDelay = (taskId: string) => {
+  return useHeaderPatchSWR(`/routine/unit/delay/check/${taskId}`);
 };
 
 export class RoutineAPI {
