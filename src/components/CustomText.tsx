@@ -14,6 +14,7 @@ interface Props {
   marginLeft?: number;
   marginRight?: number;
   numberOfLines?: number;
+  ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip' | undefined;
 }
 
 const CustomText = ({
@@ -26,6 +27,7 @@ const CustomText = ({
   marginLeft = 0,
   marginRight = 0,
   numberOfLines,
+  ellipsizeMode = undefined,
 }: Props) => {
   const style = Font.getStyle(font);
   return (
@@ -39,7 +41,8 @@ const CustomText = ({
       marginBottom={marginBottom}
       marginLeft={marginLeft}
       marginRight={marginRight}
-      numberOfLines={numberOfLines}>
+      numberOfLines={numberOfLines}
+      ellipsizeMode={ellipsizeMode}>
       {children}
     </CustomTextStyled>
   );

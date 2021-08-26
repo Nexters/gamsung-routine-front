@@ -252,7 +252,8 @@ const TaskView = styled.View`
 const DropView = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
-  padding-bottom: 20px;
+  padding-top: 5px;
+  padding-bottom: 25px;
 `;
 
 const TaskTitleView = styled.View`
