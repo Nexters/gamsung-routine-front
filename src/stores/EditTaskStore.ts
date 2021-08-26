@@ -7,6 +7,7 @@ import { TemplateTask } from '~/models/TemplateTask';
 
 export class EditTaskStore {
   templateTaskId: number | null = null;
+  code: string | null = null;
   taskName = '';
 
   days: { id: number; day: string; selected: boolean }[] = [
@@ -68,9 +69,10 @@ export class EditTaskStore {
 
     if (this.taskId) {
       // home에서 수정으로 접근
-      const data = await RoutineAPI.instance().getSingleTask(this.taskId.toString());
+      const data = await RoutineAPI.instance().getSingleTask(this.taskId);
       this.taskName = data?.title ?? '';
       this.templateTaskId = null;
+      this.code = data.code;
       data?.days.forEach((day) => {
         const d = this.days.find((d) => day === d.id);
         if (d) {
@@ -150,6 +152,7 @@ export class EditTaskStore {
     }
     const item: RoutineTaskUnit = {
       id: this.taskId ?? null,
+      code: this.code,
       profileId: profileUserId,
       title: this.taskName,
       notify: this.alarm,
