@@ -4,6 +4,7 @@ import { RoutineAPI } from '~/apis/routinAPI';
 import { Friend } from '~/models/Friend';
 import { RoutineTaskUnit } from '~/models/RoutineTaskUnit';
 import { TemplateTask } from '~/models/TemplateTask';
+import { showToast } from '~/utils/showToast';
 
 export class EditTaskStore {
   templateTaskId: number | null = null;
@@ -142,7 +143,11 @@ export class EditTaskStore {
 
   async onTaskEnd() {
     if (this.taskId) {
-      await RoutineAPI.instance().deleteTask(this.taskId);
+      try {
+        await RoutineAPI.instance().deleteTask(this.taskId);
+      } catch (e) {
+        showToast(e);
+      }
     }
   }
 
@@ -169,15 +174,27 @@ export class EditTaskStore {
     };
 
     if (this.taskId) {
-      await RoutineAPI.instance().updateTask(item);
+      try {
+        await RoutineAPI.instance().updateTask(item);
+      } catch (e) {
+        showToast(e);
+      }
       return;
     }
-    await RoutineAPI.instance().saveTask(item);
+    try {
+      await RoutineAPI.instance().saveTask(item);
+    } catch (e) {
+      showToast(e);
+    }
   }
 
   async onDeleteFriends(friendId: string, taskId: string) {
-    await RoutineAPI.instance().deleteTask(taskId);
-    this.friends = this.friends.filter((friend) => friend.profileId !== friendId);
+    try {
+      await RoutineAPI.instance().deleteTask(taskId);
+      this.friends = this.friends.filter((friend) => friend.profileId !== friendId);
+    } catch (e) {
+      showToast(e);
+    }
   }
 
   get editableTitle() {
