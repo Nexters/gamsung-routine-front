@@ -70,7 +70,14 @@ export class EditTaskStore {
 
     if (this.taskId) {
       // home에서 수정으로 접근
-      const data = await RoutineAPI.instance().getSingleTask(this.taskId);
+      let data = null;
+      try {
+        data = await RoutineAPI.instance().getSingleTask(this.taskId);
+      } catch (e) {
+        showToast(e);
+        console.error(e);
+        throw e;
+      }
       this.taskName = data?.title ?? '';
       this.templateTaskId = null;
       this.code = data.code;
