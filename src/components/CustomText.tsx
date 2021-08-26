@@ -27,7 +27,7 @@ const CustomText = ({
   marginLeft = 0,
   marginRight = 0,
   numberOfLines,
-  ellipsizeMode = undefined,
+  ellipsizeMode,
 }: Props) => {
   const style = Font.getStyle(font);
   return (
