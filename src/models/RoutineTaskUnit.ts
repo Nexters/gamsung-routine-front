@@ -2,6 +2,7 @@ import { Friend } from './Friend';
 
 export interface RoutineTaskUnit {
   id: string | null;
+  code: string | null;
   profileId: string;
   title: string;
   notify: boolean;
