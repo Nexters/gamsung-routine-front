@@ -69,7 +69,7 @@ export const FriendInviteCard: React.FC<Props> = observer(
     return (
       <>
         <CollapsibleCard marginTop={marginTop} marginBottom={marginBottom} backgroundColor={backgroundColor}>
-          <FoldableContainer type="NONE" label="파티원 추가하기" isOpen={false}>
+          <FoldableContainer type="NONE" label="파티원 추가하기">
             <TouchableOpacity onPress={handleInviteClick}>
               <Icon type="KAKAO" />
             </TouchableOpacity>
