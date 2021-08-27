@@ -108,7 +108,12 @@ const EditTaskView = ({
             <CustomText font={FontType.REGULAR_CAPTION} color={TextColor.SECONDARY_L} marginBottom={8}>
               부가 설정
             </CustomText>
-            <AlarmSettingCard onChangeAlarm={handleChangeAlarm} marginTop={8} disable={disable} />
+            <AlarmSettingCard
+              onChangeAlarm={handleChangeAlarm}
+              marginTop={8}
+              disable={disable}
+              defaultAlarm={vm.alarm}
+            />
           </AddSettingView>
           {vm.isEditMode && (
             <>

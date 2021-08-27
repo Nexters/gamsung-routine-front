@@ -24,7 +24,7 @@ export class EditTaskStore {
   times: { id: number; hour: number; minute: number }[] = [];
 
   timeOfDay = 1;
-  alarm = false;
+  alarm = true;
 
   friends: Friend[] = [];
 

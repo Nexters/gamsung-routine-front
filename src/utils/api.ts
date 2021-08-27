@@ -21,7 +21,7 @@ const getCommonHeaders = async () => {
 class API {
   // XXX : _ prefix를 계속 사용할지 고민
   private static _instance: API;
-  private static HOSTNAME = 'https://gamsung-routine.herokuapp.com';
+  private static HOSTNAME = 'http://slb-7882365.ncloudslb.com';
   private static PREFIX = '/api';
 
   axiosInstance = axios.create();
