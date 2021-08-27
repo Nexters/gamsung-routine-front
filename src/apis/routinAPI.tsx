@@ -3,7 +3,7 @@ import { useUserProfileData } from './authAPI';
 import { RoutineTaskUnit } from '~/models/RoutineTaskUnit';
 import { Task } from '~/models/Task';
 import api from '~/utils/api';
-import { useCommonSWR, useHeaderPatchSWR } from '~/utils/swr';
+import { useCommonSWR, useHeaderSWR } from '~/utils/swr';
 
 export const useMonthlyTasks = ({ year, month }: { year: string; month: string }) => {
   const { data: profile } = useUserProfileData();
@@ -17,7 +17,9 @@ export const useMonthlyTasks = ({ year, month }: { year: string; month: string }
 };
 
 export const useIsDelay = (taskId: string) => {
-  return useHeaderPatchSWR(`/routine/unit/delay/check/${taskId}`);
+  return useHeaderSWR<{
+    data?: boolean;
+  }>(`/routine/unit/delay/check/${taskId}`);
 };
 
 export class RoutineAPI {

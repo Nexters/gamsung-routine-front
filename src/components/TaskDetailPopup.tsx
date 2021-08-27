@@ -21,11 +21,11 @@ interface Props {
 }
 
 const TaskDetailPopup = observer(({ navigation, taskId, completedCount }: Props) => {
-  const { data, error, revalidate } = useMonthlyTasks({
+  const { revalidate } = useMonthlyTasks({
     month: CalendarStore.month.toString(),
     year: CalendarStore.tempYear.toString(),
   });
-  const { data: isDelay, error: isDelayError } = useIsDelay(taskId);
+  const { data: isDelay } = useIsDelay(taskId);
 
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
 

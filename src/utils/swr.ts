@@ -13,7 +13,7 @@ function fetcher<T>(url: string): Promise<any> {
 }
 function headerFetcher<T>(url: string): Promise<any> {
   return API.get<AxiosResponse<T>>(url).then((res) => {
-    if (res.data) {
+    if (res.data || (res.data as any) === false) {
       return res.data;
     }
     return res;
