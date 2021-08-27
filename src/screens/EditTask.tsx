@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
 import { Dimensions } from 'react-native';
-import RNKakaoLink from 'react-native-kakao-links';
+import KakaoShareLink from 'react-native-kakao-share-link';
 import { SvgXml, Svg, Defs, Stop, Rect, LinearGradient } from 'react-native-svg';
 
 import { useUserProfileData } from '~/apis/authAPI';
@@ -156,29 +156,20 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
   };
 
   const handleKakaoInvite = async () => {
-    const linkObject = {
-      webURL: `https://bonkae.page.link/vgNL`, //optional
-      mobileWebURL: `https://bonkae.page.link/vgNL`, //optional
-      androidExecutionParams: `bonkae-master://InviteIntro?taskId=${taskId}`, //optional For Linking URL
-      iosExecutionParams: `bonkae-master://InviteIntro?taskId=${taskId}`, //optional For Linking URL
-    };
-
-    const contentObject = {
-      title: `${name}님이 파티를 요청했어요!`,
-      link: linkObject,
-      imageURL: 'https://gamsung-routine.herokuapp.com/assets/images/invite.png',
-      desc: `${vm.taskName} 테스크를 같이 수행하려면 아래 버튼을 클릭해주세요.`, //optional
-      imageWidth: 240, //optional
-      imageHeight: 180, //optional
-    };
     try {
-      const options = {
-        objectType: 'feed', //required
-        content: contentObject, //required
-        buttonTitle: '파티 참여하기',
-      };
-
-      await RNKakaoLink.link(options);
+      await KakaoShareLink.sendFeed({
+        content: {
+          title: `${name}님이 파티를 요청했어요!`,
+          link: {
+            webUrl: `https://bonkae.page.link/vgNL`,
+            mobileWebUrl: `https://bonkae.page.link/vgNL`,
+          },
+          imageUrl: 'https://gamsung-routine.herokuapp.com/assets/images/invite.png',
+          description: `${vm.taskName} 테스크를 같이 수행하려면 아래 버튼을 클릭해주세요.`,
+          imageWidth: 240, //optional
+          imageHeight: 180, //optional
+        },
+      });
     } catch (e) {
       console.warn(e);
     }
