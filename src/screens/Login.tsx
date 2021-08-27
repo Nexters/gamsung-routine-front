@@ -10,6 +10,7 @@ import loginTitle from '~/assets/images/login_title.svg';
 import CustomText from '~/components/CustomText';
 import { RootStackParamList } from '~/navigations/types';
 import AuthStore from '~/stores/AuthStore';
+import IndicatorStore from '~/stores/IndicatorStore';
 import { BackgroundColor, GraphicColor, TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 
@@ -19,8 +20,10 @@ export interface HomeScreenProps {
 
 const Login = ({ navigation }: HomeScreenProps) => {
   const onLogin = async () => {
-    await AuthStore.login();
-    navigation.replace('Home');
+    if (IndicatorStore.count === 0) {
+      await AuthStore.login();
+      navigation.replace('Home');
+    }
   };
 
   return (

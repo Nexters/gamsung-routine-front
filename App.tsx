@@ -3,11 +3,9 @@ import messaging from '@react-native-firebase/messaging';
 import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Dimensions, Linking } from 'react-native';
+import { Linking } from 'react-native';
 
 import MainNavigator from '~/navigations/MainNavigator';
-import IndicatorStore from '~/stores/IndicatorStore';
-import { BackgroundColor } from '~/utils/color';
 
 const config = {
   screens: {
@@ -90,27 +88,9 @@ const App = observer(() => {
   }, []);
 
   return (
-    <>
-      {IndicatorStore.count > 0 && (
-        <ActivityIndicator
-          color="#0000ff"
-          size="large"
-          style={{
-            width: Dimensions.get('window').width,
-            height: Dimensions.get('window').height,
-            backgroundColor: BackgroundColor.DEPTH2_D,
-            opacity: 0.7,
-            top: 0,
-            left: 0,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        />
-      )}
-      <NavigationContainer linking={linking}>
-        <MainNavigator />
-      </NavigationContainer>
-    </>
+    <NavigationContainer linking={linking}>
+      <MainNavigator />
+    </NavigationContainer>
   );
 });
 

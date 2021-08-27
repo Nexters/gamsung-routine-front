@@ -1,5 +1,4 @@
 import styled from '@emotion/native';
-import { observer } from 'mobx-react';
 import React from 'react';
 
 import AlarmSettingCard from '~/components/AlarmSettingCard';
@@ -7,9 +6,12 @@ import CustomText from '~/components/CustomText';
 import CustomTextInput from '~/components/CustomTextInput';
 import { DailyLoopCard } from '~/components/DailyLoopCard';
 import { FriendInviteCard } from '~/components/FriendInviteCard';
+import Loading from '~/components/Loading';
 import { TimeSettingCard } from '~/components/TimeSettingCard';
 import { WeekLoopCard } from '~/components/WeekLoopCard';
+import { loading } from '~/hocs/loading';
 import { EditTaskStore } from '~/stores/EditTaskStore';
+import IndicatorStore from '~/stores/IndicatorStore';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
@@ -174,4 +176,4 @@ const FinishTaskTextButton = styled.TouchableOpacity`
   padding-top: 40px;
 `;
 
-export default observer(EditTaskView);
+export default loading(EditTaskView, () => IndicatorStore.count > 0, <Loading />);

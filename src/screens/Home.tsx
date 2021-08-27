@@ -7,20 +7,17 @@ import { StatusBar } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 import { RoutineAPI, useMonthlyTasks } from '~/apis/routinAPI';
-import { useGetCategory, useTemplates } from '~/apis/templateAPI';
 import castle from '~/assets/lottie/castle.json';
 import crown from '~/assets/lottie/crown.json';
 import Calendar from '~/components/Calendar';
 import CustomModal from '~/components/CustomModal';
-import CustomText from '~/components/CustomText';
 import Icon from '~/components/Icon';
-import TaskListView from '~/components/TaskListView';
+import TaskView from '~/components/TaskView';
 import useModal from '~/hooks/useModal';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
 import CalendarStore, { RADIO_TYPE } from '~/stores/CalendarStore';
-import { ActionColor, BackgroundColor, SurfaceColor, TextColor } from '~/utils/color';
-import { FontType } from '~/utils/font';
+import { ActionColor, BackgroundColor, SurfaceColor } from '~/utils/color';
 import { showToast } from '~/utils/showToast';
 
 export interface HomeScreenProps {
@@ -28,10 +25,6 @@ export interface HomeScreenProps {
 }
 
 const Home = ({ navigation }: HomeScreenProps) => {
-  // Category 이동 시에 데이터가 로딩되어 있으면 좋겠다...
-  const { data: categories = [] } = useGetCategory();
-  const { data: templates = [] } = useTemplates(categories?.[0]?.id || 0);
-
   const { data: TaskList, revalidate } = useMonthlyTasks({
     month: CalendarStore.month.toString(),
     year: CalendarStore.tempYear.toString(),
@@ -173,35 +166,19 @@ const Home = ({ navigation }: HomeScreenProps) => {
           }}>
           <Calendar navigation={navigation} />
           <HomeView>
-            <TaskView>
+            <TaskViewStyled>
               <DropView onPress={() => CalendarStore.changeIsWeek(!CalendarStore.isWeek)}>
                 {CalendarStore.isWeek ? <Icon type={'DROP'} /> : <Icon type={'TAKE'} />}
               </DropView>
-              <TaskTitleView>
-                <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
-                  {`${CalendarStore.focusDay.format('M월 D일')} 테스크 `}
-                </CustomText>
-                <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
-                  {routine?.length || 0}
-                </CustomText>
-                <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
-                  개의 달성률{' '}
-                </CustomText>
-                <CustomText font={FontType.BOLD_BODY_02} color={TextColor.HIGHLIGHT}>
-                  {percent.toFixed(0)}
-                </CustomText>
-                <CustomText font={FontType.REGULAR_BODY_02} color={TextColor.PRIMARY_L}>
-                  % 입니다.
-                </CustomText>
-              </TaskTitleView>
-              <TaskListView
+              <TaskView
                 navigation={navigation}
-                taskList={routine || []}
+                routine={routine}
+                percent={percent}
                 onToggleTask={handleToggleTask}
                 visiblePopup={visiblePopup}
                 onPopupClick={handlePopupClick}
               />
-            </TaskView>
+            </TaskViewStyled>
           </HomeView>
         </GestureRecognizer>
         <AddTaskButton
@@ -251,7 +228,7 @@ const HomeView = styled.View`
   background-color: ${BackgroundColor.DEPTH2_D};
 `;
 
-const TaskView = styled.View`
+const TaskViewStyled = styled.View`
   flex: 1;
   justify-content: flex-start;
   padding: 20px;
@@ -264,11 +241,6 @@ const DropView = styled.TouchableOpacity`
   align-items: center;
   padding-top: 5px;
   padding-bottom: 25px;
-`;
-
-const TaskTitleView = styled.View`
-  flex-direction: row;
-  justify-content: center;
 `;
 
 const AddTaskButton = styled.TouchableOpacity`

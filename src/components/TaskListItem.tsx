@@ -92,7 +92,6 @@ const TaskListItem = observer(
       },
       { timesOfDay: 0, len: 0 },
     );
-    console.log('weekPercent', weekPercent);
 
     const handleTaskItemClick = () => {
       CalendarStore.radio === RADIO_TYPE.루틴 && onTaskItemClick?.();
