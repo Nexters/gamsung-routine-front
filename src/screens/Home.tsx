@@ -12,7 +12,8 @@ import crown from '~/assets/lottie/crown.json';
 import Calendar from '~/components/Calendar';
 import CustomModal from '~/components/CustomModal';
 import Icon from '~/components/Icon';
-import TaskView from '~/components/TaskView';
+import Onboarding2 from '~/components/Onboarding2';
+import TaskListView from '~/components/TaskListView';
 import useModal from '~/hooks/useModal';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
@@ -153,6 +154,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
 
   return (
     <>
+      <Onboarding2 />
       <TopStatusBarStyled backgroundColor={BackgroundColor.DEPTH2_D} />
       <StatusBar barStyle="light-content" backgroundColor={BackgroundColor.DEPTH2_D} />
       <HomeStyled>
