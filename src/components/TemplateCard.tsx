@@ -71,8 +71,7 @@ const TemplateCardStyled = styled.TouchableOpacity<{ backgroundColor: GraphicCol
   flex-direction: row;
   align-items: center;
   margin: 10px;
-  padding: 20px;
-  padding-top: 32px;
+  padding: 20px 30px 20px 20px;
   background-color: ${({ backgroundColor }) => backgroundColor};
   border-radius: 10px;
 `;
@@ -82,7 +81,7 @@ const ViewStyled = styled.View`
 `;
 
 const CheckStyled = styled.View`
-  width: 120px;
+  width: 110px;
   flex-direction: row;
   align-items: center;
 `;
