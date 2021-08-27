@@ -12,8 +12,6 @@ target 'routine' do
     :hermes_enabled => false
   )
 
-  pod 'RNKakaoLink', :path => '../node_modules/react-native-kakao-links'
-
   target 'routineTests' do
     inherit! :complete
     # Pods for testing
