@@ -66,8 +66,8 @@ const EditTaskView = ({
     onInviteClick?.();
   };
 
-  const handleDeleteFriendClick = (friendId: string, taskId: string) => {
-    onDeleteFriendClick?.(friendId, taskId);
+  const handleDeleteFriendClick = async (friendId: string, taskId: string) => {
+    await onDeleteFriendClick?.(friendId, taskId);
   };
 
   return (

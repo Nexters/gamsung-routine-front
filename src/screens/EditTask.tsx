@@ -61,6 +61,13 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
   };
 
   const handleEditSubmitClick = async () => {
+    if (vm.isEditMode) {
+      id && (await vm.onSave(id));
+      revalidate();
+      navigation.pop();
+      showToast('수정되었습니다');
+      return;
+    }
     setModalContent('테스크 추가가 완료되었어요.');
     setModalSubContent('미루미를 없애기 위한\n테스크를 계속 추가하시겠어요?');
     setModalLeftButtonText('내 테스크 보기');
@@ -146,8 +153,8 @@ const EditTask = ({ route, navigation }: EditTaskScreenProps) => {
     openModal();
   };
 
-  const handleDeleteFriendClick = (friendId: string, taskId: string) => {
-    vm.onDeleteFriends(friendId, taskId);
+  const handleDeleteFriendClick = async (friendId: string, taskId: string) => {
+    await vm.onDeleteFriends(friendId, taskId);
   };
 
   const handleKakaoInvite = async () => {

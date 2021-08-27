@@ -5,6 +5,7 @@ import { observable, action, makeObservable, computed } from 'mobx';
 
 import IndicatorStore from '~/stores/IndicatorStore';
 import api from '~/utils/api';
+import { showToast } from '~/utils/showToast';
 
 class AuthStore {
   // XXX : _ prefix를 계속 사용할지 고민
@@ -62,8 +63,8 @@ class AuthStore {
       AsyncStorage.setItem('token', this.token || '');
       IndicatorStore.down();
     } catch (error) {
-      // TODO: 토스트 표시
       console.error(error);
+      showToast('로그인에 실패했습니다.');
     }
   };
 

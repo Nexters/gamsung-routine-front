@@ -4,9 +4,11 @@ import { RoutineAPI } from '~/apis/routinAPI';
 import { Friend } from '~/models/Friend';
 import { RoutineTaskUnit } from '~/models/RoutineTaskUnit';
 import { TemplateTask } from '~/models/TemplateTask';
+import { showToast } from '~/utils/showToast';
 
 export class EditTaskStore {
   templateTaskId: number | null = null;
+  code: string | null = null;
   taskName = '';
 
   days: { id: number; day: string; selected: boolean }[] = [
@@ -68,9 +70,17 @@ export class EditTaskStore {
 
     if (this.taskId) {
       // home에서 수정으로 접근
-      const data = await RoutineAPI.instance().getSingleTask(this.taskId.toString());
+      let data = null;
+      try {
+        data = await RoutineAPI.instance().getSingleTask(this.taskId);
+      } catch (e) {
+        showToast(e);
+        console.error(e);
+        throw e;
+      }
       this.taskName = data?.title ?? '';
       this.templateTaskId = null;
+      this.code = data.code;
       data?.days.forEach((day) => {
         const d = this.days.find((d) => day === d.id);
         if (d) {
@@ -140,7 +150,11 @@ export class EditTaskStore {
 
   async onTaskEnd() {
     if (this.taskId) {
-      await RoutineAPI.instance().deleteTask(this.taskId);
+      try {
+        await RoutineAPI.instance().deleteTask(this.taskId);
+      } catch (e) {
+        showToast(e);
+      }
     }
   }
 
@@ -150,6 +164,7 @@ export class EditTaskStore {
     }
     const item: RoutineTaskUnit = {
       id: this.taskId ?? null,
+      code: this.code,
       profileId: profileUserId,
       title: this.taskName,
       notify: this.alarm,
@@ -166,15 +181,27 @@ export class EditTaskStore {
     };
 
     if (this.taskId) {
-      await RoutineAPI.instance().updateTask(item);
+      try {
+        await RoutineAPI.instance().updateTask(item);
+      } catch (e) {
+        showToast(e);
+      }
       return;
     }
-    await RoutineAPI.instance().saveTask(item);
+    try {
+      await RoutineAPI.instance().saveTask(item);
+    } catch (e) {
+      showToast(e);
+    }
   }
 
   async onDeleteFriends(friendId: string, taskId: string) {
-    await RoutineAPI.instance().deleteTask(taskId);
-    this.friends = this.friends.filter((friend) => friend.profileId !== friendId);
+    try {
+      await RoutineAPI.instance().deleteTask(taskId);
+      this.friends = this.friends.filter((friend) => friend.profileId !== friendId);
+    } catch (e) {
+      showToast(e);
+    }
   }
 
   get editableTitle() {

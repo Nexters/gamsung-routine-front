@@ -31,7 +31,13 @@ export const TemplateCard: React.FC<Props> = observer(({ id, name, tasks, onPres
           {tasks.slice(0, 3).map((it, index) => (
             <CheckStyled key={index}>
               <Icon type={'CHECK'} />
-              <CustomText key={it.id} font={FontType.REGULAR_CAPTION} color={TextColor.PRIMARY_D} marginLeft={7}>
+              <CustomText
+                key={it.id}
+                font={FontType.REGULAR_CAPTION}
+                color={TextColor.PRIMARY_D}
+                marginLeft={7}
+                numberOfLines={1}
+                ellipsizeMode={'tail'}>
                 {it.name}
               </CustomText>
             </CheckStyled>
@@ -76,6 +82,7 @@ const ViewStyled = styled.View`
 `;
 
 const CheckStyled = styled.View`
+  width: 120px;
   flex-direction: row;
   align-items: center;
 `;

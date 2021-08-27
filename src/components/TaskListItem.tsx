@@ -208,7 +208,7 @@ const TaskListItemStyled = styled.View<{ checkLastItem: boolean }>`
     0px 5px 22px 4px rgba(0, 0, 0, 0.06);
 
   & + & {
-    margin-bottom: ${({ checkLastItem }) => (checkLastItem ? '80px' : '20px')};
+    margin-bottom: ${({ checkLastItem }) => (checkLastItem ? '160px' : '20px')};
   }
 `;
 
