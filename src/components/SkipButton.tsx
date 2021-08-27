@@ -8,9 +8,14 @@ import { RootStackParamList } from '~/navigations/types';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
-const SkipButton = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList> }) => {
+interface Props {
+  navigation?: StackNavigationProp<RootStackParamList>;
+  onClose?: () => void;
+}
+
+const SkipButton = ({ navigation, onClose }: Props) => {
   const handleSkipClick = () => {
-    navigation.replace('Login');
+    navigation ? navigation.replace('Login') : onClose?.();
   };
 
   return (
