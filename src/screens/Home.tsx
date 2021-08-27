@@ -13,7 +13,7 @@ import Calendar from '~/components/Calendar';
 import CustomModal from '~/components/CustomModal';
 import Icon from '~/components/Icon';
 import Onboarding2 from '~/components/Onboarding2';
-import TaskListView from '~/components/TaskListView';
+import TaskView from '~/components/TaskView';
 import useModal from '~/hooks/useModal';
 import { Task } from '~/models/Task';
 import { RootStackParamList } from '~/navigations/types';
