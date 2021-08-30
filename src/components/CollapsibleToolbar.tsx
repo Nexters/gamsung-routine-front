@@ -109,8 +109,6 @@ export const CollapsibleToolbar: React.FC<Props> = observer(
             <DescriptionView>
               <CustomText font={FontType.MEDIUM_BODY_02} color={TextColor.PRIMARY_D} numberOfLines={2}>
                 {description}
-                {'\n'}
-                테스트용 라인
               </CustomText>
             </DescriptionView>
           </Background>
