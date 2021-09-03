@@ -41,8 +41,9 @@ export const TaskList: React.FC<Props> = observer(({ navigation, route }) => {
     }
 
     const items: RoutineTaskUnit[] = template.tasks.map((task) => ({
-      id: id,
-      profileId: '',
+      id: null,
+      code: null,
+      profileId: id,
       title: task.name,
       notify: true,
       days: task.defaultDays,
@@ -56,6 +57,7 @@ export const TaskList: React.FC<Props> = observer(({ navigation, route }) => {
       category: '1',
       templateId: null,
       order: 0,
+      friends: [],
     }));
     await RoutineAPI.instance().saveMultiTask(items);
 
