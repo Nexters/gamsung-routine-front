@@ -6536,10 +6536,10 @@ react-native-iphone-x-helper@^1.3.0:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-react-native-kakao-share-link@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-kakao-share-link/-/react-native-kakao-share-link-1.0.1.tgz#2881d92be8f2733989eee9ad7a7c552d7b58dbbd"
-  integrity sha512-WcMBW/SNRLxVX0qoJsDd2j4/568BsUtteTxhnFh84BNnB7sYZiV5qNlERn+nh+VPJ500d/cEedQ/z2lbyW4DSg==
+react-native-kakao-share-link@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-kakao-share-link/-/react-native-kakao-share-link-1.0.4.tgz#9b73ac0aa61b330dd517adc5c71be6fc09b8a847"
+  integrity sha512-VaFCcsDupSHKV832yIBzu9/1LSifGmceincx+1yP2CQZqnWc2rDVis7m5F2S/6cyKwhocf9s+t1COPc1XCkCRQ==
 
 react-native-modal@^12.0.2:
   version "12.1.0"
