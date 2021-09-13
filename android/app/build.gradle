@@ -236,6 +236,8 @@ dependencies {
 
     // lottie
     implementation project(':lottie-react-native')
+    implementation project(':react-native-kakao-share-link')
+
 }
 
 // Run this once to be able to run the application with BUCK
