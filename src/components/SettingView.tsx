@@ -15,7 +15,7 @@ import { FontType } from '~/utils/font';
 interface Props {
   isOn: boolean;
   onLogoutButtonClick: () => void;
-  onLinkButtonClick: (type: 'notice' | 'terms') => void;
+  onLinkButtonClick: (type: 'notice' | 'terms' | 'privacy') => void;
   onSwitchClick: () => void;
 }
 
@@ -26,7 +26,7 @@ const SettingView = ({ isOn, onLogoutButtonClick, onLinkButtonClick, onSwitchCli
     onLogoutButtonClick();
   };
 
-  const handleLinkButtonClick = (type: 'notice' | 'terms') => {
+  const handleLinkButtonClick = (type: 'notice' | 'terms' | 'privacy') => {
     onLinkButtonClick(type);
   };
 
@@ -71,7 +71,15 @@ const SettingView = ({ isOn, onLogoutButtonClick, onLinkButtonClick, onSwitchCli
         <SettingInfoItem>
           <TouchableOpacity onPress={() => handleLinkButtonClick('terms')}>
             <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
-              약관 및 정책
+              이용 약관
+            </CustomText>
+          </TouchableOpacity>
+          <Icon type="ARROW_RIGHT" />
+        </SettingInfoItem>
+        <SettingInfoItem>
+          <TouchableOpacity onPress={() => handleLinkButtonClick('privacy')}>
+            <CustomText font={FontType.REGULAR_BODY_01} color={IconColor.PRIMARY_L}>
+              개인정보 처리방침
             </CustomText>
           </TouchableOpacity>
           <Icon type="ARROW_RIGHT" />
