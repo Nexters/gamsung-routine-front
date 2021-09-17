@@ -1,4 +1,5 @@
 import styled from '@emotion/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LottieView from 'lottie-react-native';
 import { observer } from 'mobx-react';
@@ -26,6 +27,7 @@ export interface HomeScreenProps {
 }
 
 const Home = ({ navigation }: HomeScreenProps) => {
+  AsyncStorage.clear();
   const { data: TaskList, revalidate } = useMonthlyTasks({
     month: CalendarStore.month.toString(),
     year: CalendarStore.tempYear.toString(),
@@ -147,7 +149,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
       }
 
       revalidate();
-    } catch (e) {
+    } catch (e: any) {
       showToast(e);
     }
   };

@@ -1,4 +1,5 @@
 import styled from '@emotion/native';
+import { AppleButton, appleAuthAndroid } from '@invertase/react-native-apple-authentication';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { StatusBar } from 'react-native';
@@ -10,7 +11,6 @@ import loginTitle from '~/assets/images/login_title.svg';
 import CustomText from '~/components/CustomText';
 import { RootStackParamList } from '~/navigations/types';
 import AuthStore from '~/stores/AuthStore';
-import IndicatorStore from '~/stores/IndicatorStore';
 import { BackgroundColor, GraphicColor, TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 
@@ -19,12 +19,13 @@ export interface HomeScreenProps {
 }
 
 const Login = ({ navigation }: HomeScreenProps) => {
-  const onLogin = async () => {
-    if (IndicatorStore.count === 0) {
-      await AuthStore.login();
-      navigation.replace('Home');
-    }
+  const onLoginKakao = async () => {
+    await AuthStore.login('kakao', navigation);
   };
+
+  async function onLoginApple() {
+    await AuthStore.login('apple', navigation);
+  }
 
   return (
     <>
@@ -52,12 +53,20 @@ const Login = ({ navigation }: HomeScreenProps) => {
           </IntroKimBonKae3Styled>
         </LoginView>
         <KakaoLoginButtonStyled>
-          <KakaoLoginButton onPress={onLogin}>
+          <KakaoLoginButton onPress={onLoginKakao}>
             <KakaoLoginIcon source={require('~/assets/icons/icon_kakao_login.png')} />
             <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_L} align={Align.CENTER}>
               카카오 로그인 하기
             </CustomText>
           </KakaoLoginButton>
+          {appleAuthAndroid.isSupported && (
+            <AppleButton
+              style={{ width: '100%', marginTop: 15 }}
+              buttonStyle={AppleButton.Style.WHITE}
+              buttonType={AppleButton.Type.SIGN_IN}
+              onPress={() => onLoginApple()}
+            />
+          )}
         </KakaoLoginButtonStyled>
       </LoginStyled>
     </>
