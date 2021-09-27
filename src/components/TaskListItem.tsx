@@ -5,7 +5,6 @@ import React from 'react';
 
 import Icon from './Icon';
 
-import { useMonthlyTasks } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
 import MonsterIcon from '~/components/MonsterIcon';
 import TaskDetailPopup from '~/components/TaskDetailPopup';
@@ -33,6 +32,11 @@ interface Props {
   onMoreButtonClick: (id: string) => void;
   navigation: StackNavigationProp<RootStackParamList>;
   task: Task;
+  taskList: Task[];
+  dailyRoutines: {
+    [key: string]: Task[];
+  } | null;
+  revalidate: () => Promise<boolean>;
 }
 
 const TaskListItem = observer(
@@ -52,19 +56,16 @@ const TaskListItem = observer(
     onMoreButtonClick,
     navigation,
     task,
+    dailyRoutines,
+    revalidate,
   }: Props) => {
-    const { data, error } = useMonthlyTasks({
-      month: CalendarStore.month.toString(),
-      year: CalendarStore.tempYear.toString(),
-    });
-
     const dayOfWeek = [] as Task[];
 
     if (CalendarStore.radio === RADIO_TYPE.리포트) {
       const isSun = CalendarStore.focusDay.format('ddd') === 'Sun';
       const today = CalendarStore.focusDay.add(isSun ? -1 : 0, 'day').day(1);
       for (let i = 0; i < 7; i++) {
-        const routine = data?.dailyRoutines[today.add(i, 'day').format('YYYYMMDD')] || ([] as Task[]);
+        const routine = dailyRoutines?.[today.add(i, 'day').format('YYYYMMDD')] || ([] as Task[]);
         const r =
           routine.find((rr) => {
             return rr.taskId === taskId;
@@ -191,6 +192,7 @@ const TaskListItem = observer(
             navigation={navigation}
             completedCount={completedDateList.length}
             isDelay={isDelay}
+            revalidate={revalidate}
           />
         )}
       </TaskListItemStyled>

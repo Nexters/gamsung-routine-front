@@ -16,11 +16,12 @@ type Component<Props = any> =
 
 export function loading<T extends Component>(Comp: T, condition: () => boolean, loader: ReactElement) {
   function LoadableComponent(props: ComponentProps<T>) {
-    if (condition()) {
-      return loader;
-    }
-
-    return <Comp {...props} />;
+    return (
+      <>
+        {condition() && loader}
+        <Comp {...props} />
+      </>
+    );
   }
 
   return observer(LoadableComponent);

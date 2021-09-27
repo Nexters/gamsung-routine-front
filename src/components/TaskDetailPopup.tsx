@@ -5,7 +5,7 @@ import React from 'react';
 
 import CustomModal from './CustomModal';
 
-import { RoutineAPI, useMonthlyTasks } from '~/apis/routinAPI';
+import { RoutineAPI } from '~/apis/routinAPI';
 import CustomText from '~/components/CustomText';
 import useModal from '~/hooks/useModal';
 import { RootStackParamList } from '~/navigations/types';
@@ -19,14 +19,10 @@ interface Props {
   taskId: string;
   isDelay: boolean;
   completedCount: number;
+  revalidate: () => Promise<boolean>;
 }
 
-const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount }: Props) => {
-  const { data, error, revalidate } = useMonthlyTasks({
-    month: CalendarStore.month.toString(),
-    year: CalendarStore.tempYear.toString(),
-  });
-
+const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount, revalidate }: Props) => {
   const { isVisible: isModalVisible, openModal, closeModal } = useModal();
 
   const handleCancelButtonClick = async () => {
