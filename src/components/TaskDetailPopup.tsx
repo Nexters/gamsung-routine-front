@@ -81,7 +81,7 @@ const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount 
       }
       resizeMode="cover">
       {CalendarStore.radio === RADIO_TYPE.루틴 && completedCount > 0 && (
-        <TaskDetailPopupButton onPress={handleCancelButtonClick}>
+        <TaskDetailPopupButton onPress={handleCancelButtonClick} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
           <TaskDetailPopupButtonImage source={require('~/assets/images/button_cancel.png')} />
           <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
             되돌리기
@@ -89,20 +89,20 @@ const TaskDetailPopup = observer(({ navigation, taskId, isDelay, completedCount 
         </TaskDetailPopupButton>
       )}
       {/* {CalendarStore.radio === RADIO_TYPE.루틴 && completedCount === 0 && isDelay && (
-        <TaskDetailPopupButton onPress={handleDelayButtonClick}>
+        <TaskDetailPopupButton onPress={handleDelayButtonClick} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
           <TaskDetailPopupButtonImage source={require('~/assets/images/button_delay.png')} />
           <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
             미루기
           </CustomText>
         </TaskDetailPopupButton>
       )} */}
-      <TaskDetailPopupButton onPress={handleEditButtonClick}>
+      <TaskDetailPopupButton onPress={handleEditButtonClick} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
         <TaskDetailPopupButtonImage source={require('~/assets/images/button_edit.png')} />
         <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
           수정
         </CustomText>
       </TaskDetailPopupButton>
-      <TaskDetailPopupButton onPress={handleDeleteButtonClick}>
+      <TaskDetailPopupButton onPress={handleDeleteButtonClick} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
         <TaskDetailPopupButtonImage source={require('~/assets/images/button_delete.png')} />
         <CustomText font={FontType.MEDIUM_CAPTION} color={TextColor.PRIMARY_L}>
           종료
@@ -142,6 +142,8 @@ const TaskDetailPopupButton = styled.TouchableOpacity`
 `;
 
 const TaskDetailPopupButtonImage = styled.Image`
+  width: 24px;
+  height: 24px;
   margin-bottom: 3px;
 `;
 
