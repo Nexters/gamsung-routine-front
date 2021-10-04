@@ -15,6 +15,8 @@ interface Props {
   marginRight?: number;
   numberOfLines?: number;
   ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip' | undefined;
+  textDecorationLine?: 'none' | 'underline';
+  onPress?: () => void;
 }
 
 const CustomText = ({
@@ -28,6 +30,8 @@ const CustomText = ({
   marginRight = 0,
   numberOfLines,
   ellipsizeMode,
+  textDecorationLine = 'none',
+  onPress,
 }: Props) => {
   const style = Font.getStyle(font);
   return (
@@ -42,7 +46,9 @@ const CustomText = ({
       marginLeft={marginLeft}
       marginRight={marginRight}
       numberOfLines={numberOfLines}
-      ellipsizeMode={ellipsizeMode}>
+      ellipsizeMode={ellipsizeMode}
+      textDecorationLine={textDecorationLine}
+      onPress={onPress}>
       {children}
     </CustomTextStyled>
   );
@@ -58,6 +64,7 @@ const CustomTextStyled = styled.Text<{
   marginBottom: number;
   marginLeft: number;
   marginRight: number;
+  textDecorationLine: string;
 }>`
   font-family: ${({ family }) => family};
   font-size: ${({ size }) => `${size}px`};
@@ -69,6 +76,7 @@ const CustomTextStyled = styled.Text<{
   margin-bottom: ${({ marginBottom }) => `${marginBottom}px`};
   margin-left: ${({ marginLeft }) => `${marginLeft}px`};
   margin-right: ${({ marginRight }) => `${marginRight}px`};
+  text-decoration-line: ${({ textDecorationLine }) => textDecorationLine};
 `;
 
 export default CustomText;

@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, Linking } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
 import introKimBonKae3 from '~/assets/images/intro_kim_bonkae_3.svg';
@@ -23,6 +23,14 @@ const Login = ({ navigation }: HomeScreenProps) => {
     if (IndicatorStore.count === 0) {
       await AuthStore.login();
       navigation.replace('Home');
+    }
+  };
+
+  const handleLinkButtonClick = async (type: 'terms' | 'privacy') => {
+    if (type === 'terms') {
+      await Linking.openURL('https://steep-woolen-661.notion.site/fb395cc475bc4b2e8ea4e334c55386fb');
+    } else if (type === 'privacy') {
+      await Linking.openURL('https://steep-woolen-661.notion.site/d05646281359447291c2bdef4b3eb9e1');
     }
   };
 
@@ -51,14 +59,39 @@ const Login = ({ navigation }: HomeScreenProps) => {
             <SvgXml xml={introKimBonKae3} />
           </IntroKimBonKae3Styled>
         </LoginView>
-        <KakaoLoginButtonStyled>
+        <LoginButtonStyled>
+          <CustomText
+            font={FontType.REGULAR_CAPTION}
+            color={TextColor.PRIMARY_D}
+            align={Align.CENTER}
+            marginBottom={20}>
+            계정이 만들어지면 본캐마스터의{'\n'}
+            <CustomText
+              font={FontType.BOLD_CAPTION}
+              color={TextColor.PRIMARY_D}
+              align={Align.CENTER}
+              textDecorationLine="underline"
+              onPress={() => handleLinkButtonClick('privacy')}>
+              개인정보수집방침
+            </CustomText>
+            과{' '}
+            <CustomText
+              font={FontType.BOLD_CAPTION}
+              color={TextColor.PRIMARY_D}
+              align={Align.CENTER}
+              textDecorationLine="underline"
+              onPress={() => handleLinkButtonClick('terms')}>
+              이용약관
+            </CustomText>
+            에 동의합니다.
+          </CustomText>
           <KakaoLoginButton onPress={onLogin}>
             <KakaoLoginIcon source={require('~/assets/icons/icon_kakao_login.png')} />
             <CustomText font={FontType.BOLD_LARGE} color={TextColor.PRIMARY_L} align={Align.CENTER}>
               카카오 로그인 하기
             </CustomText>
           </KakaoLoginButton>
-        </KakaoLoginButtonStyled>
+        </LoginButtonStyled>
       </LoginStyled>
     </>
   );
@@ -103,13 +136,13 @@ const LoginTitleStyled = styled.View`
 
 const IntroKimBonKae3Styled = styled.View`
   position: absolute;
-  bottom: 140px;
+  top: 33%;
   align-items: center;
   justify-content: center;
   width: 100%;
 `;
 
-const KakaoLoginButtonStyled = styled.View`
+const LoginButtonStyled = styled.View`
   position: absolute;
   bottom: 50px;
   padding-left: 20px;
