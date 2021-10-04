@@ -5,9 +5,9 @@ import { FlatList } from 'react-native';
 import CustomText from './CustomText';
 import Loading from './Loading';
 
-import { useGetCategory, useTemplates } from '~/apis/templateAPI';
 import { TemplateCard } from '~/components/TemplateCard';
 import { loading } from '~/hocs/loading';
+import { Category } from '~/models/Category';
 import { Template } from '~/models/Template';
 import IndicatorStore from '~/stores/IndicatorStore';
 import { GraphicColor, TextColor } from '~/utils/color';
@@ -15,13 +15,12 @@ import { FontType } from '~/utils/font';
 
 interface Props {
   selectedCategoryId: number;
+  categories: Category[];
+  templates: Template[];
   onTemplatePress: (template: Template, headerColor: GraphicColor) => void;
 }
 
-const CategoryView = ({ selectedCategoryId, onTemplatePress }: Props) => {
-  const { data: categories = [] } = useGetCategory();
-  const { data: templates = [] } = useTemplates(selectedCategoryId);
-
+const CategoryView = ({ selectedCategoryId, onTemplatePress, categories, templates }: Props) => {
   const handleTemplatePress = (template: Template, headerColor: GraphicColor) => {
     onTemplatePress(template, headerColor);
   };

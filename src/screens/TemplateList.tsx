@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 
-import { useGetCategory } from '~/apis/templateAPI';
+import { useGetCategory, useTemplates } from '~/apis/templateAPI';
 import CategoryView from '~/components/CategoryView';
 import CustomText from '~/components/CustomText';
 import Header from '~/components/Header';
@@ -20,13 +20,16 @@ interface Props {
 
 const TemplateList = ({ navigation }: Props) => {
   const { data: categories = [] } = useGetCategory();
-  const [selectedCategoryId, setSelectedCategoryId] = useState(categories?.[0]?.id || 0);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(0);
 
   useEffect(() => {
     if (!selectedCategoryId && categories?.[0]?.id) {
       setSelectedCategoryId(categories[0].id);
     }
   }, [categories, selectedCategoryId]);
+
+  const { data: templates = [] } = useTemplates(selectedCategoryId);
+
   const handleCategoryPress = (id: number) => {
     setSelectedCategoryId(id);
   };
@@ -66,7 +69,12 @@ const TemplateList = ({ navigation }: Props) => {
       />
       <CategoryViewStyled>
         <ScrollingButtonMenu data={categories} selectedId={selectedCategoryId} onClick={handleCategoryPress} />
-        <CategoryView selectedCategoryId={selectedCategoryId} onTemplatePress={handleTemplatePress} />
+        <CategoryView
+          selectedCategoryId={selectedCategoryId}
+          onTemplatePress={handleTemplatePress}
+          categories={categories}
+          templates={templates}
+        />
       </CategoryViewStyled>
     </Frame>
   );

@@ -179,6 +179,8 @@ const Home = ({ navigation }: HomeScreenProps) => {
                 onToggleTask={handleToggleTask}
                 visiblePopup={visiblePopup}
                 onPopupClick={handlePopupClick}
+                dailyRoutines={TaskList?.dailyRoutines ?? null}
+                revalidate={revalidate}
               />
             </TaskViewStyled>
           </HomeView>

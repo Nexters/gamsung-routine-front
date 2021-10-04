@@ -20,9 +20,22 @@ interface Props {
   onToggleTask: (taskId: string) => void;
   visiblePopup: string | null;
   onPopupClick: (id: string | null) => void;
+  dailyRoutines: {
+    [key: string]: Task[];
+  } | null;
+  revalidate: () => Promise<boolean>;
 }
 
-const TaskView = ({ navigation, routine, percent, onToggleTask, visiblePopup, onPopupClick }: Props) => {
+const TaskView = ({
+  navigation,
+  routine,
+  percent,
+  onToggleTask,
+  visiblePopup,
+  onPopupClick,
+  dailyRoutines,
+  revalidate,
+}: Props) => {
   const handleToggleTask = (taskId: string) => {
     onToggleTask(taskId);
   };
@@ -56,6 +69,8 @@ const TaskView = ({ navigation, routine, percent, onToggleTask, visiblePopup, on
         onToggleTask={handleToggleTask}
         visiblePopup={visiblePopup}
         onPopupClick={handlePopupClick}
+        dailyRoutines={dailyRoutines}
+        revalidate={revalidate}
       />
     </>
   );
