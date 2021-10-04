@@ -26,14 +26,6 @@ const Login = ({ navigation }: HomeScreenProps) => {
     }
   };
 
-  const handleLinkButtonClick = async (type: 'terms' | 'privacy') => {
-    if (type === 'terms') {
-      await Linking.openURL('https://steep-woolen-661.notion.site/fb395cc475bc4b2e8ea4e334c55386fb');
-    } else if (type === 'privacy') {
-      await Linking.openURL('https://steep-woolen-661.notion.site/d05646281359447291c2bdef4b3eb9e1');
-    }
-  };
-
   return (
     <>
       <TopStatusBarStyled backgroundColor={BackgroundColor.HIGHLIGHTER} />
@@ -71,7 +63,7 @@ const Login = ({ navigation }: HomeScreenProps) => {
               color={TextColor.PRIMARY_D}
               align={Align.CENTER}
               textDecorationLine="underline"
-              onPress={() => handleLinkButtonClick('privacy')}>
+              onPress={() => Linking.openURL('https://steep-woolen-661.notion.site/d05646281359447291c2bdef4b3eb9e1')}>
               개인정보수집방침
             </CustomText>
             과{' '}
@@ -80,7 +72,7 @@ const Login = ({ navigation }: HomeScreenProps) => {
               color={TextColor.PRIMARY_D}
               align={Align.CENTER}
               textDecorationLine="underline"
-              onPress={() => handleLinkButtonClick('terms')}>
+              onPress={() => Linking.openURL('https://steep-woolen-661.notion.site/fb395cc475bc4b2e8ea4e334c55386fb')}>
               이용약관
             </CustomText>
             에 동의합니다.
