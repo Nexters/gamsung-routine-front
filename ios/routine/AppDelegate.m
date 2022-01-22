@@ -64,7 +64,9 @@ static void InitializeFlipper(UIApplication *application) {
  if([RNKakaoLogins isKakaoTalkLoginUrl:url]) {
     return [RNKakaoLogins handleOpenUrl: url];
  }
-
+  if([RCTLinkingManager application:app openURL:url options:options]) {
+    return YES;
+  }
  return NO;
 }
 
@@ -75,12 +77,6 @@ static void InitializeFlipper(UIApplication *application) {
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
-}
-
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url
- options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
-{
- return [RCTLinkingManager application:app openURL:url options:options];
 }
 
 @end

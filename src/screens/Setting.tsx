@@ -28,11 +28,13 @@ const Setting = ({ navigation }: Props) => {
     navigation.replace('Login');
   };
 
-  const handleLinkButtonClick = async (type: 'notice' | 'terms') => {
+  const handleLinkButtonClick = async (type: 'notice' | 'terms' | 'privacy') => {
     if (type === 'notice') {
-      await Linking.openURL('https://www.notion.so/hushershe/f787649fd3f3441d841aaef5427f85cf');
+      await Linking.openURL('https://steep-woolen-661.notion.site/ca9651dcc6f849418bc9b7f2a644103e');
     } else if (type === 'terms') {
-      await Linking.openURL('https://google.com');
+      await Linking.openURL('https://steep-woolen-661.notion.site/fb395cc475bc4b2e8ea4e334c55386fb');
+    } else if (type === 'privacy') {
+      await Linking.openURL('https://steep-woolen-661.notion.site/d05646281359447291c2bdef4b3eb9e1');
     }
   };
 

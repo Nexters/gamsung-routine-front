@@ -168,22 +168,28 @@ const Home = ({ navigation }: HomeScreenProps) => {
           onSwipeDown={() => {
             CalendarStore.changeIsWeek(false);
           }}>
-          <Calendar navigation={navigation} />
-          <HomeView>
-            <TaskViewStyled>
-              <DropView onPress={() => CalendarStore.changeIsWeek(!CalendarStore.isWeek)}>
-                {CalendarStore.isWeek ? <Icon type={'DROP'} /> : <Icon type={'TAKE'} />}
-              </DropView>
-              <TaskView
-                navigation={navigation}
-                routine={routine}
-                percent={percent}
-                onToggleTask={handleToggleTask}
-                visiblePopup={visiblePopup}
-                onPopupClick={handlePopupClick}
-              />
-            </TaskViewStyled>
-          </HomeView>
+          <HomeWithoutStyled onPress={() => setVisiblePopup(null)}>
+            <HomeView>
+              <Calendar navigation={navigation} />
+              <TaskViewStyled>
+                <DropView
+                  onPress={() => {
+                    CalendarStore.changeIsWeek(!CalendarStore.isWeek);
+                    setVisiblePopup(null);
+                  }}>
+                  {CalendarStore.isWeek ? <Icon type={'DROP'} /> : <Icon type={'TAKE'} />}
+                </DropView>
+                <TaskView
+                  navigation={navigation}
+                  routine={routine}
+                  percent={percent}
+                  onToggleTask={handleToggleTask}
+                  visiblePopup={visiblePopup}
+                  onPopupClick={handlePopupClick}
+                />
+              </TaskViewStyled>
+            </HomeView>
+          </HomeWithoutStyled>
         </GestureRecognizer>
         <AddTaskButton
           onPress={() => {
@@ -222,6 +228,10 @@ const TopStatusBarStyled = styled.SafeAreaView<{ backgroundColor: string }>`
 const HomeStyled = styled.SafeAreaView`
   flex: 1;
   background-color: ${SurfaceColor.DEPTH2_L};
+`;
+
+const HomeWithoutStyled = styled.TouchableWithoutFeedback`
+  flex: 1;
 `;
 
 const HomeView = styled.View`

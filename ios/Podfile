@@ -12,7 +12,6 @@ target 'routine' do
     :hermes_enabled => false
   )
 
-  pod 'RNKakaoLink', :path => '../node_modules/react-native-kakao-links'
 
   target 'routineTests' do
     inherit! :complete
@@ -23,9 +22,8 @@ target 'routine' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
-  use_flipper!()
-
-  post_install do |installer|
-    react_native_post_install(installer)
-  end
+  use_flipper!
+    post_install do |installer|
+      react_native_post_install(installer)
+    end
 end
